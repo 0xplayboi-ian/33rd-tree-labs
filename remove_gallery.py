@@ -1,0 +1,1608 @@
+#!/usr/bin/env python3
+import os
+
+SITE_DIR = "/Users/ianmora/Desktop/Projects/33rd-tree-labs-site"
+WS_SITE_DIR = "/Users/ianmora/ai stuffs/333rd/site"
+DESKTOP_3D = "/Users/ianmora/Desktop/33RD_TREE_LABS_3D"
+ARTIFACT_DIR = "/Users/ianmora/.gemini/antigravity/brain/7181fab3-5a37-4ef0-b178-38c7996ef3ea"
+
+html_code = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>33RD TREE LABS // Decentralized Compute & Singularity Protocol</title>
+    <meta name="description" content="33rd Tree Labs is building the decentralized compute fabric for post-AGI coordination pairing cryptographic consensus with zero-knowledge inference.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Three.js + OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <style>
+        :root {
+            --orange: #FF4500;
+            --orange-bright: #FF5E1E;
+            --orange-glow: rgba(255, 69, 0, 0.45);
+            --orange-subtle: rgba(255, 69, 0, 0.12);
+            --bg: #030306;
+            --bg-elevated: #09090E;
+            --bg-panel: rgba(14, 14, 20, 0.85);
+            --border: #22222E;
+            --border-glow: #FF4500;
+            --text-main: #FFFFFF;
+            --text-muted: #9CA3AF;
+            --text-dark: #6B7280;
+            --white: #FFFFFF;
+            --cyan: #00F0FF;
+            --green: #00FF66;
+            --gold: #FFB800;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: default;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            overflow-x: hidden;
+        }
+
+        body {
+            position: relative;
+            min-height: 100vh;
+            line-height: 1.6;
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(255, 69, 0, 0.15), transparent 45%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 60px 60px, 60px 60px;
+        }
+
+        /* CUSTOM GLOWING RETICLE CURSOR */
+        #custom-cursor {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            border: 1.5px solid var(--orange);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+            mix-blend-mode: difference;
+        }
+        #custom-cursor::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: #FFF;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-hover {
+            width: 48px !important;
+            height: 48px !important;
+            background-color: var(--orange-glow) !important;
+            border-color: #FFF !important;
+        }
+
+        /* TOP TELEMETRY BAR */
+        .telemetry-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 42px;
+            background: rgba(8, 8, 12, 0.94);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            z-index: 1000;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .telemetry-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .live-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--green);
+            animation: pulse-dot 1.5s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .telemetry-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .mini-btn {
+            background: #14141C;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .mini-btn:hover {
+            color: #FFF;
+            border-color: var(--orange);
+            background: #1C1C28;
+        }
+        .mini-btn.active {
+            background: var(--orange);
+            color: #000;
+            border-color: var(--orange);
+        }
+
+        /* NAVIGATION HEADER */
+        header.site-nav {
+            position: fixed;
+            top: 42px;
+            left: 0;
+            width: 100%;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            background: rgba(3, 3, 6, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 990;
+        }
+        .brand-logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: #FFF;
+        }
+        .logo-symbol {
+            width: 38px;
+            height: 38px;
+            border: 1px solid var(--orange);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(255,69,0,0.2), #000);
+            box-shadow: 0 0 14px var(--orange-glow);
+            position: relative;
+            overflow: hidden;
+        }
+        .logo-symbol svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--orange);
+        }
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .brand-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: #FFF;
+        }
+        .brand-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--orange);
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+            position: relative;
+            padding: 6px 0;
+        }
+        .nav-links a:hover {
+            color: #FFF;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--orange);
+            transition: width 0.2s;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--orange);
+            color: #000 !important;
+            font-weight: 800;
+            padding: 8px 18px !important;
+            border-radius: 6px;
+            box-shadow: 0 0 18px var(--orange-glow);
+            transition: all 0.2s !important;
+        }
+        .nav-cta:hover {
+            background: #FFF !important;
+            box-shadow: 0 0 24px rgba(255,255,255,0.4);
+            transform: translateY(-1px);
+        }
+        .nav-cta::after { display: none !important; }
+
+        /* HERO SECTION */
+        section.hero {
+            position: relative;
+            min-height: 100vh;
+            padding-top: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-left: 6vw;
+            padding-right: 6vw;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .hero-left {
+            max-width: 580px;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .hero-pill {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 69, 0, 0.08);
+            border: 1px solid rgba(255, 69, 0, 0.3);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--orange);
+            letter-spacing: 1px;
+        }
+        .hero-pill .blinker {
+            width: 6px;
+            height: 6px;
+            background: var(--orange);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--orange);
+            animation: pulse-dot 1.2s infinite;
+        }
+
+        h1.hero-title {
+            font-size: clamp(38px, 5.2vw, 68px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -1.5px;
+            color: #FFFFFF;
+        }
+        .highlight-orange {
+            color: var(--orange);
+            text-shadow: 0 0 35px var(--orange-glow);
+        }
+
+        p.hero-desc {
+            font-size: 16px;
+            color: #D1D5DB;
+            line-height: 1.65;
+            font-family: 'Space Grotesk', sans-serif;
+            max-width: 520px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            padding: 14px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: var(--orange);
+            color: #000;
+            box-shadow: 0 0 24px var(--orange-glow);
+        }
+        .btn-primary:hover {
+            background: #FFF;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.35);
+        }
+        .btn-secondary {
+            background: #101018;
+            color: #FFF;
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            border-color: var(--orange);
+            background: #181824;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,69,0,0.15);
+        }
+
+        /* 3D WEBGL HERO CANVAS */
+        .hero-right {
+            flex: 1;
+            height: 700px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #hero-webgl-canvas {
+            width: 100%;
+            height: 100%;
+            outline: none;
+        }
+        .canvas-overlay-badge {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            background: rgba(10, 10, 16, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            pointer-events: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .canvas-overlay-badge b {
+            color: var(--orange);
+        }
+
+        /* METRICS STRIP */
+        .metrics-strip {
+            position: relative;
+            z-index: 20;
+            margin: 0 auto;
+            max-width: 88vw;
+            background: rgba(12, 12, 18, 0.9);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px 32px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+            transform: translateY(-30px);
+        }
+        .metric-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            padding-right: 20px;
+        }
+        .metric-item:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+        .metric-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            font-weight: 900;
+            color: #FFF;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+        .metric-val span {
+            color: var(--orange);
+            font-size: 14px;
+        }
+        .metric-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+        .metric-sub {
+            font-size: 11px;
+            color: #6B7280;
+        }
+
+        /* SECTION BASE */
+        section.section-wrap {
+            position: relative;
+            padding: 100px 6vw;
+            max-width: 1400px;
+            margin: 0 auto;
+            z-index: 20;
+        }
+        .section-header {
+            margin-bottom: 54px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--orange);
+            text-transform: uppercase;
+        }
+        .section-title {
+            font-size: clamp(30px, 3.6vw, 44px);
+            font-weight: 900;
+            letter-spacing: -0.8px;
+            line-height: 1.15;
+            color: #FFF;
+        }
+        .section-desc {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        /* BENTO ARCHITECTURE GRID */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+        }
+        .bento-card {
+            background: #0B0B11;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .bento-card:hover {
+            border-color: var(--orange);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(255, 69, 0, 0.15);
+        }
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--orange), transparent);
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        .bento-card:hover::before {
+            opacity: 1;
+        }
+        .bento-span-7 { grid-column: span 7; }
+        .bento-span-5 { grid-column: span 5; }
+        .bento-span-4 { grid-column: span 4; }
+        .bento-span-8 { grid-column: span 8; }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: rgba(255, 69, 0, 0.1);
+            border: 1px solid rgba(255, 69, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--orange);
+        }
+        .card-num {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 800;
+            color: #333342;
+        }
+        .card-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #FFF;
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+        }
+        .card-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .card-badge-row {
+            margin-top: 24px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .tech-pill {
+            background: #14141E;
+            border: 1px solid #252536;
+            color: #A1A1AA;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        /* INTERACTIVE 33RD CLI TERMINAL */
+        .terminal-wrap {
+            background: #08080C;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .terminal-top {
+            background: #101018;
+            padding: 10px 18px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .term-dots {
+            display: flex;
+            gap: 7px;
+        }
+        .term-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .term-dot.r { background: #EF4444; }
+        .term-dot.y { background: #F59E0B; }
+        .term-dot.g { background: #10B981; }
+        .terminal-title {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+        .terminal-body {
+            padding: 24px;
+            height: 380px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #D4D4D8;
+        }
+        .term-line-output {
+            color: #A1A1AA;
+            white-space: pre-wrap;
+        }
+        .term-prompt-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .term-prompt-symbol {
+            color: var(--orange);
+            font-weight: 800;
+        }
+        .term-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #FFF;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            flex-grow: 1;
+        }
+        .term-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 12px 18px;
+            background: #0C0C12;
+            border-top: 1px solid var(--border);
+        }
+        .term-chip {
+            background: #161622;
+            border: 1px solid #28283C;
+            color: #E4E4E7;
+            font-size: 10.5px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .term-chip:hover {
+            border-color: var(--orange);
+            color: #FFF;
+            background: #202030;
+        }
+
+        /* CONSENSUS SIMULATOR */
+        .simulator-box {
+            background: #08080E;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        #node-canvas {
+            width: 100%;
+            height: 340px;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* FOOTER */
+        footer.site-footer {
+            border-top: 1px solid var(--border);
+            background: #050508;
+            padding: 70px 6vw 40px;
+            position: relative;
+            z-index: 20;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            max-width: 380px;
+        }
+        .footer-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .footer-col-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            color: #FFF;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 13px;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--orange);
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-dark);
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        @media (max-width: 1024px) {
+            section.hero { flex-direction: column; padding-top: 150px; text-align: center; }
+            .hero-left { align-items: center; max-width: 100%; }
+            .hero-right { width: 100%; height: 480px; }
+            .metrics-strip { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .bento-card { grid-column: span 12 !important; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+            .metrics-strip { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CUSTOM RETICLE CURSOR -->
+    <div id="custom-cursor"></div>
+
+    <!-- TOP TELEMETRY BAR -->
+    <div class="telemetry-bar">
+        <div class="telemetry-left">
+            <span><span class="live-dot"></span> <b>SINGULARITY MAINNET</b>: CANARY ONLINE</span>
+            <span style="color:var(--text-muted);">// EPOCH 338,912</span>
+            <span style="color:var(--orange);">// 142.8 PFLOPS VERIFIED</span>
+        </div>
+        <div class="telemetry-right">
+            <span>AUDIO FX:</span>
+            <button class="mini-btn" id="audio-toggle" onclick="toggleAudio()">[SFX: OFF]</button>
+            <div style="display:flex; gap:4px; align-items:center;">
+                <span style="color:var(--text-muted);">THEME:</span>
+                <button class="mini-btn active" onclick="setGlobalTheme('#FF4500', this)">ORANGE</button>
+                <button class="mini-btn" onclick="setGlobalTheme('#00F0FF', this)">CYAN</button>
+                <button class="mini-btn" onclick="setGlobalTheme('#FFFFFF', this)">STARK</button>
+                <button class="mini-btn" onclick="setGlobalTheme('#00FF66', this)">EMERALD</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION HEADER -->
+    <header class="site-nav">
+        <a href="#hero" class="brand-logo-wrap">
+            <div class="logo-symbol">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                    <path d="M4 3h16M4 21h16M12 3v18M6 3c2 6 2 12 0 18M18 3c-2 6-2 12 0 18" />
+                    <circle cx="12" cy="12" r="2" fill="var(--orange)" />
+                </svg>
+            </div>
+            <div class="brand-text">
+                <span class="brand-name">33RD TREE LABS</span>
+                <span class="brand-sub">SINGULARITY PROTOCOL</span>
+            </div>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="#architecture">ARCHITECTURE</a></li>
+            <li><a href="#proof-of-intelligence">PROOF OF INTELLIGENCE</a></li>
+            <li><a href="#interactive-terminal">33RD TERMINAL</a></li>
+            <li><a href="#interactive-terminal" class="nav-cta">CONNECT NODE</a></li>
+        </ul>
+    </header>
+
+    <!-- HERO SECTION WITH LIVE 3D ARBOR -->
+    <section class="hero" id="hero">
+        <div class="hero-left">
+            <div class="hero-pill">
+                <span class="blinker"></span>
+                <span>PROOF OF INTELLIGENCE // MAINNET DEPLOYED</span>
+            </div>
+
+            <h1 class="hero-title">
+                DECENTRALIZED <br>
+                <span class="highlight-orange">COMPUTE FABRIC</span> <br>
+                FOR POST-AGI.
+            </h1>
+
+            <p class="hero-desc">
+                By pairing cryptographic consensus with zero-knowledge inference and Proof of Intelligence, 33rd Tree Labs turns global tensor compute into an immutable public utility.
+            </p>
+
+            <div class="hero-ctas">
+                <a href="#interactive-terminal" class="btn btn-primary" onclick="playSfx('click')">
+                    <span>LAUNCH TERMINAL</span>
+                    <span>→</span>
+                </a>
+                <a href="#architecture" class="btn btn-secondary" onclick="playSfx('click')">
+                    <span>EXPLORE ARCHITECTURE</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <canvas id="hero-webgl-canvas"></canvas>
+
+            <div class="canvas-overlay-badge">
+                <div><b>SINGULARITY TENSOR ARBOR</b> [3D LIVE]</div>
+                <div>Left click &amp; drag to orbit 360° • Scroll zoom</div>
+                <div style="font-size:10px; color:#777; margin-top:2px;">Mathematical surface: r(y) = r₀ + A·(e^(ky) - 1)/(e^k - 1)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE TELEMETRY STATS STRIP -->
+    <div class="metrics-strip">
+        <div class="metric-item">
+            <div class="metric-val" id="stat-tflops">142.8 <span>PFLOPS</span></div>
+            <div class="metric-label">Decentralized Compute</div>
+            <div class="metric-sub">Distributed H100 &amp; B200 tensor cluster fabric</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-val" id="stat-latency">1.42 <span>MS</span></div>
+            <div class="metric-label">ZK Verification Latency</div>
+            <div class="metric-sub">Sub-millisecond Halo2 / Plonky3 proofs</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-val" id="stat-nodes">3,333 <span>NODES</span></div>
+            <div class="metric-label">Validator Network</div>
+            <div class="metric-sub">Across 42 Tier-4 subterranean compute facilities</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-val" id="stat-uptime">99.998 <span>%</span></div>
+            <div class="metric-label">Consensus Finality</div>
+            <div class="metric-sub">Slashing-resistant Byzantine agreement</div>
+        </div>
+    </div>
+
+    <!-- ARCHITECTURE BENTO GRID -->
+    <section class="section-wrap" id="architecture">
+        <div class="section-header">
+            <span class="section-tag">// PROTOCOL ARCHITECTURE</span>
+            <h2 class="section-title">ENGINEERED FOR THE POST-AGI HORIZON</h2>
+            <p class="section-desc">Traditional AI compute is trapped in closed silicon silos. 33rd Tree Labs liberates tensor operations through cryptographically verified peer coordination.</p>
+        </div>
+
+        <div class="bento-grid">
+            <div class="bento-card bento-span-7">
+                <span class="card-num">01 // CONSENSUS</span>
+                <div class="card-icon">⚡</div>
+                <h3 class="card-title">Proof of Intelligence (PoI) Engine</h3>
+                <p class="card-text">
+                    Replaces wasteful SHA-256 hash grinding with verifiable transformer tensor matrix multiplications. Validators earn consensus weight by computing real zero-knowledge forward passes and verifiable LLM inference batches.
+                </p>
+                <div class="card-badge-row">
+                    <span class="tech-pill">Halo2 SNARKs</span>
+                    <span class="tech-pill">Bilinear Pairings</span>
+                    <span class="tech-pill">Slashing Collateral</span>
+                </div>
+            </div>
+
+            <div class="bento-card bento-span-5">
+                <span class="card-num">02 // CRYPTOGRAPHY</span>
+                <div class="card-icon">🛡️</div>
+                <h3 class="card-title">Zero-Knowledge Tensor Inference</h3>
+                <p class="card-text">
+                    Execute proprietary neural weights on untrusted global nodes with zero weight leakage. Clients verify model outputs in O(1) time without exposing private inputs.
+                </p>
+                <div class="card-badge-row">
+                    <span class="tech-pill">zk-SNARKs</span>
+                    <span class="tech-pill">Plonky3</span>
+                    <span class="tech-pill">O(1) Verification</span>
+                </div>
+            </div>
+
+            <div class="bento-card bento-span-4">
+                <span class="card-num">03 // ROUTING</span>
+                <div class="card-icon">🌐</div>
+                <h3 class="card-title">Exponential Plunge Fabric</h3>
+                <p class="card-text">
+                    Dynamic hyperboloid topology matches traffic spikes with ultra-low latency routing across global clusters.
+                </p>
+                <div class="card-badge-row">
+                    <span class="tech-pill">Hyperboloid Mesh</span>
+                    <span class="tech-pill">Sub-10ms P99</span>
+                </div>
+            </div>
+
+            <div class="bento-card bento-span-8">
+                <span class="card-num">04 // ORCHESTRATION</span>
+                <div class="card-icon">🌀</div>
+                <h3 class="card-title">Immutable Singularity Model Checkpoint Ledger</h3>
+                <p class="card-text">
+                    Decentralized, content-addressed tensor storage anchored across cryptographic shards. Checkpoints are automatically checkpointed, signed by validator multisig, and protected against Byzantine weight poisoning.
+                </p>
+                <div class="card-badge-row">
+                    <span class="tech-pill">IPFS/Arweave Sharding</span>
+                    <span class="tech-pill">PoI Multi-Sig</span>
+                    <span class="tech-pill">Anti-Poisoning Filter</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROOF OF INTELLIGENCE SIMULATOR SECTION -->
+    <section class="section-wrap" id="proof-of-intelligence">
+        <div class="section-header">
+            <span class="section-tag">// LIVE CONSENSUS SIMULATOR</span>
+            <h2 class="section-title">REAL-TIME TENSOR VERIFICATION</h2>
+            <p class="section-desc">Watch 33rd Tree Labs validators coordinate matrix multiplication proofs in real time.</p>
+        </div>
+
+        <div class="simulator-box">
+            <canvas id="node-canvas"></canvas>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-muted);">
+                <span>STATUS: <b style="color:var(--green)">CONSENSUS ROUND IN PROGRESS</b></span>
+                <span>DIFFICULTY: <b style="color:var(--orange)">33.84 TERA-OPS</b></span>
+                <span>LATEST BLOCK: <b style="color:#FFF">#3,389,124 [ZK-PROVEN]</b></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE 33RD TERMINAL / CLI -->
+    <section class="section-wrap" id="interactive-terminal">
+        <div class="section-header">
+            <span class="section-tag">// DEVELOPER INTERFACE</span>
+            <h2 class="section-title">THE 33RD CLI &amp; PROTOCOL RUNTIME</h2>
+            <p class="section-desc">Interact directly with the Singularity Protocol. Run commands, query validator state, benchmark compute, or switch visual themes.</p>
+        </div>
+
+        <div class="terminal-wrap">
+            <div class="terminal-top">
+                <div class="term-dots">
+                    <div class="term-dot r"></div>
+                    <div class="term-dot y"></div>
+                    <div class="term-dot g"></div>
+                </div>
+                <div class="terminal-title">33rd-tree-cli // v3.3.0-canary (x86_64-tensor-darwin)</div>
+                <div style="color:var(--orange); font-size:10px;">[ONLINE]</div>
+            </div>
+
+            <div class="terminal-body" id="term-output">
+                <div class="term-line-output">33RD TREE LABS // SINGULARITY PROTOCOL v3.3.0
+Connecting to global coordinator node (wss://canary.33rdtreelabs.ai:8443)...
+✓ Authenticated via Ed25519 node keypair
+✓ Proof of Intelligence consensus engine: READY
+Type 'help' for available commands, or click the quick command chips below.</div>
+            </div>
+
+            <div class="term-chips">
+                <button class="term-chip" onclick="executeCmd('singularity --status')">singularity --status</button>
+                <button class="term-chip" onclick="executeCmd('nodes --list')">nodes --list</button>
+                <button class="term-chip" onclick="executeCmd('bench --tflops')">bench --tflops</button>
+                <button class="term-chip" onclick="executeCmd('proof --verify 0x33')">proof --verify</button>
+                <button class="term-chip" onclick="executeCmd('theme cyan')">theme cyan</button>
+                <button class="term-chip" onclick="executeCmd('theme orange')">theme orange</button>
+                <button class="term-chip" onclick="executeCmd('clear')">clear</button>
+            </div>
+
+            <form class="terminal-top" style="background:#09090E;" onsubmit="handleTermSubmit(event)">
+                <div class="term-prompt-row" style="width:100%;">
+                    <span class="term-prompt-symbol">33rd@singularity:~#</span>
+                    <input class="term-input" id="term-input" type="text" placeholder="Type a command (e.g. help, singularity --status)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- SITE FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="brand-logo-wrap">
+                    <div class="logo-symbol">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                            <path d="M4 3h16M4 21h16M12 3v18M6 3c2 6 2 12 0 18M18 3c-2 6-2 12 0 18" />
+                            <circle cx="12" cy="12" r="2" fill="var(--orange)" />
+                        </svg>
+                    </div>
+                    <div class="brand-text">
+                        <span class="brand-name">33RD TREE LABS</span>
+                        <span class="brand-sub">SINGULARITY PROTOCOL</span>
+                    </div>
+                </div>
+                <p class="footer-desc">
+                    33rd Tree Labs is building the decentralized compute fabric for post-AGI coordination. Cryptographic consensus, zero-knowledge inference, and Proof of Intelligence.
+                </p>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--orange);">
+                    // DECENTRALIZED COMPUTE // SINGULARITY PROTOCOL // PROOF OF INTELLIGENCE
+                </div>
+            </div>
+
+            <div>
+                <h5 class="footer-col-title">Protocol</h5>
+                <ul class="footer-links">
+                    <li><a href="#proof-of-intelligence">Proof of Intelligence</a></li>
+                    <li><a href="#architecture">Zero-Knowledge Inference</a></li>
+                    <li><a href="#architecture">Hyperboloid Routing</a></li>
+                    <li><a href="#interactive-terminal">Canary Network</a></li>
+                    <li><a href="#interactive-terminal">Node Staking</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h5 class="footer-col-title">Coordination</h5>
+                <ul class="footer-links">
+                    <li><a href="https://x.com" target="_blank">X (Twitter)</a></li>
+                    <li><a href="https://github.com" target="_blank">GitHub</a></li>
+                    <li><a href="#">Discord Community</a></li>
+                    <li><a href="#">Governance Forum</a></li>
+                    <li><a href="#">Status Monitor</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>© 2026 33RD TREE LABS FOUNDATION. ALL RIGHTS RESERVED.</div>
+            <div style="font-family:'JetBrains Mono',monospace; color:var(--text-muted);">
+                CONTRACT: <span style="color:var(--orange);">0x3333333333333333333333333333333333333333</span>
+            </div>
+            <div>[SECURED BY PROOF OF INTELLIGENCE]</div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT & THREE.JS ENGINE -->
+    <script>
+        // CUSTOM CURSOR RETICLE
+        const cursor = document.getElementById('custom-cursor');
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        document.querySelectorAll('a, button, .bento-card, .term-chip').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+        });
+
+        // SYNTHESIZED WEB AUDIO SOUND FX
+        let audioCtx = null;
+        let sfxEnabled = false;
+
+        function toggleAudio() {
+            sfxEnabled = !sfxEnabled;
+            const btn = document.getElementById('audio-toggle');
+            if (sfxEnabled) {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                btn.textContent = '[SFX: ON]';
+                btn.classList.add('active');
+                playSfx('boot');
+            } else {
+                btn.textContent = '[SFX: OFF]';
+                btn.classList.remove('active');
+            }
+        }
+
+        function playSfx(type) {
+            if (!sfxEnabled || !audioCtx) return;
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.exponentialRampToValueAtTime(1400, now + 0.05);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.linearRampToValueAtTime(0.001, now + 0.05);
+                osc.start(now);
+                osc.stop(now + 0.05);
+            } else if (type === 'boot') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0.001, now + 0.15);
+                osc.start(now);
+                osc.stop(now + 0.15);
+            } else if (type === 'command') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(540, now);
+                osc.frequency.linearRampToValueAtTime(720, now + 0.08);
+                gain.gain.setValueAtTime(0.06, now);
+                gain.gain.linearRampToValueAtTime(0.001, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.08);
+            }
+        }
+
+        // HERO 3D THREE.JS WEBGL CANVAS
+        const heroCanvas = document.getElementById('hero-webgl-canvas');
+        const heroScene = new THREE.Scene();
+        heroScene.fog = new THREE.FogExp2(0x030306, 0.04);
+
+        const heroCamera = new THREE.PerspectiveCamera(40, heroCanvas.clientWidth / heroCanvas.clientHeight, 0.1, 100);
+        heroCamera.position.set(2.8, 2.2, 3.8);
+
+        const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+        heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        heroRenderer.setSize(heroCanvas.clientWidth, heroCanvas.clientHeight);
+        heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+        heroRenderer.toneMappingExposure = 1.3;
+
+        const heroControls = new THREE.OrbitControls(heroCamera, heroRenderer.domElement);
+        heroControls.enableDamping = true;
+        heroControls.dampingFactor = 0.05;
+        heroControls.maxDistance = 8.5;
+        heroControls.minDistance = 1.2;
+        heroControls.enablePan = false;
+
+        // LIGHTING
+        const ambLight = new THREE.AmbientLight(0xFFFFFF, 0.6);
+        heroScene.add(ambLight);
+
+        let activeHex = 0xFF4500;
+        let activeColor = new THREE.Color(activeHex);
+
+        const coreLight = new THREE.PointLight(activeColor, 4, 10);
+        coreLight.position.set(0, 0, 0);
+        heroScene.add(coreLight);
+
+        const topDir = new THREE.DirectionalLight(0xFFFFFF, 2.2);
+        topDir.position.set(0, 6, 2);
+        heroScene.add(topDir);
+
+        const botDir = new THREE.DirectionalLight(activeColor, 1.8);
+        botDir.position.set(0, -6, -2);
+        heroScene.add(botDir);
+
+        // ROOT 3D MODEL
+        const arborRoot = new THREE.Group();
+        heroScene.add(arborRoot);
+
+        const H = 2.4;
+        const R_TOP = 1.5;
+        const R_THROAT = 0.09;
+        const EXP_K = 3.8;
+
+        function radiusAtY(y) {
+            const normY = Math.abs(y) / (H / 2);
+            return R_THROAT + (R_TOP - R_THROAT) * (Math.exp(EXP_K * normY) - 1.0) / (Math.exp(EXP_K) - 1.0);
+        }
+
+        // MERIDIAN RIBS
+        const ribsGroup = new THREE.Group();
+        arborRoot.add(ribsGroup);
+        const ribMat = new THREE.MeshStandardMaterial({
+            color: activeColor,
+            emissive: activeColor,
+            emissiveIntensity: 0.95,
+            metalness: 0.8,
+            roughness: 0.2
+        });
+        const numRibs = 32;
+        const ribSegs = 70;
+        for (let i = 0; i < numRibs; i++) {
+            const theta = (i / numRibs) * Math.PI * 2;
+            const pts = [];
+            for (let j = 0; j <= ribSegs; j++) {
+                const t = j / ribSegs;
+                const y = (t - 0.5) * H;
+                const r = radiusAtY(y);
+                pts.push(new THREE.Vector3(r * Math.cos(theta), y, r * Math.sin(theta)));
+            }
+            const curve = new THREE.CatmullRomCurve3(pts);
+            const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 60, 0.009, 6, false), ribMat);
+            ribsGroup.add(tube);
+        }
+
+        // LATITUDE RINGS
+        const ringsGroup = new THREE.Group();
+        arborRoot.add(ringsGroup);
+        const ringMat = new THREE.MeshStandardMaterial({
+            color: activeColor,
+            emissive: activeColor,
+            emissiveIntensity: 0.7,
+            metalness: 0.7,
+            roughness: 0.3
+        });
+        const numRings = 21;
+        for (let i = 0; i < numRings; i++) {
+            const t = (i + 1) / (numRings + 1);
+            const y = (t - 0.5) * H;
+            const r = radiusAtY(y);
+            const tor = new THREE.Mesh(new THREE.TorusGeometry(r, 0.007, 6, 64), ringMat);
+            tor.rotation.x = Math.PI / 2;
+            tor.position.y = y;
+            ringsGroup.add(tor);
+        }
+
+        // TOP & BOTTOM HALO RIMS
+        const haloMat = new THREE.MeshStandardMaterial({
+            color: 0xFFFFFF,
+            emissive: 0xFFFFFF,
+            emissiveIntensity: 0.9,
+            metalness: 0.9,
+            roughness: 0.1
+        });
+        const topRim = new THREE.Mesh(new THREE.TorusGeometry(R_TOP, 0.022, 12, 80), haloMat);
+        topRim.rotation.x = Math.PI / 2;
+        topRim.position.y = H / 2;
+        arborRoot.add(topRim);
+
+        const botRim = new THREE.Mesh(new THREE.TorusGeometry(R_TOP, 0.022, 12, 80), haloMat);
+        botRim.rotation.x = Math.PI / 2;
+        botRim.position.y = -H / 2;
+        arborRoot.add(botRim);
+
+        // SINGULARITY CORE NODE
+        const coreNode = new THREE.Mesh(
+            new THREE.SphereGeometry(0.12, 32, 32),
+            new THREE.MeshStandardMaterial({
+                color: 0xFFFFFF,
+                emissive: 0xFFFFFF,
+                emissiveIntensity: 1.6,
+                metalness: 0.2,
+                roughness: 0.1
+            })
+        );
+        arborRoot.add(coreNode);
+
+        // TRANSLUCENT OPTICAL GLASS SKIN
+        let skinGeom = new THREE.CylinderGeometry(R_TOP, R_TOP, H, 64, 40, true);
+        const skinPos = skinGeom.attributes.position;
+        for (let i = 0; i < skinPos.count; i++) {
+            const y = skinPos.getY(i);
+            const x = skinPos.getX(i);
+            const z = skinPos.getZ(i);
+            const currR = Math.sqrt(x*x + z*z);
+            const targetR = radiusAtY(y);
+            const scale = targetR / (currR || 1);
+            skinPos.setX(i, x * scale);
+            skinPos.setZ(i, z * scale);
+        }
+        skinGeom.computeVertexNormals();
+        const skinMat = new THREE.MeshPhysicalMaterial({
+            color: activeColor,
+            transparent: true,
+            opacity: 0.18,
+            roughness: 0.1,
+            metalness: 0.1,
+            transmission: 0.85,
+            ior: 1.5,
+            side: THREE.DoubleSide
+        });
+        const skinMesh = new THREE.Mesh(skinGeom, skinMat);
+        arborRoot.add(skinMesh);
+
+        // PARTICLES
+        const pCount = 180;
+        const pGeom = new THREE.BufferGeometry();
+        const pCoords = new Float32Array(pCount * 3);
+        for(let i=0; i<pCount; i++) {
+            pCoords[i*3] = (Math.random() - 0.5) * 5.5;
+            pCoords[i*3+1] = (Math.random() - 0.5) * 5.5;
+            pCoords[i*3+2] = (Math.random() - 0.5) * 5.5;
+        }
+        pGeom.setAttribute('position', new THREE.BufferAttribute(pCoords, 3));
+        const pMat = new THREE.PointsMaterial({ color: activeColor, size: 0.025, transparent: true, opacity: 0.65 });
+        const particles = new THREE.Points(pGeom, pMat);
+        heroScene.add(particles);
+
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 0.4;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 0.4;
+        });
+
+        function animateHero() {
+            requestAnimationFrame(animateHero);
+            arborRoot.rotation.y += 0.006;
+            particles.rotation.y += 0.001;
+
+            arborRoot.rotation.x = THREE.MathUtils.lerp(arborRoot.rotation.x, mouseY, 0.05);
+            arborRoot.rotation.z = THREE.MathUtils.lerp(arborRoot.rotation.z, -mouseX, 0.05);
+
+            const time = performance.now() * 0.0025;
+            const scale = 1.0 + Math.sin(time) * 0.09;
+            coreNode.scale.set(scale, scale, scale);
+
+            heroControls.update();
+            heroRenderer.render(heroScene, heroCamera);
+        }
+        animateHero();
+
+        window.addEventListener('resize', () => {
+            const w = heroCanvas.clientWidth;
+            const h = heroCanvas.clientHeight;
+            if (w && h) {
+                heroCamera.aspect = w / h;
+                heroCamera.updateProjectionMatrix();
+                heroRenderer.setSize(w, h);
+            }
+        });
+
+        // GLOBAL THEME SWITCHER
+        function setGlobalTheme(hex, btn) {
+            document.querySelectorAll('.telemetry-right .mini-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            activeColor = new THREE.Color(hex);
+            ribMat.color = activeColor;
+            ribMat.emissive = activeColor;
+            ringMat.color = activeColor;
+            ringMat.emissive = activeColor;
+            skinMat.color = activeColor;
+            coreLight.color = activeColor;
+            botDir.color = activeColor;
+            pMat.color = activeColor;
+
+            document.documentElement.style.setProperty('--orange', hex);
+            document.documentElement.style.setProperty('--orange-glow', hex + '77');
+            playSfx('command');
+        }
+
+        // LIVE METRIC TICKERS
+        function animateLiveMetrics() {
+            const tflopsEl = document.getElementById('stat-tflops');
+            const latencyEl = document.getElementById('stat-latency');
+            const nodesEl = document.getElementById('stat-nodes');
+
+            setInterval(() => {
+                const baseTflops = 142.8 + (Math.random() * 0.6 - 0.3);
+                tflopsEl.innerHTML = baseTflops.toFixed(1) + ' <span>PFLOPS</span>';
+
+                const baseLatency = 1.40 + (Math.random() * 0.06 - 0.03);
+                latencyEl.innerHTML = baseLatency.toFixed(2) + ' <span>MS</span>';
+
+                const nodes = 3333 + Math.floor(Math.random() * 6 - 3);
+                nodesEl.innerHTML = nodes.toLocaleString() + ' <span>NODES</span>';
+            }, 2200);
+        }
+        animateLiveMetrics();
+
+        // 33RD CLI TERMINAL LOGIC
+        const termOutput = document.getElementById('term-output');
+        const termInput = document.getElementById('term-input');
+
+        function appendTermLine(text, isCmd = false) {
+            const line = document.createElement('div');
+            line.className = 'term-line-output';
+            if (isCmd) {
+                line.innerHTML = '<span style="color:var(--orange)">33rd@singularity:~#</span> <span style="color:#FFF">' + text + '</span>';
+            } else {
+                line.textContent = text;
+            }
+            termOutput.appendChild(line);
+            termOutput.scrollTop = termOutput.scrollHeight;
+        }
+
+        function executeCmd(cmd) {
+            appendTermLine(cmd, true);
+            playSfx('command');
+
+            const lower = cmd.trim().toLowerCase();
+            setTimeout(() => {
+                if (lower === 'help') {
+                    appendTermLine(
+`AVAILABLE COMMANDS:
+  singularity --status     Check mainnet consensus & epoch telemetry
+  nodes --list             View active Tier-4 global compute nodes
+  bench --tflops           Benchmark local browser vs network throughput
+  proof --verify           Simulate zk-SNARK tensor verification
+  theme <color>            Change theme: orange, cyan, stark, emerald
+  clear                    Clear terminal screen
+  help                     Show this help directory`
+                    );
+                } else if (lower.includes('status')) {
+                    appendTermLine(
+`[SINGULARITY PROTOCOL STATUS]
+✓ Epoch: #338,912
+✓ Consensus Algorithm: Proof of Intelligence (PoI)
+✓ Global Tensor Capacity: 142.8 PFLOPS
+✓ Active Nodes: 3,333 / 3,333 (100% quorum)
+✓ Slashing Conditions: 0 infractions in current epoch
+✓ Cryptographic Proof: Plonky3 / Halo2 zk-SNARK Verified`
+                    );
+                } else if (lower.includes('nodes')) {
+                    appendTermLine(
+`NODE ID          LOCATION           GPU SPEC       LATENCY   STATUS
+node-033-sf      San Francisco, US  8x H100 SXM5   1.2ms     ONLINE
+node-077-zh      Zurich, CH         16x B200 NVL   2.4ms     ONLINE
+node-108-ty      Tokyo, JP          8x H200 PCIe   3.1ms     ONLINE
+node-224-sg      Singapore, SG      8x H100 SXM5   2.8ms     ONLINE
+node-333-is      Reykjavik, IS      32x H100 Liquid 1.8ms     ONLINE`
+                    );
+                } else if (lower.includes('bench')) {
+                    appendTermLine(
+`Running local WebGL tensor matrix multiplication benchmark...
+[========================================] 100%
+Local Browser GPU: 1.84 TFLOPS FP32
+Singularity Network Distributed Fabric: 142.8 PFLOPS
+Speedup vs Local: 77,608x factor`
+                    );
+                } else if (lower.includes('verify')) {
+                    appendTermLine(
+`[ZK-VERIFICATION ROUND]
+Generated Proof Hash: 0x33e8a49c901bfb72a...
+Validating bilinear pairing constraints over BN254 curve...
+✓ Gate checks: 1,048,576 / 1,048,576 passed
+✓ Verification Time: 1.418 ms
+Verdict: PROOF VALID. BLOCK #3,389,124 SEALED.`
+                } else if (lower.startsWith('theme')) {
+                    const color = lower.split(' ')[1];
+                    if (color === 'cyan') setGlobalTheme('#00F0FF', null);
+                    else if (color === 'orange') setGlobalTheme('#FF4500', null);
+                    else if (color === 'stark' || color === 'white') setGlobalTheme('#FFFFFF', null);
+                    else if (color === 'emerald' || color === 'green') setGlobalTheme('#00FF66', null);
+                    else appendTermLine("Unknown theme. Choices: orange, cyan, stark, emerald");
+                    appendTermLine("Theme applied: " + color.toUpperCase());
+                } else if (lower === 'clear') {
+                    termOutput.innerHTML = '';
+                } else {
+                    appendTermLine("Command not recognized: '" + cmd + "'. Type 'help' for available commands.");
+                }
+            }, 120);
+        }
+
+        function handleTermSubmit(e) {
+            e.preventDefault();
+            const val = termInput.value.trim();
+            if (val) {
+                executeCmd(val);
+                termInput.value = '';
+            }
+        }
+
+        // CONSENSUS SIMULATOR CANVAS
+        const nodeCanvas = document.getElementById('node-canvas');
+        const nodeCtx = nodeCanvas.getContext('2d');
+
+        function resizeNodeCanvas() {
+            nodeCanvas.width = nodeCanvas.parentElement.clientWidth - 48;
+            nodeCanvas.height = 340;
+        }
+        window.addEventListener('resize', resizeNodeCanvas);
+        resizeNodeCanvas();
+
+        const simNodes = [];
+        const simNodeCount = 28;
+        for (let i = 0; i < simNodeCount; i++) {
+            simNodes.push({
+                x: Math.random() * nodeCanvas.width,
+                y: Math.random() * nodeCanvas.height,
+                vx: (Math.random() - 0.5) * 0.8,
+                vy: (Math.random() - 0.5) * 0.8,
+                radius: Math.random() * 3 + 2,
+                pulse: Math.random() * Math.PI
+            });
+        }
+
+        const packets = [];
+
+        function renderSimulator() {
+            nodeCtx.fillStyle = 'rgba(8, 8, 14, 0.25)';
+            nodeCtx.fillRect(0, 0, nodeCanvas.width, nodeCanvas.height);
+
+            for (let i = 0; i < simNodes.length; i++) {
+                const n1 = simNodes[i];
+                for (let j = i + 1; j < simNodes.length; j++) {
+                    const n2 = simNodes[j];
+                    const dist = Math.hypot(n1.x - n2.x, n1.y - n2.y);
+                    if (dist < 130) {
+                        const alpha = (1 - dist / 130) * 0.35;
+                        nodeCtx.strokeStyle = 'rgba(255, 69, 0, ' + alpha + ')';
+                        nodeCtx.lineWidth = 1;
+                        nodeCtx.beginPath();
+                        nodeCtx.moveTo(n1.x, n1.y);
+                        nodeCtx.lineTo(n2.x, n2.y);
+                        nodeCtx.stroke();
+                    }
+                }
+            }
+
+            simNodes.forEach(n => {
+                n.x += n.vx;
+                n.y += n.vy;
+                if (n.x < 10 || n.x > nodeCanvas.width - 10) n.vx *= -1;
+                if (n.y < 10 || n.y > nodeCanvas.height - 10) n.vy *= -1;
+                n.pulse += 0.05;
+
+                nodeCtx.fillStyle = '#FFFFFF';
+                nodeCtx.beginPath();
+                nodeCtx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+                nodeCtx.fill();
+
+                nodeCtx.strokeStyle = 'rgba(255, 69, 0, ' + (0.4 + Math.sin(n.pulse) * 0.3) + ')';
+                nodeCtx.beginPath();
+                nodeCtx.arc(n.x, n.y, n.radius + 4 + Math.sin(n.pulse) * 2, 0, Math.PI * 2);
+                nodeCtx.stroke();
+            });
+
+            if (Math.random() < 0.08 && simNodes.length > 2) {
+                const src = simNodes[Math.floor(Math.random() * simNodes.length)];
+                const dst = simNodes[Math.floor(Math.random() * simNodes.length)];
+                if (src !== dst) {
+                    packets.push({
+                        x: src.x, y: src.y,
+                        tx: dst.x, ty: dst.y,
+                        progress: 0,
+                        speed: 0.02 + Math.random() * 0.02
+                    });
+                }
+            }
+
+            for (let i = packets.length - 1; i >= 0; i--) {
+                const p = packets[i];
+                p.progress += p.speed;
+                const px = p.x + (p.tx - p.x) * p.progress;
+                const py = p.y + (p.ty - p.y) * p.progress;
+
+                nodeCtx.fillStyle = '#FF5E1E';
+                nodeCtx.shadowColor = '#FF4500';
+                nodeCtx.shadowBlur = 8;
+                nodeCtx.beginPath();
+                nodeCtx.arc(px, py, 2.5, 0, Math.PI * 2);
+                nodeCtx.fill();
+                nodeCtx.shadowBlur = 0;
+
+                if (p.progress >= 1) packets.splice(i, 1);
+            }
+
+            requestAnimationFrame(renderSimulator);
+        }
+        renderSimulator();
+    </script>
+</body>
+</html>
+"""
+
+destinations = [
+    os.path.join(SITE_DIR, "index.html"),
+    os.path.join(WS_SITE_DIR, "index.html"),
+    os.path.join(ARTIFACT_DIR, "33rd_tree_labs_website.html"),
+    os.path.join(DESKTOP_3D, "33rd_Tree_Labs_Website.html")
+]
+
+for d in destinations:
+    with open(d, "w", encoding="utf-8") as f:
+        f.write(html_code)
+    print(f"Updated site without 3D vault: {d} ({len(html_code)} bytes)")
