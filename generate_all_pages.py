@@ -625,6 +625,18 @@ def build_index_html():
             color: #070707;
         }
 
+        
+        .hero .btn-brutal-outline {
+            color: #070707;
+            border-color: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.03);
+        }
+        .hero .btn-brutal-outline:hover {
+            border-color: var(--laser-red);
+            color: var(--laser-red);
+            background: rgba(255, 41, 44, 0.08);
+        }
+
         .hero-ctas {
             display: flex;
             gap: 14px;
