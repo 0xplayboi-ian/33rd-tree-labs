@@ -1,0 +1,62 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage[margin=18mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{cite}
+
+\title{\textbf{33rd Tree Labs: The Singularity Protocol}\\
+\large A Byzantine-Resilient Verifiable DePIN Compute Fabric on Solana}
+\author{33rd Tree Labs Cryptographic \& Distributed Systems Working Group\\
+\small 33rd Tree Labs Foundation \quad \texttt{research@33rdtreelabs.com} \quad \url{https://33rdtreelabs.com}\\
+\small \textit{Canary Specification v4.0 --- November 2026}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+As autonomous artificial intelligence agents assume direct fiduciary stewardship over capital, centralized cloud infrastructure introduces fatal vulnerabilities: memory bus snooping, unverified output manipulation, and administrative censorship. While proof-of-work pioneered trustless coordination, evaluating arbitrary hash preimages squanders gigawatts of power on zero computational utility. We present 33rd Tree Labs and the Singularity Protocol, an off-chain verifiable compute fabric settled natively on Solana. The network replaces hash lotteries with Proof of Intelligence (PoI), an unforgeable physical GPU admission gate requiring bit-exact evaluations of standard transformer layers verified via BN254 polynomial commitments, while slot proposals scale with stake among verified nodes. Validator topologies are embedded into a non-Euclidean Exponential Plunge Hyperboloid manifold that bounds network diameter to $\le 8$ overlay hops and neutralizes Sybil clustering via epoch-rotating coordinate derivations. Staking collateral, slashing, and commercial fee distributions are anchored to Solana via the native \$33RD token (hard-capped at 33,333,333 units), incorporating an automated 10\% revenue buyback-and-burn engine routed to the Solana Incinerator. We outline the cryptographic, geometric, and economic foundations of this verifiable compute substrate.
+\end{abstract}
+
+\section{Introduction}
+Modern machine learning inference is bottlenecked by corporate centralization. Industry market analysis indicates that over 94\% of enterprise-grade tensor accelerators are concentrated within fewer than six hyperscaler cloud providers \cite{trendforce2024}. The Singularity Protocol replaces arbitrary hash grinding with verifiable neural evaluations settled natively onto Solana.
+
+\subsection{Core Mathematical Notation}
+Throughout this specification: $\mathbb{F}_p$ denotes the scalar field of BN254 ($p \approx 2^{254}$); $e: \mathbb{G}_1 \times \mathbb{G}_2 \to \mathbb{G}_T$ is the optimal Ate pairing; batch size $B = 32$; context length $L_{\text{prefill}} = 512$; auto-regressive decoding length $T_{\text{decode}} = 32$ ($N_{\text{tokens}} = 17{,}408$); $d_{\text{model}} = 4096$; $d_{\text{ffn}} = 14336$; depth $N_{\text{layers}} = 32$; and committee size $K = 64$.
+
+\section{Tensor Transactions \& Confidential Computing}
+Clients submit encrypted tensors $\mathbf{X} \in \mathbb{R}^{B \times L \times d_{\text{model}}}$. Attention computes:
+\begin{equation}
+\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Softmax}\left(\frac{\mathbf{Q} \mathbf{K}^T}{\sqrt{d_k}} + \mathbf{M}_{\text{causal}}\right) \mathbf{V}
+\end{equation}
+with RoPE \cite{su2024roformer} and SwiGLU activations. Master keys are custodied via Feldman VSS \cite{feldman1987vss} with $(t, n) = (4, 5)$ threshold.
+
+\section{Proof of Intelligence (PoI)}
+Validators evaluate a 32-layer CAP-FFN kernel executing $2.80 \times 10^{14}$ FLOPs, taking 2.24s on dual H100 SXM5 GPUs. Proposals satisfy:
+\begin{equation}
+\mathcal{H}\Big(\sigma_t \;\Vert\; pk_{\text{validator}} \;\Vert\; \text{Poseidon}(\mathbf{Y}_t)\Big) < \frac{2^{256} \cdot S_{\text{validator}}}{D_t \cdot S_{\text{total}}}
+\end{equation}
+Difficulty retargeting clamps to $[0.80, 1.25]$:
+\begin{equation}
+D_{t+1} = \mathrm{clamp}\left(D_t \cdot \frac{T_{\text{target}}}{\Delta T_{\text{actual}}}, \; 0.80 \cdot D_t, \; 1.25 \cdot D_t\right)
+\end{equation}
+
+\section{Routing \& Manifold Geometry}
+Manifold metric: $ds^2 = \frac{dr^2 + r^2 d\theta^2 + dy^2}{1 + k^2 y^2}$. Theorem 1 proves overlay path length $h \le \lceil \ln N / \ln k \rceil = 8$ hops.
+
+\section{Tokenomics}
+Native \$33RD hard-capped at 33,333,333 units (9 decimals). 10\% commercial fees execute automated buyback-burn to \texttt{1nc1nerator11111111111111111111111111111111}.
+
+\section{Verification \& Settlement}
+On-chain Anchor verification executes BN254 KZG opening check:
+\begin{equation}
+e\Big(W, [x]_2 - [z]_2\Big) = e\Big(f - [v]_1, G_2\Big)
+\end{equation}
+Header size: 304 bytes ($798.9$ MB/yr). Transaction size: 544 bytes.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\end{document}

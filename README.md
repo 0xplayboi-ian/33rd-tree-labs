@@ -62,9 +62,10 @@ Consensus operates via a dual-mechanism architecture:
 
 ```
 .
-├── 33rd_Tree_Labs_Whitepaper.pdf   # Formal Canary v3.7 Academic Whitepaper (9 Pages)
+├── 33rd_Tree_Labs_Whitepaper.pdf   # Formal Canary v4.0 Academic Whitepaper (9 Pages)
 ├── WHITEPAPER.md                   # Full Markdown Specification
 ├── whitepaper_academic.html        # Academic Print-to-PDF Source
+├── whitepaper.tex                  # Canonical LaTeX Source Document        # Academic Print-to-PDF Source
 ├── build_whitepaper.py             # Chrome-Headless KaTeX PDF Compiler
 ├── index.html                      # Luxury Dark Web Experience & Three.js Canvas
 ├── tokenomics.html                 # Interactive Emission & Staking Models
