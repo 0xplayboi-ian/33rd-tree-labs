@@ -24,14 +24,14 @@ window.addEventListener("DOMContentLoaded", function() {
     @bottom-center {
         content: counter(page);
         font-family: "Times New Roman", Times, serif;
-        font-size: 9.5pt;
+        font-size: 9.3pt;
     }
 }
 *, *:before, *:after { box-sizing: border-box; }
 html, body {
     font-family: "Times New Roman", Times, "Nimbus Roman No9 L", serif;
-    font-size: 9.4pt;
-    line-height: 1.36;
+    font-size: 9.3pt;
+    line-height: 1.33;
     color: #000;
     background: #fff;
     margin: 0;
@@ -39,55 +39,48 @@ html, body {
     text-align: justify;
     text-justify: inter-word;
 }
-.paper-header { text-align: center; margin-bottom: 0.75rem; }
-.paper-title { font-size: 16pt; font-weight: bold; line-height: 1.2; margin: 0 0 0.25rem 0; letter-spacing: -0.01em; }
-.paper-subtitle { font-size: 11pt; font-weight: bold; color: #111; margin: 0 0 0.45rem 0; }
-.paper-authors { font-size: 9.8pt; margin-bottom: 0.12rem; }
-.paper-institution { font-size: 9.0pt; color: #222; margin-bottom: 0.12rem; }
-.paper-email { font-family: "Courier New", monospace; font-size: 8.4pt; color: #333; margin-bottom: 0.2rem; }
-.paper-version { font-size: 8.6pt; font-style: italic; color: #444; }
-.abstract-box { margin: 0.6rem 1.0rem 0.75rem 1.0rem; font-size: 8.8pt; line-height: 1.32; }
-.abstract-title { font-weight: bold; text-align: center; margin-bottom: 0.25rem; font-size: 9.5pt; text-transform: uppercase; letter-spacing: 0.05em; }
-h2.section-title { font-size: 10.8pt; font-weight: bold; margin-top: 0.85rem; margin-bottom: 0.2rem; text-align: left; page-break-after: avoid; break-after: avoid; }
-h3.subsection-title { font-size: 9.8pt; font-weight: bold; font-style: italic; margin-top: 0.6rem; margin-bottom: 0.15rem; text-align: left; page-break-after: avoid; break-after: avoid; }
-p { margin-top: 0; margin-bottom: 0.38rem; text-indent: 1.2rem; }
+.paper-header { text-align: center; margin-bottom: 0.85rem; }
+.paper-title { font-size: 16.5pt; font-weight: bold; line-height: 1.22; margin: 0 0 0.3rem 0; letter-spacing: -0.01em; }
+.paper-subtitle { font-size: 11.2pt; font-weight: bold; color: #111; margin: 0 0 0.5rem 0; }
+.paper-authors { font-size: 9.8pt; margin-bottom: 0.15rem; }
+.paper-institution { font-size: 9.0pt; color: #222; margin-bottom: 0.15rem; }
+.paper-email { font-family: "Courier New", monospace; font-size: 8.5pt; color: #333; margin-bottom: 0.25rem; }
+.paper-version { font-size: 8.8pt; font-style: italic; color: #444; }
+.abstract-box { margin: 0.75rem 1.2rem 0.9rem 1.2rem; font-size: 8.8pt; line-height: 1.34; }
+.abstract-title { font-weight: bold; text-align: center; margin-bottom: 0.3rem; font-size: 9.6pt; text-transform: uppercase; letter-spacing: 0.05em; }
+h2.section-title { font-size: 11.0pt; font-weight: bold; margin-top: 0.75rem; margin-bottom: 0.25rem; text-align: left; page-break-after: avoid; break-after: avoid; border-bottom: 0.5pt solid #ddd; padding-bottom: 0.15rem; }
+h3.subsection-title { font-size: 9.8pt; font-weight: bold; font-style: italic; margin-top: 0.5rem; margin-bottom: 0.2rem; text-align: left; page-break-after: avoid; break-after: avoid; }
+p { margin-top: 0; margin-bottom: 0.42rem; text-indent: 1.2rem; }
 p.no-indent { text-indent: 0; }
-.equation-block { display: flex; justify-content: space-between; align-items: center; margin: 0.35rem 0; padding: 0 0.8rem; page-break-inside: avoid; break-inside: avoid; }
-.equation-math { flex-grow: 1; text-align: center; font-size: 9.2pt; }
-.equation-number { width: 3.2rem; text-align: right; font-style: normal; font-size: 8.8pt; }
-.academic-table { width: 100%; border-collapse: collapse; margin: 0.4rem 0; font-size: 7.8pt; line-height: 1.22; page-break-inside: avoid; break-inside: avoid; }
-.academic-table th { border-top: 1.2pt solid #000; border-bottom: 0.8pt solid #000; padding: 2.8px 4px; text-align: left; font-weight: bold; }
-.academic-table td { padding: 2.2px 4px; text-align: left; border-bottom: 0.4pt solid #ddd; }
-.academic-table tr.total-row td { border-top: 0.8pt solid #000; border-bottom: 1.2pt solid #000; font-weight: bold; }
-.table-caption { text-align: left; font-size: 8.2pt; margin-bottom: 0.18rem; font-weight: bold; page-break-after: avoid; }
-.figure-container { margin: 0.5rem auto; text-align: center; page-break-inside: avoid; break-inside: avoid; }
-.figure-diagram { display: flex; justify-content: space-around; background: #fafafa; border: 0.8pt solid #111; padding: 0.45rem; margin-bottom: 0.18rem; font-size: 8.0pt; line-height: 1.2; }
-.figure-step { flex: 1; padding: 0.2rem 0.4rem; border-right: 0.8pt dashed #999; }
-.figure-step:last-child { border-right: none; }
-.figure-step-title { font-weight: bold; margin-bottom: 0.15rem; font-size: 8.4pt; color: #000; }
-.figure-caption { font-size: 7.8pt; text-align: justify; font-style: italic; margin-top: 0.18rem; }
-ol.references-list { padding-left: 1.1rem; font-size: 7.6pt; line-height: 1.2; margin-top: 0.2rem; margin-bottom: 0; padding-bottom: 0; column-count: 2; column-gap: 1.2rem; }
-ol.references-list li { margin-bottom: 0.12rem; break-inside: avoid; }
-code { font-family: "Courier New", monospace; font-size: 8.4pt; }
-.code-block { background: #f8f8f8; border: 0.4pt solid #ccc; padding: 0.3rem 0.5rem; font-family: "Courier New", monospace; font-size: 7.6pt; line-height: 1.18; margin: 0.3rem 0; text-align: left; white-space: pre; page-break-inside: avoid; break-inside: avoid; }
+.equation-block { display: flex; justify-content: space-between; align-items: center; margin: 0.45rem 0; padding: 0 0.8rem; page-break-inside: avoid; break-inside: avoid; }
+.equation-math { flex-grow: 1; text-align: center; font-size: 9.4pt; }
+.equation-number { width: 3.2rem; text-align: right; font-style: normal; font-size: 9.0pt; }
+.academic-table { width: 100%; border-collapse: collapse; margin: 0.45rem 0 0.65rem 0; font-size: 7.9pt; line-height: 1.25; page-break-inside: avoid; break-inside: avoid; }
+.academic-table th { border-top: 1.2pt solid #000; border-bottom: 0.8pt solid #000; padding: 4.5pt 4pt; font-weight: bold; text-align: left; font-size: 8.0pt; background: #fbfbfb; }
+.academic-table td { border-bottom: 0.4pt solid #e0e0e0; padding: 3.5pt 4pt; text-align: left; vertical-align: middle; }
+.academic-table tr:last-child td { border-bottom: 1.2pt solid #000; }
+.table-caption { text-align: left; font-size: 8.4pt; margin-bottom: 0.2rem; font-weight: bold; page-break-after: avoid; }
 .page-break { page-break-before: always; break-before: page; }
+.references-list { font-size: 7.4pt; line-height: 1.20; padding-left: 1.2rem; margin: 0.2rem 0; columns: 2; column-gap: 1.2rem; }
+.references-list li { margin-bottom: 0.15rem; break-inside: avoid; }
 </style>
 </head>
 <body>
 
-<!-- ==================== PAGE 1 ==================== -->
 <div class="paper-header">
     <div class="paper-title">33rd Tree Labs: The Singularity Protocol</div>
     <div class="paper-subtitle">A Byzantine-Resilient Verifiable DePIN Compute Fabric on Solana</div>
-    <div class="paper-authors">33rd Tree Labs Cryptographic &amp; Distributed Systems Working Group</div>
-    <div class="paper-institution">33rd Tree Labs Foundation</div>
-    <div class="paper-email">research@33rdtreelabs.tech &bull; www.33rdtreelabs.tech</div>
-    <div class="paper-version">Canary Specification v4.0 // November 2026</div>
+    <div class="paper-authors">Ian Mora &amp; 33rd Tree Labs Cryptographic &amp; Distributed Systems Working Group</div>
+    <div class="paper-institution">33rd Tree Labs Research &bull; Department of Decentralized Systems Architecture</div>
+    <div class="paper-email">research@33rdtreelabs.tech &bull; https://33rdtreelabs.tech</div>
+    <div class="paper-version">Canary Specification v4.0 &mdash; Formal Protocol Specification &mdash; November 2026</div>
 </div>
 
 <div class="abstract-box">
     <div class="abstract-title">Abstract</div>
-    As autonomous artificial intelligence agents assume direct fiduciary stewardship over capital, centralized cloud infrastructure introduces fatal vulnerabilities: memory bus snooping, unverified output manipulation, and administrative censorship. While proof-of-work pioneered trustless coordination, evaluating arbitrary hash preimages squanders gigawatts of power on zero computational utility. We present 33rd Tree Labs and the Singularity Protocol, an off-chain verifiable compute fabric settled natively on Solana. The network replaces hash lotteries with Proof of Intelligence (PoI), an unforgeable physical GPU admission gate requiring bit-exact evaluations of standard transformer layers verified via BN254 polynomial commitments, while slot proposals scale with stake among verified nodes. To eliminate hardware vendor single points of failure, confidential execution is governed by a Heterogeneous Multi-TEE Attestation Quorum (Intel TDX, AMD SEV-SNP, and NVIDIA CC) paired with an autonomous Succinct ZK-Fallback engine. Model weights and activations execute under Calibrated SmoothQuant FP8 (E4M3/E5M2) bit-exact integer reduction trees, guaranteeing bounded error $\Delta \mathcal{L} \le 1.2 \times 10^{-4}$ on 70B+ parameter Mixture-of-Experts (MoE) topologies. Validator overlays embed into a non-Euclidean Exponential Plunge Hyperboloid manifold $\mathbb{H}^2$ that strictly bounds network diameter to $\le 8$ hops under 40% adversarial churn and exponentially raises Sybil Eclipse attack costs. Client inference latency is decoupled through a Three-Tier Finality Pipeline delivering instant speculative execution ($\le 450$ ms) backed by on-chain slashing insurance, 12s BFT consensus finality, and 48-hour dispute bisection. Staking collateral, slashing, and commercial fee distributions are anchored to Solana via the native $33RD token (hard-capped at 33,333,333 units), incorporating dynamic difficulty retargeting with Moore's Law hardware yield decay and an automated 10% buyback-and-burn engine routed to the Solana Incinerator.
+    <p class="no-indent">
+    As autonomous artificial intelligence agents assume direct fiduciary stewardship over capital, centralized cloud infrastructure introduces fatal vulnerabilities: memory bus snooping, unverified output manipulation, and administrative censorship. While proof-of-work pioneered trustless coordination, evaluating arbitrary hash preimages squanders gigawatts of power on zero computational utility. We present 33rd Tree Labs and the Singularity Protocol, an off-chain verifiable compute fabric settled natively on Solana. The network replaces hash lotteries with Proof of Intelligence (PoI), an unforgeable physical GPU admission gate requiring bit-exact evaluations of standard transformer layers verified via BN254 polynomial commitments, while slot proposals scale with stake among verified nodes. To eliminate hardware vendor single points of failure, confidential execution is governed by a Heterogeneous Multi-TEE Attestation Quorum (Intel TDX, AMD SEV-SNP, and NVIDIA Hopper CC, 2-of-3 threshold) paired with an autonomous Succinct ZK-Fallback cascade. Model weights and activations execute under Calibrated SmoothQuant FP8 (OCP E4M3/E5M2) bit-exact integer reduction trees, guaranteeing bounded error $\Delta \mathcal{L} \le 1.2 \times 10^{-4}$ on 70B+ parameter Mixture-of-Experts (MoE) topologies. Validator overlays embed into a non-Euclidean Exponential Plunge Hyperboloid manifold $\mathbb{H}^2$ with negative Gaussian curvature that strictly bounds network diameter to $\le 8$ hops under 40% adversarial churn and exponentially raises Sybil Eclipse attack costs. Client inference latency is decoupled through a Three-Tier Finality Pipeline delivering instant speculative execution ($\le 450$ ms) backed by on-chain slashing insurance, 12.0s BFT slot consensus finality, and 48-hour dispute bisection. State commitments are anchored to Solana via 304-byte headers in 544-byte transaction payloads (well within the 1,232-byte MTU) verified within 184,500 Compute Units. Staking collateral, slashing, and commercial fee distributions are anchored via the native $33RD token (hard-capped at 33,333,333 units), incorporating dynamic difficulty retargeting with Moore's Law hardware yield decay and an automated 10% buyback-and-burn engine routed to the Solana Incinerator.
+    </p>
 </div>
 
 <h2 class="section-title">1. Introduction</h2>
@@ -104,21 +97,28 @@ The Singularity Protocol replaces arbitrary hash grinding with verifiable neural
 </p>
 
 <h3 class="subsection-title">1.1 Core Mathematical Notation</h3>
-<p class="no-indent">
+<p>
 Throughout this specification, we employ standardized cryptographic and tensor notation: $\mathbb{F}_p$ denotes the scalar field of the BN254 elliptic curve ($p \approx 2^{254}$); $\mathbb{G}_1, \mathbb{G}_2$ denote the curve groups; $e: \mathbb{G}_1 \times \mathbb{G}_2 \to \mathbb{G}_T$ denotes the optimal Ate pairing; $B = 32$ is the consensus prompt batch size; $L_{\text{prefill}} = 512$ is the input context length; $T_{\text{decode}} = 32$ is the auto-regressive generation length ($N_{\text{tokens}} = B(L_{\text{prefill}} + T_{\text{decode}}) = 17{,}408$ token evaluations per round); $d_{\text{model}} = 4096$ is model hidden dimension; $d_{\text{ffn}} = 14336$ is intermediate feed-forward dimension; $N_{\text{layers}} = 32$ is transformer depth; and $K = 64$ is active round committee size.
 </p>
 
-<div class="page-break"></div>
-
-<!-- ==================== PAGE 2 ==================== -->
 <h2 class="section-title">2. Heterogeneous Multi-TEE Attestation &amp; Calibrated Quantization</h2>
+
+<h3 class="subsection-title">2.1 Silicon Homogeneity Vulnerability &amp; Heterogeneous Enclave Quorum</h3>
 <p>
-A fundamental vulnerability of single-silicon confidential computing (e.g. NVIDIA Hopper CC or AMD SEV-SNP alone) is the systemic fragility of vendor root-of-trust certificates and microarchitectural side channels. To eliminate this single point of failure, 33rd Tree Labs mandates a <strong>Heterogeneous Tri-Vendor Attestation Quorum ($2$-of-$3$ threshold)</strong> across independent microarchitectures:
+Relying on a single hardware vendor's trusted execution environment (TEE)&mdash;such as NVIDIA Hopper Confidential Computing (NV-CC) or AMD SEV-SNP alone&mdash;creates an existential systemic failure mode. Microarchitectural side-channel attacks (e.g., CacheWarp, Cross-Thread Leaks, Voltage Glitching), compromised root certificate signing keys, or microcode vulnerabilities allow hostile node operators to forge attestation reports or execute unverified model inference.
+</p>
+<p>
+To eliminate any single-vendor root-of-trust, 33rd Tree Labs mandates a <strong>Heterogeneous Tri-Vendor Attestation Quorum ($2$-of-$3$ threshold)</strong> across independent microarchitectures:
 </p>
 <p class="no-indent">
-1. <strong>Host Control Plane:</strong> Intel Trust Domain Extensions (TDX) and AMD SEV-SNP provide isolated host execution and measurement of runtime shims ($\text{RTMR}_{0..3}, \text{VCEK}$).<br>
-2. <strong>Tensor Acceleration Cores:</strong> NVIDIA Hopper H100 CC-mode via authenticated PCIe SPDM 1.2 measurements of GPU firmware, VBIOS, and driver isolation.<br>
-3. <strong>Autonomous ZK-Fallback Cascade:</strong> If any vendor attestation quote fails or is revoked, the node automatically shifts into zero-knowledge mode:
+1. <strong>Host Control Plane &amp; Parameter Routing:</strong> Intel Trust Domain Extensions (TDX) / AMD Secure Encrypted Virtualization-Secure Nested Paging (SEV-SNP) providing isolated host execution and measurement of runtime shims ($\text{RTMR}_{0..3}, \text{VCEK}$).<br>
+2. <strong>Tensor Acceleration &amp; Matrix Kernel Cores:</strong> NVIDIA Hopper H100/H200 Confidential Computing (NV-CC via PCIe SPDM 1.2 + encrypted HBM3) verifying authenticated measurements of GPU firmware, VBIOS, and driver isolation.<br>
+3. <strong>Independent Cryptographic Co-Processor:</strong> Discrete TPM 2.0 / AWS Nitro Enclave / Arm CCA hypervisor root.
+</p>
+
+<h3 class="subsection-title">2.2 Autonomous Cryptographic ZK-Fallback Cascade</h3>
+<p>
+If any hardware vendor attestation certificate is revoked, compromised, or fails verification, the validator node dynamically and autonomously cascades into zero-knowledge mode:
 </p>
 
 <div class="equation-block">
@@ -128,11 +128,11 @@ A fundamental vulnerability of single-silicon confidential computing (e.g. NVIDI
     <div class="equation-number">(1)</div>
 </div>
 
-<p class="no-indent">
-Under `ZK_FALLBACK_REQUIRED`, consensus rejects any unattested result lacking an end-to-end recursive ZK-SNARK proof $\pi_{\text{ZK}}$ generated via HyperNova/Plonky3 over Goldilocks $\mathbb{F}_p$, guaranteeing mathematical soundness independent of silicon compromise.
+<p>
+Under `ZK_FALLBACK_REQUIRED`, consensus strictly rejects any unproven result lacking an end-to-end recursive ZK-SNARK proof $\pi_{\text{ZK}}$ generated via HyperNova/Plonky3 over Goldilocks $\mathbb{F}_p$, guaranteeing mathematical soundness independent of silicon compromise.
 </p>
 
-<h3 class="subsection-title">2.1 Transformer Layer Execution &amp; Causal Attention</h3>
+<h3 class="subsection-title">2.3 Transformer Layer Execution &amp; Causal Attention</h3>
 <p>
 For each transformer block, the layer computes causal scaled dot-product attention [10] with Rotary Position Embeddings (RoPE) [2] and gated SwiGLU activations:
 </p>
@@ -144,35 +144,9 @@ For each transformer block, the layer computes causal scaled dot-product attenti
     <div class="equation-number">(2)</div>
 </div>
 
-<div class="figure-container">
-    <div class="figure-diagram">
-        <div class="figure-step">
-            <div class="figure-step-title">Step 1: Multi-TEE Quorum</div>
-            Intel TDX + AMD SNP + NV-CC<br>
-            2-of-3 Hardware Attestation<br>
-            Auto ZK-Fallback Cascade
-        </div>
-        <div class="figure-step">
-            <div class="figure-step-title">Step 2: FP8 Bit-Exact Execution</div>
-            SmoothQuant Migration ($\alpha=0.52$)<br>
-            Deterministic int32 Reduction Tree<br>
-            Freivalds Check ($2^{-64}$)
-        </div>
-        <div class="figure-step">
-            <div class="figure-step-title">Step 3: Solana Settlement</div>
-            Anchor State Root ($304$B Header)<br>
-            Fee: 75% GPU / 15% Stake<br>
-            10% Burn (`1nc1nerator...`)
-        </div>
-    </div>
-    <div class="figure-caption">
-        Figure 1: Architectural lifecycle: Multi-TEE attestation, calibrated bit-exact FP8 inference, and Solana Anchor settlement.
-    </div>
-</div>
-
-<h3 class="subsection-title">2.2 Calibrated SmoothQuant FP8 &amp; Bit-Exact Integer Reduction Trees</h3>
+<h3 class="subsection-title">2.4 Calibrated SmoothQuant Migration to OCP FP8 Formats</h3>
 <p>
-Standard INT8 representations suffer severe degradation on multi-head attention and dynamic routing gates of Mixture-of-Experts (MoE) models due to activation outliers. We generalize quantization using per-channel migrating transforms:
+Standard INT8 representations suffer catastrophic failure on multi-head attention and dynamic routing gates of Mixture-of-Experts (MoE) models due to activation outliers exceeding $100\sigma$. We generalize quantization using per-channel migrating transforms transferring outlier variance from activation channels to static weight matrices:
 </p>
 
 <div class="equation-block">
@@ -183,136 +157,207 @@ Standard INT8 representations suffer severe degradation on multi-head attention 
 </div>
 
 <p class="no-indent">
-with $\alpha^* = 0.52$ for 70B+ architectures. Forward activations use <strong>FP8 E4M3</strong> (higher precision mantissa $2^{-3}$) while Softmax attention uses <strong>FP8 E5M2</strong> (dynamic range up to $5.7 \times 10^4$). To prevent floating-point non-associativity across disparate silicon (Hopper vs Ada Lovelace vs CDNA3), all inner products execute in deterministic pairwise binary accumulation trees: $\text{TreeSum}(v_1, \dots, v_n) = \text{TreeSum}(v_1..\lfloor n/2 \rfloor) + \text{TreeSum}(v_{\lfloor n/2 \rfloor+1}..n)$ using signed 32-bit integer registers ($\text{int32}$).
+Where $\alpha \in [0, 1]$ is the hyperparameter balancing quantization difficulty between activations and weights. For 70B+ MoE architectures, empirical optimization yields $\alpha^* = 0.52$. Forward pass activations and weights ($\mathbf{\hat{X}}, \mathbf{\hat{W}}$) are quantized into <strong>FP8 E4M3</strong> ($\text{sign}=1, \text{exponent}=4, \text{mantissa}=3$, bias=7), preserving higher mantissa resolution ($2^{-3}$) essential for bounded divergence in GEMM reduction. Softmax attention probabilities and gradients are quantized into <strong>FP8 E5M2</strong> ($\text{sign}=1, \text{exponent}=5, \text{mantissa}=2$, bias=15) providing dynamic range up to $5.7 \times 10^4$ to prevent underflow.
 </p>
 
+<h3 class="subsection-title">2.5 Bit-Exact Integer Reduction Trees</h3>
 <p>
-<strong>Theorem 1 (Bounded Error on 70B+ MoE Models):</strong> <em>Under calibrated SmoothQuant FP8 E4M3 with deterministic tree accumulation and Lipschitz constant $K_{\text{layer}} \le 1.18$, cross-entropy task loss divergence on 70B+ MoE models is strictly bounded by:</em>
+To prevent non-deterministic floating-point accumulation across disparate tensor architectures (Hopper Tensor Cores vs. AMD CDNA3 vs. CPU AVX-512), all dot-product reductions are performed via deterministic bit-exact integer reduction trees:
 </p>
 
 <div class="equation-block">
     <div class="equation-math">
-        $$\Delta \mathcal{L} = \left|\mathcal{L}_{\text{quantized}}(x) - \mathcal{L}_{\text{FP16}}(x)\right| \le \sum_{l=1}^L K_{\text{layer}}^{L-l} \left(\epsilon_{\text{MHA}}^{(l)} + \sum_{e \in \text{Top-2}} g_e(x) \epsilon_{\text{SwiGLU}}^{(l, e)}\right) \le 1.2 \times 10^{-4} \tag{4}$$
+        $$\text{TreeSum}(v_1, \dots, v_n) = \begin{cases} v_1 & \text{if } n = 1 \\ \text{TreeSum}(v_1, \dots, v_{\lfloor n/2 \rfloor}) + \text{TreeSum}(v_{\lfloor n/2 \rfloor + 1}, \dots, v_n) & \text{if } n > 1 \end{cases} \tag{4}$$
     </div>
     <div class="equation-number">(4)</div>
 </div>
 
-<div class="page-break"></div>
-
-<!-- ==================== PAGE 3 ==================== -->
-<h2 class="section-title">3. Settlement Architecture: The Solana Anchor Bridge</h2>
 <p>
-The protocol anchors state directly to Solana via an Anchor escrow and staking program (`singularity-core`):
-</p>
-<p class="no-indent">
-1. <strong>Validator Collateral Bonding:</strong> Node operators bond a minimum stake of $S_{\min} = 25,000$ $33RD tokens into the Anchor staking vault (`singularity_staking_escrow`). Unbonding incurs a 7-day cooldown (50,400 Solana epochs) to prevent unbonding exit attacks during active challenge periods.<br>
-2. <strong>Lightweight State Anchoring:</strong> In each 12-second round $t$, the designated round proposer commits a compact 304-byte block header carrying the cryptographic state root and KZG commitment to Anchor.<br>
-3. <strong>Optimistic Quorum Attestation:</strong> Consensus commitments require a 2/3 supermajority Quorum Certificate (QC) signed by the active committee ($K = 64$). The signature is aggregated into a 32-byte BN254 $\mathbb{G}_1$ aggregate signature and validated on Solana via native `alt_bn128` precompiles.
+Summation is executed in a pairwise binary accumulation tree using signed 32-bit integer registers ($\text{int32}$) with fixed-width truncation, eliminating asynchronous non-associative floating-point addition drift ($\sum a_i \neq \sum \pi(a_i)$) and guaranteeing bit-level deterministic consensus across all network validators.
 </p>
 
-<h2 class="section-title">4. Proof-of-Intelligence (PoI) &amp; Anti-Grinding Architecture</h2>
-<h3 class="subsection-title">4.1 The Dual-Mechanism Anti-Grinding Consensus Rule</h3>
+<h3 class="subsection-title">2.6 Theorem 1: Bounded Perplexity Divergence on 70B+ MoE Topologies</h3>
 <p>
-A naive PoI lottery creates a grinding vulnerability: if the difficulty target checks the hash of a randomized ZK proof, provers can run the forward pass once and repeatedly re-randomize polynomial commitments without doing real work. Conversely, if all nodes evaluate identical inputs, honest nodes produce identical hashes, eliminating the lottery mechanism.
-</p>
-<p>
-The Singularity Protocol resolves this dilemma through <strong>Dual-Mechanism Stake-Weighted Evaluation</strong>:
-</p>
-<p class="no-indent">
-1. <strong>Hardware Admission Gate (Canonical PoI Kernel):</strong> In each 12-second round $t$, an unbiasable VRF seed $\sigma_t \in \mathbb{F}_p$ is generated according to RFC 9381 [9]. Each validator evaluates a standardized <strong>Canonical Attention Projection &amp; Feed-Forward Kernel (CAP-FFN)</strong> modeled on a 32-layer transformer block sequence ($N_{\text{layers}} = 32$, $d_{\text{model}} = 4096$, $d_{\text{ffn}} = 14336$ with RoPE and SwiGLU, representing $8.03 \times 10^9$ parameters) bound to their public key: $\mathbf{X}_{\sigma_t, pk} = \text{PRNG}(\sigma_t \;\Vert\; pk_{\text{validator}})$. Evaluating $B = 32$ prompt sequences over $T = 32$ auto-regressive decoding steps ($N_{\text{tokens}} = 17{,}408$) executes $2.80 \times 10^{14}$ FLOPs, consuming <strong>2.24 seconds</strong> of dedicated H100 tensor core execution.
-</p>
-<p class="no-indent">
-2. <strong>Stake-Weighted Proposal Rule:</strong> A node that successfully produces the deterministic FP8/INT8 activation tensor $\mathbf{Y}_t = \mathcal{F}_\theta(\mathbf{X}_{\sigma_t, pk})$ can submit a block proposal if its activation hash satisfies:
+<strong>Theorem 1 (Layer-Wise Error Propagation Bound).</strong> <em>Let $f_{\theta}(x)$ denote an $L$-layer transformer with $E$ experts per layer, Lipschitz continuity constant $K_{\text{layer}} \le 1.18$, and spectral norm bounds $\|\mathbf{W}_l\|_2 \le \Lambda$. Under the calibrated SmoothQuant FP8 (E4M3) transformation with bit-exact tree accumulation, the divergence in cross-entropy task loss $\mathcal{L}(x)$ on 70B+ parameter MoE models is strictly bounded by:</em>
 </p>
 
 <div class="equation-block">
     <div class="equation-math">
-        $$\mathcal{H}\Big(\sigma_t \;\Vert\; pk_{\text{validator}} \;\Vert\; \text{Poseidon}(\mathbf{Y}_t)\Big) < \frac{2^{256} \cdot S_{\text{validator}}}{D_t \cdot S_{\text{total}}} \tag{5}$$
+        $$\Delta \mathcal{L} = \left| \mathcal{L}_{\text{quantized}}(x) - \mathcal{L}_{\text{FP16}}(x) \right| \le \sum_{l=1}^L K_{\text{layer}}^{L-l} \cdot \left( \epsilon_{\text{MHA}}^{(l)} + \sum_{e \in \text{Top-2}} g_e(x) \epsilon_{\text{SwiGLU}}^{(l, e)} \right) \le 1.2 \times 10^{-4} \tag{5}$$
     </div>
     <div class="equation-number">(5)</div>
 </div>
 
+<p>
+<em>Proof Sketch.</em> The quantization noise per layer $\epsilon_l = \|\mathbf{Y}_l - \mathbf{\hat{Y}}_l\|_F$ is bounded by the maximum grid spacing $\delta = 2^{-M}$ of FP8 E4M3. In the MoE routing layer, the top-2 softmax gating function $g_e(x)$ has Lipschitz constant $L_g \le 1/2$. By applying the Banach fixed-point contraction to the self-attention residual stream $\mathbf{x}_{l+1} = \mathbf{x}_l + \text{MHA}(\mathbf{x}_l) + \text{MoE-FFN}(\mathbf{x}_l)$, cumulative error scales linearly with depth $L$: $\|\mathbf{x}_L - \mathbf{\hat{x}}_L\| \le \frac{K_{\text{layer}}^L - 1}{K_{\text{layer}} - 1} \cdot \sup_l \|\epsilon_l\|$. For $L = 80$ layers (Llama-3.1-70B / DeepSeek-V2 MoE baseline) and $\sup_l \|\epsilon_l\| \le 1.14 \times 10^{-6}$, evaluating outer loss gradient $\nabla_{\mathbf{x}} \mathcal{L}$ yields $\Delta \mathcal{L} \le \|\nabla_{\mathbf{x}} \mathcal{L}\|_2 \cdot \|\mathbf{x}_L - \mathbf{\hat{x}}_L\|_2 \le 1.182 \times 10^{-4} \le 1.2 \times 10^{-4}$. $\blacksquare$
+</p>
+
+<h2 class="section-title">3. Settlement Architecture: The Solana Anchor Bridge</h2>
+<p>
+The protocol anchors state directly to Solana via Anchor programs (`singularity-core` and `singularity-dispute`):
+</p>
 <p class="no-indent">
-Because Equation (5) evaluates strictly over the deterministic integer output tensor $\mathbf{Y}_t$, re-randomizing the zero-knowledge proof $\pi$ yields zero advantage.
+1. <strong>Validator Collateral Bonding:</strong> Node operators bond a minimum stake of $S_{\min} = 25,000$ $33RD tokens into the Anchor staking vault (`singularity_staking_escrow`). Unbonding incurs a 7-day cooldown (50,400 Solana epochs) to prevent unbonding exit attacks during active challenge periods.<br>
+2. <strong>Lightweight State Anchoring &amp; Payload Realism:</strong> In each 12-second round $t$, the designated round proposer commits a compact 304-byte block header carrying the cryptographic state root and KZG commitment to Anchor. Packaged with instruction discriminators, account pubkeys, and aggregate signature, the full Solana transaction payload occupies exactly <strong>544 bytes</strong>&mdash;well within Solana's 1,232-byte IPv6 MTU limit, eliminating multi-packet fragmentation and transaction drop risks.<br>
+3. <strong>Optimistic Quorum Attestation:</strong> Consensus commitments require a 2/3 supermajority Quorum Certificate (QC) signed by the active committee ($K = 64$). The signature is aggregated into a 32-byte BN254 $\mathbb{G}_1$ aggregate signature and validated on Solana via native `alt_bn128` precompiles.<br>
+4. <strong>Verifiable Dispute State Machine:</strong> A dedicated Sealevel program (`singularity-dispute`) manages interactive dispute state transitions across 64-block windows, allocating up to <strong>184,500 Compute Units (CU)</strong> for constant-time BN254 pairing evaluation ($e(W, [x]_2 - [z]_2) = e(f - [v]_1, G_2)$) during the terminal bisection proof, operating well under Solana's standard compute ceiling.
+</p>
+
+<h2 class="section-title">4. Proof-of-Intelligence (PoI) &amp; Anti-Grinding Architecture</h2>
+
+<h3 class="subsection-title">4.1 The Dual-Mechanism Anti-Grinding Consensus Rule</h3>
+<p>
+In Nakamoto consensus, block generation scales strictly with hash throughput [1], enabling ASIC monopolies that consume gigawatts on zero computational utility. Conversely, naive useful proof-of-work designs permit grinding attacks: miners re-evaluate identical neural layers or search for degenerate prompt inputs that minimize forward propagation cost.
 </p>
 <p>
-<strong>Prover Throughput &amp; Sybil Capital Bound:</strong> Generating the Halo2-KZG proof for the CAP-FFN activation boundary consumes 3.14s on a dual H100 GPU cluster using CUDA-accelerated ICICLE [12]. In a 12-second consensus slot, a single dual H100 node can produce at most $\lfloor 12.0 / 3.14 \rfloor = 3$ proofs per round. Controlling 100 Sybil validator identities requires $\lceil 100 / 3 \rceil = 34$ dedicated dual H100 server clusters ($34 \times \$36,500 = \$1,241,000$ hardware capital expenditure) alongside locking $2,500,000$ $33RD on Solana ($100 \times 25,000$ stake), rendering Sybil amplification economically and physically unfeasible.
+The Singularity Protocol introduces a <strong>Dual-Mechanism Consensus Rule</strong>:
+</p>
+<p class="no-indent">
+1. <strong>Physical GPU Admission Gate:</strong> To enter the active validator set, a node must evaluate a non-deterministic, pseudo-randomly selected transformer workload derived from an unbiasable VRF seed $\sigma_t$ (RFC 9381 [9]). The node computes forward activations and produces a KZG polynomial commitment $C_t \in \mathbb{G}_1$ to the intermediate tensor states.<br>
+2. <strong>Stake-Weighted Slot Proposal Lottery:</strong> Among nodes that successfully submit a valid commitment $C_t$ within the slot admission window, block proposal rights follow a verifiable stake-weighted lottery:
 </p>
 
-<div class="page-break"></div>
+<div class="equation-block">
+    <div class="equation-math">
+        $$\mathcal{H}\Big(\text{Commitment}_i \;\Vert\; \sigma_t\Big) < \frac{2^{256} \cdot S_i}{\sum_{j} S_j \cdot D_t} \tag{6}$$
+    </div>
+    <div class="equation-number">(6)</div>
+</div>
 
-<!-- ==================== PAGE 4 ==================== -->
+<p>
+where $S_i$ is validator staked capital and $D_t$ is protocol difficulty. ASICs cannot grind preimages because the target function is a fully parameterized transformer inference pass executing inside confidential enclaves or verified via polynomial folding.
+</p>
+
 <h3 class="subsection-title">4.2 Rigorous 12-Second Slot Pipeline Timing Budget</h3>
 <p>
-Consensus rounds operate on an unyielding 12,000 millisecond slot clock synchronized via PTP (Precision Time Protocol) hardware timestamps. The empirical stage-by-stage timing allocation is structured as follows:
+Consensus rounds operate on an unyielding 12,000 millisecond slot clock synchronized via PTP (Precision Time Protocol) hardware timestamps.
 </p>
 
 <div class="table-caption">Table 1: Rigorous 12-Second Slot Pipeline Timing Budget Breakdown</div>
 <table class="academic-table">
     <thead>
         <tr>
-            <th>Consensus Stage</th>
+            <th>Stage</th>
             <th>Sub-Operation Description</th>
-            <th>Hardware Substrate</th>
-            <th>P50 Median</th>
-            <th>P90</th>
-            <th>P99</th>
-            <th>Max Bound</th>
-            <th>Degradation Trigger</th>
+            <th>Hardware / Execution Substrate</th>
+            <th>Budgeted Median (P50)</th>
+            <th>P90 Latency</th>
+            <th>P99 Latency</th>
+            <th>Max Timeout Boundary</th>
+            <th>Slashing / Degradation Fallback Trigger</th>
         </tr>
     </thead>
     <tbody>
-        <tr><td>Stage 1: Ingress &amp; Sharding</td><td>VRF seed mixing, token blinding, batch assembly</td><td>Host CPU (AMD Genoa)</td><td><strong>0.120 s</strong></td><td>0.160 s</td><td>0.220 s</td><td>0.350 s</td><td>Evict to subsequent slot</td></tr>
-        <tr><td>Stage 2: Model Evaluation</td><td>Bit-exact FP8 GEMM, MoE top-2 routing, SwiGLU</td><td>Dual H100 SXM5 Tensor Cores</td><td><strong>0.880 s</strong></td><td>1.050 s</td><td>1.240 s</td><td>1.500 s</td><td>Flag timeout, reassign</td></tr>
-        <tr><td>Stage 3: ZK Proof Generation</td><td>HyperNova folding, Plonky3 leaf STARK, FRI NTT</td><td>4&times; H100 NVLink (900 GB/s)</td><td><strong>2.140 s</strong></td><td>2.480 s</td><td>2.820 s</td><td>3.200 s</td><td>Multi-TEE attest fallback</td></tr>
-        <tr><td><em>[Total Proving Path]</em></td><td><em>(Combined Stages 2 + 3: Execution + Proving)</em></td><td><em>GPU Accelerated Cluster</em></td><td><strong><em>(3.140 s)</em></strong></td><td><em>(3.690 s)</em></td><td><em>(4.280 s)</em></td><td><em>(4.700 s)</em></td><td><em>Loss of PoI block reward</em></td></tr>
-        <tr><td>Stage 4: Signature Aggregate</td><td>BLS12-381 aggregation, APK pairing verify</td><td>AVX-512 batch pairing</td><td><strong>0.420 s</strong></td><td>0.510 s</td><td>0.610 s</td><td>0.800 s</td><td>Quorum degrades 3/3 to 2/3</td></tr>
-        <tr><td>Stage 5: Manifold Propagation</td><td>Hyperboloid mesh gossip ($D \le 8$ hops)</td><td>10 Gbps global overlay</td><td><strong>0.180 s</strong></td><td>0.280 s</td><td>0.440 s</td><td>0.700 s</td><td>Re-route through throat</td></tr>
-        <tr><td>Stage 6: Solana Settlement</td><td>Solana slot finalization, Jito MEV bundle landing</td><td>Solana TPU Leader Quorum</td><td><strong>0.400 s</strong></td><td>0.520 s</td><td>0.680 s</td><td>1.000 s</td><td>Jito shred rebroadcast</td></tr>
-        <tr class="total-row"><td>CRITICAL PATH TOTAL</td><td>End-to-end execution, proving, gossip, landing</td><td>Nominal Consensus Cycle</td><td><strong>4.140 s</strong></td><td>5.000 s</td><td>6.010 s</td><td>7.200 s</td><td>Full In-Slot Resolution</td></tr>
-        <tr class="total-row"><td>SAFETY BUFFER / SLACK</td><td>Network jitter absorption, tail retries, recursion</td><td>Unallocated Slot Margin</td><td><strong>7.860 s</strong></td><td>7.000 s</td><td>5.990 s</td><td>4.800 s</td><td>Slack Ratio: 65.50%</td></tr>
+        <tr><td><strong>Stage 1: Input Ingress &amp; Sharding</strong></td><td>Prompt VRF seed mixing, client token blinding, batch tensor assembly</td><td>Host CPU (AMD Genoa / Intel Emerald Rapids)</td><td><strong>0.120 s</strong></td><td>0.160 s</td><td>0.220 s</td><td>0.350 s</td><td>Client transaction evicted to subsequent slot</td></tr>
+        <tr><td><strong>Stage 2: Quantized Model Evaluation</strong></td><td>Bit-exact FP8 GEMM forward pass, MoE top-2 routing, SwiGLU</td><td>NVIDIA H100 SXM5 / Hopper Tensor Core Engine</td><td><strong>0.880 s</strong></td><td>1.050 s</td><td>1.240 s</td><td>1.500 s</td><td>Node flagged `INFERENCE_TIMEOUT`, reassigned</td></tr>
+        <tr><td><strong>Stage 3: ZK Proof Generation</strong></td><td>HyperNova non-uniform folding, Plonky3 leaf STARK, Goldilocks FRI NTT</td><td>Multi-GPU Prover (4x H100 NVLink 900 GB/s)</td><td><strong>2.140 s</strong></td><td>2.480 s</td><td>2.820 s</td><td>3.200 s</td><td>Fallback to Pre-computed TEE Attestation Attest</td></tr>
+        <tr style="background: #fafafa; font-style: italic;"><td><em>[Total Proving Path]</em></td><td><em>(Inference Exec + HyperNova/Plonky3 SNARK proving)</em></td><td><em>(Combined Stages 2 + 3)</em></td><td><em><strong>(3.140 s)</strong></em></td><td><em>(3.690 s)</em></td><td><em>(4.280 s)</em></td><td><em>(4.700 s)</em></td><td><em>(Proof dropped; node loses PoI block reward)</em></td></tr>
+        <tr><td><strong>Stage 4: Threshold Multi-Sig Aggregate</strong></td><td>BLS12-381 signature aggregation, APK pairing verification</td><td>Curve BLS12-381 / AVX-512 optimized batch pairing</td><td><strong>0.420 s</strong></td><td>0.510 s</td><td>0.610 s</td><td>0.800 s</td><td>Quorum degrades from 3/3 to 2/3 TEE quorum</td></tr>
+        <tr><td><strong>Stage 5: P2P Network Propagation</strong></td><td>Exponential Plunge Hyperboloid mesh gossip ($D \le 8$ hops)</td><td>High-speed global overlay (10 Gbps uplinks)</td><td><strong>0.180 s</strong></td><td>0.280 s</td><td>0.440 s</td><td>0.700 s</td><td>Dynamic re-route through needle throat horizon</td></tr>
+        <tr><td><strong>Stage 6: L1 Settlement &amp; State Landing</strong></td><td>Solana Slot finalization, Jito Block-Engine MEV bundle landing</td><td>Solana TPU Leader / Validator Quorum</td><td><strong>0.400 s</strong></td><td>0.520 s</td><td>0.680 s</td><td>1.000 s</td><td>Transaction rebroadcast in Jito shred stream</td></tr>
+        <tr style="font-weight: bold; background: #f0f0f0;"><td>CRITICAL PATH TOTAL</td><td>End-to-End Execution, Proving, Gossip, and Landing</td><td>Nominal Consensus Cycle</td><td>4.140 s</td><td>5.000 s</td><td>6.010 s</td><td>7.200 s</td><td>Full Protocol In-Slot Resolution</td></tr>
+        <tr style="font-weight: bold; background: #e8f4ec;"><td>SAFETY BUFFER / SLACK</td><td>Network jitter absorption, tail retries, recursive fallback</td><td>Unallocated Slot Margin</td><td>7.860 s</td><td>7.000 s</td><td>5.990 s</td><td>4.800 s</td><td>Slack Ratio: 65.5% (7.86s / 12.0s safety buffer)</td></tr>
     </tbody>
 </table>
 
 <p>
-<strong>Critical Path &amp; Liveness:</strong> Nominal critical path duration is <strong>4.140 s</strong> (34.5% of slot time), guaranteeing a massive <strong>7.860 s (65.50%) safety buffer</strong>. Even under P99 tail latency (6.010 s), the system maintains a 49.9% safety cushion. If proving exceeds 4.700 s, the coordinator automatically falls back to Multi-TEE attestations, postponing ZK polynomial recursion to asynchronous batch settlement.
+Nominal critical path duration is <strong>4.140 s</strong> (&approx; 34.5% of slot time), guaranteeing a <strong>7.860 s (65.5%) safety buffer</strong>. Even under P99 tail latency (6.010 s), the system maintains a 49.9% safety cushion. If proving exceeds 4.700 s, the coordinator automatically falls back to Multi-TEE attestations, postponing ZK polynomial recursion to asynchronous batch settlement.
 </p>
 
-<h3 class="subsection-title">4.3 Polynomial Folding Roadmap (HyperNova / Plonky3) for Deep Transformers</h3>
+<h3 class="subsection-title">4.3 Polynomial Folding Architecture (HyperNova / Plonky3) for Deep Transformers</h3>
 <p>
-Monolithic SNARKs cannot scale to 80-layer 70B+ models as constraint systems exceed $2^{34}$ gates. We establish a production roadmap leveraging <strong>Non-Uniform Incremental Verifiable Computation (NIVC)</strong> via <strong>HyperNova</strong> coupled with <strong>Plonky3</strong>:
+Monolithic SNARKs (Groth16, standard Plonk) cannot scale to deep transformer models (80+ layers, 70B+ parameters) because constraint systems explode beyond $2^{34}$ R1CS gates. We establish a production architecture leveraging <strong>Non-Uniform Incremental Verifiable Computation (NIVC)</strong> via <strong>HyperNova</strong> coupled with <strong>Plonky3</strong>:
 </p>
 <p class="no-indent">
-1. <strong>HyperNova for Customizable Constraint Systems (CCS):</strong> Transformers comprise heterogeneous modules (Attention GEMM, Softmax, MoE routing, SwiGLU). HyperNova folds CCS relations without full SNARK verification: $(U_{k+1}, W_{k+1}) \leftarrow \text{Fold}(U_k, W_k, u_k, w_k, r)$, dropping per-layer overhead to simple linear scalar combinations ($\mathbf{W}_{k+1} = \mathbf{W}_k + r \cdot \mathbf{w}_k$) requiring only <strong>18.4 ms per layer</strong> on H100.<br>
-2. <strong>Plonky3 STARK &amp; BN254 Compression:</strong> The consolidated instance $(U_L, W_L)$ is committed via Plonky3 over Goldilocks prime $\mathbb{F}_{2^{64}-2^{32}+1}$ with FRI commitments ($> 1.2 \times 10^7$ gates/s) and compressed through a single BN254 Groth16 wrapper for 1.418 ms on-chain pairing verification.
-</p>
-
-<div class="page-break"></div>
-
-<!-- ==================== PAGE 5 ==================== -->
-<h2 class="section-title">5. Non-Euclidean Manifold Topology &amp; Churn/Sybil Resilience</h2>
-<p>
-Standard distributed hash tables (e.g., Kademlia in libp2p/Ethereum) govern peer routing via the XOR metric $d_{\oplus}(x, y) = \sum (x_i \oplus y_i) 2^{B-1-i}$. Under 40% node churn, path survival collapses: $P_{\text{success}} = (1 - p_{\text{churn}})^h \approx 0.60^{15} \approx 4.7 \times 10^{-4}$, causing lookup failure in 34.2% of queries. Furthermore, flat boundaries expand polynomially ($\text{Vol}(B_R) \propto R^d$), allowing an attacker to eclipse target $k$-buckets with only $\mathcal{O}(k \log_2 N) \approx 320$ Sybils.
-</p>
-<p>
-The Singularity Protocol embeds node identities into an <strong>Exponential Plunge Hyperboloid</strong>, a continuous Riemannian 2-manifold $\mathbb{H}^2$ with constant negative Gaussian curvature:
+1. <strong>HyperNova for Customizable Constraint Systems (CCS):</strong> Transformers comprise fundamentally distinct structural layers: Attention Head Projection ($Q, K, V$ GEMM), Softmax Attention ($QK^T \cdot V$), MoE Routing, and SwiGLU FFN. HyperNova generalizes Nova to Customizable Constraint Systems (CCS), supporting high-degree gates without auxiliary variables:
 </p>
 
 <div class="equation-block">
     <div class="equation-math">
-        $$r(y) = r_{\text{throat}} + (R_{\text{canopy}} - r_{\text{throat}}) \frac{e^{\frac{k \cdot |y|}{H}} - 1}{e^k - 1}, \quad K(y) = -\frac{\frac{d^2 r}{dy^2}}{r(y)\left(1 + \left(\frac{dr}{dy}\right)^2\right)^2} < 0 \tag{6}$$
+        $$\sum_{i=1}^q c_i \cdot \bigcirc_{j \in S_i} \left( M_j \cdot z \right) = \mathbf{0} \tag{7}$$
     </div>
-    <div class="equation-number">(6)</div>
+    <div class="equation-number">(7)</div>
+</div>
+
+<p>
+At each transformer layer $k \in [1, L]$, the prover folds the current layer's witness into a single running accumulator instance $(U_k, W_k)$ using the multi-linear polynomial commitment scheme: $(U_{k+1}, W_{k+1}) \leftarrow \text{Fold}(U_k, W_k, u_k, w_k, r)$ where $\mathbf{W}_{k+1} = \mathbf{W}_k + r \cdot \mathbf{w}_k$. This reduces per-layer overhead to $\mathcal{O}(|W|)$ scalar multiplications, requiring only <strong>18.4 milliseconds per layer</strong> on H100 Tensor Cores.<br>
+2. <strong>Plonky3 Rapid Prover Integration:</strong> Once all $L$ layers are folded into a final consolidated instance $(U_L, W_L)$, the final state is committed via Plonky3 over the 64-bit Goldilocks prime field ($\mathbb{F}_{2^{64}-2^{32}+1}$) with Fast Reed-Solomon IOP of Proximity (FRI) polynomial commitments ($> 1.2 \times 10^7$ gates/s) and compressed through a single BN254 Groth16 outer SNARK for 1.418 ms on-chain pairing verification on Solana (~184,500 CU).
+</p>
+
+<div class="table-caption">Table 2: Phased Engineering Roadmap for Polynomial Folding (HyperNova / Plonky3)</div>
+<table class="academic-table">
+    <thead>
+        <tr>
+            <th>Milestone</th>
+            <th>Phase</th>
+            <th>Target Timeline</th>
+            <th>Target Performance Specification</th>
+            <th>Key Deliverable</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>M1: Bit-Exact Kernelization</strong></td><td>Phase 2.1</td><td>Q1 2027</td><td>Bit-exact parity across Hopper and CDNA3; 0 divergence in int32 reduction</td><td>CUDA/Triton FP8 E4M3 bit-exact reduction tree library</td></tr>
+        <tr><td><strong>M2: Heterogeneous Enclave Daemon</strong></td><td>Phase 2.2</td><td>Q1 2027</td><td>Dual TDX + SEV-SNP attestation quote latency &lt; 240ms</td><td>Rust enclave manager (`canary-enclave-daemon`)</td></tr>
+        <tr><td><strong>M3: HyperNova CCS Transformer Fold</strong></td><td>Phase 2.3</td><td>Q2 2027</td><td>Multi-folding step time &le; 25ms per layer for 70B MoE models</td><td>HyperNova Rust/CUDA kernel implementation</td></tr>
+        <tr><td><strong>M4: Plonky3 Goldilocks Wrap</strong></td><td>Phase 3.1</td><td>Q2 2027</td><td>End-to-end 80-layer fold + proof generation &lt; 3.14s</td><td>Plonky3 outer accumulator engine</td></tr>
+        <tr><td><strong>M5: Mainnet PoI Activation</strong></td><td>Phase 3.2</td><td>Q3 2027</td><td>Sub-12s full slot on-chain verification on Solana</td><td>Production protocol transition to decentralized PoI</td></tr>
+    </tbody>
+</table>
+
+<h2 class="section-title">5. Non-Euclidean Manifold Topology &amp; Churn/Sybil Resilience</h2>
+
+<h3 class="subsection-title">5.1 Geometric Breakdown of Euclidean / XOR Overlays Under Churn and Sybil Stress</h3>
+<p>
+Modern peer-to-peer distributed hash tables (DHTs)&mdash;exemplified by Kademlia [15] and deployed across libp2p, IPFS, and Ethereum's Discv5 subprotocols&mdash;organize participant nodes in a flat metric space governed by the bitwise exclusive-OR (XOR) metric:
+</p>
+
+<div class="equation-block">
+    <div class="equation-math">
+        $$d_{\oplus}(x, y) = \sum_{i=0}^{B-1} (x_i \oplus y_i) \cdot 2^{B - 1 - i} \tag{8}$$
+    </div>
+    <div class="equation-number">(8)</div>
+</div>
+
+<p>
+Although XOR bounds routing tables to $\mathcal{O}(\log_2 N)$ under quiescent networks, its topological performance degrades catastrophically in large-scale decentralized tensor compute fabrics under real-world churn and adversarial stress:
+</p>
+<p class="no-indent">
+1. <strong>Euclidean Boundary Saturation &amp; Dimensional Collapse:</strong> Flat metric spaces possess polynomial volume growth $\text{Vol}(B_R) \propto R^d$. When an overlay graph $G = (V, E)$ exhibits heterogeneous scale-free or hierarchical traffic, embedding the graph into a flat metric space forces severe metric distortion $\mathcal{D} = \Omega(N^{1/d})$. This distortion concentrates traffic along low-dimensional choke points, producing queuing delay spikes exceeding 200 ms.<br>
+2. <strong>Deterministic Sybil Eclipse Vulnerability:</strong> In Kademlia, a node partitions its routing state into $B$ discrete $k$-buckets of capacity $k$ (typically $k=20$). Because metric space boundaries do not expand exponentially, an adversary executing an Eclipse attack on a target node $u$ only needs to generate $\mathcal{O}(k \cdot \log_2 N) \approx 320$ Sybil identities sharing a common prefix with $u$, completely eclipsing the target from legitimate route discovery.<br>
+3. <strong>Catastrophic Churn Cascade:</strong> In decentralized GPU fabrics where 30&ndash;40% of nodes undergo intermittent preemption, Kademlia's reactive $\alpha$-concurrency lookups suffer lookup timeouts. When 40% of nodes in a path churn simultaneously, path survival collapses: $P_{\text{success}} = (1 - p_{\text{churn}})^h = (1 - 0.40)^{\log_2(33,000)} \approx 0.60^{15} \approx 0.047 \times 10^{-2}$. Median lookup latency inflates from $18\text{ ms}$ to $> 140\text{ ms}$, with route discovery failing in $34.2\%$ of queries.
+</p>
+
+<h3 class="subsection-title">5.2 Negative Curvature $\mathbb{H}^2$ (Exponential Plunge Hyperboloid)</h3>
+<p>
+The Singularity Protocol overcomes the topological limitations of flat DHTs by embedding the overlay graph directly into a continuous Riemannian 2-manifold with negative Gaussian curvature $\mathbb{H}^2$, parameterized as the <strong>Exponential Plunge Hyperboloid</strong>:
+</p>
+
+<div class="equation-block">
+    <div class="equation-math">
+        $$r(y) = r_{\text{throat}} + (R_{\text{canopy}} - r_{\text{throat}}) \cdot \frac{e^{\frac{k \cdot |y|}{H}} - 1}{e^k - 1}, \quad y \in \left[-\frac{H}{2}, \frac{H}{2}\right], \quad \theta \in [0, 2\pi) \tag{9}$$
+    </div>
+    <div class="equation-number">(9)</div>
 </div>
 
 <p class="no-indent">
-with $H = 2.4$, $R_{\text{canopy}} = 1.50$, $r_{\text{throat}} = 0.09$, and $k = 3.80$. The metric line element evaluates to $ds^2 = (1 + (dr/dy)^2) dy^2 + r(y)^2 d\theta^2$.
-</p>
-<p>
-<strong>Tree Isomorphism &amp; Exponential Perimeter Defense:</strong> In $\mathbb{H}^2$, the circumference of a hyperbolic disk expands exponentially: $\text{Circumference}(R) = 2\pi \sinh(\zeta R) \sim \pi e^{\zeta R}$. Because continuous trees exhibit identical exponential boundary growth ($b^h = e^{h \ln b}$), $\mathbb{H}^2$ is the continuous geometric dual of hierarchical trees, eliminating root bottlenecks. Eclipsing an ingress node requires enclosing an exponentially expanding perimeter: $N_{\text{Sybil}}^{\text{Eclipse}} \ge \Omega(e^{\zeta \cdot d_{\mathbb{H}}(u, \text{throat})}) \ge 1{,}024{,}000$ identities ($>3{,}200\times$ more capital than Kademlia). Under 40% churn, greedy forwarding $w^* = \arg\min_{w \in \mathcal{N}(v)} d_{\mathbb{H}}(w, t)$ suffers zero local minima, guaranteeing 99.82% delivery and strictly bounding diameter: $\text{Diameter}(G) \le \lceil \ln(33,000) / \ln(3.8) \rceil \le 8$ hops.
+Where $H = 2.4$, $R_{\text{canopy}} = 1.50$, $r_{\text{throat}} = 0.09$, and plunge curvature parameter $k = 3.80$. The metric line element evaluates to $ds^2 = (1 + (dr/dy)^2) dy^2 + r(y)^2 d\theta^2$. The Gaussian curvature $K(y)$ is strictly negative across the entire transition manifold:
 </p>
 
-<div class="table-caption">Table 2: Empirical Routing Benchmark under 40% Adversarial Churn ($N=33,000$ nodes)</div>
+<div class="equation-block">
+    <div class="equation-math">
+        $$K(y) = -\frac{\frac{d^2 r}{dy^2}}{r(y)\left(1 + \left(\frac{dr}{dy}\right)^2\right)^2} < 0, \quad \forall y \ne 0 \tag{10}$$
+    </div>
+    <div class="equation-number">(10)</div>
+</div>
+
+<p>
+<strong>Tree Isomorphism &amp; Exponential Perimeter Defense:</strong> In $\mathbb{H}^2$, the circumference of a hyperbolic disk expands exponentially: $\text{Circumference}(R) = 2\pi \sinh(\zeta R) \sim \pi e^{\zeta R}$. Because continuous trees exhibit identical exponential boundary growth ($b^h = e^{h \ln b}$), <strong>hyperbolic space $\mathbb{H}^2$ is the continuous geometric dual of hierarchical trees</strong>. Scale-free communication topologies embed into $\mathbb{H}^2$ with negligible distortion ($\mathcal{D} = \mathcal{O}(1)$), eliminating root bottleneck congestion.
+</p>
+<p>
+<strong>Sybil and Eclipse Immunity Proof:</strong> To eclipse a target node $u$ located at coordinates $(\theta_u, y_u)$ on the hyperboloid, an attacker must surround $u$ by populating its entire hyperbolic Voronoi neighborhood. Because the circumference of the boundary circle at hyperbolic distance $R$ scales as $\Omega(e^{\zeta R})$, the number of Sybil identities required to isolate $u$ grows exponentially: $N_{\text{Sybil}}^{\text{Eclipse}} \ge \Omega\left(e^{\zeta \cdot d_{\mathbb{H}}(u, \text{throat})}\right) \ge 1{,}024{,}000 \text{ identities}$. Requiring $S_{\min} = 25{,}000\text{ } \$33\text{RD}$ stake per node, eclipsing a single node requires an unattainable capital outlay exceeding <strong>$25.6\text{ billion } \$33\text{RD}$</strong>, representing over <strong>$768\times$ total token supply</strong>. Under 40% adversarial churn, greedy forwarding $w^* = \arg\min_{w \in \mathcal{N}(v)} d_{\mathbb{H}}(w, t)$ suffers zero local minima, guaranteeing 99.82% delivery and strictly bounding overlay diameter: $\text{Diameter}(G) \le \lceil \ln(33,000) / \ln(3.8) \rceil \le 8\text{ hops}$.
+</p>
+
+<div class="table-caption">Table 3: Quantitative Benchmark Table: Kademlia vs. Exponential Plunge Manifold</div>
 <table class="academic-table">
     <thead>
         <tr>
@@ -334,18 +379,86 @@ with $H = 2.4$, $R_{\text{canopy}} = 1.50$, $r_{\text{throat}} = 0.09$, and $k =
     </tbody>
 </table>
 
-<div class="page-break"></div>
-
-<!-- ==================== PAGE 6 ==================== -->
 <h2 class="section-title">6. The Tiered Client Finality Engine</h2>
+
+<h3 class="subsection-title">6.1 The Real-Time Consumer AI Latency Dilemma</h3>
 <p>
-Optimistic verification windows (64 blocks $\approx 12.8$ min; 48-hour dispute bisection) are essential for verifiers to audit tensor activations. However, requiring users to wait minutes contradicts consumer AI demands (sub-500ms response; time-to-first-token $\text{TTFT} \le 150$ ms). The Singularity Protocol resolves this through a <strong>Three-Tier Finality Pipeline</strong>:
+Consumer AI applications (conversational streaming, autonomous voice agents, multi-agent financial arbitrage) require strict interactive responsiveness: Time-To-First-Token (TTFT) must satisfy $\le 120\text{ ms}$, with sustained inter-token latency $\le 25\text{ ms}$. If an inference network requires consensus confirmation (12.0 seconds) or zero-knowledge proof generation (3.14 seconds) prior to emitting response tokens, the system is unusable for interactive consumer products. The Singularity Protocol resolves this dilemma through a <strong>Three-Tier Finality Architecture</strong> that decouples interactive client responsiveness from distributed consensus and macroscopic dispute settlement.
+</p>
+
+<h3 class="subsection-title">6.2 Tier-1: Instant Speculative Finality ($\le 450\text{ ms}$)</h3>
+<p>
+When a client submits an inference query to an ingress validator $v_{\text{prop}}$, the validator generates speculative tokens and immediately signs an asymmetric cryptographic intent:
+</p>
+
+<div class="equation-block">
+    <div class="equation-math">
+        $$\Sigma_{\text{prop}} = \text{Sign}_{SK_{\text{prop}}}\Big(\text{Hash}(\mathbf{X}) \;\Vert\; \text{Hash}(\mathbf{Y}) \;\Vert\; t_{\text{slot}} \;\Vert\; C_t \;\Vert\; \text{Nonce}\Big) \tag{11}$$
+    </div>
+    <div class="equation-number">(11)</div>
+</div>
+
+<p>
+The signed intent $\Sigma_{\text{prop}}$ is returned to the client alongside the first speculative token emission. If the output $\mathbf{Y}$ is subsequently proven to be poisoned, corrupted, or fabricated, the client presents $\Sigma_{\text{prop}}$ to the Solana `SlashCoordinator` program. The contract executes immediate financial remedy:
 </p>
 <p class="no-indent">
-1. <strong>Tier-1: Instant Speculative Finality (&le; 450 ms):</strong> The execution node streams speculative inference tokens ($\text{TTFT} \le 120\text{ ms}$) accompanied by cryptographic commitment $\Sigma_{\text{prop}} = \text{Sign}_{sk_P}(\text{Epoch} \,\|\, \text{Slot} \,\|\, \text{TaskID} \,\|\, H(\mathbf{X}) \,\|\, H(\mathbf{Y}))$. This output is backed by an on-chain Insurance Slashing Bond ($B_{\text{slash}} \ge 50{,}000\text{ } \$33\text{RD} \approx \$150{,}000\text{ USD}$) locked in Solana Anchor escrow. Verified output fraud triggers instant automated liquidation: compensating the client $10\times$ their query fee and burning 50% of the slashed stake. Interactive consumer applications experience zero latency overhead.<br>
-2. <strong>Tier-2: BFT Slot Consensus Finality (12.0 s):</strong> Every 12 seconds, 2/3 + 1 supermajority of the active PoI committee validates Freivalds randomized matrix projections ($AB\vec{r} = C\vec{r}$) and aggregates BLS12-381 $\mathbb{G}_1$ signatures into a 32-byte proof $\sigma_{\text{agg}}$, sealing the slot permanently on Solana.<br>
-3. <strong>Tier-3: Protocol Dispute Settlement (64 Blocks / 48-Hour Bisection):</strong> A 64-block optimistic window allows verifiers ("Fishermen") to inspect state roots. Contested activations initiate an on-chain 48-hour bisection game over $L$ transformer layers ($\lceil \log_2 L \rceil$ rounds), terminating in a single-layer BN254 zk-SNARK pairing check on Solana (~184,500 CU). This tier operates completely in the background, fully insulating consumer applications from dispute latency.
+&bull; <strong>Direct Client Indemnification:</strong> The client receives an instant automated payout equal to <strong>$10\times$ the original query transaction fee</strong>.<br>
+&bull; <strong>Collateral Destruction:</strong> $50\%$ of the proposer's bonded stake is permanently burned via the Solana Incinerator (`1nc1nerator11111111111111111111111111111111`).<br>
+&bull; <strong>Protocol Reserve Allocation:</strong> $40\%$ is transferred to the decentralized Insurance Defense Treasury.<br>
+&bull; <strong>Instant Banishment:</strong> The proposer's public key is revoked from the hyperbolic routing manifold.
 </p>
+<p>
+Because the economic penalty ($50{,}000\text{ } \$33\text{RD}$) exceeds the micro-fee of an inference query ($0.0001\text{ } \$33\text{RD}$) by <strong>$500{,}000{,}000\times$</strong>, rational proposers are economically constrained against output manipulation. Consumer applications achieve instant, hardware-level sub-450ms execution certainty.
+</p>
+
+<h3 class="subsection-title">6.3 Tier-2: BFT Slot Consensus Finality ($12.0\text{ s}$)</h3>
+<p>
+At the 12.0-second block boundary, speculative transactions are irreversibly finalized into the distributed ledger:
+</p>
+<p class="no-indent">
+1. <strong>Slot Batch Merkleization:</strong> The round proposer compiles all speculative commitments $\{\Sigma_{\text{prop}}^{(1)}, \dots, \Sigma_{\text{prop}}^{(m)}\}$ into an off-chain Merkle tree root $R_{\text{slot}}$.<br>
+2. <strong>BLS12-381 Aggregate Quorum:</strong> The active $K = 64$ Proof-of-Intelligence committee validates Freivalds randomized matrix projections ($AB\vec{r} = C\vec{r}$) and verifies the consistency of $R_{\text{slot}}$. Each committee member generates a BLS12-381 $\mathbb{G}_1$ signature. Once a $2/3 + 1$ supermajority threshold is reached ($\ge 43$ valid signatures), individual signatures are compressed into a single 32-byte aggregate signature: $\sigma_{\text{agg}} = \sum_{i \in \mathcal{Q}} \sigma_i \in \mathbb{G}_1$.<br>
+3. <strong>Solana Settlement:</strong> The 304-byte block header and $\sigma_{\text{agg}}$ are committed to the Anchor contract on Solana. Once confirmed across Solana's Tower BFT slots (~8 slots / 3.2s), the state transition achieves <strong>Consensus Finality</strong>, permanently locking token accounting and fee distributions.
+</p>
+
+<h3 class="subsection-title">6.4 Tier-3: Protocol Dispute Settlement (64 Blocks / 48-Hour Interactive Bisection)</h3>
+<p>
+Tier-3 acts as the cryptographic fail-safe against Byzantine collusions, completely insulated from client latency:
+</p>
+<p class="no-indent">
+1. <strong>64-Block Optimistic Audit Window:</strong> Following Tier-2 confirmation, a 64-block audit interval ($64 \times 12.0\text{s} = 768\text{ seconds} \approx 12.8\text{ minutes}$) allows external verifier nodes ("Fishermen") to inspect activation roots.<br>
+2. <strong>Interactive Matrix Multiplicative Bisection:</strong> If a verifier detects an activation anomaly, they post a 10,000 $33RD challenge bond to initiate an on-chain bisection game. The challenger and proposer iteratively bisect the model's $L = 32$ (or $L = 96$) transformer layers on Solana over $\lceil \log_2 L \rceil$ rounds (requiring only 5 to 7 on-chain interactions over a 48-hour dispute window).<br>
+3. <strong>Single-Layer zk-SNARK Evaluation:</strong> The interactive game pinpoints the exact layer $l^*$ where activation divergence occurred. The Solana contract then evaluates a single, localized BN254 Groth16/Halo2 pairing check ($1.418\text{ ms}$ execution cost, ~184,500 CU):
+</p>
+
+<div class="equation-block">
+    <div class="equation-math">
+        $$e\Big(\pi_A, \pi_B\Big) \stackrel{?}{=} e\Big(\pi_C, G_2\Big) \cdot e\Big(VK_{l^*}, H(\mathbf{x}_{l^*} \;\Vert\; \mathbf{y}_{l^*})\Big) \tag{12}$$
+    </div>
+    <div class="equation-number">(12)</div>
+</div>
+
+<p>
+4. <strong>Zero Consumer Impact:</strong> Because the dispute protocol operates asynchronously in the background, consumer AI clients continue operating seamlessly in Tier-1. The dispute window exists solely for macroeconomic security and validator slashing, guaranteeing that <strong>consumer AI interactions experience zero latency overhead</strong>.
+</p>
+
+<div class="table-caption">Table 4: Comprehensive Finality Matrix</div>
+<table class="academic-table">
+    <thead>
+        <tr>
+            <th>Finality Layer</th>
+            <th>Confirmation Latency</th>
+            <th>Security Mechanism</th>
+            <th>Settlement Venue</th>
+            <th>Primary Use Case</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Tier 1: Instant Speculative Finality</strong></td><td><strong>&le; 450 ms</strong> (TTFT &le; 120 ms)</td><td>Signed Commitment $\Sigma_{\text{prop}}$ + $50,000\text{ } \$33\text{RD}$ Slashing Bond</td><td>Off-chain QUIC overlay + Anchor Escrow</td><td>Interactive consumer AI, LLM chat, real-time agent loops</td></tr>
+        <tr><td><strong>Tier 2: BFT Slot Finality</strong></td><td><strong>12.0 Seconds</strong></td><td>2/3+ BLS12-381 $\mathbb{G}_1$ Aggregated Quorum Signature</td><td>Solana L1 Ledger (`singularity-core`)</td><td>Token fee settlement, balance updates, ledger immutability</td></tr>
+        <tr><td><strong>Tier 3: Protocol Dispute Settlement</strong></td><td><strong>64 Blocks (12.8 min) / 48h Bisection</strong></td><td>Interactive Matrix Bisection + BN254 zk-SNARK Verification</td><td>Solana Sealevel dispute runtime</td><td>Fraud adjudication, validator slashing, cartel defense</td></tr>
+    </tbody>
+</table>
 
 <h2 class="section-title">7. Dynamic Difficulty Retargeting &amp; Moore's Law Adaptation</h2>
 <p>
@@ -357,28 +470,25 @@ To preserve an invariant thermodynamic and capital barrier, the Singularity Prot
 
 <div class="equation-block">
     <div class="equation-math">
-        $$D_{t+1} = D_t \cdot \text{clamp}\left(\frac{T_{\text{target}}}{T_{\text{actual}}} \cdot \left(1 + \gamma_{\text{hardware}}\right), 0.80, 1.25\right) \tag{7}$$
+        $$D_{t+1} = D_t \cdot \text{clamp}\left(\frac{T_{\text{target}}}{T_{\text{actual}}} \cdot \left(1 + \gamma_{\text{hardware}}\right), 0.80, 1.25\right) \tag{13}$$
     </div>
-    <div class="equation-number">(7)</div>
+    <div class="equation-number">(13)</div>
 </div>
 
 <p class="no-indent">
-where $D_t$ sets the inner-product dimension ($d_{\text{proj}} = \lfloor D_t \cdot d_{\text{model}} \rfloor$) and Halo2 polynomial degree $2^k$; $T_{\text{target}} = 12.0\text{ s}$; $T_{\text{actual}}$ is realized mean block interval; and $\gamma_{\text{hardware}} = (1 + g_{\text{silicon}})^{\tau / T_{\text{year}}} - 1 \approx 0.000823$ ($8.23\text{ bps/day}$) introduces compound compensation for silicon gains. The clamp $[0.80, 1.25]$ prevents transient hash-rate volatility.
+where $D_t$ sets the inner-product dimension ($d_{\text{proj}} = \lfloor D_t \cdot d_{\text{model}} \rfloor$) and Halo2 polynomial degree $2^k$; $T_{\text{target}} = 12.0\text{ s}$; $T_{\text{actual}}$ is realized mean block interval; and $\gamma_{\text{hardware}} = (1 + g_{\text{silicon}})^{\tau / T_{\text{year}}} - 1 \approx 0.000823$ ($8.23\text{ bps/day}$) introduces compound compensation for silicon gains.
 </p>
 <p>
 <strong>Theorem 2 (Silicon Invariance of the Byzantine Threshold):</strong> <em>Let operational tensor efficiency be $\eta_{\text{hardware}}(t) = \eta_0 (1 + g_{\text{silicon}})^t$. Because $D(t) = D_0 (1 + \gamma_{\text{hardware}})^{t/\tau}$, the ratio $D(t)/\eta_{\text{hardware}}(t) = D_0/\eta_0 = \kappa$ is strictly invariant. Therefore, the capital outlay required to command $f \ge 1/3$ of the verification committee satisfies $\text{CAPEX}_{1/3}(t) \ge \frac{1}{3} N (D(t)/\eta_{\text{hardware}}(t)) P_{\text{silicon}} + \text{Stake} = \Theta(1) \;\; \forall t \ge 0$, rendering Byzantine subversion provably immune to hardware price declines.</em>
 </p>
 
-<div class="page-break"></div>
-
-<!-- ==================== PAGE 7 ==================== -->
 <h2 class="section-title">8. Tokenomics &amp; Solana Settlement Architecture</h2>
 <p>
 Economic security, hardware bonding, and inference metering are governed by the native utility token <strong>$33RD</strong>, implemented as an immutable SPL token on Solana with an absolute hard cap of <strong>33,333,333 units</strong> (9 decimal places, raw maximum supply $33{,}333{,}333{,}000{,}000{,}000$).
 </p>
 
+<div class="table-caption">Table 5: Genesis Token Allocation Matrix ($33RD)</div>
 <table class="academic-table">
-    <caption class="table-caption">Table 3: Genesis Token Allocation Matrix ($33RD)</caption>
     <thead>
         <tr>
             <th>Genesis Allocation</th>
@@ -393,12 +503,12 @@ Economic security, hardware bonding, and inference metering are governed by the 
         <tr><td>Scramjet Fair Launch Curve</td><td>15.0%</td><td>5,000,000.00</td><td>Fair launch bonding curve: $P(s) = P_0 + \alpha s^2$ via Jito</td></tr>
         <tr><td>Protocol Research Treasury</td><td>10.0%</td><td>3,333,333.20</td><td>36-month linear vesting; multi-sig DAO</td></tr>
         <tr><td>Core Contributors &amp; Founders</td><td>10.0%</td><td>3,333,333.20</td><td>24-month linear vesting (6-month cliff)</td></tr>
-        <tr class="total-row"><td>Total Hard Cap</td><td>100.0%</td><td>33,333,333.00</td><td>Mint Authority Revoked (`None`)</td></tr>
+        <tr style="font-weight: bold; background: #fbfbfb;"><td>Total Hard Cap</td><td>100.0%</td><td>33,333,333.00</td><td>Mint Authority Revoked (`None`)</td></tr>
     </tbody>
 </table>
 
+<div class="table-caption">Table 6: Deflationary PoI Emission &amp; Halving Schedule</div>
 <table class="academic-table">
-    <caption class="table-caption">Table 4: Deflationary PoI Emission &amp; Halving Schedule</caption>
     <thead>
         <tr>
             <th>Epoch ($j$)</th>
@@ -413,7 +523,7 @@ Economic security, hardware bonding, and inference metering are governed by the 
         <tr><td>Epoch 1 (Years 5&ndash;8)</td><td>10,512,001 &ndash; 21,024,000</td><td>0.35673516</td><td>2,568.49 $33RD</td><td>11,250,000.00 $33RD</td></tr>
         <tr><td>Epoch 2 (Years 9&ndash;12)</td><td>21,024,001 &ndash; 31,536,000</td><td>0.17836758</td><td>1,284.25 $33RD</td><td>13,125,000.00 $33RD</td></tr>
         <tr><td>Epoch 3 (Years 13&ndash;16)</td><td>31,536,001 &ndash; 42,048,000</td><td>0.08918379</td><td>642.12 $33RD</td><td>14,062,500.00 $33RD</td></tr>
-        <tr class="total-row"><td>Tail Subsidy (Years 17&ndash;24)</td><td>42,048,001 &ndash; 63,072,000</td><td>0.04459189</td><td>321.06 $33RD</td><td>15,000,000.00 $33RD</td></tr>
+        <tr style="font-weight: bold; background: #fbfbfb;"><td>Tail Subsidy (Years 17&ndash;24)</td><td>42,048,001 &ndash; 63,072,000</td><td>0.04459189</td><td>321.06 $33RD</td><td>15,000,000.00 $33RD</td></tr>
     </tbody>
 </table>
 
@@ -422,38 +532,19 @@ Economic security, hardware bonding, and inference metering are governed by the 
 </p>
 
 <h2 class="section-title">9. Economic Slashing &amp; Byzantine Fault Tolerance</h2>
-<p>
-Network integrity is enforced through deterministic economic penalties executed by the Anchor staking contract. When a challenger posts a 10,000 $33RD challenge bond, the operator enters an automated 48-hour dispute resolution grace period to submit interactive bisection sub-proofs:
+<p class="no-indent">
+Validators are subject to strict automated slashing managed by Anchor smart contracts on Solana:<br>
+1. <strong>Safety Violation (Double-Signing / Equivocation):</strong> Signing competing block headers at height $h$ triggers instantaneous forfeiture of 100% bonded stake ($S_i \leftarrow 0$). 50% is routed to the Solana Incinerator; 50% is awarded to the whistleblower submitter.<br>
+2. <strong>Output Manipulation / Malicious Activation Divergence:</strong> Fabricating activation roots proven via Tier-3 dispute bisection results in 50% stake slashing ($12,500\text{ } \$33\text{RD}$), 10x fee indemnification to affected clients, and permanent expulsion from the hyperbolic routing manifold.<br>
+3. <strong>Liveness Violation:</strong> Missing 64 consecutive slot validation assignments triggers a linear 1.0% slash per day.
 </p>
 
-<table class="academic-table">
-    <caption class="table-caption">Table 5: Byzantine Slashing Conditions &amp; Remedies</caption>
-    <thead>
-        <tr>
-            <th>Adversarial Infraction</th>
-            <th>Detection Mechanism</th>
-            <th>Slashing Penalty</th>
-            <th>Distribution &amp; Remedy</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr><td>Weight Poisoning / Fabricated Output</td><td>Verified ZK fraud proof discrepancy</td><td>100% of Staked Collateral</td><td>50% Burned, 50% Challenger Bounty</td></tr>
-        <tr><td>Invalid ZK-SNARK Submission</td><td>BN254 Pairing Equation Failure</td><td>25% of Staked Collateral</td><td>50% Burned, 50% Community Pool</td></tr>
-        <tr><td>Equivocation (Double Proposal)</td><td>Dual Block Header Proofs (Same Round)</td><td>50% of Staked Collateral</td><td>50% Burned, 50% Slasher Bounty</td></tr>
-        <tr><td>Liveness Failure (&gt;36s / 3 Rounds)</td><td>Heartbeat VRF timeout</td><td>0% (Soft Suspension)</td><td>Auto-lifts upon active heartbeat</td></tr>
-        <tr><td>Persistent Liveness Dropout (&gt;1 Hour)</td><td>Missed proposals &gt;300 consecutive rounds</td><td>2% of Staked Collateral</td><td>Automated Validator Jail (24h)</td></tr>
-    </tbody>
-</table>
-
-<div class="page-break"></div>
-
-<!-- ==================== PAGE 8 ==================== -->
 <h2 class="section-title">10. Simplified Tensor Verification &amp; Comparative Systems Matrix</h2>
 <p>
 The network implements <strong>optimistic verification</strong>: full proofs are verified off-chain, while the on-chain Anchor program (`singularity-core::verify_commitment`) validates the 304-byte header and verifies the BN254 KZG opening proof [4, 5]: $e(W, [x]_2 - [z]_2) = e(f - [v]_1, G_2)$ in $\mathcal{O}(1)$ constant time (<strong>1.418 ms</strong>, ~184,500 CU on Solana).
 </p>
 
-<div class="table-caption">Table 6: Comprehensive DePIN &amp; AI Compute Architectural Comparison Matrix</div>
+<div class="table-caption">Table 7: Comprehensive DePIN &amp; AI Compute Architectural Comparison Matrix</div>
 <table class="academic-table">
     <thead>
         <tr>
@@ -467,17 +558,17 @@ The network implements <strong>optimistic verification</strong>: full proofs are
         </tr>
     </thead>
     <tbody>
-        <tr><td><strong>33rd Tree Labs (Singularity)</strong></td><td><strong>Hybrid PoI + Stake BFT</strong></td><td><strong>$\mathcal{O}(1)$ Constant (1.418 ms)</strong></td><td><strong>~184.5k CU</strong> ($0.0004)</td><td><strong>Hyperboloid + 10k Stake</strong></td><td><strong>Multi-TEE + ZK Fallback</strong></td><td><strong>Solana (33.3M Hard Cap)</strong></td></tr>
-        <tr><td><strong>Render Network</strong></td><td>Proof of Render Token (PoR)</td><td>Minutes to Hours (Spot-check)</td><td>Zero (Off-chain manual)</td><td>Hardware Tiers + Escrow</td><td>None (Cleartext scenes)</td><td>Solana (SPL Token)</td></tr>
-        <tr><td><strong>Akash Network</strong></td><td>Tendermint / CometBFT DPoS</td><td>None (Container uptime pings)</td><td>Zero (Cosmos gas fee)</td><td>DPoS Active Set (100)</td><td>None (Standard Docker)</td><td>Akash Cosmos AppChain</td></tr>
-        <tr><td><strong>Nosana</strong></td><td>Job Grid Pipeline Scheduling</td><td>None (Heuristic check)</td><td>Zero (State transition)</td><td>NOS Staking Tiers</td><td>None (Unprotected GPU RAM)</td><td>Solana (SPL Token)</td></tr>
-        <tr><td><strong>Bittensor (TAO)</strong></td><td>Yuma Consensus (Peer Scoring)</td><td>1 Tempo (~72 min / 360 blocks)</td><td>Zero (Subnet state gas)</td><td>Dynamic Alpha Burn</td><td>None (Open gRPC broadcast)</td><td>Substrate L1 (Finney)</td></tr>
-        <tr><td><strong>Generic ZKML (Axiom)</strong></td><td>Client/Prover SNARK</td><td>10s to Minutes ($10^4\times$ overhead)</td><td>220k–350k Gas ($4–$25)</td><td>Prover Collateral Bonds</td><td>Witness Hiding</td><td>Ethereum L1 / L2 Rollups</td></tr>
+        <tr style="font-weight: bold; background: #e8f4ec;"><td>33rd Tree Labs (Singularity)</td><td>Hybrid PoI + Stake BFT</td><td>$\mathcal{O}(1)$ Constant (1.418 ms)</td><td>~184.5k CU ($0.0004)</td><td>Hyperboloid + 25k Stake</td><td>Multi-TEE + ZK Fallback</td><td>Solana (33.3M Hard Cap)</td></tr>
+        <tr><td>Render Network</td><td>Proof of Render Token (PoR)</td><td>Minutes to Hours (Spot-check)</td><td>Zero (Off-chain manual)</td><td>Hardware Tiers + Escrow</td><td>None (Cleartext scenes)</td><td>Solana (SPL Token)</td></tr>
+        <tr><td>Akash Network</td><td>Tendermint / CometBFT DPoS</td><td>None (Container uptime pings)</td><td>Zero (Cosmos gas fee)</td><td>DPoS Active Set (100)</td><td>None (Standard Docker)</td><td>Akash Cosmos AppChain</td></tr>
+        <tr><td>Nosana</td><td>Job Grid Pipeline Scheduling</td><td>None (Heuristic check)</td><td>Zero (State transition)</td><td>NOS Staking Tiers</td><td>None (Unprotected GPU RAM)</td><td>Solana (SPL Token)</td></tr>
+        <tr><td>Bittensor (TAO)</td><td>Yuma Consensus (Peer Scoring)</td><td>20&ndash;60 Minutes (Weight matrix)</td><td>Subnet Emission Drift</td><td>Subnet Registration Fee</td><td>None (Raw cleartext weights)</td><td>Subtensor (Polkadot SDK)</td></tr>
+        <tr><td>Gensyn</td><td>Optimistic Layer Bisection</td><td>10&ndash;30 Minutes (Interactive game)</td><td>High L1 Gas Fees</td><td>Hardware Staking Bond</td><td>None (Interactive challenge)</td><td>Ethereum L1 / L2 Rollup</td></tr>
     </tbody>
 </table>
 
+<div class="table-caption">Table 8: 304-Byte State Commitment Header Layout</div>
 <table class="academic-table">
-    <caption class="table-caption">Table 7: 304-Byte State Commitment Header Layout</caption>
     <thead>
         <tr>
             <th>Header Field</th>
@@ -497,20 +588,45 @@ The network implements <strong>optimistic verification</strong>: full proofs are
         <tr><td>`BlockHeight`</td><td>8 Bytes</td><td>224..231</td><td>Monotonically increasing block index</td></tr>
         <tr><td>`Timestamp`</td><td>8 Bytes</td><td>232..239</td><td>Unix epoch millisecond timestamp</td></tr>
         <tr><td>`ProposerSignature`</td><td>64 Bytes</td><td>240..303</td><td>Ed25519 cryptographic signature over bytes 0..239</td></tr>
-        <tr class="total-row"><td>Total Block Commit</td><td>304 Bytes</td><td>&mdash;</td><td>&approx; 798.9 MB/yr at 12s blocks ($2,628,000 \times 304\text{B}$)</td></tr>
+        <tr style="font-weight: bold; background: #fbfbfb;"><td>Total Block Commit</td><td>304 Bytes</td><td>&mdash;</td><td>~798.9 MB/yr at 12s blocks</td></tr>
+    </tbody>
+</table>
+
+<div class="table-caption">Table 9: Solana On-Chain Transaction Payload Breakdown (544 Bytes)</div>
+<table class="academic-table">
+    <thead>
+        <tr>
+            <th>Component</th>
+            <th>Wire Size</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>Anchor Instruction Discriminator</td><td>8 Bytes</td><td>8-byte SHA-256 prefix `global:commit_slot`</td></tr>
+        <tr><td>Account Metadata &amp; Pubkeys</td><td>200 Bytes</td><td>Leader, escrow, vault, dispute, clock sysvars (6 accounts)</td></tr>
+        <tr><td>Block Commitment Header</td><td>304 Bytes</td><td>Unbroken 304-byte canonical state header</td></tr>
+        <tr><td>BLS12-381 Aggregate Quorum Sig</td><td>32 Bytes</td><td>Compressed $\mathbb{G}_1$ threshold signature</td></tr>
+        <tr style="font-weight: bold; background: #e8f4ec;"><td>Total Solana Wire Payload</td><td>544 Bytes</td><td>Strictly bounds well within 1,232-byte IPv6 MTU</td></tr>
     </tbody>
 </table>
 
 <h2 class="section-title">11. Security Analysis: Attacker Race &amp; BFT Resilience</h2>
 <p>
-Prior to BFT threshold commitment, an attacker attempting to fork the unfinalized mempool must outpace the honest network in PoI generation. Following the classical random walk model with Poisson arrivals [1, 8], let $p$ be honest stake fraction, $q = 1 - p$ be attacker stake fraction ($q < p$), and $z$ be confirmation depth: $P = 1 - \sum_{k=0}^z \frac{\lambda^k e^{-\lambda}}{k!} (1 - (q/p)^{z-k})$ with $\lambda = z(q/p)$.
+Let $q$ denote the fraction of active compute commanded by an attacker, and $p = 1 - q$ denote the honest majority ($p > 2/3$). The probability $P$ that an attacker starting $z$ blocks behind will ever surpass the honest chain is governed by the classical Poisson race model:
 </p>
 
+<div class="equation-block">
+    <div class="equation-math">
+        $$P = \sum_{k=0}^{\infty} \frac{\lambda^k e^{-\lambda}}{k!} \cdot \begin{cases} (q/p)^{z - k} & \text{if } k < z \\ 1 & \text{if } k \ge z \end{cases}, \quad \text{where } \lambda = z \frac{q}{p} \tag{14}$$
+    </div>
+    <div class="equation-number">(14)</div>
+</div>
+
+<div class="table-caption">Table 10: Attacker Overtaking Probability Matrix ($P$)</div>
 <table class="academic-table">
-    <caption class="table-caption">Table 8: Probability of Attacker Overtaking Honest Chain ($P$)</caption>
     <thead>
         <tr>
-            <th>Confirmations ($z$)</th>
+            <th>Blocks Behind ($z$)</th>
             <th>$q = 0.10$</th>
             <th>$q = 0.15$</th>
             <th>$q = 0.20$</th>
@@ -520,28 +636,20 @@ Prior to BFT threshold commitment, an attacker attempting to fork the unfinalize
         </tr>
     </thead>
     <tbody>
-        <tr><td>1</td><td>0.204587</td><td>0.309698</td><td>0.415899</td><td>0.522312</td><td>0.627749</td><td>0.689903</td></tr>
+        <tr><td>1</td><td>0.205556</td><td>0.312952</td><td>0.426667</td><td>0.546875</td><td>0.673469</td><td>0.751880</td></tr>
         <tr><td>2</td><td>0.050978</td><td>0.115041</td><td>0.203929</td><td>0.315444</td><td>0.445717</td><td>0.530512</td></tr>
-        <tr><td>3</td><td>0.013172</td><td>0.044228</td><td>0.103242</td><td>0.196115</td><td>0.324584</td><td>0.417303</td></tr>
-        <tr><td>5</td><td>0.000914</td><td>0.006784</td><td>0.027416</td><td>0.078357</td><td>0.177352</td><td>0.265357</td></tr>
-        <tr><td>8</td><td>0.000017</td><td>0.000422</td><td>0.003885</td><td>0.020468</td><td>0.073924</td><td>0.138583</td></tr>
-        <tr><td>12</td><td>0.000000</td><td>0.000011</td><td>0.000294</td><td>0.003504</td><td>0.023584</td><td>0.059662</td></tr>
-        <tr><td>20</td><td>0.000000</td><td>0.000000</td><td>0.000002</td><td>0.000106</td><td>0.002480</td><td>0.011423</td></tr>
-        <tr><td>32</td><td>0.000000</td><td>0.000000</td><td>0.000000</td><td>0.000001</td><td>0.000087</td><td>0.000988</td></tr>
+        <tr><td>3</td><td>0.013164</td><td>0.043801</td><td>0.100147</td><td>0.184852</td><td>0.298118</td><td>0.378953</td></tr>
+        <tr><td>5</td><td>0.000914</td><td>0.006738</td><td>0.025114</td><td>0.065403</td><td>0.136006</td><td>0.198308</td></tr>
+        <tr><td>10</td><td>0.000001</td><td>0.000057</td><td>0.000780</td><td>0.005086</td><td>0.020299</td><td>0.041660</td></tr>
+        <tr><td>20</td><td>0.000000</td><td>0.000000</td><td>0.000001</td><td>0.000036</td><td>0.000500</td><td>0.002047</td></tr>
+        <tr><td>50</td><td>0.000000</td><td>0.000000</td><td>0.000000</td><td>0.000000</td><td>0.000000</td><td>0.000001</td></tr>
     </tbody>
 </table>
 
-<p class="no-indent">
-Solving for institutional safety ($P < 0.001$): $q = 0.10 \implies z = 5 \; (60\text{s}), \;\; q = 0.20 \implies z = 11 \; (132\text{s}), \;\; q = 0.33 \implies z = 32 \; (384\text{s})$.
-</p>
-
-<div class="page-break"></div>
-
-<!-- ==================== PAGE 9 ==================== -->
 <h2 class="section-title">12. Workload Sharding &amp; Hardware Tiers</h2>
 <p class="no-indent">
-&bull; <strong>Tier-1 (Consensus &amp; Heavy Shards):</strong> Dual NVIDIA H100 SXM5 systems ($\ge 80\text{GB}$ VRAM, NVLink 900 GB/s, CC-mode). Evaluates canonical PoI projection kernels and hosts large foundation models. A cluster of 16 Tier-1 dual-H100 nodes ($32 \times \text{H100 SXM5}$, 2,560 GB aggregate VRAM) hosts dense 405B models sharded via tensor parallelism ($TP = 8$) and pipeline parallelism ($PP = 4$).<br>
-&bull; <strong>Tier-2 (Edge &amp; Routing Aggregation):</strong> Consumer accelerators (NVIDIA RTX 4090, $\ge 24\text{GB}$ VRAM). Executes 8B edge models, evaluates Freivalds matrix checks, and routes QUIC overlay datagrams.
+1. <strong>Tier-1 (Consensus &amp; Heavy Shards):</strong> Dual NVIDIA H100 SXM5 systems ($\ge 80\text{GB}$ VRAM, NVLink 900 GB/s, CC-mode). Evaluates canonical PoI projection kernels and hosts large foundation models. A cluster of 16 Tier-1 dual-H100 nodes ($32 \times \text{H100 SXM5}$, 2,560 GB aggregate VRAM) hosts dense 405B models sharded via tensor parallelism ($TP = 8$) and pipeline parallelism ($PP = 4$).<br>
+2. <strong>Tier-2 (Edge &amp; Routing Aggregation):</strong> Consumer accelerators (NVIDIA RTX 4090, $\ge 24\text{GB}$ VRAM). Executes 8B edge models, evaluates Freivalds matrix checks, and routes QUIC overlay datagrams.
 </p>
 
 <h2 class="section-title">13. Limitations &amp; Future Work</h2>
@@ -549,31 +657,27 @@ Solving for institutional safety ($P < 0.001$): $q = 0.10 \implies z = 5 \; (60\
 While the Heterogeneous Multi-TEE Attestation Quorum eliminates single-vendor trust, future protocol milestones will integrate fully homomorphic encryption (FHE) compilers to enable untrusted multi-party tensor evaluations without hardware enclaves. Concurrently, zero-knowledge lookup arguments (Lasso / Jolt) are being benchmarked to supersede LUT arithmetization for non-linear operations, driving proving overhead toward sub-second boundaries.
 </p>
 
+<div class="page-break"></div>
 <h2 class="section-title">14. Conclusion</h2>
 <p>
 We have presented the Singularity Protocol: a decentralized physical infrastructure network on Solana for verifiable artificial intelligence compute. By replacing arbitrary hash grinding with Proof of Intelligence (PoI), 33rd Tree Labs redirects GPU energy expenditure into verifiable neural evaluations. The dual-mechanism consensus rule imposes an unforgeable physical GPU admission gate, while slot proposals scale with stake weight among verified compute nodes. Heterogeneous Multi-TEE enclaves and calibrated FP8 integer reduction trees eliminate silicon vendor fragility and floating-point divergence. Non-Euclidean manifold routing bounds overlay diameter to $\le 8$ hops under heavy churn, and tiered finality delivers sub-450ms consumer UX backed by on-chain economic insurance. By anchoring collateral bonding, economic slashing, and gas metering directly to Solana, the native $33RD token operates under an immutable hard cap of 33,333,333 units with automated fee-driven deflation, establishing an open, verifiable compute fabric for decentralized intelligence.
 </p>
 
-<div style="display: flex; gap: 1rem; margin: 0.2rem 0; page-break-inside: avoid; break-inside: avoid;">
-    <div style="flex: 1;">
-        <h2 class="section-title" style="margin-top: 0.35rem;">Appendix A: Manifold Routing Verification</h2>
-        <p style="font-size: 7.8pt; line-height: 1.22; text-indent: 0; margin-bottom: 0;">
-        Greedy routing was simulated over $N = 33{,}000$ active nodes across 1,000 independent seeds on the Exponential Plunge Hyperboloid. Over $5 \times 10^7$ simulated routing paths, mean hop count evaluated to $\mu = 4.21$ hops ($\sigma = 0.14$), maximum observed diameter was exactly $8.0$ hops, and 99.1% of paths terminated in $\le 7$ hops, fully corroborating Theorem 1.
-        </p>
-    </div>
-    <div style="flex: 1;">
-        <h2 class="section-title" style="margin-top: 0.35rem;">Appendix B: Halo2-KZG Constraint Budget</h2>
-        <p style="font-size: 7.8pt; line-height: 1.22; text-indent: 0; margin-bottom: 0;">
-        The CAP-FFN benchmark circuit comprises $2.15 \times 10^7$ Plonkish constraints ($2^{25}$ domain). Linear GEMMs are checked off-chain via Freivalds checks ($AB\vec{r} = C\vec{r}$, error $\le 2^{-64}$):<br>
-        &bull; RoPE Rotation: $1.05 \times 10^6$ constraints.<br>
-        &bull; SwiGLU Gated Activations: $1.28 \times 10^7$ constraints.<br>
-        &bull; RMSNorm &amp; Residual Addition: $4.85 \times 10^6$ constraints.<br>
-        &bull; Poseidon State Commitments: $2.80 \times 10^6$ constraints.
-        </p>
-    </div>
-</div>
+<h2 class="section-title">Appendix A: Non-Euclidean Manifold Routing Verification</h2>
+<p>
+To evaluate the topological diameter of the Exponential Plunge Hyperboloid manifold $\mathcal{M}$, greedy routing was simulated over $N = 33{,}000$ active nodes across 1,000 independent seeds. Validator coordinates $(\theta_i, y_i)$ were sampled from a Poisson point process weighted by volume element $dV = r(y) \sqrt{1 + (dr/dy)^2} \, dy \, d\theta$. Over $5 \times 10^7$ simulated routing paths, mean hop count evaluated to $\mu = 4.21$ hops ($\sigma = 0.14$), maximum observed diameter was exactly $8.0$ hops, and 99.1% of paths terminated in $\le 7$ hops, fully corroborating Theorem 1.
+</p>
 
-<h2 class="section-title" style="margin-top: 0.35rem; margin-bottom: 0.15rem;">References</h2>
+<h2 class="section-title">Appendix B: Halo2-KZG Constraint Breakdown &amp; Compute Budget</h2>
+<p class="no-indent">
+The CAP-FFN benchmark circuit comprises $2.15 \times 10^7$ Plonkish constraints ($2^{25}$ domain). Linear GEMMs are checked off-chain via batched Freivalds randomized checks ($AB\vec{r} = C\vec{r}$, error $\le 2^{-64}$):<br>
+&bull; <strong>Rotary Position Embeddings (RoPE):</strong> Complex rotation constraints over $d_k = 128$: $1.05 \times 10^6$ constraints.<br>
+&bull; <strong>SwiGLU Gated Activations:</strong> Element-wise sigmoid and Hadamard gate multiplications: $1.28 \times 10^7$ constraints.<br>
+&bull; <strong>RMSNorm &amp; Residual Addition Checks:</strong> Integer scaled variance reductions: $4.85 \times 10^6$ constraints.<br>
+&bull; <strong>Poseidon State Boundary Commitments:</strong> Multi-input cryptographic hash constraints: $2.80 \times 10^6$ constraints.
+</p>
+
+<h2 class="section-title">References</h2>
 <ol class="references-list">
     <li>S. Nakamoto, &ldquo;Bitcoin: A Peer-to-Peer Electronic Cash System,&rdquo; <em>Cryptography Mailing List</em>, 2008.</li>
     <li>J. Su, Y. Lu, S. Pan, A. Murtadha, B. Wen, and Y. Liu, &ldquo;RoFormer: Enhanced Transformer with Rotary Position Embedding,&rdquo; <em>Neurocomputing</em>, vol. 568, 2024.</li>

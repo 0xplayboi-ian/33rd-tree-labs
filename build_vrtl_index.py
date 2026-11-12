@@ -1527,7 +1527,7 @@ html_content = """<!DOCTYPE html>
 
                     <div class="sim-status-banner" id="sim-status-box">
                         <div class="sim-status-head success" id="sim-status-title">
-                            <span>&check; CONSENSUS REACHED: QUORUM VALIDATED</span>
+                            <span>[VALID] CONSENSUS REACHED: QUORUM VALIDATED</span>
                         </div>
                         <div id="sim-status-desc" style="color:var(--slate);">
                             Honest nodes: 60/64 (93.8%) &bull; Quorum threshold 66.7% met. Byzantine nodes isolated and marked for collateral slashing.
@@ -1938,7 +1938,7 @@ html_content = """<!DOCTYPE html>
 
             if (f <= maxTolerance) {
                 simStatusTitle.className = 'sim-status-head success';
-                simStatusTitle.innerHTML = '&check; CONSENSUS VALIDATED: QUORUM REACHED';
+                simStatusTitle.innerHTML = '[VALID] CONSENSUS VALIDATED: QUORUM REACHED';
                 simStatusDesc.innerHTML = `
                     Attack: <strong>${attackType}</strong> thwarted.<br>
                     Honest nodes: ${totalCommittee - f}/${totalCommittee} (${((totalCommittee - f)/totalCommittee*100).toFixed(1)}%).
@@ -1951,7 +1951,7 @@ html_content = """<!DOCTYPE html>
                 }
             } else {
                 simStatusTitle.className = 'sim-status-head alert';
-                simStatusTitle.innerHTML = '&#9888; BYZANTINE FAULT DETECTED: SAFETY HALT TRIGGERED';
+                simStatusTitle.innerHTML = '[ALERT] BYZANTINE FAULT DETECTED: SAFETY HALT TRIGGERED';
                 simStatusDesc.innerHTML = `
                     Adversary fraction exceeds BFT threshold (f = ${f} &gt; 21). 
                     Solana anchor initiates circuit breaker. No state finalized to preserve zero-knowledge safety.
