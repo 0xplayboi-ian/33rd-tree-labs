@@ -39,6 +39,34 @@ html, body {
     padding: 0;
     text-align: justify;
     text-justify: inter-word;
+    overflow-x: hidden;
+}
+@media screen {
+    body {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        background: #fdfdfd;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+    }
+    .academic-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .equation-block {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+@media print {
+    body {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        box-shadow: none;
+    }
 }
 .paper-header { text-align: center; margin-bottom: 1.2rem; }
 .paper-title { font-size: 17pt; font-weight: bold; line-height: 1.25; margin: 0 0 0.35rem 0; letter-spacing: -0.01em; }

@@ -52,6 +52,34 @@ html, body {
     padding: 0;
     text-align: justify;
     text-justify: inter-word;
+    overflow-x: hidden;
+}
+@media screen {
+    body {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        background: #fdfdfd;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+    }
+    .academic-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .equation-block {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+@media print {
+    body {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        box-shadow: none;
+    }
 }
 .paper-header { text-align: center; margin-bottom: 1.2rem; }
 .paper-title { font-size: 17pt; font-weight: bold; line-height: 1.25; margin: 0 0 0.35rem 0; letter-spacing: -0.01em; }
@@ -67,8 +95,9 @@ h3.subsection-title { font-size: 10.5pt; font-weight: bold; font-style: italic; 
 h4.subsubsection-title { font-size: 9.8pt; font-weight: bold; margin-top: 0.65rem; margin-bottom: 0.2rem; text-align: left; page-break-after: avoid; break-after: avoid; }
 p { margin-top: 0; margin-bottom: 0.5rem; text-indent: 1.4rem; }
 p.no-indent { text-indent: 0; }
-.equation-block { display: flex; justify-content: space-between; align-items: center; margin: 0.5rem 0; padding: 0 1rem; page-break-inside: avoid; break-inside: avoid; }
-.equation-math { flex-grow: 1; text-align: center; font-size: 9.8pt; }
+.equation-block { display: flex; justify-content: space-between; align-items: center; margin: 0.5rem 0; padding: 0 1rem; page-break-inside: avoid; break-inside: avoid; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.equation-math { flex-grow: 1; text-align: center; font-size: 9.8pt; min-width: 0; }
+.katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
 .equation-number { width: 3.5rem; text-align: right; font-style: normal; font-size: 9.2pt; color: #222; }
 .academic-table { width: 100%; border-collapse: collapse; margin: 0.55rem 0; font-size: 8.2pt; line-height: 1.26; page-break-inside: avoid; break-inside: avoid; }
 .academic-table th { border-top: 1.3pt solid #000; border-bottom: 0.8pt solid #000; padding: 4px 6px; text-align: left; font-weight: bold; background: #fafafa; }
