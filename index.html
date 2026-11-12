@@ -3,2124 +3,2065 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>33RD TREE LABS // Decentralized Compute &amp; Singularity Protocol</title>
-    <meta name="description" content="33rd Tree Labs is building the decentralized compute fabric for post-AGI coordination pairing cryptographic consensus with zero-knowledge inference on Solana.">
+    <title>33RD TREE LABS // The Singularity Protocol &bull; 33rdtreelabs.tech</title>
+    <meta name="description" content="A Byzantine-Resilient Verifiable DePIN Compute Fabric on Solana. Hierarchical Tensor Arbor coordination, zero-knowledge neural evaluations, and cryptographic consensus at scale.">
 
+    <!-- OpenGraph & Twitter Metadata -->
+    <meta property="og:title" content="33RD TREE LABS // The Singularity Protocol">
+    <meta property="og:description" content="A Byzantine-Resilient Verifiable DePIN Compute Fabric on Solana. Pairing cryptographic consensus with zero-knowledge neural evaluations.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://33rdtreelabs.tech/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="33RD TREE LABS // 33rdtreelabs.tech">
+    <meta name="twitter:description" content="Decentralized verifiable GPU compute orchestration anchored on Solana.">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Three.js + OrbitControls -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
             /* VRTL WRLD DESIGN SYSTEM PALETTE */
-            --void-bg: #060606;
-            --void-surface: #080808;
-            --card-bg: #0C0C0C;
-            --card-bg-elevated: #111111;
-            
-            /* OFFICIAL PRIMARY ACCENT: LASER RED */
+            --bg: #070707;
+            --bg-elevated: #0B0B0E;
+            --bg-card: #101014;
+            --bg-card-hover: #15151B;
+            --border: #1C1C24;
+            --border-hover: #343442;
+            --border-accent: rgba(255, 41, 44, 0.35);
             --laser-red: #FF292C;
-            --laser-red-bright: #FF4548;
-            --laser-red-glow: rgba(255, 41, 44, 0.45);
-            --laser-red-subtle: rgba(255, 41, 44, 0.12);
-            --laser-red-border: rgba(255, 41, 44, 0.28);
-            
-            /* ARCHITECTURAL TEXT & HAIRLINES */
-            --chalk: #F1F1F1;
-            --tech-slate: #888888;
-            --tech-dim: #555555;
-            --graphite-border: #181818;
-            --graphite-border-light: #222222;
-            
-            /* TELEMETRY ACCENTS */
-            --status-green: #00FF66;
-            --status-cyan: #00F0FF;
-            --status-gold: #FFB800;
+            --laser-glow: rgba(255, 41, 44, 0.45);
+            --laser-subtle: rgba(255, 41, 44, 0.08);
+            --chalk: #F2F2F5;
+            --chalk-dim: #D4D4DC;
+            --slate: #8E8E98;
+            --dark-slate: #4A4A56;
+            --white: #FFFFFF;
+            --green: #00E676;
+            --green-glow: rgba(0, 230, 118, 0.35);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            cursor: none; /* Controlled by custom reticle cursor */
+            cursor: default;
         }
 
         html {
             scroll-behavior: smooth;
-            background: var(--void-bg);
+            background: var(--bg);
             color: var(--chalk);
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
             overflow-x: hidden;
-            font-feature-settings: "cv02", "cv03", "cv04", "cv11";
         }
 
         body {
-            position: relative;
+            background: var(--bg);
             min-height: 100vh;
-            line-height: 1.6;
-            background-color: var(--void-bg);
-            /* VRTL WRLD Subtle Architectural Crosshair & Grid Matrix */
+            position: relative;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(255, 41, 44, 0.14), transparent 50%),
-                radial-gradient(circle at 85% 60%, rgba(255, 41, 44, 0.05), transparent 40%),
-                linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 54px 54px, 54px 54px;
-            color: var(--chalk);
+                radial-gradient(circle at 50% 0%, rgba(255, 41, 44, 0.045) 0%, transparent 60%),
+                linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+            background-size: 100% 100%, 44px 44px, 44px 44px;
+            background-position: 0 0, 0 0, 0 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* CUSTOM MINIMALIST LASER RED CURSOR */
-        #custom-cursor-dot {
-            position: fixed;
+        ::selection {
+            background: var(--laser-red);
+            color: var(--white);
+        }
+
+        /* CUSTOM RETRO-TECH CURSOR */
+        #cursor-dot {
             width: 6px;
             height: 6px;
             background: var(--laser-red);
             border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 99999;
-            box-shadow: 0 0 10px var(--laser-red);
-            transition: transform 0.05s linear;
-        }
-        #custom-cursor-follower {
             position: fixed;
-            width: 26px;
-            height: 26px;
-            border: 1px solid rgba(255, 41, 44, 0.55);
-            border-radius: 50%;
             pointer-events: none;
+            z-index: 9999;
             transform: translate(-50%, -50%);
-            z-index: 99998;
-            box-shadow: 0 0 16px rgba(255, 41, 44, 0.25);
-            transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-                        height 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.22s,
-                        background-color 0.22s,
-                        transform 0.1s ease-out;
+            box-shadow: 0 0 12px var(--laser-red);
+            transition: opacity 0.15s ease;
         }
-        .cursor-active #custom-cursor-follower {
+        #cursor-ring {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255, 41, 44, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease, transform 0.08s ease-out;
+        }
+        body.cursor-hover #cursor-ring {
             width: 48px;
             height: 48px;
-            border-color: var(--chalk);
-            background-color: rgba(255, 41, 44, 0.18);
+            border-color: var(--laser-red);
+            background: rgba(255, 41, 44, 0.05);
         }
 
-        /* TOP-SCREEN TECHNICAL WATERMARKS */
-        .fixed-watermark {
+        /* FLOATING PILL NAVBAR */
+        .nav-wrapper {
             position: fixed;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            letter-spacing: 0.18em;
-            color: var(--tech-dim);
-            text-transform: uppercase;
-            z-index: 800;
-            pointer-events: none;
-            user-select: none;
-        }
-        .watermark-tl {
-            top: 22px;
-            left: 28px;
-        }
-        .watermark-tr {
-            top: 22px;
-            right: 28px;
-            color: var(--laser-red);
-        }
-        .watermark-bl {
-            bottom: 20px;
-            left: 28px;
-        }
-        .watermark-br {
-            bottom: 20px;
-            right: 28px;
-        }
-
-        /* FLOATING GLASSMORHPIC PILL NAVBAR (VRTL WRLD) */
-        .pill-navbar-container {
-            position: fixed;
-            top: 18px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
             z-index: 1000;
-            width: calc(100% - 56px);
-            max-width: 1180px;
+            padding: 0 16px;
         }
-        .pill-navbar {
-            background: rgba(8, 8, 8, 0.85);
+
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            background: rgba(11, 11, 14, 0.88);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            padding: 8px 14px 8px 18px;
             border-radius: 9999px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 10px 0 18px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 1px 1px rgba(255, 41, 44, 0.2);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
         }
-        .pill-navbar:hover {
+        .nav-pill:hover {
             border-color: rgba(255, 41, 44, 0.35);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 24px rgba(255, 41, 44, 0.18);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 41, 44, 0.1);
         }
-        .pill-left {
+
+        .nav-brand {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
             text-decoration: none;
             color: var(--chalk);
         }
-        .pill-logo-wrap {
-            width: 32px;
-            height: 32px;
+        .nav-logo-box {
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
-            background: #000;
-            border: 1px solid var(--laser-red);
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 12px var(--laser-red-glow);
-            overflow: hidden;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             flex-shrink: 0;
         }
-        .pill-logo-wrap img {
+        .nav-logo-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            filter: grayscale(100%) contrast(150%);
+            transition: filter 0.25s ease;
         }
-        .pill-brand-title {
+        .nav-brand:hover .nav-logo-box img {
+            filter: grayscale(0%) contrast(120%);
+        }
+        .nav-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            font-weight: 800;
+            font-size: 11px;
+            font-weight: 700;
             letter-spacing: 0.12em;
             color: var(--chalk);
             white-space: nowrap;
         }
-        .pill-status-badge {
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .nav-link {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
+            font-size: 10.5px;
+            font-weight: 500;
             letter-spacing: 0.08em;
-            color: var(--laser-red);
-            background: rgba(255, 41, 44, 0.08);
-            border: 1px solid var(--laser-red-border);
-            padding: 3px 9px;
-            border-radius: 9999px;
-            display: inline-flex;
+            color: var(--slate);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            position: relative;
+            padding: 4px 2px;
+        }
+        .nav-link:hover {
+            color: var(--chalk);
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: var(--laser-red);
+            transition: width 0.2s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-status {
+            display: flex;
             align-items: center;
             gap: 6px;
-            white-space: nowrap;
+            padding: 4px 10px;
+            background: rgba(255, 41, 44, 0.07);
+            border: 1px solid rgba(255, 41, 44, 0.2);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            color: var(--chalk);
+            letter-spacing: 0.08em;
         }
-        .pulse-beacon {
+        .nav-status-dot {
             width: 6px;
             height: 6px;
             background: var(--laser-red);
             border-radius: 50%;
             box-shadow: 0 0 8px var(--laser-red);
-            animation: beacon-pulse 1.6s infinite ease-in-out;
+            animation: pulseDot 1.8s infinite;
         }
-        @keyframes beacon-pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(0.7); opacity: 0.35; }
-        }
-
-        .pill-links {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            list-style: none;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-        }
-        .pill-links a {
-            color: var(--tech-slate);
-            text-decoration: none;
-            transition: color 0.2s, text-shadow 0.2s;
-            position: relative;
-            padding: 4px 0;
-        }
-        .pill-links a:hover {
-            color: var(--chalk);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-        .pill-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0%;
-            height: 1.5px;
-            background: var(--laser-red);
-            transition: width 0.2s;
-        }
-        .pill-links a:hover::after {
-            width: 100%;
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
         }
 
-        .pill-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .pill-sfx-btn {
-            background: #111111;
-            border: 1px solid var(--graphite-border-light);
-            color: var(--tech-slate);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 6px 10px;
-            border-radius: 9999px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .pill-sfx-btn:hover {
-            border-color: var(--laser-red);
-            color: var(--chalk);
-        }
-        .pill-sfx-btn.active {
-            background: var(--laser-red);
-            color: #000;
-            border-color: var(--laser-red);
-            box-shadow: 0 0 12px var(--laser-red-glow);
-        }
-
-        /* CHAMFERED GEOMETRIC BUTTON (VRTL WRLD) */
-        .btn-chamfer {
-            position: relative;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            text-decoration: none;
+        .nav-cta {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 10px 18px;
-            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: pointer;
-            border: none;
-            white-space: nowrap;
-        }
-        .btn-chamfer-primary {
+            gap: 6px;
             background: var(--laser-red);
-            color: #060606;
-            box-shadow: 0 0 24px var(--laser-red-glow);
-        }
-        .btn-chamfer-primary:hover {
-            background: var(--chalk);
-            color: #060606;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(255, 255, 255, 0.4);
-        }
-        .btn-chamfer-secondary {
-            background: #101010;
-            color: var(--chalk);
-            border: 1px solid var(--graphite-border-light);
-        }
-        .btn-chamfer-secondary:hover {
-            border-color: var(--laser-red);
-            background: #161616;
-            color: #FFF;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 41, 44, 0.25);
-        }
-
-        /* CHAMFERED CARD WRAPPER TECHNIQUE (Crisp 1px borders) */
-        .chamfer-card {
-            position: relative;
-            background: var(--graphite-border);
-            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-            transition: background-color 0.25s, box-shadow 0.25s, transform 0.25s;
-            padding: 1px; /* 1px border */
-        }
-        .chamfer-card:hover {
-            background: var(--laser-red);
-            box-shadow: 0 14px 40px rgba(255, 41, 44, 0.22);
-            transform: translateY(-3px);
-        }
-        .chamfer-inner {
-            background: var(--card-bg);
-            width: 100%;
-            height: 100%;
-            clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 11px 100%, 0 calc(100% - 11px));
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-        }
-
-        /* CORNER CROSSHAIR ACCENTS */
-        .corner-crosshair {
-            position: absolute;
+            color: var(--white);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            line-height: 1;
-            color: var(--tech-dim);
-            pointer-events: none;
-            user-select: none;
-            transition: color 0.25s ease;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            padding: 7px 16px;
+            border-radius: 9999px;
+            box-shadow: 0 0 16px var(--laser-glow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
-        .chamfer-card:hover .corner-crosshair {
-            color: var(--laser-red);
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 24px var(--laser-red);
+            background: #FF4245;
         }
-        .crosshair-tl { top: 8px; left: 8px; }
-        .crosshair-tr { top: 8px; right: 16px; }
-        .crosshair-bl { bottom: 8px; left: 16px; }
-        .crosshair-br { bottom: 8px; right: 8px; }
 
-        /* SECTION BASE */
-        section.section-wrap {
-            position: relative;
-            padding: 110px 6vw;
-            max-width: 1380px;
+        /* SECTION WRAPPER */
+        .section-wrap {
+            max-width: 1320px;
             margin: 0 auto;
-            z-index: 20;
-        }
-        .section-header {
-            margin-bottom: 50px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            padding: 90px 24px;
             position: relative;
         }
-        .section-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.22em;
-            color: var(--laser-red);
-            text-transform: uppercase;
-            display: flex;
+
+        .meta-tag {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            color: var(--laser-red);
+            text-transform: uppercase;
+            margin-bottom: 16px;
         }
+        .meta-tag::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--laser-red);
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+        }
+
         .section-title {
-            font-size: clamp(28px, 3.8vw, 44px);
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(32px, 4.5vw, 54px);
             font-weight: 800;
+            line-height: 1.05;
             letter-spacing: -0.02em;
-            line-height: 1.15;
             color: var(--chalk);
             text-transform: uppercase;
+            margin-bottom: 18px;
         }
+
         .section-desc {
-            font-size: 15.5px;
-            color: var(--tech-slate);
+            font-size: 15px;
+            line-height: 1.65;
+            color: var(--slate);
             max-width: 680px;
-            line-height: 1.6;
+            font-weight: 400;
         }
 
         /* HERO SECTION */
-        section.hero {
-            position: relative;
+        .hero {
             min-height: 100vh;
-            padding-top: 135px;
-            padding-bottom: 60px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding-left: 6vw;
-            padding-right: 6vw;
-            overflow: hidden;
-            z-index: 10;
+            padding-top: 130px;
+            padding-bottom: 60px;
+            position: relative;
         }
+
+        .hero-inner {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 48px;
+            align-items: center;
+            width: 100%;
+        }
+
         .hero-left {
-            max-width: 590px;
-            z-index: 20;
             display: flex;
             flex-direction: column;
-            gap: 26px;
+            z-index: 2;
         }
-        .hero-pill {
-            align-self: flex-start;
+
+        .hero-split-words {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 28px;
+        }
+        .hero-word-row {
+            display: flex;
+            align-items: baseline;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        .display-word {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(48px, 6.2vw, 88px);
+            font-weight: 800;
+            line-height: 0.92;
+            letter-spacing: -0.04em;
+            color: var(--chalk);
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        .display-word.red-accent {
+            color: var(--laser-red);
+            text-shadow: 0 0 40px rgba(255, 41, 44, 0.45);
+        }
+        .display-word:hover {
+            color: var(--white);
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--slate);
+            max-width: 580px;
+            margin-bottom: 34px;
+        }
+        .hero-desc strong {
+            color: var(--chalk);
+            font-weight: 500;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-brutal-red {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: rgba(255, 41, 44, 0.08);
-            border: 1px solid var(--laser-red-border);
-            padding: 6px 14px;
-            border-radius: 9999px;
+            background: var(--laser-red);
+            color: var(--white);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10.5px;
+            font-size: 12px;
             font-weight: 700;
-            color: var(--laser-red);
-            letter-spacing: 0.12em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
+            text-decoration: none;
+            padding: 14px 26px;
+            clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+            box-shadow: 0 0 24px var(--laser-glow);
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
         }
-        h1.hero-title {
-            font-size: clamp(40px, 5.4vw, 68px);
-            font-weight: 900;
-            line-height: 1.04;
-            letter-spacing: -0.03em;
-            color: var(--chalk);
-            text-transform: uppercase;
+        .btn-brutal-red:hover {
+            transform: translateY(-2px);
+            background: #FF3D40;
+            box-shadow: 0 0 36px rgba(255, 41, 44, 0.7);
         }
-        .highlight-laser-red {
-            color: var(--laser-red);
-            text-shadow: 0 0 35px var(--laser-red-glow);
-        }
-        p.hero-desc {
-            font-size: 16px;
-            color: #C0C0C0;
-            line-height: 1.65;
-            max-width: 520px;
-        }
-        .hero-ctas {
-            display: flex;
+
+        .btn-brutal-outline {
+            display: inline-flex;
             align-items: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-
-        /* 3D WEBGL HERO CANVAS CONTAINER */
-        .hero-right {
-            flex: 1;
-            height: 720px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 420px;
-        }
-        #hero-webgl-canvas {
-            width: 100%;
-            height: 100%;
-            outline: none;
-        }
-        .canvas-overlay-badge {
-            position: absolute;
-            bottom: 24px;
-            right: 24px;
-            background: rgba(10, 10, 10, 0.88);
-            backdrop-filter: blur(14px);
-            border: 1px solid var(--graphite-border-light);
-            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-            padding: 12px 18px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10.5px;
-            color: var(--tech-slate);
-            pointer-events: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        }
-        .canvas-overlay-badge b {
-            color: var(--laser-red);
-        }
-
-        /* METRICS STRIP */
-        .metrics-strip {
-            position: relative;
-            z-index: 20;
-            margin: -20px auto 40px auto;
-            max-width: 88vw;
-            background: rgba(12, 12, 12, 0.92);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--graphite-border-light);
-            clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
-            padding: 26px 36px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 28px;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 1px 1px rgba(255, 41, 44, 0.15);
-        }
-        .metric-item {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            border-right: 1px solid var(--graphite-border);
-            padding-right: 24px;
-            position: relative;
-        }
-        .metric-item:last-child {
-            border-right: none;
-            padding-right: 0;
-        }
-        .metric-val {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 30px;
-            font-weight: 900;
-            color: var(--chalk);
-            display: flex;
-            align-items: baseline;
-            gap: 5px;
-        }
-        .metric-val span {
-            color: var(--laser-red);
-            font-size: 13px;
-            font-weight: 700;
-        }
-        .metric-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--tech-slate);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-        .metric-sub {
-            font-size: 11.5px;
-            color: var(--tech-dim);
-        }
-
-        /* BENTO GRID (ARCHITECTURE) */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 20px;
-        }
-        .bento-span-7 { grid-column: span 7; }
-        .bento-span-5 { grid-column: span 5; }
-        .bento-span-4 { grid-column: span 4; }
-        .bento-span-8 { grid-column: span 8; }
-        .bento-span-6 { grid-column: span 6; }
-        .bento-span-12 { grid-column: span 12; }
-
-        .card-stamp-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.12em;
-            margin-bottom: 16px;
-        }
-        .card-stamp-num {
-            color: var(--laser-red);
-            font-weight: 700;
-        }
-        .card-stamp-badge {
-            color: var(--tech-dim);
-            font-size: 10px;
-        }
-        .card-title {
-            font-size: 21px;
-            font-weight: 800;
-            color: var(--chalk);
-            margin-bottom: 10px;
-            letter-spacing: -0.01em;
-        }
-        .card-text {
-            font-size: 14px;
-            color: #A0A0A0;
-            line-height: 1.6;
-            margin-bottom: 22px;
-        }
-        .card-badge-row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .tech-pill {
-            background: #121212;
-            border: 1px solid var(--graphite-border-light);
-            color: #B4B4B4;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 9999px;
-            letter-spacing: 0.05em;
-        }
-        .tech-pill-accent {
-            border-color: var(--laser-red-border);
-            color: var(--laser-red);
-            background: rgba(255, 41, 44, 0.06);
-        }
-
-        /* CONSENSUS SIMULATOR SECTION */
-        .simulator-box {
-            background: var(--void-surface);
-            border: 1px solid var(--graphite-border);
-            clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
-            padding: 24px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-        }
-        #node-canvas {
-            width: 100%;
-            height: 340px;
-            display: block;
-            background: #040404;
-        }
-        .sim-telemetry-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 16px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--tech-slate);
-            flex-wrap: wrap;
-            gap: 12px;
-            border-top: 1px solid var(--graphite-border);
-            padding-top: 14px;
-        }
-
-        /* TOKENOMICS & EMISSIONS CALCULATOR */
-        .calc-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 24px;
-        }
-        .calc-control-group {
-            margin-bottom: 20px;
-        }
-        .calc-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            color: var(--tech-slate);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            display: flex;
-            justify-content: space-between;
-        }
-        .calc-select {
-            width: 100%;
-            padding: 12px 14px;
-            background: #111111;
-            border: 1px solid var(--graphite-border-light);
+            gap: 10px;
+            background: transparent;
             color: var(--chalk);
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
-            outline: none;
-            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-            transition: border-color 0.2s;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 13px 24px;
+            border: 1px solid var(--border-hover);
+            clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
         }
-        .calc-select:focus {
+        .btn-brutal-outline:hover {
             border-color: var(--laser-red);
-        }
-        .calc-range {
-            width: 100%;
-            accent-color: var(--laser-red);
-            height: 6px;
-            background: #1A1A1A;
-            border-radius: 4px;
-            outline: none;
-            cursor: pointer;
-        }
-        .calc-result-box {
-            background: #0A0A0A;
-            border: 1px solid var(--graphite-border-light);
-            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .calc-stat-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            border-bottom: 1px solid #161616;
-            padding-bottom: 10px;
-        }
-        .calc-stat-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--tech-slate);
-        }
-        .calc-stat-val {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--chalk);
-        }
-        .calc-stat-val.accent {
-            color: var(--laser-red);
-            font-size: 20px;
+            color: var(--white);
+            background: rgba(255, 41, 44, 0.05);
         }
 
-        /* BRAND IDENTITY MATRIX SHOWCASE (VRTL WRLD) */
-        .brand-showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 24px;
+        /* HARDWARE / MANIFOLD SCHEMATIC SHOWCASE */
+        .schematic-box {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            clip-path: polygon(0 16px, 16px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0 calc(100% - 16px));
+            padding: 2px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 41, 44, 0.06);
+            transition: border-color 0.3s ease;
         }
-        .medallion-display {
+        .schematic-box:hover {
+            border-color: rgba(255, 41, 44, 0.4);
+        }
+
+        .schematic-inner {
+            background: #09090C;
+            padding: 24px;
+            clip-path: polygon(0 14px, 14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .schematic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: var(--slate);
+        }
+        .schematic-header .status-tag {
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .schematic-header .status-tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--green);
+        }
+
+        .schematic-canvas-wrap {
+            position: relative;
             width: 100%;
-            height: 250px;
+            height: 380px;
+        }
+        #schematic-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .schematic-telemetry {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+        .tele-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .tele-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            color: var(--slate);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .tele-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--chalk);
+        }
+        .tele-val.accent {
+            color: var(--laser-red);
+        }
+
+        /* HORIZONTAL RUNNING MARQUEE */
+        .marquee-section {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: #09090D;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 12px 0;
+            display: flex;
+            position: relative;
+        }
+        .marquee-track {
+            display: flex;
+            gap: 40px;
+            animation: marquee 35s linear infinite;
+            will-change: transform;
+        }
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            color: var(--slate);
+            text-transform: uppercase;
+        }
+        .marquee-item span.highlight {
+            color: var(--chalk);
+            font-weight: 700;
+        }
+        .marquee-item span.red {
+            color: var(--laser-red);
+            font-weight: 700;
+        }
+        .marquee-bullet {
+            color: var(--laser-red);
+            font-size: 9px;
+        }
+
+        /* PROTOCOL ARCHITECTURE (SERVICES GRID) */
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+        @media (max-width: 900px) {
+            .arch-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .arch-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 36px 32px;
+            clip-path: polygon(0 16px, 16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+            position: relative;
+            transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .arch-card:hover {
+            border-color: rgba(255, 41, 44, 0.4);
+            transform: translateY(-3px);
+            background: var(--bg-card-hover);
+        }
+        .arch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--laser-red);
+            opacity: 0;
+            transition: opacity 0.25s ease, width 0.25s ease;
+        }
+        .arch-card:hover::before {
+            opacity: 1;
+            width: 90px;
+        }
+
+        .card-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .card-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--laser-red);
+            letter-spacing: 0.12em;
+        }
+        .card-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            color: var(--slate);
+            border: 1px solid var(--border);
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .card-heading {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--chalk);
+            margin-bottom: 14px;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+        .card-text {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--slate);
+            margin-bottom: 24px;
+        }
+
+        .card-footer-metrics {
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .card-metric-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--chalk-dim);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        .card-metric-pill strong {
+            color: var(--laser-red);
+        }
+
+        /* BYZANTINE SIMULATOR & TERMINAL */
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 28px;
+            margin-top: 48px;
+        }
+        @media (max-width: 1024px) {
+            .sim-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sim-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            clip-path: polygon(0 16px, 16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .sim-box-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            color: var(--laser-red);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .node-lattice {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
+            padding: 18px;
+            background: #09090C;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+        .node-tile {
+            aspect-ratio: 1;
+            background: #14141A;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            margin: 10px 0 20px 0;
-            background: radial-gradient(circle, rgba(255, 41, 44, 0.16) 0%, transparent 70%);
-        }
-        .medallion-display img {
-            max-height: 220px;
-            max-width: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 25px rgba(255, 41, 44, 0.5));
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s;
-        }
-        .medallion-display:hover img {
-            transform: scale(1.06) rotate(3deg);
-            filter: drop-shadow(0 0 38px rgba(255, 41, 44, 0.75));
-        }
-
-        .cards-preview-wrap {
-            position: relative;
-            width: 100%;
-            border: 1px solid var(--graphite-border-light);
-            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-            overflow: hidden;
-            background: #050505;
-            margin-bottom: 18px;
-        }
-        .cards-preview-wrap img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-        .cards-preview-wrap:hover img {
-            transform: scale(1.02);
-        }
-
-        .spec-list {
-            list-style: none;
-            margin-top: 12px;
-        }
-        .spec-list li {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--graphite-border);
-            display: flex;
-            justify-content: space-between;
+            font-size: 8px;
+            color: var(--dark-slate);
+            transition: all 0.25s ease;
+            position: relative;
         }
-        .spec-list li .label { color: var(--tech-slate); }
-        .spec-list li .val { color: var(--chalk); font-weight: 600; }
-        .spec-list li .accent { color: var(--laser-red); font-weight: 700; }
-
-        /* PALETTE SWATCHES */
-        .swatch-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-top: 16px;
+        .node-tile.honest {
+            background: rgba(0, 230, 118, 0.08);
+            border-color: rgba(0, 230, 118, 0.3);
+            color: var(--green);
         }
-        .swatch-box {
-            background: #111111;
-            border: 1px solid var(--graphite-border-light);
-            padding: 10px;
-            clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
-            transition: border-color 0.2s;
-            cursor: pointer;
-        }
-        .swatch-box:hover {
+        .node-tile.byzantine {
+            background: rgba(255, 41, 44, 0.2);
             border-color: var(--laser-red);
+            color: var(--white);
+            box-shadow: 0 0 10px rgba(255, 41, 44, 0.6);
+            transform: scale(1.08);
+            z-index: 2;
         }
-        .swatch-color {
-            height: 38px;
-            margin-bottom: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .swatch-name {
-            font-size: 10.5px;
-            font-weight: 700;
-            color: var(--chalk);
-            white-space: nowrap;
-        }
-        .swatch-hex {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9.5px;
-            color: var(--tech-slate);
+        .node-tile.slashed {
+            background: #240a0b;
+            border-color: #551214;
+            color: #882226;
+            text-decoration: line-through;
         }
 
-        /* INTERACTIVE 33RD PROTOCOL TERMINAL */
-        .terminal-wrap {
-            background: #070707;
-            border: 1px solid var(--graphite-border-light);
-            clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
-            overflow: hidden;
-            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.9);
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .terminal-top {
-            background: #0E0E0E;
-            padding: 12px 20px;
-            border-bottom: 1px solid var(--graphite-border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .term-dots {
-            display: flex;
-            gap: 6px;
-        }
-        .term-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-        .term-dot.r { background: #FF292C; }
-        .term-dot.y { background: #555555; }
-        .term-dot.g { background: #222222; }
-        .terminal-title {
-            font-size: 11px;
-            color: var(--tech-slate);
-            letter-spacing: 0.1em;
-        }
-        .terminal-body {
-            padding: 24px;
-            height: 380px;
-            overflow-y: auto;
+        .sim-controls {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            font-size: 12.5px;
-            line-height: 1.6;
-            color: #CFCFCF;
-            background: #040404;
+            gap: 14px;
         }
-        .term-line-output {
-            color: #A0A0A0;
-            white-space: pre-wrap;
+        .sim-slider-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--chalk);
         }
-        .term-prompt-row {
+        .sim-range {
+            width: 100%;
+            height: 4px;
+            accent-color: var(--laser-red);
+            background: #1C1C26;
+            border-radius: 2px;
+            margin-top: 8px;
+        }
+
+        .sim-attack-select {
+            background: #0B0B0E;
+            border: 1px solid var(--border);
+            color: var(--chalk);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            padding: 10px 12px;
+            border-radius: 4px;
+            outline: none;
+            width: 100%;
+        }
+        .sim-attack-select:focus {
+            border-color: var(--laser-red);
+        }
+
+        .sim-status-banner {
+            background: #09090D;
+            border: 1px solid var(--border);
+            padding: 14px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+        }
+        .sim-status-head {
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-top: 4px;
         }
-        .term-prompt-symbol {
+        .sim-status-head.success { color: var(--green); }
+        .sim-status-head.alert { color: var(--laser-red); }
+
+        /* Terminal Console */
+        .terminal-box {
+            background: #09090C;
+            border: 1px solid var(--border);
+            clip-path: polygon(0 16px, 16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+            display: flex;
+            flex-direction: column;
+            height: 520px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+        }
+        .terminal-topbar {
+            background: #111116;
+            border-bottom: 1px solid var(--border);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            color: var(--slate);
+        }
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .terminal-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #252530;
+        }
+        .terminal-dot.red { background: #FF292C; }
+
+        .terminal-output {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            line-height: 1.6;
+            color: #C0C0C8;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+        .terminal-output::-webkit-scrollbar {
+            width: 4px;
+        }
+        .terminal-output::-webkit-scrollbar-thumb {
+            background: var(--border);
+        }
+
+        .terminal-line {
+            margin-bottom: 4px;
+            word-break: break-all;
+        }
+        .terminal-line.cmd { color: var(--laser-red); font-weight: 600; }
+        .terminal-line.highlight { color: #FFFFFF; font-weight: 600; }
+        .terminal-line.success { color: var(--green); }
+        .terminal-line.warn { color: #FFB300; }
+        .terminal-line.dim { color: var(--slate); }
+
+        .terminal-input-wrap {
+            border-top: 1px solid var(--border);
+            padding: 10px 14px;
+            background: #0E0E12;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .terminal-prompt {
             color: var(--laser-red);
-            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
         }
-        .term-input {
+        .terminal-input {
+            flex: 1;
             background: transparent;
             border: none;
             outline: none;
             color: var(--chalk);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12.5px;
-            flex-grow: 1;
-        }
-        .term-chips {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            padding: 12px 20px;
-            background: #0A0A0A;
-            border-top: 1px solid var(--graphite-border);
-        }
-        .term-chip {
-            background: #141414;
-            border: 1px solid var(--graphite-border-light);
-            color: #D0D0D0;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            padding: 5px 11px;
-            clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-        .term-chip:hover {
-            border-color: var(--laser-red);
-            color: #FFF;
-            background: #1D1D1D;
+            font-size: 12px;
         }
 
-        /* FOOTER */
-        footer.site-footer {
-            border-top: 1px solid var(--graphite-border);
-            background: #040404;
-            padding: 80px 6vw 40px;
-            position: relative;
-            z-index: 20;
+        .quick-chips {
+            display: flex;
+            gap: 6px;
+            padding: 8px 14px;
+            background: #09090C;
+            border-top: 1px solid var(--border);
+            overflow-x: auto;
         }
-        .footer-grid {
+        .chip {
+            background: #14141B;
+            border: 1px solid var(--border);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            color: var(--slate);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .chip:hover {
+            color: var(--chalk);
+            border-color: var(--laser-red);
+            background: rgba(255, 41, 44, 0.08);
+        }
+
+        /* YIELD CALCULATOR */
+        .calc-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 50px;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 28px;
+            margin-top: 48px;
         }
-        .footer-brand {
+        @media (max-width: 900px) {
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .calc-panel-left {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            clip-path: polygon(0 16px, 16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+            padding: 32px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            max-width: 380px;
+            gap: 24px;
         }
-        .footer-desc {
-            font-size: 13px;
-            color: var(--tech-slate);
-            line-height: 1.6;
-        }
-        .footer-col-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--chalk);
-            letter-spacing: 0.18em;
-            margin-bottom: 18px;
-            text-transform: uppercase;
-        }
-        .footer-links {
-            list-style: none;
+
+        .calc-field {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            font-size: 13px;
         }
-        .footer-links a {
-            color: var(--tech-slate);
-            text-decoration: none;
-            transition: color 0.2s;
+        .calc-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--chalk-dim);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
         }
-        .footer-links a:hover {
+        .calc-select {
+            background: #09090D;
+            border: 1px solid var(--border);
+            color: var(--chalk);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            padding: 12px 14px;
+            border-radius: 4px;
+            outline: none;
+            width: 100%;
+        }
+        .calc-select:focus {
+            border-color: var(--laser-red);
+        }
+
+        .calc-slider {
+            width: 100%;
+            height: 6px;
+            accent-color: var(--laser-red);
+            background: #1C1C26;
+            border-radius: 3px;
+        }
+
+        .calc-panel-right {
+            background: #0A0A0E;
+            border: 1px solid var(--border);
+            clip-path: polygon(0 16px, 16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .calc-stat-box {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .calc-metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+        .calc-metric-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--slate);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .calc-metric-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--chalk);
+        }
+        .calc-metric-val.highlight {
+            font-size: 32px;
             color: var(--laser-red);
+            text-shadow: 0 0 20px rgba(255, 41, 44, 0.4);
         }
-        .footer-bottom {
-            border-top: 1px solid var(--graphite-border);
-            padding-top: 28px;
+
+        .calc-disclaimer {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            color: var(--dark-slate);
+            line-height: 1.5;
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+        }
+
+        /* MASSIVE CALL TO ACTION SECTION */
+        .cta-section {
+            max-width: 1320px;
+            margin: 40px auto 100px;
+            padding: 0 24px;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, #101015 0%, #08080A 100%);
+            border: 1px solid rgba(255, 41, 44, 0.3);
+            clip-path: polygon(0 20px, 20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px));
+            padding: 72px 48px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(255, 41, 44, 0.08);
+            overflow: hidden;
+        }
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 41, 44, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(32px, 4.8vw, 64px);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            color: var(--chalk);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .cta-desc {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--slate);
+            max-width: 640px;
+            margin: 0 auto 36px;
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        /* BRUTALIST FOOTER */
+        .footer {
+            border-top: 1px solid var(--border);
+            background: #050507;
+            padding: 70px 24px 40px;
+            position: relative;
+        }
+        .footer-inner {
+            max-width: 1320px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 40px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid var(--border);
+        }
+        @media (max-width: 900px) {
+            .footer-inner {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 600px) {
+            .footer-inner {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .footer-brand-title {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 10px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10.5px;
-            color: var(--tech-dim);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--chalk);
+        }
+        .footer-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--slate);
+            max-width: 320px;
+        }
+        .footer-domain-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--laser-red);
+            letter-spacing: 0.08em;
+            margin-top: 6px;
+        }
+
+        .footer-heading {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            color: var(--chalk);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .footer-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--slate);
+            text-decoration: none;
+            letter-spacing: 0.06em;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+        .footer-link:hover {
+            color: var(--laser-red);
+            transform: translateX(3px);
+        }
+
+        .footer-contract-box {
+            background: #09090D;
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            line-height: 1.5;
+            color: var(--slate);
+            word-break: break-all;
+        }
+        .footer-contract-box strong {
+            color: var(--chalk);
+        }
+
+        .footer-bottom {
+            max-width: 1320px;
+            margin: 30px auto 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--dark-slate);
+            letter-spacing: 0.08em;
             flex-wrap: wrap;
-            gap: 14px;
+            gap: 16px;
+        }
+        .footer-bottom-copy {
+            color: var(--slate);
         }
 
         /* RESPONSIVE DESIGN */
-        @media (max-width: 1120px) {
-            .pill-links { display: none; }
-            section.hero { flex-direction: column; padding-top: 140px; text-align: center; }
-            .hero-left { align-items: center; max-width: 100%; }
-            .hero-right { width: 100%; height: 520px; min-width: unset; }
-            .metrics-strip { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-            .bento-card { grid-column: span 12 !important; }
-            .calc-grid { grid-template-columns: 1fr; }
-            .brand-showcase-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width: 640px) {
-            .pill-navbar-container { width: calc(100% - 24px); }
-            .pill-status-badge { display: none; }
-            .metrics-strip { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .fixed-watermark { display: none; }
-            .swatch-grid { grid-template-columns: repeat(2, 1fr); }
+        @media (max-width: 900px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .schematic-canvas-wrap {
+                height: 300px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- MINIMALIST LASER RED RETICLE CURSOR FOLLOWER -->
-    <div id="custom-cursor-dot"></div>
-    <div id="custom-cursor-follower"></div>
+    <!-- CUSTOM RETRO-TECH CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
 
-    <!-- TECHNICAL WATERMARKS (CORNERS) -->
-    <div class="fixed-watermark watermark-tl">+ 33RD TREE LABS // SINGULARITY FABRIC</div>
-    <div class="fixed-watermark watermark-tr">[ SOLANA // DEPIN ] +</div>
-    <div class="fixed-watermark watermark-bl">+ COORD: 37.7749°N, 122.4194°W</div>
-    <div class="fixed-watermark watermark-br">[ LATENCY: 12.0s ] +</div>
-
-    <!-- FLOATING GLASSMORHPIC PILL NAVBAR (VRTL WRLD) -->
-    <div class="pill-navbar-container">
-        <header class="pill-navbar">
-            <a href="#hero" class="pill-left">
-                <div class="pill-logo-wrap">
-                    <img src="assets/nav_logo.png" alt="33rd Tree Labs Nav Mark">
+    <!-- FLOATING PILL NAVBAR -->
+    <div class="nav-wrapper">
+        <nav class="nav-pill">
+            <a href="#hero" class="nav-brand">
+                <div class="nav-logo-box">
+                    <img src="assets/nav_logo.png" alt="33rd Tree Labs Wireframe">
                 </div>
-                <span class="pill-brand-title">33RD TREE LABS</span>
-                <span class="pill-status-badge">
-                    <span class="pulse-beacon"></span>
-                    <span>[ MAINNET CANARY ]</span>
-                </span>
+                <span class="nav-title">33RD TREE LABS</span>
             </a>
 
-            <ul class="pill-links">
-                <li><a href="#architecture">PROTOCOL</a></li>
-                <li><a href="nodes.html">NODES</a></li>
-                <li><a href="tokenomics.html">TOKENOMICS</a></li>
-                <li><a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank">WHITEPAPER</a></li>
-                <li><a href="#calculator">CALCULATOR</a></li>
-                <li><a href="#brand">BRAND</a></li>
-            </ul>
-
-            <div class="pill-right">
-                <button class="pill-sfx-btn" id="audio-toggle" onclick="toggleAudio()">[ SFX: OFF ]</button>
-                <a href="#interactive-terminal" class="btn-chamfer btn-chamfer-primary" onclick="playSfx('click')">
-                    [ LAUNCH APP ]
-                </a>
+            <div class="nav-links">
+                <a href="#protocol" class="nav-link">PROTOCOL</a>
+                <a href="#simulator" class="nav-link">SIMULATOR</a>
+                <a href="#calculator" class="nav-link">YIELD</a>
+                <a href="nodes.html" class="nav-link">NODES</a>
+                <a href="tokenomics.html" class="nav-link">TOKENOMICS</a>
+                <a href="research.html" class="nav-link">RESEARCH</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="nav-link">WHITEPAPER (V4.0)</a>
             </div>
-        </header>
+
+            <div class="nav-status">
+                <span class="nav-status-dot"></span>
+                <span>MAINNET CANARY</span>
+            </div>
+
+            <a href="nodes.html" class="nav-cta">DEPLOY GPU</a>
+        </nav>
     </div>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION (VRTL WRLD BRUTALIST DISPLAY + HARDWARE SCHEMATIC HUD) -->
     <section class="hero" id="hero">
-        <div class="hero-left">
-            <div class="hero-pill">
-                <span class="pulse-beacon"></span>
-                <span>PROOF OF INTELLIGENCE // MAINNET CANARY</span>
+        <div class="hero-inner">
+            <div class="hero-left">
+                <div class="meta-tag">( 01 ) // PROTOCOL OVERVIEW &bull; 33RDTREELABS.TECH</div>
+                
+                <!-- Massive Split Brutalist Display Typography -->
+                <div class="hero-split-words">
+                    <div class="hero-word-row">
+                        <span class="display-word">WE</span>
+                        <span class="display-word">COORDINATE</span>
+                    </div>
+                    <div class="hero-word-row">
+                        <span class="display-word">DECENTRALIZED</span>
+                    </div>
+                    <div class="hero-word-row">
+                        <span class="display-word red-accent">COMPUTE</span>
+                        <span class="display-word">AT SCALE</span>
+                    </div>
+                </div>
+
+                <p class="hero-desc">
+                    A Byzantine-Resilient Verifiable DePIN Compute Fabric anchored on <strong>Solana</strong>. 
+                    Uniting hierarchical <strong>Tensor Arbor</strong> cluster orchestration with zero-knowledge neural evaluations (KZG polynomial commitments) to power trustless machine intelligence.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="nodes.html" class="btn-brutal-red">
+                        <span>DEPLOY GPU CAPACITY</span>
+                        <span>&rarr;</span>
+                    </a>
+                    <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="btn-brutal-outline">
+                        <span>READ CANARY SPEC v4.0</span>
+                        <span>&darr;</span>
+                    </a>
+                </div>
             </div>
 
-            <h1 class="hero-title">
-                DECENTRALIZED <br>
-                <span class="highlight-laser-red">COMPUTE FABRIC</span> <br>
-                FOR POST-AGI.
-            </h1>
+            <!-- HIGH-TECH CHAMFERED HARDWARE / MANIFOLD SCHEMATIC SHOWCASE -->
+            <div class="schematic-box">
+                <div class="schematic-inner">
+                    <div class="schematic-header">
+                        <span>[ TENSOR ARBOR MANIFOLD // v4.0 ]</span>
+                        <span class="status-tag">QUORUM ACTIVE (K=64)</span>
+                    </div>
 
-            <p class="hero-desc">
-                By pairing cryptographic consensus with zero-knowledge inference and Proof of Intelligence, 33rd Tree Labs turns global tensor compute into an immutable public utility on Solana.
-            </p>
+                    <div class="schematic-canvas-wrap">
+                        <canvas id="schematic-canvas"></canvas>
+                    </div>
 
-            <div class="hero-ctas">
-                <a href="#interactive-terminal" class="btn-chamfer btn-chamfer-primary" onclick="playSfx('click')">
-                    <span>[ LAUNCH TERMINAL ]</span>
-                    <span>→</span>
-                </a>
-                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="btn-chamfer btn-chamfer-secondary" onclick="playSfx('click')">
-                    <span>[ VIEW WHITEPAPER ]</span>
-                </a>
-                <a href="nodes.html" class="btn-chamfer btn-chamfer-secondary" onclick="playSfx('click')">
-                    <span>[ CONNECT NODE ]</span>
-                </a>
-            </div>
-        </div>
-
-        <div class="hero-right">
-            <canvas id="hero-webgl-canvas"></canvas>
-
-            <div class="canvas-overlay-badge">
-                <div><b>SINGULARITY TENSOR ARBOR</b> [3D LIVE]</div>
-                <div>Left-click &amp; drag to orbit 360° | Scroll to zoom</div>
-                <div style="font-size:9.5px; color:#666; margin-top:2px;">
-                    r(y) = r₀ + A·(e^(ky) - 1)/(e^k - 1) // [ k=3.8, R=1.50, r₀=0.09 ]
+                    <div class="schematic-telemetry">
+                        <div class="tele-stat">
+                            <span class="tele-label">P99 Latency</span>
+                            <span class="tele-val accent" id="tele-lat">14.2ms</span>
+                        </div>
+                        <div class="tele-stat">
+                            <span class="tele-label">Solana Anchor</span>
+                            <span class="tele-val" id="tele-slot">Slot #312M</span>
+                        </div>
+                        <div class="tele-stat">
+                            <span class="tele-label">KZG Verification</span>
+                            <span class="tele-val accent">&lt; 1.84ms</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- LIVE TELEMETRY STATS STRIP -->
-    <div class="metrics-strip">
-        <div class="metric-item">
-            <div class="metric-val" id="stat-tflops">142.8 <span>PFLOPS</span></div>
-            <div class="metric-label">Decentralized Compute</div>
-            <div class="metric-sub">Distributed H100 &amp; B200 tensor cluster fabric</div>
-        </div>
-        <div class="metric-item">
-            <div class="metric-val" id="stat-latency">1.42 <span>MS</span></div>
-            <div class="metric-label">ZK Verification Latency</div>
-            <div class="metric-sub">Sub-millisecond Halo2 / Plonky3 proofs</div>
-        </div>
-        <div class="metric-item">
-            <div class="metric-val" id="stat-nodes">3,333 <span>NODES</span></div>
-            <div class="metric-label">Validator Network</div>
-            <div class="metric-sub">Across 42 Tier-4 subterranean compute facilities</div>
-        </div>
-        <div class="metric-item">
-            <div class="metric-val" id="stat-uptime">99.998 <span>%</span></div>
-            <div class="metric-label">Consensus Finality</div>
-            <div class="metric-sub">Slashing-resistant Byzantine agreement on Solana</div>
+    <!-- HORIZONTAL RUNNING TELEMETRY TICKER / MARQUEE -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>NETWORK STATUS:</span>
+                <span class="highlight">MAINNET CANARY</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>ACTIVE GPU CLUSTERS:</span>
+                <span class="red">33,492 TIER-1 SXM5</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>AGGREGATE CAPACITY:</span>
+                <span class="highlight">142.8 EFLOPS (FP8)</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>CONSENSUS QUORUM:</span>
+                <span class="highlight">2/3 + 1 BLS AGGREGATE</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>SLASHING INCIDENTS:</span>
+                <span class="red">0.00% (STABLE)</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>BUYBACK-BURN CRANK:</span>
+                <span class="highlight">10% CONTINUOUS BURN</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>SOLANA SETTLEMENT CADENCE:</span>
+                <span class="red">400ms FINALITY</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>DOMAIN:</span>
+                <span class="highlight">33RDTREELABS.TECH</span>
+            </div>
+            <!-- Duplicate for infinite seamless marquee loop -->
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>NETWORK STATUS:</span>
+                <span class="highlight">MAINNET CANARY</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>ACTIVE GPU CLUSTERS:</span>
+                <span class="red">33,492 TIER-1 SXM5</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>AGGREGATE CAPACITY:</span>
+                <span class="highlight">142.8 EFLOPS (FP8)</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>CONSENSUS QUORUM:</span>
+                <span class="highlight">2/3 + 1 BLS AGGREGATE</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>SLASHING INCIDENTS:</span>
+                <span class="red">0.00% (STABLE)</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>BUYBACK-BURN CRANK:</span>
+                <span class="highlight">10% CONTINUOUS BURN</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>SOLANA SETTLEMENT CADENCE:</span>
+                <span class="red">400ms FINALITY</span>
+            </div>
+            <div class="marquee-item">
+                <span class="marquee-bullet">&bull;</span>
+                <span>DOMAIN:</span>
+                <span class="highlight">33RDTREELABS.TECH</span>
+            </div>
         </div>
     </div>
 
-    <!-- PROTOCOL ARCHITECTURE (BENTO GRID) -->
-    <section class="section-wrap" id="architecture">
-        <div class="section-header">
-            <span class="section-tag">+ 01 // ARCHITECTURE &bull; [ SOLANA // DEPIN ]</span>
-            <h2 class="section-title">ENGINEERED FOR THE POST-AGI HORIZON</h2>
-            <p class="section-desc">
-                Traditional AI compute is trapped in closed silicon silos. 33rd Tree Labs liberates tensor operations through cryptographically verified peer coordination.
-            </p>
-        </div>
+    <!-- PROTOCOL ARCHITECTURE (VRTL WRLD SERVICES GRID) -->
+    <section class="section-wrap" id="protocol">
+        <div class="meta-tag">( 02 ) // ARCHITECTURE MATRIX &bull; PILLARS</div>
+        <h2 class="section-title">ENGINEERED FOR UNCOMPROMISING INTEGRITY</h2>
+        <p class="section-desc">
+            A fault-tolerant computing fabric designed to guarantee deterministic verification across untrusted distributed hardware without performance degradation.
+        </p>
 
-        <div class="bento-grid">
-            <!-- 01 // Consensus -->
-            <div class="chamfer-card bento-span-7">
-                <span class="corner-crosshair crosshair-tl">+</span>
-                <span class="corner-crosshair crosshair-tr">+</span>
-                <span class="corner-crosshair crosshair-bl">+</span>
-                <span class="corner-crosshair crosshair-br">+</span>
-                <div class="chamfer-inner">
-                    <div>
-                        <div class="card-stamp-row">
-                            <span class="card-stamp-num">+ 01.1 // CONSENSUS</span>
-                            <span class="card-stamp-badge">[ HARDWARE-GATED ]</span>
-                        </div>
-                        <h3 class="card-title">Proof of Intelligence (PoI) Engine</h3>
-                        <p class="card-text">
-                            Replaces wasteful SHA-256 hash grinding with verifiable transformer tensor matrix multiplications. Validators earn consensus weight by computing real zero-knowledge forward passes and verifiable LLM inference batches.
-                        </p>
+        <div class="arch-grid">
+            <!-- Pillar 01 -->
+            <div class="arch-card">
+                <div>
+                    <div class="card-meta-row">
+                        <span class="card-number">[ 01 ]</span>
+                        <span class="card-badge">COORDINATION</span>
                     </div>
-                    <div class="card-badge-row">
-                        <span class="tech-pill tech-pill-accent">Halo2 SNARKs</span>
-                        <span class="tech-pill">BN254 Pairings</span>
-                        <span class="tech-pill">Slashing Collateral</span>
-                        <span class="tech-pill">FP8 Tensor Cores</span>
-                    </div>
+                    <h3 class="card-heading">TENSOR ARBOR TOPOLOGY</h3>
+                    <p class="card-text">
+                        Hierarchical tree manifold partitioning distributed model parameters across heterogeneous GPU nodes. Dynamically matches pipeline stages and tensor parallelism to physical interconnect latencies, preventing inter-node bottlenecks.
+                    </p>
+                </div>
+                <div class="card-footer-metrics">
+                    <span class="card-metric-pill">ROUTING: <strong>NON-EUCLIDEAN DAG</strong></span>
+                    <span class="card-metric-pill">BANDWIDTH: <strong>900 GB/s NVLINK</strong></span>
                 </div>
             </div>
 
-            <!-- 02 // Cryptography -->
-            <div class="chamfer-card bento-span-5">
-                <span class="corner-crosshair crosshair-tl">+</span>
-                <span class="corner-crosshair crosshair-tr">+</span>
-                <span class="corner-crosshair crosshair-bl">+</span>
-                <span class="corner-crosshair crosshair-br">+</span>
-                <div class="chamfer-inner">
-                    <div>
-                        <div class="card-stamp-row">
-                            <span class="card-stamp-num">+ 01.2 // PRIVACY</span>
-                            <span class="card-stamp-badge">[ O(1) PROOF ]</span>
-                        </div>
-                        <h3 class="card-title">Zero-Knowledge Tensor Inference</h3>
-                        <p class="card-text">
-                            Execute proprietary neural weights on untrusted global nodes with zero weight leakage. Clients verify model outputs in O(1) time without exposing private inputs or architecture.
-                        </p>
+            <!-- Pillar 02 -->
+            <div class="arch-card">
+                <div>
+                    <div class="card-meta-row">
+                        <span class="card-number">[ 02 ]</span>
+                        <span class="card-badge">VERIFICATION</span>
                     </div>
-                    <div class="card-badge-row">
-                        <span class="tech-pill tech-pill-accent">zk-SNARKs</span>
-                        <span class="tech-pill">Plonky3</span>
-                        <span class="tech-pill">Weight Masking</span>
-                    </div>
+                    <h3 class="card-heading">PROOF OF INFERENCE (POI)</h3>
+                    <p class="card-text">
+                        Zero-knowledge neural evaluations pairing randomized Chebyshev Activation Polynomial (CAP-FFN) challenges with BN254 KZG polynomial commitment schemes. Enables sub-2ms cryptographic verification directly inside Solana smart contracts.
+                    </p>
+                </div>
+                <div class="card-footer-metrics">
+                    <span class="card-metric-pill">SCHEME: <strong>BN254 KZG</strong></span>
+                    <span class="card-metric-pill">SOLANA ON-CHAIN: <strong>&lt; 200,000 COMPUTE UNITS</strong></span>
                 </div>
             </div>
 
-            <!-- 03 // Routing -->
-            <div class="chamfer-card bento-span-4">
-                <span class="corner-crosshair crosshair-tl">+</span>
-                <span class="corner-crosshair crosshair-tr">+</span>
-                <span class="corner-crosshair crosshair-bl">+</span>
-                <span class="corner-crosshair crosshair-br">+</span>
-                <div class="chamfer-inner">
-                    <div>
-                        <div class="card-stamp-row">
-                            <span class="card-stamp-num">+ 01.3 // TOPOLOGY</span>
-                            <span class="card-stamp-badge">[ LATENCY: 12.0s ]</span>
-                        </div>
-                        <h3 class="card-title">Exponential Plunge Fabric</h3>
-                        <p class="card-text">
-                            Dynamic hyperboloid coordinate topology matches traffic spikes with ultra-low latency routing across global clusters, bounding diameter to 4.21 mean hops.
-                        </p>
+            <!-- Pillar 03 -->
+            <div class="arch-card">
+                <div>
+                    <div class="card-meta-row">
+                        <span class="card-number">[ 03 ]</span>
+                        <span class="card-badge">CONSENSUS</span>
                     </div>
-                    <div class="card-badge-row">
-                        <span class="tech-pill tech-pill-accent">Hyperboloid Mesh</span>
-                        <span class="tech-pill">Sub-10ms P99</span>
-                    </div>
+                    <h3 class="card-heading">BYZANTINE QUORUM MATRIX</h3>
+                    <p class="card-text">
+                        Asynchronous BFT consensus withstanding up to f &lt; K/3 malicious, compromised, or colluding nodes. Immediate automated slashing of bonded $33RD collateral upon mathematical detection of gradient poisoning or equivocation.
+                    </p>
+                </div>
+                <div class="card-footer-metrics">
+                    <span class="card-metric-pill">TOLERANCE: <strong>f &lt; K/3</strong></span>
+                    <span class="card-metric-pill">COMMITTEE: <strong>K=64 VALIDATORS</strong></span>
                 </div>
             </div>
 
-            <!-- 04 // Ledger -->
-            <div class="chamfer-card bento-span-8">
-                <span class="corner-crosshair crosshair-tl">+</span>
-                <span class="corner-crosshair crosshair-tr">+</span>
-                <span class="corner-crosshair crosshair-bl">+</span>
-                <span class="corner-crosshair crosshair-br">+</span>
-                <div class="chamfer-inner">
-                    <div>
-                        <div class="card-stamp-row">
-                            <span class="card-stamp-num">+ 01.4 // CHECKPOINTS</span>
-                            <span class="card-stamp-badge">[ BYZANTINE FAULT TOLERANT ]</span>
-                        </div>
-                        <h3 class="card-title">Immutable Singularity Model Checkpoint Ledger</h3>
-                        <p class="card-text">
-                            Decentralized, content-addressed tensor storage anchored across cryptographic shards on Arweave and Solana. Checkpoints are signed by validator multisig, guaranteeing byte-level model provenance and resilience against weight poisoning.
-                        </p>
+            <!-- Pillar 04 -->
+            <div class="arch-card">
+                <div>
+                    <div class="card-meta-row">
+                        <span class="card-number">[ 04 ]</span>
+                        <span class="card-badge">TOKENOMICS</span>
                     </div>
-                    <div class="card-badge-row">
-                        <span class="tech-pill tech-pill-accent">Arweave Sharding</span>
-                        <span class="tech-pill">PoI Multi-Sig</span>
-                        <span class="tech-pill">Anti-Poisoning Filter</span>
-                        <span class="tech-pill">Merkle Trees</span>
-                    </div>
+                    <h3 class="card-heading">DEFLATIONARY BUYBACK CRANK</h3>
+                    <p class="card-text">
+                        Hard cap of 33,000,000 $33RD with quadrennial halving cycles. 10% of all commercial GPU inference revenue is routed into an autonomous smart contract crank that executes continuous market buybacks and irrevocable token burns.
+                    </p>
+                </div>
+                <div class="card-footer-metrics">
+                    <span class="card-metric-pill">SUPPLY: <strong>33,000,000 $33RD CAP</strong></span>
+                    <span class="card-metric-pill">BURN CRANK: <strong>10% REVENUE CAPTURE</strong></span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- REAL-TIME CONSENSUS SIMULATOR -->
-    <section class="section-wrap" id="consensus">
-        <div class="section-header">
-            <span class="section-tag">+ 02 // CONSENSUS &bull; [ REAL-TIME TELEMETRY ]</span>
-            <h2 class="section-title">REAL-TIME TENSOR VERIFICATION MESH</h2>
-            <p class="section-desc">
-                Watch 33rd Tree Labs validator nodes coordinate zero-knowledge matrix multiplication proofs across the global hyperboloid topology.
-            </p>
-        </div>
+    <!-- INTERACTIVE BYZANTINE SIMULATOR & SOLANA ANCHOR TERMINAL -->
+    <section class="section-wrap" id="simulator">
+        <div class="meta-tag">( 03 ) // BYZANTINE AUDIT &bull; LIVE SIMULATOR &bull; TERMINAL</div>
+        <h2 class="section-title">ADVERSARIAL CONSENSUS &amp; CLI ENGINE</h2>
+        <p class="section-desc">
+            Test the mathematical guarantees of the Singularity Protocol. Inject malicious adversaries, evaluate Byzantine resilience, and query on-chain Solana state via the live command console.
+        </p>
 
-        <div class="simulator-box">
-            <canvas id="node-canvas"></canvas>
-            <div class="sim-telemetry-bar">
-                <span>STATUS: <b style="color:var(--status-green)">[ CONSENSUS ROUND ACTIVE ]</b></span>
-                <span>DIFFICULTY: <b style="color:var(--laser-red)">33.84 TERA-OPS</b></span>
-                <span>EPOCH: <b style="color:var(--chalk)">#338,912</b></span>
-                <span>BLOCK: <b style="color:var(--laser-red)">#3,389,124 [ZK-PROVEN BN254]</b></span>
+        <div class="sim-grid">
+            <!-- Left: Visual Byzantine Committee Lattice -->
+            <div class="sim-box">
+                <div class="sim-box-title">
+                    <span>VALIDATOR COMMITTEE LATTICE (K=64)</span>
+                    <span id="byz-ratio-tag" style="color:var(--chalk);">f = 4 / 64 (6.2%)</span>
+                </div>
+
+                <!-- 8x8 Interactive Node Lattice -->
+                <div class="node-lattice" id="node-matrix">
+                    <!-- 64 Nodes dynamically generated in JS -->
+                </div>
+
+                <div class="sim-controls">
+                    <div>
+                        <div class="sim-slider-row">
+                            <span>BYZANTINE ADVERSARY COUNT (f)</span>
+                            <span id="byz-count-text" style="color:var(--laser-red); font-weight:700;">f = 4 (Safe)</span>
+                        </div>
+                        <input type="range" id="byz-slider" class="sim-range" min="0" max="30" value="4" oninput="updateByzantineSim()">
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                        <span class="sim-slider-row"><span>ATTACK VECTOR SIMULATION</span></span>
+                        <select id="attack-vector-select" class="sim-attack-select" onchange="updateByzantineSim()">
+                            <option value="gradient-poison">Malicious Gradient Poisoning (CAP-FFN Failure)</option>
+                            <option value="equivocation">Equivocation &bull; Dual Block Commitment</option>
+                            <option value="weight-tamper">Model Weight Tampering &bull; Silent Bit-Rot</option>
+                            <option value="sybil-stall">Coordinated Sybil Denial of Service (Stall)</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-brutal-red" onclick="runConsensusRound()" style="width:100%; justify-content:center; padding:12px; cursor:pointer;">
+                        EXECUTE CONSENSUS ROUND &rarr;
+                    </button>
+
+                    <div class="sim-status-banner" id="sim-status-box">
+                        <div class="sim-status-head success" id="sim-status-title">
+                            <span>&check; CONSENSUS REACHED: QUORUM VALIDATED</span>
+                        </div>
+                        <div id="sim-status-desc" style="color:var(--slate);">
+                            Honest nodes: 60/64 (93.8%) &bull; Quorum threshold 66.7% met. Byzantine nodes isolated and marked for collateral slashing.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Interactive Solana CLI Terminal -->
+            <div class="terminal-box">
+                <div class="terminal-topbar">
+                    <div class="terminal-dots">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot"></div>
+                        <div class="terminal-dot"></div>
+                    </div>
+                    <span>canary-cli &bull; 33rdtreelabs.tech</span>
+                    <span style="color:var(--green);">&bull; CONNECTED</span>
+                </div>
+
+                <div class="terminal-output" id="terminal-output">
+                    <div class="terminal-line highlight">========================================================</div>
+                    <div class="terminal-line highlight">33RD TREE LABS // THE SINGULARITY PROTOCOL v4.0</div>
+                    <div class="terminal-line dim">Solana Anchor Program: 33rdCore11111111111111111111111111111111111</div>
+                    <div class="terminal-line dim">Domain: 33rdtreelabs.tech &bull; Node Cadence: 400ms</div>
+                    <div class="terminal-line highlight">========================================================</div>
+                    <div class="terminal-line">Type <span style="color:var(--laser-red);">help</span> to list available diagnostics commands.</div>
+                    <div class="terminal-line success">&gt; Anchor state verified &bull; 33,492 GPU nodes bonded</div>
+                </div>
+
+                <form class="terminal-input-wrap" onsubmit="handleTerminalSubmit(event)">
+                    <span class="terminal-prompt">&gt;</span>
+                    <input type="text" id="terminal-input" class="terminal-input" placeholder="Type status, nodes, bench, verify, tokenomics, byzantine..." autocomplete="off">
+                </form>
+
+                <div class="quick-chips">
+                    <span class="chip" onclick="executeTermCommand('status')">status</span>
+                    <span class="chip" onclick="executeTermCommand('nodes')">nodes</span>
+                    <span class="chip" onclick="executeTermCommand('bench')">bench</span>
+                    <span class="chip" onclick="executeTermCommand('verify')">verify</span>
+                    <span class="chip" onclick="executeTermCommand('byzantine')">byzantine</span>
+                    <span class="chip" onclick="executeTermCommand('tokenomics')">tokenomics</span>
+                    <span class="chip" onclick="executeTermCommand('clear')">clear</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- TOKENOMICS & DEFLATIONARY EMISSIONS CALCULATOR -->
+    <!-- VALIDATOR YIELD & STAKING CALCULATOR -->
     <section class="section-wrap" id="calculator">
-        <div class="section-header">
-            <span class="section-tag">+ 03 // TOKENOMICS &bull; [ COMPUTE EMISSION SCHEDULE ]</span>
-            <h2 class="section-title">DEFLATIONARY POI EMISSION &amp; YIELD CALCULATOR</h2>
-            <p class="section-desc">
-                Model validator node yields across halving epochs, hardware specifications, and network staking tiers. Built with Solana SPL settlement and an unforgeable Proof-of-Intelligence hardware gate.
-            </p>
-        </div>
+        <div class="meta-tag">( 04 ) // TOKENOMICS &bull; REWARDS SIMULATOR</div>
+        <h2 class="section-title">VALIDATOR YIELD CALCULATOR</h2>
+        <p class="section-desc">
+            Model validator yields, collateral requirements, and deflationary buyback dynamics across hardware configurations and halving epochs.
+        </p>
 
-        <div class="chamfer-card">
-            <span class="corner-crosshair crosshair-tl">+</span>
-            <span class="corner-crosshair crosshair-tr">+</span>
-            <span class="corner-crosshair crosshair-bl">+</span>
-            <span class="corner-crosshair crosshair-br">+</span>
-            <div class="chamfer-inner" style="padding: 36px;">
-                <div class="calc-grid">
-                    <!-- Controls -->
-                    <div>
-                        <div class="calc-control-group">
-                            <label class="calc-label">
-                                <span>1. Select Hardware Configuration:</span>
-                                <span style="color:var(--laser-red);">[ HARDWARE SPEC ]</span>
-                            </label>
-                            <select id="calc-hardware" class="calc-select" onchange="recalculateYield()">
-                                <option value="18">1x NVIDIA RTX 4090 (24GB VRAM) &bull; Tier 1 Compute (18 $33RD/day)</option>
-                                <option value="94" selected>1x NVIDIA H100 SXM5 (80GB VRAM) &bull; Tier 2 Compute (94 $33RD/day)</option>
-                                <option value="640">8x NVIDIA H100 SXM5 (640GB VRAM) &bull; Tier 3 Supercluster (640 $33RD/day)</option>
-                                <option value="1850">16x NVIDIA B200 NVL (3,072GB VRAM) &bull; Tier 4 Hyperscale (1,850 $33RD/day)</option>
-                            </select>
-                        </div>
+        <div class="calc-grid">
+            <div class="calc-panel-left">
+                <div class="calc-field">
+                    <label class="calc-label">Validator Hardware Configuration</label>
+                    <select id="calc-hw-select" class="calc-select" onchange="calculateRewards()">
+                        <option value="dual-h100" selected>Tier-1: Dual NVIDIA H100 SXM5 (160GB VRAM)</option>
+                        <option value="quad-h100">Tier-1 Heavy: Quad NVIDIA H100 SXM5 (320GB VRAM)</option>
+                        <option value="cluster-b200">Tier-1 Ultra: NVIDIA B200 NVL72 Cluster</option>
+                        <option value="single-4090">Tier-2 Edge: NVIDIA RTX 4090 (24GB VRAM)</option>
+                    </select>
+                </div>
 
-                        <div class="calc-control-group">
-                            <label class="calc-label">
-                                <span>2. Halving Cycle &amp; Epoch:</span>
-                                <span style="color:var(--laser-red);">[ 16-YR CURVE ]</span>
-                            </label>
-                            <select id="calc-epoch" class="calc-select" onchange="recalculateYield()">
-                                <option value="1.0" selected>Year 1 &bull; Genesis Canary (100% Emission: 15,410.96 $33RD/day pool)</option>
-                                <option value="0.5">Year 2 &bull; 1st Halving (50% Emission: 7,705.48 $33RD/day pool)</option>
-                                <option value="0.25">Year 3 &bull; 2nd Halving (25% Emission: 3,852.74 $33RD/day pool)</option>
-                                <option value="0.125">Year 4 &bull; 3rd Halving (12.5% Emission: 1,926.37 $33RD/day pool)</option>
-                                <option value="0.08">Year 5+ &bull; Tail Subsidy (Commercial inference fees + tail emission)</option>
-                            </select>
-                        </div>
+                <div class="calc-field">
+                    <label class="calc-label">
+                        <span>Bonded Collateral</span>
+                        <span id="calc-stake-display" style="color:var(--chalk); font-weight:700;">25,000 $33RD</span>
+                    </label>
+                    <input type="range" id="calc-stake-slider" class="calc-slider" min="25000" max="500000" step="5000" value="25000" oninput="calculateRewards()">
+                </div>
 
-                        <div class="calc-control-group">
-                            <div class="calc-label">
-                                <span>3. Validator Staked Bond:</span>
-                                <span id="staked-display" style="color:var(--chalk); font-weight:700;">25,000 $33RD (Min Bond)</span>
-                            </div>
-                            <input type="range" id="calc-stake" class="calc-range" min="25000" max="250000" step="5000" value="25000" oninput="recalculateYield()">
-                            <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--tech-dim); margin-top:6px;">
-                                <span>25,000 $33RD</span>
-                                <span>125,000 $33RD</span>
-                                <span>250,000 $33RD</span>
-                            </div>
-                        </div>
+                <div class="calc-field">
+                    <label class="calc-label">Emission Halving Epoch</label>
+                    <select id="calc-epoch-select" class="calc-select" onchange="calculateRewards()">
+                        <option value="0" selected>Epoch 0 (Years 1&ndash;4) &bull; 0.7135 $33RD / block</option>
+                        <option value="1">Epoch 1 (Years 5&ndash;8) &bull; 0.3567 $33RD / block</option>
+                        <option value="2">Epoch 2 (Years 9&ndash;12) &bull; 0.1784 $33RD / block</option>
+                        <option value="3">Epoch 3 (Years 13&ndash;16) &bull; 0.0892 $33RD / block</option>
+                    </select>
+                </div>
+            </div>
 
-                        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--tech-slate); line-height:1.6; border-left:2px solid var(--laser-red); padding-left:14px; margin-top:20px;">
-                            Hard Cap: <b>33,333,333 $33RD</b> &bull; Mint Authority Revoked (None) &bull; 10% Buyback &amp; Incinerator Burn automated on commercial inference settlement.
-                        </div>
+            <div class="calc-panel-right">
+                <div class="calc-stat-box">
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-name">ESTIMATED APY</span>
+                        <span class="calc-metric-val highlight" id="calc-apy-val">38.4%</span>
                     </div>
-
-                    <!-- Readout Display -->
-                    <div class="calc-result-box">
-                        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:var(--tech-dim); text-transform:uppercase;">
-                            + PROJECTED PROTOCOL REWARDS +
-                        </div>
-
-                        <div class="calc-stat-row">
-                            <span class="calc-stat-label">DAILY ESTIMATED YIELD:</span>
-                            <span class="calc-stat-val accent" id="res-daily">94.00 $33RD</span>
-                        </div>
-
-                        <div class="calc-stat-row">
-                            <span class="calc-stat-label">MONTHLY ESTIMATED YIELD:</span>
-                            <span class="calc-stat-val" id="res-monthly">2,820 $33RD</span>
-                        </div>
-
-                        <div class="calc-stat-row">
-                            <span class="calc-stat-label">ANNUALIZED PROJECTED:</span>
-                            <span class="calc-stat-val" id="res-annual">34,310 $33RD</span>
-                        </div>
-
-                        <div class="calc-stat-row">
-                            <span class="calc-stat-label">ESTIMATED APY ON STAKE:</span>
-                            <span class="calc-stat-val" style="color:var(--status-green);" id="res-apy">137.2 %</span>
-                        </div>
-
-                        <div class="calc-stat-row">
-                            <span class="calc-stat-label">NETWORK COMPUTE SHARE:</span>
-                            <span class="calc-stat-val" id="res-share">0.056 %</span>
-                        </div>
-
-                        <div class="calc-stat-row" style="border-bottom:none;">
-                            <span class="calc-stat-label">10% DEFLATIONARY BURN:</span>
-                            <span class="calc-stat-val" style="color:var(--laser-red);" id="res-burn">9.40 $33RD/day</span>
-                        </div>
-
-                        <div style="margin-top:10px;">
-                            <a href="tokenomics.html" class="btn-chamfer btn-chamfer-secondary" style="width:100%; text-align:center;">
-                                [ VIEW FULL TOKENOMICS BREAKDOWN ]
-                            </a>
-                        </div>
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-name">EST. DAILY REWARDS</span>
+                        <span class="calc-metric-val" id="calc-daily-val">26.3 $33RD</span>
                     </div>
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-name">EST. MONTHLY REWARDS</span>
+                        <span class="calc-metric-val" id="calc-monthly-val">789.0 $33RD</span>
+                    </div>
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-name">10% BUYBACK-BURN BURNED / DAY</span>
+                        <span class="calc-metric-val" id="calc-burn-val" style="color:var(--laser-red);">513.7 $33RD</span>
+                    </div>
+                </div>
+
+                <div class="calc-disclaimer">
+                    Calculations assume constant network compute demand and bonded stake distribution. Model parameters defined in Canary Specification v4.0.
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- OFFICIAL BRAND IDENTITY MATRIX & MANIFOLD (VRTL WRLD) -->
-    <section class="section-wrap" id="brand">
-        <div class="section-header">
-            <span class="section-tag">+ 04 // BRAND MATRIX &bull; [ TOPOLOGY &amp; CHROMATICS ]</span>
-            <h2 class="section-title">THE OFFICIAL BRAND IDENTITY &amp; MANIFOLD</h2>
-            <p class="section-desc">
-                Official cryptographic emblems, chromatic tokens, and geometric manifold specifications governing the 33rd Tree Labs verifiable tensor compute network on Solana.
+    <!-- MASSIVE CALL TO ACTION (CTA) SECTION -->
+    <section class="cta-section">
+        <div class="cta-box">
+            <div class="meta-tag" style="justify-content:center;">( 05 ) // JOIN THE FABRIC &bull; 33RDTREELABS.TECH</div>
+            <h2 class="cta-title">DECENTRALIZE INTELLIGENCE.<br>SECURE THE SINGULARITY.</h2>
+            <p class="cta-desc">
+                Contribute enterprise GPU capacity to earn native protocol emissions, or interface autonomous AI agents directly to verifiable inference streams anchored on Solana.
             </p>
-        </div>
-
-        <div class="brand-showcase-grid">
-            <!-- Official Emblem Showcase -->
-            <div class="chamfer-card bento-span-5">
-                <span class="corner-crosshair crosshair-tl">+</span>
-                <span class="corner-crosshair crosshair-tr">+</span>
-                <span class="corner-crosshair crosshair-bl">+</span>
-                <span class="corner-crosshair crosshair-br">+</span>
-                <div class="chamfer-inner">
-                    <div>
-                        <div class="card-stamp-row">
-                            <span class="card-stamp-num">+ 04.1 // PRIMARY CREST</span>
-                            <span class="card-stamp-badge">[ OFFICIAL MARK ]</span>
-                        </div>
-                        <h3 class="card-title">Exponential Manifold Medallion</h3>
-                        <p class="card-text">
-                            The core insignia embodies the non-Euclidean throat manifold of revolution. Features dual singularity foci in Laser Red (#FF292C) bounded by concentric orbital rings.
-                        </p>
-                        <div class="medallion-display">
-                            <img src="assets/official_logo.png" alt="33rd Tree Labs Official Logo Emblem">
-                        </div>
-                    </div>
-                    <ul class="spec-list">
-                        <li><span class="label">Top Arc</span><span class="val">33RD TREE LABS // DECENTRALIZED COMPUTE</span></li>
-                        <li><span class="label">Bottom Arc</span><span class="accent">SINGULARITY PROTOCOL // PROOF OF INTELLIGENCE</span></li>
-                        <li><span class="label">Focal Nodes</span><span class="accent">Dual Singularity Radii (Throat &amp; Canopy)</span></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Brand Cards Composite Showcase -->
-            <div class="chamfer-card bento-span-7">
-                <span class="corner-crosshair crosshair-tl">+</span>
-                <span class="corner-crosshair crosshair-tr">+</span>
-                <span class="corner-crosshair crosshair-bl">+</span>
-                <span class="corner-crosshair crosshair-br">+</span>
-                <div class="chamfer-inner">
-                    <div>
-                        <div class="card-stamp-row">
-                            <span class="card-stamp-num">+ 04.2 // DESIGN SYSTEM</span>
-                            <span class="card-stamp-badge">[ 4-CARD MATRIX ]</span>
-                        </div>
-                        <h3 class="card-title">Official Brand Specification Cards</h3>
-                        <p class="card-text">
-                            Complete tactical reference sheets detailing the Exponential Plunge Hyperboloid ($k=3.8$), high-voltage chromatic tokens, and Solana settlement architecture.
-                        </p>
-                        <div class="cards-preview-wrap">
-                            <img src="assets/brand_cards/33rd_tree_labs_brand_cards.png" alt="33rd Tree Labs Brand Specification Cards">
-                        </div>
-                    </div>
-
-                    <!-- Chromatic Tokens -->
-                    <div>
-                        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--tech-slate); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px;">
-                            + HIGH-VOLTAGE THERMAL PALETTE (CLICK TO COPY):
-                        </div>
-                        <div class="swatch-grid">
-                            <div class="swatch-box" onclick="copyHex('#FF292C', this)">
-                                <div class="swatch-color" style="background:#FF292C; box-shadow:0 0 10px rgba(255,41,44,0.4);"></div>
-                                <div class="swatch-name">Laser Red</div>
-                                <div class="swatch-hex">#FF292C</div>
-                            </div>
-                            <div class="swatch-box" onclick="copyHex('#060606', this)">
-                                <div class="swatch-color" style="background:#060606;"></div>
-                                <div class="swatch-name">Deep Void</div>
-                                <div class="swatch-hex">#060606</div>
-                            </div>
-                            <div class="swatch-box" onclick="copyHex('#F1F1F1', this)">
-                                <div class="swatch-color" style="background:#F1F1F1;"></div>
-                                <div class="swatch-name">Chalk White</div>
-                                <div class="swatch-hex">#F1F1F1</div>
-                            </div>
-                            <div class="swatch-box" onclick="copyHex('#181818', this)">
-                                <div class="swatch-color" style="background:#181818;"></div>
-                                <div class="swatch-name">Graphite</div>
-                                <div class="swatch-hex">#181818</div>
-                            </div>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
-                            <a href="assets/brand_cards/index.html" target="_blank" class="btn-chamfer btn-chamfer-primary">
-                                [ LAUNCH FULL BRAND CARDS VIEWER ]
-                            </a>
-                            <span id="copy-status" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--laser-red);"></span>
-                        </div>
-                    </div>
-                </div>
+            <div class="cta-buttons">
+                <a href="nodes.html" class="btn-brutal-red" style="padding:16px 36px; font-size:13px;">
+                    <span>DEPLOY GPU CAPACITY</span>
+                    <span>&rarr;</span>
+                </a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="btn-brutal-outline" style="padding:15px 32px; font-size:13px;">
+                    <span>READ CANARY SPEC v4.0</span>
+                    <span>&darr;</span>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- INTERACTIVE 33RD PROTOCOL TERMINAL / CLI -->
-    <section class="section-wrap" id="interactive-terminal">
-        <div class="section-header">
-            <span class="section-tag">+ 05 // DEVELOPER INTERFACE &bull; [ REPL CLI ]</span>
-            <h2 class="section-title">THE 33RD CLI &amp; PROTOCOL RUNTIME</h2>
-            <p class="section-desc">
-                Interact directly with the Singularity Protocol. Run commands, query validator cluster state, benchmark local compute against network PFLOPS, or verify ZK proofs.
-            </p>
-        </div>
-
-        <div class="terminal-wrap">
-            <div class="terminal-top">
-                <div class="term-dots">
-                    <div class="term-dot r"></div>
-                    <div class="term-dot y"></div>
-                    <div class="term-dot g"></div>
-                </div>
-                <div class="terminal-title">33rd-tree-cli // v3.3.0-canary (x86_64-tensor-darwin)</div>
-                <div style="color:var(--laser-red); font-size:10px; font-weight:700;">[CANARY ONLINE]</div>
-            </div>
-
-            <div class="terminal-body" id="term-output">
-                <div class="term-line-output">33RD TREE LABS // SINGULARITY PROTOCOL v3.3.0
-Connecting to global coordinator node (wss://canary.33rdtreelabs.ai:8443)...
-Authenticated via Ed25519 node keypair
-Proof of Intelligence consensus engine: READY
-Type 'help' for available commands, or click the quick command chips below.</div>
-            </div>
-
-            <div class="term-chips">
-                <button class="term-chip" onclick="executeCmd('singularity --status')">singularity --status</button>
-                <button class="term-chip" onclick="executeCmd('nodes --list')">nodes --list</button>
-                <button class="term-chip" onclick="executeCmd('bench --tflops')">bench --tflops</button>
-                <button class="term-chip" onclick="executeCmd('proof --verify 0x33')">proof --verify</button>
-                <button class="term-chip" onclick="executeCmd('tokenomics')">tokenomics</button>
-                <button class="term-chip" onclick="executeCmd('brand')">brand</button>
-                <button class="term-chip" onclick="executeCmd('clear')">clear</button>
-            </div>
-
-            <form class="terminal-top" style="background:#080808;" onsubmit="handleTermSubmit(event)">
-                <div class="term-prompt-row" style="width:100%;">
-                    <span class="term-prompt-symbol">33rd@singularity:~#</span>
-                    <input class="term-input" id="term-input" type="text" placeholder="Type a command (e.g. help, singularity --status)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- SITE FOOTER -->
-    <footer class="site-footer">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <div class="pill-left" style="gap:12px;">
-                    <div class="pill-logo-wrap" style="width:36px; height:36px;">
+    <!-- BRUTALIST FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <div class="footer-brand-title">
+                    <div class="nav-logo-box" style="width:22px; height:22px;">
                         <img src="assets/nav_logo.png" alt="33rd Tree Labs">
                     </div>
-                    <div>
-                        <div style="font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:800; color:var(--chalk);">33RD TREE LABS</div>
-                        <div style="font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--laser-red); letter-spacing:0.12em;">SINGULARITY PROTOCOL</div>
-                    </div>
+                    <span>33RD TREE LABS</span>
                 </div>
-                <p class="footer-desc">
-                    33rd Tree Labs is building the decentralized compute fabric for post-AGI coordination. Cryptographic consensus, zero-knowledge inference, and Proof of Intelligence on Solana.
+                <p class="footer-text">
+                    A Byzantine-Resilient Verifiable DePIN Compute Fabric on Solana. Coordinating non-Euclidean tensor pipelines and zero-knowledge neural evaluations.
                 </p>
-                <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--laser-red);">
-                    // DECENTRALIZED COMPUTE // SINGULARITY PROTOCOL // PROOF OF INTELLIGENCE
+                <div class="footer-domain-badge">
+                    <span>DOMAIN:</span>
+                    <strong>33rdtreelabs.tech</strong>
                 </div>
             </div>
 
-            <div>
-                <h5 class="footer-col-title">Protocol</h5>
-                <ul class="footer-links">
-                    <li><a href="#architecture">Proof of Intelligence</a></li>
-                    <li><a href="#architecture">Zero-Knowledge Inference</a></li>
-                    <li><a href="#architecture">Hyperboloid Routing</a></li>
-                    <li><a href="nodes.html">Validator Nodes</a></li>
-                    <li><a href="research.html">Cryptographic Research</a></li>
-                </ul>
+            <div class="footer-col">
+                <div class="footer-heading">// ARCHITECTURE</div>
+                <a href="#protocol" class="footer-link">Tensor Arbor Protocol</a>
+                <a href="nodes.html" class="footer-link">Validator Clusters</a>
+                <a href="tokenomics.html" class="footer-link">Token Economics</a>
+                <a href="research.html" class="footer-link">Research Papers</a>
             </div>
 
-            <div>
-                <h5 class="footer-col-title">Economics &amp; Specs</h5>
-                <ul class="footer-links">
-                    <li><a href="tokenomics.html">Tokenomics &amp; Emission</a></li>
-                    <li><a href="#calculator">Yield Estimator</a></li>
-                    <li><a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank">Whitepaper (PDF)</a></li>
-                    <li><a href="whitepaper_academic.html">Academic Specification</a></li>
-                    <li><a href="assets/brand_cards/index.html" target="_blank">Brand Identity Cards</a></li>
-                </ul>
+            <div class="footer-col">
+                <div class="footer-heading">// SPECIFICATIONS</div>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="footer-link">Whitepaper (Canary Spec v4.0)</a>
+                <a href="whitepaper_academic.html" class="footer-link">Academic Specification</a>
+                <a href="https://github.com/0xplayboi-ian/33rd-tree-labs" target="_blank" class="footer-link">GitHub Repository</a>
+                <a href="https://solana.com" target="_blank" class="footer-link">Solana Mainnet Anchor</a>
             </div>
 
-            <div>
-                <h5 class="footer-col-title">Network</h5>
-                <ul class="footer-links">
-                    <li><a href="https://x.com" target="_blank">X (Twitter)</a></li>
-                    <li><a href="https://github.com" target="_blank">GitHub Repository</a></li>
-                    <li><a href="#">Solana Canary RPC</a></li>
-                    <li><a href="#">Status Monitor</a></li>
-                    <li><a href="#">Security Audits</a></li>
-                </ul>
+            <div class="footer-col">
+                <div class="footer-heading">// PROTOCOL CONTRACTS</div>
+                <div class="footer-contract-box">
+                    <div><strong>Anchor Program ID:</strong></div>
+                    <div style="color:var(--chalk); margin-top:2px;">33rdCore11111111111111111111111111111111111</div>
+                    <div style="margin-top:8px;"><strong>Byzantine Committee:</strong></div>
+                    <div style="color:var(--green);">K=64 Quorum &bull; 2/3 BLS BN254</div>
+                </div>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <div>&copy; 2026 33RD TREE LABS FOUNDATION. ALL RIGHTS RESERVED.</div>
-            <div>
-                SOLANA CONTRACT: <span style="color:var(--laser-red); font-weight:700;">0x3333333333333333333333333333333333333333</span>
+            <div class="footer-bottom-copy">
+                &copy; 2026 33RD TREE LABS FOUNDATION &bull; THE SINGULARITY PROTOCOL &bull; 33RDTREELABS.TECH
             </div>
-            <div>[SECURED BY PROOF OF INTELLIGENCE]</div>
+            <div>
+                CANARY SPECIFICATION V4.0 &bull; ALL RIGHTS RESERVED
+            </div>
         </div>
     </footer>
 
-    <!-- INTERACTIVE SCRIPTS -->
+    <!-- INTERACTIVE JAVASCRIPT ENGINES (NO 3D CANVAS, NO 3D LIBRARIES) -->
     <script>
-        // RETICLE CURSOR FOLLOWER
-        const dot = document.getElementById('custom-cursor-dot');
-        const follower = document.getElementById('custom-cursor-follower');
+        /* 1. CUSTOM CURSOR DOT & EXPANDING RING */
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
         let mouseX = window.innerWidth / 2;
         let mouseY = window.innerHeight / 2;
-        let followerX = mouseX;
-        let followerY = mouseY;
+        let ringX = mouseX;
+        let ringY = mouseY;
 
         window.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-            dot.style.left = mouseX + 'px';
-            dot.style.top = mouseY + 'px';
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
         });
 
         function animateCursor() {
-            followerX += (mouseX - followerX) * 0.18;
-            followerY += (mouseY - followerY) * 0.18;
-            follower.style.left = followerX + 'px';
-            follower.style.top = followerY + 'px';
+            ringX += (mouseX - ringX) * 0.18;
+            ringY += (mouseY - ringY) * 0.18;
+            cursorRing.style.left = ringX + 'px';
+            cursorRing.style.top = ringY + 'px';
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
 
-        document.querySelectorAll('a, button, input, select, .chamfer-card, .term-chip, .swatch-box').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+        document.querySelectorAll('a, button, select, input, .chip, .node-tile').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
 
-        // AUDIO FX SYNTHESIZER
-        let audioCtx = null;
-        let sfxEnabled = false;
+        /* 2. VECTOR TENSOR ARBOR MANIFOLD CANVAS (HERO SCHEMATIC) */
+        const canvas = document.getElementById('schematic-canvas');
+        const ctx = canvas.getContext('2d');
 
-        function toggleAudio() {
-            sfxEnabled = !sfxEnabled;
-            const btn = document.getElementById('audio-toggle');
-            if (sfxEnabled) {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                btn.textContent = '[ SFX: ON ]';
-                btn.classList.add('active');
-                playSfx('boot');
-            } else {
-                btn.textContent = '[ SFX: OFF ]';
-                btn.classList.remove('active');
-            }
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
         }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-        function playSfx(type) {
-            if (!sfxEnabled || !audioCtx) return;
-            const now = audioCtx.currentTime;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-
-            if (type === 'click') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, now);
-                osc.frequency.exponentialRampToValueAtTime(1400, now + 0.05);
-                gain.gain.setValueAtTime(0.08, now);
-                gain.gain.linearRampToValueAtTime(0.001, now + 0.05);
-                osc.start(now);
-                osc.stop(now + 0.05);
-            } else if (type === 'boot') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(220, now);
-                osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
-                gain.gain.setValueAtTime(0.1, now);
-                gain.gain.linearRampToValueAtTime(0.001, now + 0.15);
-                osc.start(now);
-                osc.stop(now + 0.15);
-            } else if (type === 'command') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(540, now);
-                osc.frequency.linearRampToValueAtTime(720, now + 0.08);
-                gain.gain.setValueAtTime(0.06, now);
-                gain.gain.linearRampToValueAtTime(0.001, now + 0.08);
-                osc.start(now);
-                osc.stop(now + 0.08);
-            }
-        }
-
-        // THREE.JS 3D HERO CANVAS (CALIBRATED LASER RED // NO PINK WASHOUT)
-        const heroCanvas = document.getElementById('hero-webgl-canvas');
-        const heroScene = new THREE.Scene();
-        heroScene.fog = new THREE.FogExp2(0x060606, 0.035);
-
-        const heroCamera = new THREE.PerspectiveCamera(40, (heroCanvas.clientWidth || 600) / (heroCanvas.clientHeight || 700), 0.1, 100);
-        heroCamera.position.set(2.8, 2.2, 3.8);
-
-        const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
-        heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        heroRenderer.setSize(heroCanvas.clientWidth || 600, heroCanvas.clientHeight || 700);
-        heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
-        heroRenderer.toneMappingExposure = 0.95; // Keeps laser red hyper-saturated without white/pink bleaching
-
-        const heroControls = new THREE.OrbitControls(heroCamera, heroRenderer.domElement);
-        heroControls.enableDamping = true;
-        heroControls.dampingFactor = 0.05;
-        heroControls.maxDistance = 8.5;
-        heroControls.minDistance = 1.2;
-        heroControls.enablePan = false;
-
-        // PURE DEEP LASER RED & CRIMSON LIGHTING (Zero white specular highlights)
-        const ambLight = new THREE.AmbientLight(0x1A0203, 1.8);
-        heroScene.add(ambLight);
-
-        const coreLight = new THREE.PointLight(0xFF292C, 4.5, 12);
-        coreLight.position.set(0, 0, 0);
-        heroScene.add(coreLight);
-
-        const topDir = new THREE.DirectionalLight(0xFF292C, 2.2);
-        topDir.position.set(2, 6, 3);
-        heroScene.add(topDir);
-
-        const botDir = new THREE.DirectionalLight(0x770003, 1.4);
-        botDir.position.set(-2, -6, -3);
-        heroScene.add(botDir);
-
-        const arborRoot = new THREE.Group();
-        heroScene.add(arborRoot);
-
-        const H = 2.4;
-        const R_TOP = 1.5;
-        const R_THROAT = 0.09;
-        const EXP_K = 3.8;
-
-        function radiusAtY(y) {
-            const normY = Math.abs(y) / (H / 2);
-            return R_THROAT + (R_TOP - R_THROAT) * (Math.exp(EXP_K * normY) - 1.0) / (Math.exp(EXP_K) - 1.0);
-        }
-
-        // RIBS (Pure Laser Red #FF292C, low metalness and moderate roughness to eliminate pink glare)
-        const ribsGroup = new THREE.Group();
-        arborRoot.add(ribsGroup);
-        const ribMat = new THREE.MeshStandardMaterial({
-            color: 0xFF292C,
-            emissive: 0x550002,
-            emissiveIntensity: 0.75,
-            metalness: 0.05,
-            roughness: 0.45
-        });
-        const numRibs = 32;
-        const ribSegs = 70;
-        for (let i = 0; i < numRibs; i++) {
-            const theta = (i / numRibs) * Math.PI * 2;
-            const pts = [];
-            for (let j = 0; j <= ribSegs; j++) {
-                const t = j / ribSegs;
-                const y = (t - 0.5) * H;
-                const r = radiusAtY(y);
-                pts.push(new THREE.Vector3(r * Math.cos(theta), y, r * Math.sin(theta)));
-            }
-            const curve = new THREE.CatmullRomCurve3(pts);
-            const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 60, 0.009, 6, false), ribMat);
-            ribsGroup.add(tube);
-        }
-
-        // RINGS
-        const ringsGroup = new THREE.Group();
-        arborRoot.add(ringsGroup);
-        const ringMat = new THREE.MeshStandardMaterial({
-            color: 0xFF292C,
-            emissive: 0x440001,
-            emissiveIntensity: 0.65,
-            metalness: 0.05,
-            roughness: 0.45
-        });
-        const numRings = 21;
-        for (let i = 0; i < numRings; i++) {
-            const t = (i + 1) / (numRings + 1);
-            const y = (t - 0.5) * H;
-            const r = radiusAtY(y);
-            const tor = new THREE.Mesh(new THREE.TorusGeometry(r, 0.007, 6, 64), ringMat);
-            tor.rotation.x = Math.PI / 2;
-            tor.position.y = y;
-            ringsGroup.add(tor);
-        }
-
-        // HALO RIMS (Crisp Stark White Collar)
-        const haloMat = new THREE.MeshStandardMaterial({
-            color: 0xF1F1F1,
-            emissive: 0x333333,
-            emissiveIntensity: 0.4,
-            metalness: 0.8,
-            roughness: 0.2
-        });
-        const topRim = new THREE.Mesh(new THREE.TorusGeometry(R_TOP, 0.022, 12, 80), haloMat);
-        topRim.rotation.x = Math.PI / 2;
-        topRim.position.y = H / 2;
-        arborRoot.add(topRim);
-
-        const botRim = new THREE.Mesh(new THREE.TorusGeometry(R_TOP, 0.022, 12, 80), haloMat);
-        botRim.rotation.x = Math.PI / 2;
-        botRim.position.y = -H / 2;
-        arborRoot.add(botRim);
-
-        // SINGULARITY CORE & NODES (Pure Unshaded Laser Red #FF292C MeshBasicMaterial)
-        const coreNode = new THREE.Mesh(
-            new THREE.SphereGeometry(0.14, 32, 32),
-            new THREE.MeshBasicMaterial({ color: 0xFF292C })
-        );
-        arborRoot.add(coreNode);
-
-        const topNode = new THREE.Mesh(
-            new THREE.SphereGeometry(0.09, 24, 24),
-            new THREE.MeshBasicMaterial({ color: 0xFF292C })
-        );
-        topNode.position.set(0, H / 2, 0);
-        arborRoot.add(topNode);
-
-        const botNode = new THREE.Mesh(
-            new THREE.SphereGeometry(0.09, 24, 24),
-            new THREE.MeshBasicMaterial({ color: 0xFF292C })
-        );
-        botNode.position.set(0, -H / 2, 0);
-        arborRoot.add(botNode);
-
-        // PARTICLES (Laser Red)
-        const pCount = 160;
-        const pGeom = new THREE.BufferGeometry();
-        const pCoords = new Float32Array(pCount * 3);
-        for (let i = 0; i < pCount; i++) {
-            pCoords[i * 3] = (Math.random() - 0.5) * 5.5;
-            pCoords[i * 3 + 1] = (Math.random() - 0.5) * 5.5;
-            pCoords[i * 3 + 2] = (Math.random() - 0.5) * 5.5;
-        }
-        pGeom.setAttribute('position', new THREE.BufferAttribute(pCoords, 3));
-        const pMat = new THREE.PointsMaterial({ color: 0xFF292C, size: 0.022, transparent: true, opacity: 0.55 });
-        const particles = new THREE.Points(pGeom, pMat);
-        heroScene.add(particles);
-
-        let orbitMouseX = 0, orbitMouseY = 0;
-        window.addEventListener('mousemove', (e) => {
-            orbitMouseX = (e.clientX / window.innerWidth - 0.5) * 0.35;
-            orbitMouseY = (e.clientY / window.innerHeight - 0.5) * 0.35;
-        });
-
-        function animateHero() {
-            requestAnimationFrame(animateHero);
-            arborRoot.rotation.y += 0.006;
-            particles.rotation.y += 0.001;
-
-            arborRoot.rotation.x = THREE.MathUtils.lerp(arborRoot.rotation.x, orbitMouseY, 0.05);
-            arborRoot.rotation.z = THREE.MathUtils.lerp(arborRoot.rotation.z, -orbitMouseX, 0.05);
-
-            const time = performance.now() * 0.0025;
-            const scale = 1.0 + Math.sin(time) * 0.08;
-            coreNode.scale.set(scale, scale, scale);
-
-            heroControls.update();
-            heroRenderer.render(heroScene, heroCamera);
-        }
-        animateHero();
-
-        function handleResize() {
-            const w = heroCanvas.clientWidth || heroCanvas.parentElement.clientWidth;
-            const h = heroCanvas.clientHeight || heroCanvas.parentElement.clientHeight;
-            if (w && h) {
-                heroCamera.aspect = w / h;
-                heroCamera.updateProjectionMatrix();
-                heroRenderer.setSize(w, h);
-            }
-        }
-        window.addEventListener('resize', handleResize);
-        setTimeout(handleResize, 100);
-
-        // LIVE METRICS TICKER
-        function animateLiveMetrics() {
-            const tflopsEl = document.getElementById('stat-tflops');
-            const latencyEl = document.getElementById('stat-latency');
-            const nodesEl = document.getElementById('stat-nodes');
-
-            setInterval(() => {
-                const baseTflops = 142.8 + (Math.random() * 0.6 - 0.3);
-                tflopsEl.innerHTML = baseTflops.toFixed(1) + ' <span>PFLOPS</span>';
-
-                const baseLatency = 1.40 + (Math.random() * 0.06 - 0.03);
-                latencyEl.innerHTML = baseLatency.toFixed(2) + ' <span>MS</span>';
-
-                const nodes = 3333 + Math.floor(Math.random() * 6 - 3);
-                nodesEl.innerHTML = nodes.toLocaleString() + ' <span>NODES</span>';
-            }, 2200);
-        }
-        animateLiveMetrics();
-
-        // 2D CANVAS CONSENSUS SIMULATOR
-        const nodeCanvas = document.getElementById('node-canvas');
-        const nodeCtx = nodeCanvas.getContext('2d');
-
-        function resizeNodeCanvas() {
-            nodeCanvas.width = nodeCanvas.parentElement.clientWidth - 48;
-            nodeCanvas.height = 340;
-        }
-        window.addEventListener('resize', resizeNodeCanvas);
-        resizeNodeCanvas();
-
-        const simNodes = [];
-        const simNodeCount = 28;
-        for (let i = 0; i < simNodeCount; i++) {
-            simNodes.push({
-                x: Math.random() * nodeCanvas.width,
-                y: Math.random() * nodeCanvas.height,
-                vx: (Math.random() - 0.5) * 0.8,
-                vy: (Math.random() - 0.5) * 0.8,
-                radius: Math.random() * 2.5 + 2,
+        let animAngle = 0;
+        const nodesCount = 33;
+        const nodes = [];
+        for (let i = 0; i < nodesCount; i++) {
+            nodes.push({
+                angle: (i / nodesCount) * Math.PI * 2,
+                radius: 40 + Math.random() * 120,
+                speed: (Math.random() - 0.5) * 0.008,
+                size: Math.random() * 2.5 + 2,
+                isRed: Math.random() < 0.22,
                 pulse: Math.random() * Math.PI
             });
         }
 
-        const simPackets = [];
+        function drawSchematic() {
+            const w = canvas.width / window.devicePixelRatio;
+            const h = canvas.height / window.devicePixelRatio;
+            const cx = w / 2;
+            const cy = h / 2;
 
-        function renderSimulator() {
-            nodeCtx.fillStyle = 'rgba(6, 6, 6, 0.28)';
-            nodeCtx.fillRect(0, 0, nodeCanvas.width, nodeCanvas.height);
+            ctx.clearRect(0, 0, w, h);
 
-            // Mesh lines in Laser Red
-            for (let i = 0; i < simNodes.length; i++) {
-                const n1 = simNodes[i];
-                for (let j = i + 1; j < simNodes.length; j++) {
-                    const n2 = simNodes[j];
-                    const dist = Math.hypot(n1.x - n2.x, n1.y - n2.y);
-                    if (dist < 130) {
-                        const alpha = (1 - dist / 130) * 0.3;
-                        nodeCtx.strokeStyle = 'rgba(255, 41, 44, ' + alpha + ')';
-                        nodeCtx.lineWidth = 1;
-                        nodeCtx.beginPath();
-                        nodeCtx.moveTo(n1.x, n1.y);
-                        nodeCtx.lineTo(n2.x, n2.y);
-                        nodeCtx.stroke();
+            // Polar Grid Rings
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+            ctx.lineWidth = 1;
+            for (let r = 40; r <= 160; r += 35) {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Radial Hyperbolic Coordinate Axes
+            for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(cx + Math.cos(a + animAngle * 0.2) * 170, cy + Math.sin(a + animAngle * 0.2) * 170);
+                ctx.stroke();
+            }
+
+            // Interconnecting Tensor Lattice Lines
+            ctx.strokeStyle = 'rgba(255, 41, 44, 0.12)';
+            ctx.beginPath();
+            for (let i = 0; i < nodes.length; i++) {
+                const n1 = nodes[i];
+                const x1 = cx + Math.cos(n1.angle) * n1.radius;
+                const y1 = cy + Math.sin(n1.angle) * n1.radius;
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const n2 = nodes[j];
+                    const x2 = cx + Math.cos(n2.angle) * n2.radius;
+                    const y2 = cy + Math.sin(n2.angle) * n2.radius;
+                    const dist = Math.hypot(x2 - x1, y2 - y1);
+                    if (dist < 65) {
+                        ctx.moveTo(x1, y1);
+                        ctx.lineTo(x2, y2);
                     }
                 }
             }
+            ctx.stroke();
 
-            // Nodes
-            simNodes.forEach(n => {
-                n.x += n.vx;
-                n.y += n.vy;
-                if (n.x < 10 || n.x > nodeCanvas.width - 10) n.vx *= -1;
-                if (n.y < 10 || n.y > nodeCanvas.height - 10) n.vy *= -1;
+            // Central Singularity Node
+            ctx.fillStyle = '#FF292C';
+            ctx.shadowColor = '#FF292C';
+            ctx.shadowBlur = 16;
+            ctx.beginPath();
+            ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // Rotating Orbit Rings
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(animAngle);
+            ctx.strokeStyle = 'rgba(255, 41, 44, 0.45)';
+            ctx.setLineDash([8, 12]);
+            ctx.beginPath();
+            ctx.arc(0, 0, 115, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+
+            // Render Nodes
+            for (let i = 0; i < nodes.length; i++) {
+                const n = nodes[i];
+                n.angle += n.speed;
                 n.pulse += 0.05;
 
-                nodeCtx.fillStyle = '#F1F1F1';
-                nodeCtx.beginPath();
-                nodeCtx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-                nodeCtx.fill();
+                const x = cx + Math.cos(n.angle) * n.radius;
+                const y = cy + Math.sin(n.angle) * n.radius;
 
-                nodeCtx.strokeStyle = 'rgba(255, 41, 44, ' + (0.4 + Math.sin(n.pulse) * 0.3) + ')';
-                nodeCtx.beginPath();
-                nodeCtx.arc(n.x, n.y, n.radius + 4 + Math.sin(n.pulse) * 2, 0, Math.PI * 2);
-                nodeCtx.stroke();
-            });
+                if (n.isRed) {
+                    ctx.fillStyle = '#FF292C';
+                    ctx.shadowColor = '#FF292C';
+                    ctx.shadowBlur = 8;
+                } else {
+                    ctx.fillStyle = '#F2F2F5';
+                    ctx.shadowColor = 'transparent';
+                    ctx.shadowBlur = 0;
+                }
 
-            // Proof Packets
-            if (Math.random() < 0.08 && simNodes.length > 2) {
-                const src = simNodes[Math.floor(Math.random() * simNodes.length)];
-                const dst = simNodes[Math.floor(Math.random() * simNodes.length)];
-                if (src !== dst) {
-                    simPackets.push({
-                        x: src.x, y: src.y,
-                        tx: dst.x, ty: dst.y,
-                        progress: 0,
-                        speed: 0.02 + Math.random() * 0.02
-                    });
+                ctx.beginPath();
+                ctx.arc(x, y, n.size + Math.sin(n.pulse) * 0.8, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            animAngle += 0.003;
+            requestAnimationFrame(drawSchematic);
+        }
+        drawSchematic();
+
+        /* Realtime Slot & Latency Jitter Simulation */
+        setInterval(() => {
+            const slot = 312849200 + Math.floor(Date.now() / 400) % 100000;
+            const slotEl = document.getElementById('tele-slot');
+            if (slotEl) slotEl.textContent = 'Slot #' + slot.toLocaleString();
+
+            const lat = (13.8 + Math.random() * 0.8).toFixed(1);
+            const latEl = document.getElementById('tele-lat');
+            if (latEl) latEl.textContent = lat + 'ms';
+        }, 1200);
+
+        /* 3. INTERACTIVE BYZANTINE FAULT SIMULATOR */
+        const nodeMatrix = document.getElementById('node-matrix');
+        const byzSlider = document.getElementById('byz-slider');
+        const byzCountText = document.getElementById('byz-count-text');
+        const byzRatioTag = document.getElementById('byz-ratio-tag');
+        const simStatusBox = document.getElementById('sim-status-box');
+        const simStatusTitle = document.getElementById('sim-status-title');
+        const simStatusDesc = document.getElementById('sim-status-desc');
+
+        const totalCommittee = 64;
+
+        function buildNodeLattice() {
+            nodeMatrix.innerHTML = '';
+            for (let i = 0; i < totalCommittee; i++) {
+                const tile = document.createElement('div');
+                tile.className = 'node-tile honest';
+                tile.id = 'node-' + i;
+                tile.textContent = (i + 1).toString().padStart(2, '0');
+                nodeMatrix.appendChild(tile);
+            }
+        }
+        buildNodeLattice();
+
+        function updateByzantineSim() {
+            const f = parseInt(byzSlider.value);
+            const pct = ((f / totalCommittee) * 100).toFixed(1);
+            byzRatioTag.textContent = `f = ${f} / ${totalCommittee} (${pct}%)`;
+
+            const maxTolerance = Math.floor((totalCommittee - 1) / 3); // 21 for 64 nodes
+
+            if (f <= maxTolerance) {
+                byzCountText.textContent = `f = ${f} (Safe < ${maxTolerance + 1})`;
+                byzCountText.style.color = 'var(--laser-red)';
+            } else {
+                byzCountText.textContent = `f = ${f} (CRITICAL > 1/3 Byzantine)`;
+                byzCountText.style.color = '#FF1744';
+            }
+
+            for (let i = 0; i < totalCommittee; i++) {
+                const tile = document.getElementById('node-' + i);
+                if (i < f) {
+                    tile.className = 'node-tile byzantine';
+                } else {
+                    tile.className = 'node-tile honest';
                 }
             }
-
-            for (let i = simPackets.length - 1; i >= 0; i--) {
-                const p = simPackets[i];
-                p.progress += p.speed;
-                const px = p.x + (p.tx - p.x) * p.progress;
-                const py = p.y + (p.ty - p.y) * p.progress;
-
-                nodeCtx.fillStyle = '#FF292C';
-                nodeCtx.shadowColor = '#FF292C';
-                nodeCtx.shadowBlur = 8;
-                nodeCtx.beginPath();
-                nodeCtx.arc(px, py, 2.5, 0, Math.PI * 2);
-                nodeCtx.fill();
-                nodeCtx.shadowBlur = 0;
-
-                if (p.progress >= 1) simPackets.splice(i, 1);
-            }
-
-            requestAnimationFrame(renderSimulator);
         }
-        renderSimulator();
+        updateByzantineSim();
 
-        // INTERACTIVE EMISSIONS & YIELD CALCULATOR
-        function recalculateYield() {
-            const baseDaily = parseFloat(document.getElementById('calc-hardware').value);
-            const epochMultiplier = parseFloat(document.getElementById('calc-epoch').value);
-            const stakedAmount = parseInt(document.getElementById('calc-stake').value);
+        function runConsensusRound() {
+            const f = parseInt(byzSlider.value);
+            const maxTolerance = Math.floor((totalCommittee - 1) / 3);
+            const attackType = document.getElementById('attack-vector-select').selectedOptions[0].text;
 
-            // Staking bond bonus: 1.0 at 25,000 up to 1.35 at 250,000
-            const stakeMultiplier = 1.0 + ((stakedAmount - 25000) / 225000) * 0.35;
-            
-            document.getElementById('staked-display').textContent = stakedAmount.toLocaleString() + ' $33RD (' + (stakedAmount === 25000 ? 'Min Bond' : '+' + Math.round((stakeMultiplier - 1)*100) + '% Staking Boost') + ')';
+            if (f <= maxTolerance) {
+                simStatusTitle.className = 'sim-status-head success';
+                simStatusTitle.innerHTML = '&check; CONSENSUS VALIDATED: QUORUM REACHED';
+                simStatusDesc.innerHTML = `
+                    Attack: <strong>${attackType}</strong> thwarted.<br>
+                    Honest nodes: ${totalCommittee - f}/${totalCommittee} (${((totalCommittee - f)/totalCommittee*100).toFixed(1)}%).
+                    KZG verification rejected ${f} invalid proofs. Slashed: ${(f * 25000).toLocaleString()} $33RD.
+                `;
 
-            const netDaily = baseDaily * epochMultiplier * stakeMultiplier;
-            const netMonthly = netDaily * 30;
-            const netAnnual = netDaily * 365;
-            const apy = (netAnnual / stakedAmount) * 100;
-            const burnDaily = netDaily * 0.10;
-            const share = (netDaily / 15410.96) * 100;
-
-            document.getElementById('res-daily').textContent = netDaily.toFixed(2) + ' $33RD';
-            document.getElementById('res-monthly').textContent = Math.round(netMonthly).toLocaleString() + ' $33RD';
-            document.getElementById('res-annual').textContent = Math.round(netAnnual).toLocaleString() + ' $33RD';
-            document.getElementById('res-apy').textContent = apy.toFixed(1) + ' %';
-            document.getElementById('res-burn').textContent = burnDaily.toFixed(2) + ' $33RD/day';
-            document.getElementById('res-share').textContent = share.toFixed(3) + ' %';
-        }
-
-        // SWATCH COPY FUNCTION
-        function copyHex(hex, el) {
-            navigator.clipboard.writeText(hex).then(() => {
-                const status = document.getElementById('copy-status');
-                status.textContent = 'COPIED ' + hex + ' TO CLIPBOARD';
-                playSfx('click');
-                setTimeout(() => { status.textContent = ''; }, 2000);
-            });
-        }
-
-        // 33RD CLI REPL TERMINAL
-        const termOutput = document.getElementById('term-output');
-        const termInput = document.getElementById('term-input');
-
-        function appendTermLine(text, isCmd = false) {
-            const line = document.createElement('div');
-            line.className = 'term-line-output';
-            if (isCmd) {
-                line.innerHTML = '<span style="color:var(--laser-red)">33rd@singularity:~#</span> <span style="color:#FFF">' + text + '</span>';
+                for (let i = 0; i < f; i++) {
+                    const tile = document.getElementById('node-' + i);
+                    tile.className = 'node-tile slashed';
+                }
             } else {
-                line.textContent = text;
+                simStatusTitle.className = 'sim-status-head alert';
+                simStatusTitle.innerHTML = '&#9888; BYZANTINE FAULT DETECTED: SAFETY HALT TRIGGERED';
+                simStatusDesc.innerHTML = `
+                    Adversary fraction exceeds BFT threshold (f = ${f} &gt; 21). 
+                    Solana anchor initiates circuit breaker. No state finalized to preserve zero-knowledge safety.
+                `;
             }
-            termOutput.appendChild(line);
+        }
+
+        /* 4. SOLANA ANCHOR CLI TERMINAL */
+        const termOutput = document.getElementById('terminal-output');
+        const termInput = document.getElementById('terminal-input');
+
+        function appendTermLine(text, type = '') {
+            const div = document.createElement('div');
+            div.className = 'terminal-line ' + type;
+            div.innerHTML = text;
+            termOutput.appendChild(div);
             termOutput.scrollTop = termOutput.scrollHeight;
         }
 
-        function executeCmd(cmd) {
-            appendTermLine(cmd, true);
-            playSfx('command');
+        function executeTermCommand(rawCmd) {
+            const cmd = rawCmd.trim();
+            if (!cmd) return;
 
-            const lower = cmd.trim().toLowerCase();
-            setTimeout(() => {
-                if (lower === 'help') {
-                    appendTermLine(
-`AVAILABLE COMMANDS:
-  singularity --status     Check mainnet consensus & epoch telemetry
-  nodes --list             View active Tier-4 global compute nodes
-  bench --tflops           Benchmark local browser vs network throughput
-  proof --verify           Simulate zk-SNARK tensor verification
-  tokenomics               View supply, mint revocation & emission pool
-  brand                    Inspect manifold constants & color tokens
-  clear                    Clear terminal screen
-  help                     Show this help directory`
-                    );
-                } else if (lower.includes('status')) {
-                    appendTermLine(
-`[SINGULARITY PROTOCOL STATUS]
-  Epoch: #338,912
-  Consensus Algorithm: Proof of Intelligence (PoI)
-  Global Tensor Capacity: 142.8 PFLOPS
-  Active Nodes: 3,333 / 3,333 (100% quorum)
-  Solana State Commit: 280 bytes every 12s (~30 slots)
-  Slashing Conditions: 0 infractions in current epoch
-  Cryptographic Proof: Plonky3 / Halo2 zk-SNARK Verified`
-                    );
-                } else if (lower.includes('nodes')) {
-                    appendTermLine(
-`NODE ID          LOCATION           GPU SPEC         LATENCY   STATUS
-node-033-sf      San Francisco, US  8x H100 SXM5     1.2ms     ONLINE
-node-077-zh      Zurich, CH         16x B200 NVL     2.4ms     ONLINE
-node-108-ty      Tokyo, JP          8x H200 PCIe     3.1ms     ONLINE
-node-224-sg      Singapore, SG      8x H100 SXM5     2.8ms     ONLINE
-node-333-is      Reykjavik, IS      32x H100 Liquid  1.8ms     ONLINE`
-                    );
-                } else if (lower.includes('bench')) {
-                    appendTermLine(
-`Running local WebGL tensor matrix multiplication benchmark...
-[========================================] 100%
-Local Browser GPU: 1.84 TFLOPS FP32
-Singularity Network Distributed Fabric: 142.8 PFLOPS
-Speedup vs Local: 77,608x factor`
-                    );
-                } else if (lower.includes('verify')) {
-                    appendTermLine(
-`[ZK-VERIFICATION ROUND]
-Generated Proof Hash: 0x33e8a49c901bfb72a44d82...
-Validating bilinear pairing constraints over BN254 curve...
-  Gate checks: 1,048,576 / 1,048,576 passed
-  Verification Time: 1.418 ms
-Verdict: PROOF VALID. BLOCK #3,389,124 SEALED ON SOLANA.`
-                    );
-                } else if (lower.includes('tokenomics')) {
-                    appendTermLine(
-`[TOKENOMICS SPECIFICATION]
-  Hard Cap: 33,333,333 $33RD
-  Mint Authority: Revoked (None) at Genesis
-  PoI Compute Subsidy Pool: 15,000,000 (45%) over 16-yr halving curve
-  Validator Staking Bond: >= 25,000 $33RD
-  Automated Deflation: 10% Buyback & Incinerator Burn`
-                    );
-                } else if (lower.includes('brand')) {
-                    appendTermLine(
-`[BRAND IDENTITY & MANIFOLD]
-  Manifold: Exponential Plunge Hyperboloid
-  Formula: r(y) = r0 + A*(e^(ky) - 1)/(e^k - 1)
-  Parameters: k=3.8, R=1.50, r0=0.09, H=2.40
-  Palette: Laser Red #FF292C, Deep Void #060606, Chalk White #F1F1F1, Graphite #181818`
-                    );
-                } else if (lower === 'clear') {
-                    termOutput.innerHTML = '';
-                } else {
-                    appendTermLine("Command not recognized: '" + cmd + "'. Type 'help' for available commands.");
-                }
-            }, 120);
-        }
+            appendTermLine('&gt; ' + cmd, 'cmd');
+            const c = cmd.toLowerCase();
 
-        function handleTermSubmit(e) {
-            e.preventDefault();
-            const val = termInput.value.trim();
-            if (val) {
-                executeCmd(val);
-                termInput.value = '';
+            if (c === 'help') {
+                appendTermLine('CANARY SPEC v4.0 &bull; DIAGNOSTIC COMMANDS:', 'highlight');
+                appendTermLine('  status     - Query Solana anchor slot and committee state');
+                appendTermLine('  nodes      - Inspect active Tier-1 GPU cluster telemetry');
+                appendTermLine('  bench      - Execute simulated CAP-FFN LLaMA-3 PoI verification');
+                appendTermLine('  verify     - Perform BN254 KZG polynomial opening check');
+                appendTermLine('  byzantine  - Run Byzantine consensus fault assessment');
+                appendTermLine('  tokenomics - Display hard cap, emission rates, & buyback crank');
+                appendTermLine('  clear      - Clear terminal logs');
+            } else if (c === 'status') {
+                appendTermLine('[ANCHOR] Program ID: 33rdCore11111111111111111111111111111111111', 'highlight');
+                appendTermLine('[CONSENSUS] Active Committee: K=64 / 64 nodes &bull; Slot Cadence: 400ms');
+                appendTermLine('[STATE] Epoch 300 &bull; D_t = 1.042 &bull; Quorum: 2/3 BLS BN254 Verified', 'success');
+                appendTermLine('[METRICS] Network Latency: 14.2ms &bull; 0 Slashing Events Recorded');
+            } else if (c === 'nodes') {
+                appendTermLine('ACTIVE VALIDATOR CLUSTERS (Sampling 4 of 33,492 clusters):', 'highlight');
+                appendTermLine('  0x7F2A...9C1D [Tier-1 Dual H100 SXM5] &bull; Stake: 150,000 $33RD &bull; Status: OPTIMAL');
+                appendTermLine('  0x3E11...B450 [Tier-1 Quad H100 SXM5] &bull; Stake: 250,000 $33RD &bull; Status: OPTIMAL');
+                appendTermLine('  0x992B...C01F [Tier-1 B200 NVL72]    &bull; Stake: 500,000 $33RD &bull; Status: OPTIMAL');
+                appendTermLine('  0x1A4C...33D8 [Tier-2 RTX 4090 Edge]  &bull; Stake: 35,000 $33RD  &bull; Status: ACTIVE');
+            } else if (c === 'bench') {
+                appendTermLine('[BENCH] Executing CAP-FFN LLaMA-3-8B PoI kernel challenge...', 'dim');
+                setTimeout(() => {
+                    appendTermLine('[BENCH] Randomized polynomial eval: Degree d=16 &bull; Chebyshev match', 'dim');
+                    appendTermLine('[BENCH] Forward pass: 14.2ms &bull; Proof generated: 1.84ms &bull; OK', 'success');
+                }, 300);
+            } else if (c === 'verify') {
+                appendTermLine('[KZG] Evaluating BN254 pairing: e(pi, [x - z]_2) == e(C - v*[1]_1, [1]_2)...', 'dim');
+                setTimeout(() => {
+                    appendTermLine('[KZG] Commitment opening verified on Solana &bull; Cost: 184,200 Compute Units', 'success');
+                }, 350);
+            } else if (c === 'byzantine') {
+                appendTermLine('[BYZANTINE] Committee audit: K=64 nodes &bull; Current f=4 (6.2%)', 'highlight');
+                appendTermLine('[BYZANTINE] Quorum threshold 2/3 + 1: SATISFIED (60 honest signatures)', 'success');
+                appendTermLine('[BYZANTINE] Slashing collateral protection active at 33rdtreelabs.tech');
+            } else if (c === 'tokenomics') {
+                appendTermLine('TOKENOMICS & EMISSION PARAMETERS:', 'highlight');
+                appendTermLine('  Hard Supply Cap : 33,000,000 $33RD');
+                appendTermLine('  Current Epoch   : Epoch 0 (Years 1-4) &bull; 0.7135 $33RD / block');
+                appendTermLine('  Buyback-Burn    : 10% commercial revenue routed to market burn');
+                appendTermLine('  Burned To Date  : 412,840 $33RD (Deflationary)');
+            } else if (c === 'clear') {
+                termOutput.innerHTML = '';
+            } else {
+                appendTermLine(`Command not found: "${cmd}". Type "help" for valid options.`, 'warn');
             }
         }
+
+        function handleTerminalSubmit(e) {
+            e.preventDefault();
+            const val = termInput.value;
+            termInput.value = '';
+            executeTermCommand(val);
+        }
+
+        /* 5. VALIDATOR YIELD & STAKING CALCULATOR */
+        function calculateRewards() {
+            const hw = document.getElementById('calc-hw-select').value;
+            const stake = parseInt(document.getElementById('calc-stake-slider').value);
+            const epoch = parseInt(document.getElementById('calc-epoch-select').value);
+
+            document.getElementById('calc-stake-display').textContent = stake.toLocaleString() + ' $33RD';
+
+            let baseRewardsPerDay = 5136.99;
+            if (epoch === 1) baseRewardsPerDay = 2568.49;
+            if (epoch === 2) baseRewardsPerDay = 1284.25;
+            if (epoch === 3) baseRewardsPerDay = 642.12;
+
+            let hwMultiplier = 1.0;
+            if (hw === 'dual-h100') hwMultiplier = 1.0;
+            if (hw === 'quad-h100') hwMultiplier = 2.1;
+            if (hw === 'cluster-b200') hwMultiplier = 5.4;
+            if (hw === 'single-4090') hwMultiplier = 0.28;
+
+            const validatorShare = (stake / 2500000) * hwMultiplier;
+            const daily = baseRewardsPerDay * validatorShare;
+            const monthly = daily * 30;
+            const apy = ((daily * 365) / stake) * 100;
+            const burnDaily = baseRewardsPerDay * 0.10;
+
+            document.getElementById('calc-apy-val').textContent = apy.toFixed(1) + '%';
+            document.getElementById('calc-daily-val').textContent = daily.toFixed(1) + ' $33RD';
+            document.getElementById('calc-monthly-val').textContent = monthly.toFixed(1) + ' $33RD';
+            document.getElementById('calc-burn-val').textContent = burnDaily.toFixed(1) + ' $33RD';
+        }
+        calculateRewards();
     </script>
 </body>
 </html>

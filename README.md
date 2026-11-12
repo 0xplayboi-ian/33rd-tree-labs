@@ -9,8 +9,8 @@
 </p>
 
 > **A Byzantine-Resilient Verifiable DePIN Compute Fabric on Solana**  
-> *Canary Specification v3.5 &bull; November 2026*  
-> Website: [33rdtreelabs.com](https://33rdtreelabs.com) &bull; Research: `research@33rdtreelabs.com`
+> *Canary Specification v4.0 &bull; November 2026*  
+> Website: [33rdtreelabs.tech](https://33rdtreelabs.tech) &bull; Research: `research@33rdtreelabs.tech`
 
 ---
 
