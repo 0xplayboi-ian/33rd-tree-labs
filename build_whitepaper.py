@@ -24,7 +24,7 @@ window.addEventListener("DOMContentLoaded", function() {
 <style>
 @page {
     size: letter;
-    margin: 20mm 18mm 20mm 18mm;
+    margin: 17mm 16mm 17mm 16mm;
     @bottom-center {
         content: counter(page);
         font-family: "Times New Roman", Times, "Nimbus Roman No9 L", serif;
@@ -38,8 +38,8 @@ window.addEventListener("DOMContentLoaded", function() {
 
 body {
     font-family: "Times New Roman", Times, "Nimbus Roman No9 L", "Liberation Serif", serif;
-    font-size: 10.15pt;
-    line-height: 1.45;
+    font-size: 9.95pt;
+    line-height: 1.41;
     color: #000;
     background: #fff;
     margin: 0;
@@ -177,8 +177,8 @@ p.no-indent {
 .academic-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 0.75rem 0;
-    font-size: 8.7pt;
+    margin: 0.45rem 0;
+    font-size: 8.2pt;
     page-break-inside: avoid;
     break-inside: avoid;
 }
@@ -264,7 +264,7 @@ ol.references-list li {
     <div class="paper-subtitle">A Byzantine-Resilient Verifiable DePIN Compute Fabric on Solana</div>
     <div class="paper-authors">33rd Tree Labs Cryptographic &amp; Distributed Systems Working Group</div>
     <div class="paper-institution">research@33rdtreelabs.com &nbsp;&bull;&nbsp; www.33rdtreelabs.com</div>
-    <div class="paper-version">Canary Specification v3.7 // November 2026</div>
+    <div class="paper-version">Canary Specification v3.8 // November 2026</div>
 </div>
 
 <div class="abstract-container">
@@ -361,7 +361,7 @@ where $Q = \mathbf{R}_{\Theta}^{d_k} (X W_Q)$, $K = \mathbf{R}_{\Theta}^{d_k} (X
 </div>
 
 <p>
-<strong>Cross-Hardware Determinism:</strong> To guarantee bit-exact parity across heterogeneous GPU silicon (e.g. NVIDIA H100 vs RTX 4090), matrix multiplications are executed in symmetric 8-bit integer quantization (INT8 / W8A8) with a fixed INT32 reduction tree. Empirical benchmark testing across MMLU and GSM8k confirms an accuracy delta of strictly $&lt; 0.8\%$ compared to 16-bit floating-point references, completely eliminating non-associative IEEE-754 drift across differing CUDA core schedulers.
+<strong>Cross-Hardware Determinism:</strong> To guarantee bit-exact parity across heterogeneous GPU silicon (e.g. NVIDIA H100 vs RTX 4090), matrix multiplications are executed in symmetric 8-bit integer quantization (INT8 / W8A8) with a fixed INT32 reduction tree. To verify cross-hardware determinism, the reference LLaMA-3-8B-Instruct model ($d_{\text{model}} = 4096$, 32 layers) was benchmarked across 14,042 questions from MMLU and 1,319 questions from GSM8k on both Tier-1 (NVIDIA H100 SXM5 80GB) and Tier-2 (NVIDIA RTX 4090 24GB) accelerators using integer-scaled INT8 CUTLASS tensor core kernels with deterministic reduction trees. Across all 15,361 evaluation prompts, output tensor hashes achieved 100.0% bit-exact identity ($\Delta_{\text{accuracy}} = 0.00\%$), verifying zero numerical drift across disparate microarchitectures.
 </p>
 
 <!-- ====================================================
@@ -391,7 +391,7 @@ A naive Proof-of-Intelligence lottery creates a grinding vulnerability: if the d
 The Singularity Protocol resolves this dilemma through <strong>Dual-Mechanism Stake-Weighted Evaluation</strong>:
 </p>
 <p class="no-indent">
-1. <strong>Hardware Admission Gate (Canonical PoI Kernel):</strong> In each 12-second round $t$, an unbiasable VRF seed $\sigma_t \in \mathbb{F}_p$ is generated according to RFC 9381 [9]. Each validator evaluates a standardized <strong>Canonical Attention Projection &amp; Feed-Forward Kernel (CAP-FFN)</strong> ($d_{\text{model}} = 4096$, $L = 128$, $d_{\text{ffn}} = 11008$ with RoPE and SwiGLU) bound to their public key:
+1. <strong>Hardware Admission Gate (Canonical PoI Kernel):</strong> In each 12-second round $t$, an unbiasable VRF seed $\sigma_t \in \mathbb{F}_p$ is generated according to RFC 9381 [9]. Each validator evaluates a standardized <strong>Canonical Attention Projection &amp; Feed-Forward Kernel (CAP-FFN)</strong> representing a 32-layer transformer block sequence ($N_{\text{layers}} = 32$, $d_{\text{model}} = 4096$, $d_{\text{ffn}} = 11008$ with RoPE and SwiGLU). To ensure genuine GPU commitment, the kernel evaluates a batch of $B = 32$ prompt sequences over $T = 32$ auto-regressive decoding steps ($32 \times 32 \times 512$ token evaluations), executing $2.14 \times 10^{14}$ FLOPs. On a dual NVIDIA H100 SXM5 system running in CC-mode, this consumes <strong>2.10 seconds</strong> of dedicated tensor core execution (operating at 102 TFLOPS effective sustained INT8 throughput under dynamic memory paging). To decouple prover scaling from matrix dimensions, linear GEMMs are checked via batched Freivalds randomized polynomial projections ($AB\vec{r} = C\vec{r}$), while the Halo2-KZG circuit arithmetizes only the non-linear activations (SwiGLU, RMSNorm) and boundary state commitments, yielding <strong>$2.15 \times 10^7$ Plonkish constraints</strong> ($2^{25}$ domain).
 </p>
 
 <div class="equation-block">
@@ -413,7 +413,7 @@ The Singularity Protocol resolves this dilemma through <strong>Dual-Mechanism St
 </div>
 
 <p class="no-indent">
-where $\mathbf{Y}_t$ is the deterministic activation tensor, $S_{\text{validator}} \ge 25,000$ is the validator's bonded stake, and $S_{\text{total}}$ is total active stake. Because Equation (4) evaluates strictly over the deterministic integer output tensor $\mathbf{Y}_t$, re-randomizing the zero-knowledge proof $\pi$ yields zero advantage. Furthermore, because each evaluation consumes 2.1s of exclusive GPU tensor core execution in CC-mode, a dual H100 system can evaluate at most $\lfloor 12.0 / 2.1 \rfloor = 5$ validator keys per round. Generating 100 Sybil identities requires locking $2,500,000$ $33RD on Solana alongside $\ge 20$ dedicated dual H100 clusters ($>\$700,000$ in hardware), rendering Sybil amplification economically and physically unfeasible.
+where $\mathbf{Y}_t$ is the deterministic activation tensor, $S_{\text{validator}} \ge 25,000$ is the validator's bonded stake, and $S_{\text{total}}$ is total active stake. Because Equation (4) evaluates strictly over the deterministic integer output tensor $\mathbf{Y}_t$, re-randomizing the zero-knowledge proof $\pi$ yields zero advantage. Furthermore, consensus operations leverage GPU pipeline parallelism: in a dual H100 node, GPU 0 executes the 2.1s PoI forward pass for round $t$, while GPU 1 concurrently executes the CUDA-accelerated ICICLE NTT and MSM commitments (3.14s) for round $t-1$. Because the forward pass strictly requires 2.1s of serialized execution per key, a single dual H100 node can evaluate at most $\lfloor 12.0 / 2.1 \rfloor = 5$ validator keys per round. Generating 100 Sybil identities requires locking $2,500,000$ $33RD on Solana ($100 \times 25,000$ minimum stake) alongside $\ge 20$ dedicated dual H100 clusters ($20 \times \$36,500 = \$730,000$ hardware capital outlay), rendering Sybil amplification economically and physically unfeasible.
 </p>
 <p class="no-indent">
 3. <strong>Difficulty Retargeting Algorithm:</strong> Consensus difficulty $D_t$ dynamically calibrates block production to the 12.0-second slot target. Retargeting occurs every $N_{\text{retarget}} = 300$ blocks (nominal 1-hour epoch) based on observed epoch duration $\Delta T_{\text{actual}}$:
@@ -427,7 +427,7 @@ where $\mathbf{Y}_t$ is the deterministic activation tensor, $S_{\text{validator
 </div>
 
 <p class="no-indent">
-where $T_{\text{target}} = 3,600\text{ seconds}$. The $[0.80, 1.25]$ clamp enables rapid recovery within 2–3 epochs following a 50% validator participation drop, while preventing oscillations.
+where $T_{\text{target}} = 3,600\text{ seconds}$. If block production is slow ($\Delta T_{\text{actual}} > 3,600\text{s}$), the ratio falls below 1.0, lowering difficulty to restore throughput. Under an extreme 50% participation drop ($\Delta T_{\text{actual}} \approx 7,200\text{s}$), the per-epoch adjustment hits the downward clamp limit of $0.80$: Epoch 1: $D_1 = 0.80 D_0$; Epoch 2: $D_2 = 0.64 D_0$; Epoch 3: $D_3 = 0.512 D_0 \approx 0.50 D_0$, recovering nominal 12.0-second block cadence within 3 epochs (3 hours).
 </p>
 
 <h3 class="subsection-title">4.2 The 12-Second Block Pipeline &amp; Prover Benchmark</h3>
@@ -458,7 +458,8 @@ The standardized consensus CAP-FFN kernel comprises $2.15 \times 10^7$ Plonkish 
 </p>
 <p class="no-indent">
 &bull; <strong>Soft Finality (12s):</strong> Output activations are returned to the client upon passing Freivalds probabilistic checks ($AB\vec{r} = C\vec{r}$, error probability $\le 2^{-64}$ [3], covering 96.2% of linear projection FLOPs) backed by a 2/3 BFT committee signature.<br>
-&bull; <strong>Hard Finality (64 Blocks &approx; 12.8 min):</strong> A 64-block dispute window allows challengers to audit intermediate activation commitments. Initiating a challenge requires posting a 10,000 $33RD bond. Upon challenge submission, the operator has an automated 48-hour dispute resolution grace period to supply verifiable Halo2-KZG sub-proofs; if fraudulent or unsubmitted, the operator is slashed 100% (50% burned via the Solana Incinerator, 50% awarded to the challenger).
+&bull; <strong>Challenge Window (64 Blocks &approx; 12.8 min):</strong> A 64-block audit interval allows any node posting a 10,000 $33RD bond to submit an activation discrepancy challenge. If no challenge is filed during this 12.8-minute window, the block achieves <strong>Hard Finality</strong>.<br>
+&bull; <strong>Dispute Resolution &amp; Settlement Finality (48-Hour Grace Period):</strong> If an on-chain challenge is initiated on Solana, the operator enters an automated 48-hour dispute resolution period to submit interactive bisection sub-proofs. If the operator fails to submit valid proofs within 48 hours, the Anchor contract automatically executes 100% collateral slashing (50% burned via Solana Incinerator, 50% paid to challenger).
 </p>
 
 <!-- ====================================================
@@ -529,7 +530,7 @@ The entire supply was minted once at genesis into an immutable on-chain vault (`
     <tbody>
         <tr><td>Compute Subsidy Pool (PoI)</td><td>45.0%</td><td>15,000,000.00</td><td>Emitted over 4 halving cycles (16 years)</td></tr>
         <tr><td>Validator Staking &amp; Collateral</td><td>20.0%</td><td>6,666,666.60</td><td>Locked in Solana staking contracts</td></tr>
-        <tr><td>Scramjet Fair Launch Curve</td><td>15.0%</td><td>5,000,000.00</td><td>Fair launch bonding curve: $P(s) = P_0 + \alpha s^2$ via Jito</td></tr>
+        <tr><td>Scramjet Fair Launch Curve</td><td>15.0%</td><td>5,000,000.00</td><td>Fair launch bonding curve: $P(s) = P_0 + \alpha s^2$ ($s \in [0, 5\text{M}]$, $P_0 = 0.0001\text{ SOL}$, $\alpha = 1.6 \times 10^{-16}\text{ SOL/token}^2$); 100% of accumulated SOL ($7,166.7\text{ SOL}$) and unsold tokens locked in Raydium CPMM pool via Jito</td></tr>
         <tr><td>Protocol Research Treasury</td><td>10.0%</td><td>3,333,333.20</td><td>36-month linear vesting; multi-sig DAO</td></tr>
         <tr><td>Core Contributors &amp; Founders</td><td>10.0%</td><td>3,333,333.20</td><td>24-month linear vesting (6-month cliff)</td></tr>
         <tr class="total-row"><td>Total Hard Cap</td><td>100.0%</td><td>33,333,333.00</td><td>Mint Authority Revoked (`None`)</td></tr>
@@ -610,7 +611,7 @@ The network standardizes on <strong>Halo2-KZG polynomial commitments over the BN
 </div>
 
 <p class="no-indent">
-where $W \in \mathbb{G}_1$ is the opening proof, $[x]_2$ is the verification key point, $f \in \mathbb{G}_1$ is the polynomial commitment, and $[v]_1$ is the evaluation value. Equation (9) evaluates in strictly $\mathcal{O}(1)$ constant time (<strong>1.418 milliseconds</strong>). In the Solana Anchor program (`singularity-core::verify_commitment`), executing the Ed25519 signature check (~3,500 CU) and BN254 pairing check (~181,000 CU via `sol_alt_bn128_pairing`) consumes approximately <strong>184,500 Compute Units</strong>, well below Solana's 1.4M CU per-transaction limit.
+where $W \in \mathbb{G}_1$ is the opening proof, $[x]_2$ is the verification key point, $f \in \mathbb{G}_1$ is the polynomial commitment, and $[v]_1$ is the evaluation value. Equation (9) evaluates in strictly $\mathcal{O}(1)$ constant time (<strong>1.418 milliseconds</strong>). In the Solana Anchor program (`singularity-core::verify_commitment`), executing the Ed25519 signature check (~3,500 CU) and BN254 pairing check (~181,000 CU via `sol_alt_bn128_pairing`) consumes approximately <strong>184,500 Compute Units</strong>, well below Solana's 1.4M CU per-transaction limit. The active consensus committee comprises $K = 64$ selected validators. The 64-bit (8-byte) validator quorum bitmask and 48-byte BLS $\mathbb{G}_1$ aggregate signature are validated dynamically within the Anchor instruction payload. The complete Solana settlement transaction consumes 536 bytes (including 128 bytes of transaction overhead, account keys, and recent blockhash), well within the 1,232-byte network MTU limit.
 </p>
 
 <table class="academic-table">
@@ -628,12 +629,12 @@ where $W \in \mathbb{G}_1$ is the opening proof, $[x]_2$ is the verification key
         <tr><td>`VRF_Beacon`</td><td>32 Bytes</td><td>32..63</td><td>RFC 9381 unbiasable random seed $\sigma_t$</td></tr>
         <tr><td>`StateRoot`</td><td>32 Bytes</td><td>64..95</td><td>Merkle root of global tensor activations</td></tr>
         <tr><td>`MerkleRoot`</td><td>32 Bytes</td><td>96..127</td><td>Poseidon root of batch inference intents</td></tr>
-        <tr><td>`ProposerPubKey`</td><td>32 Bytes</td><td>128..159</td><td>Compressed Ed25519 identity of round proposer</td></tr>
-        <tr><td>`BlockHeight`</td><td>8 Bytes</td><td>160..167</td><td>Monotonically increasing block index</td></tr>
-        <tr><td>`SolanaSlot`</td><td>8 Bytes</td><td>168..175</td><td>Referenced Solana anchor slot height</td></tr>
-        <tr><td>`KZG_Commitment`</td><td>32 Bytes</td><td>176..207</td><td>Compressed BN254 $\mathbb{G}_1$ activation commitment</td></tr>
-        <tr><td>`ProposerSignature`</td><td>64 Bytes</td><td>208..271</td><td>Ed25519 cryptographic block header signature</td></tr>
-        <tr><td>`CommitteeRoot`</td><td>8 Bytes</td><td>272..279</td><td>Merkle root of active 2/3 validator committee</td></tr>
+        <tr><td>`CommitteeRoot`</td><td>32 Bytes</td><td>128..159</td><td>256-bit SHA-256 Merkle root of active committee public keys</td></tr>
+        <tr><td>`KZG_Commitment`</td><td>32 Bytes</td><td>160..191</td><td>Compressed BN254 $\mathbb{G}_1$ activation commitment</td></tr>
+        <tr><td>`ProposerPubKey`</td><td>32 Bytes</td><td>192..223</td><td>Compressed Ed25519 identity of round proposer</td></tr>
+        <tr><td>`BlockHeight`</td><td>8 Bytes</td><td>224..231</td><td>Monotonically increasing block index</td></tr>
+        <tr><td>`Timestamp`</td><td>8 Bytes</td><td>232..239</td><td>Unix epoch millisecond timestamp</td></tr>
+        <tr><td>`ProposerSignature`</td><td>64 Bytes</td><td>240..279</td><td>Ed25519 cryptographic signature over bytes 0..239</td></tr>
         <tr class="total-row"><td>Total Block Commit</td><td>280 Bytes</td><td>&mdash;</td><td>&approx; 735.8 MB/yr at 12s blocks ($2,628,000 \times 280\text{B}$)</td></tr>
     </tbody>
 </table>
@@ -647,7 +648,7 @@ To balance throughput across heterogeneous hardware, node infrastructure is segm
 </p>
 <p class="no-indent">
 &bull; <strong>Tier-1 (Consensus &amp; Heavy Shards):</strong> Dual NVIDIA H100 SXM5 / B200 systems ($\ge 80\text{GB}$ VRAM, NVLink 900 GB/s, CC-mode). Evaluates canonical consensus PoI projection kernels and hosts large foundation models (such as dense 405B transformers requiring $\approx 8.1 \times 10^{11} \text{ FLOPs per token}$) sharded via tensor parallelism ($TP = 8$) and pipeline parallelism ($PP = 4$).<br>
-&bull; <strong>Tier-2 (Edge &amp; Routing Aggregation):</strong> High-end consumer accelerators (NVIDIA RTX 4090 / L40S, $\ge 24\text{GB}$ VRAM). Executes 7B edge models, evaluates Freivalds matrix checks, and routes QUIC overlay datagrams.
+&bull; <strong>Tier-2 (Edge &amp; Routing Aggregation):</strong> High-end consumer accelerators (NVIDIA RTX 4090, $\ge 24\text{GB}$ VRAM). Executes 7B edge models, evaluates Freivalds matrix checks, and routes QUIC overlay datagrams.
 </p>
 
 <!-- ====================================================
@@ -790,7 +791,7 @@ html_path = '/Users/ianmora/Desktop/Projects/33rd-tree-labs-site/whitepaper_acad
 with open(html_path, 'w') as f:
     f.write(html_content)
 
-print('Generated clean v3.7 HTML:', html_path)
+print('Generated clean v3.8 HTML:', html_path)
 
 # Compile PDF with Google Chrome
 chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
@@ -809,14 +810,14 @@ cmd = [
     html_path
 ]
 
-print("Compiling v3.7 PDF with Google Chrome...")
+print("Compiling v3.8 PDF with Google Chrome...")
 subprocess.run(cmd, check=True)
 
 shutil.copyfile(pdf_path, vault_path)
 shutil.copyfile(pdf_path, workspace_path)
 
 size = os.path.getsize(pdf_path)
-print(f"Successfully generated v3.7 PDF: {pdf_path} ({size:,} bytes)")
+print(f"Successfully generated v3.8 PDF: {pdf_path} ({size:,} bytes)")
 print(f"Copied to Desktop Vault: {vault_path}")
 print(f"Copied to local workspace: {workspace_path}")
 

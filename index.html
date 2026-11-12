@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>33RD TREE LABS // Decentralized Compute & Singularity Protocol</title>
-    <meta name="description" content="33rd Tree Labs is building the decentralized compute fabric for post-AGI coordination pairing cryptographic consensus with zero-knowledge inference.">
+    <title>33RD TREE LABS // Decentralized Compute &amp; Singularity Protocol</title>
+    <meta name="description" content="33rd Tree Labs is building the decentralized compute fabric for post-AGI coordination pairing cryptographic consensus with zero-knowledge inference on Solana.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Three.js + OrbitControls -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -16,262 +16,416 @@
 
     <style>
         :root {
-            --orange: #FF292C;
-            --orange-bright: #FF4D50;
-            --orange-glow: rgba(255, 41, 44, 0.45);
-            --orange-subtle: rgba(255, 41, 44, 0.12);
-            --bg: #030306;
-            --bg-elevated: #09090E;
-            --bg-panel: rgba(14, 14, 20, 0.85);
-            --border: #22222E;
-            --border-glow: #FF292C;
-            --text-main: #FFFFFF;
-            --text-muted: #9CA3AF;
-            --text-dark: #6B7280;
-            --white: #FFFFFF;
-            --cyan: #00F0FF;
-            --green: #00FF66;
-            --gold: #FFB800;
+            /* VRTL WRLD DESIGN SYSTEM PALETTE */
+            --void-bg: #060606;
+            --void-surface: #080808;
+            --card-bg: #0C0C0C;
+            --card-bg-elevated: #111111;
+            
+            /* OFFICIAL PRIMARY ACCENT: LASER RED */
+            --laser-red: #FF292C;
+            --laser-red-bright: #FF4548;
+            --laser-red-glow: rgba(255, 41, 44, 0.45);
+            --laser-red-subtle: rgba(255, 41, 44, 0.12);
+            --laser-red-border: rgba(255, 41, 44, 0.28);
+            
+            /* ARCHITECTURAL TEXT & HAIRLINES */
+            --chalk: #F1F1F1;
+            --tech-slate: #888888;
+            --tech-dim: #555555;
+            --graphite-border: #181818;
+            --graphite-border-light: #222222;
+            
+            /* TELEMETRY ACCENTS */
+            --status-green: #00FF66;
+            --status-cyan: #00F0FF;
+            --status-gold: #FFB800;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            cursor: default;
+            cursor: none; /* Controlled by custom reticle cursor */
         }
 
         html {
             scroll-behavior: smooth;
-            background: var(--bg);
-            color: var(--text-main);
-            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            background: var(--void-bg);
+            color: var(--chalk);
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
             overflow-x: hidden;
+            font-feature-settings: "cv02", "cv03", "cv04", "cv11";
         }
 
         body {
             position: relative;
             min-height: 100vh;
             line-height: 1.6;
-            background-color: var(--bg);
+            background-color: var(--void-bg);
+            /* VRTL WRLD Subtle Architectural Crosshair & Grid Matrix */
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(255, 41, 44, 0.15), transparent 45%),
-                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 60px 60px, 60px 60px;
+                radial-gradient(circle at 50% 0%, rgba(255, 41, 44, 0.14), transparent 50%),
+                radial-gradient(circle at 85% 60%, rgba(255, 41, 44, 0.05), transparent 40%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 54px 54px, 54px 54px;
+            color: var(--chalk);
         }
 
-        /* RETICLE CURSOR */
-        #custom-cursor {
+        /* CUSTOM MINIMALIST LASER RED CURSOR */
+        #custom-cursor-dot {
             position: fixed;
-            width: 24px;
-            height: 24px;
-            border: 1.5px solid var(--orange);
+            width: 6px;
+            height: 6px;
+            background: var(--laser-red);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            z-index: 9999;
-            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
-            mix-blend-mode: difference;
+            z-index: 99999;
+            box-shadow: 0 0 10px var(--laser-red);
+            transition: transform 0.05s linear;
         }
-        #custom-cursor::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 4px;
-            height: 4px;
-            background: #FFF;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .cursor-hover {
-            width: 48px !important;
-            height: 48px !important;
-            background-color: var(--orange-glow) !important;
-            border-color: #FFF !important;
-        }
-
-        /* TELEMETRY TOP BAR */
-        .telemetry-bar {
+        #custom-cursor-follower {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 42px;
-            background: rgba(8, 8, 12, 0.94);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 28px;
-            z-index: 1000;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.5px;
-        }
-        .telemetry-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .live-dot {
-            display: inline-block;
-            width: 7px;
-            height: 7px;
-            background: var(--green);
+            width: 26px;
+            height: 26px;
+            border: 1px solid rgba(255, 41, 44, 0.55);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--green);
-            animation: pulse-dot 1.5s infinite;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 99998;
+            box-shadow: 0 0 16px rgba(255, 41, 44, 0.25);
+            transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                        height 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.22s,
+                        background-color 0.22s,
+                        transform 0.1s ease-out;
         }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.85); }
+        .cursor-active #custom-cursor-follower {
+            width: 48px;
+            height: 48px;
+            border-color: var(--chalk);
+            background-color: rgba(255, 41, 44, 0.18);
         }
 
-        .telemetry-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .mini-btn {
-            background: #14141C;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
+        /* TOP-SCREEN TECHNICAL WATERMARKS */
+        .fixed-watermark {
+            position: fixed;
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
+            letter-spacing: 0.18em;
+            color: var(--tech-dim);
+            text-transform: uppercase;
+            z-index: 800;
+            pointer-events: none;
+            user-select: none;
         }
-        .mini-btn:hover {
-            color: #FFF;
-            border-color: var(--orange);
-            background: #1C1C28;
+        .watermark-tl {
+            top: 22px;
+            left: 28px;
         }
-        .mini-btn.active {
-            background: var(--orange);
-            color: #000;
-            border-color: var(--orange);
+        .watermark-tr {
+            top: 22px;
+            right: 28px;
+            color: var(--laser-red);
+        }
+        .watermark-bl {
+            bottom: 20px;
+            left: 28px;
+        }
+        .watermark-br {
+            bottom: 20px;
+            right: 28px;
         }
 
-        /* NAVIGATION HEADER */
-        header.site-nav {
+        /* FLOATING GLASSMORHPIC PILL NAVBAR (VRTL WRLD) */
+        .pill-navbar-container {
             position: fixed;
-            top: 42px;
-            left: 0;
-            width: 100%;
-            height: 72px;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: calc(100% - 56px);
+            max-width: 1180px;
+        }
+        .pill-navbar {
+            background: rgba(8, 8, 8, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 9999px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 32px;
-            background: rgba(3, 3, 6, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            z-index: 990;
+            padding: 0 10px 0 18px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 1px 1px rgba(255, 41, 44, 0.2);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .brand-logo-wrap {
+        .pill-navbar:hover {
+            border-color: rgba(255, 41, 44, 0.35);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 24px rgba(255, 41, 44, 0.18);
+        }
+        .pill-left {
             display: flex;
             align-items: center;
             gap: 14px;
             text-decoration: none;
-            color: #FFF;
+            color: var(--chalk);
         }
-        .logo-symbol {
-            width: 44px;
-            height: 44px;
-            border: 1px solid var(--orange);
-            border-radius: 10px;
+        .pill-logo-wrap {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #000;
+            border: 1px solid var(--laser-red);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle, rgba(255,41,44,0.22), #000);
-            box-shadow: 0 0 16px var(--orange-glow);
-            padding: 4px;
+            box-shadow: 0 0 12px var(--laser-red-glow);
+            overflow: hidden;
+            flex-shrink: 0;
         }
-        .logo-symbol svg {
+        .pill-logo-wrap img {
             width: 100%;
             height: 100%;
+            object-fit: cover;
         }
-        .brand-text {
-            display: flex;
-            flex-direction: column;
-        }
-        .brand-name {
+        .pill-brand-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 16px;
-            font-weight: 900;
-            letter-spacing: 1.5px;
-            color: #FFF;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            color: var(--chalk);
             white-space: nowrap;
         }
-        .brand-sub {
+        .pill-status-badge {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 700;
-            letter-spacing: 1.5px;
-            color: var(--orange);
+            letter-spacing: 0.08em;
+            color: var(--laser-red);
+            background: rgba(255, 41, 44, 0.08);
+            border: 1px solid var(--laser-red-border);
+            padding: 3px 9px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             white-space: nowrap;
         }
-        .nav-links {
+        .pulse-beacon {
+            width: 6px;
+            height: 6px;
+            background: var(--laser-red);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--laser-red);
+            animation: beacon-pulse 1.6s infinite ease-in-out;
+        }
+        @keyframes beacon-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.7); opacity: 0.35; }
+        }
+
+        .pill-links {
             display: flex;
             align-items: center;
-            gap: 28px;
+            gap: 24px;
             list-style: none;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.08em;
         }
-        .nav-links a {
-            color: var(--text-muted);
+        .pill-links a {
+            color: var(--tech-slate);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: color 0.2s, text-shadow 0.2s;
             position: relative;
-            padding: 6px 0;
+            padding: 4px 0;
         }
-        .nav-links a:hover {
-            color: #FFF;
+        .pill-links a:hover {
+            color: var(--chalk);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
-        .nav-links a::after {
+        .pill-links a::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -2px;
             left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--orange);
+            width: 0%;
+            height: 1.5px;
+            background: var(--laser-red);
             transition: width 0.2s;
         }
-        .nav-links a:hover::after {
+        .pill-links a:hover::after {
             width: 100%;
         }
 
-        .nav-cta {
-            background: var(--orange);
-            color: #000 !important;
+        .pill-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pill-sfx-btn {
+            background: #111111;
+            border: 1px solid var(--graphite-border-light);
+            color: var(--tech-slate);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 6px 10px;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .pill-sfx-btn:hover {
+            border-color: var(--laser-red);
+            color: var(--chalk);
+        }
+        .pill-sfx-btn.active {
+            background: var(--laser-red);
+            color: #000;
+            border-color: var(--laser-red);
+            box-shadow: 0 0 12px var(--laser-red-glow);
+        }
+
+        /* CHAMFERED GEOMETRIC BUTTON (VRTL WRLD) */
+        .btn-chamfer {
+            position: relative;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
             font-weight: 800;
-            padding: 8px 18px !important;
-            border-radius: 6px;
-            box-shadow: 0 0 18px var(--orange-glow);
-            transition: all 0.2s !important;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            border: none;
+            white-space: nowrap;
         }
-        .nav-cta:hover {
-            background: #FFF !important;
-            box-shadow: 0 0 24px rgba(255,255,255,0.4);
-            transform: translateY(-1px);
+        .btn-chamfer-primary {
+            background: var(--laser-red);
+            color: #060606;
+            box-shadow: 0 0 24px var(--laser-red-glow);
         }
-        .nav-cta::after { display: none !important; }
+        .btn-chamfer-primary:hover {
+            background: var(--chalk);
+            color: #060606;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(255, 255, 255, 0.4);
+        }
+        .btn-chamfer-secondary {
+            background: #101010;
+            color: var(--chalk);
+            border: 1px solid var(--graphite-border-light);
+        }
+        .btn-chamfer-secondary:hover {
+            border-color: var(--laser-red);
+            background: #161616;
+            color: #FFF;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 41, 44, 0.25);
+        }
+
+        /* CHAMFERED CARD WRAPPER TECHNIQUE (Crisp 1px borders) */
+        .chamfer-card {
+            position: relative;
+            background: var(--graphite-border);
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+            transition: background-color 0.25s, box-shadow 0.25s, transform 0.25s;
+            padding: 1px; /* 1px border */
+        }
+        .chamfer-card:hover {
+            background: var(--laser-red);
+            box-shadow: 0 14px 40px rgba(255, 41, 44, 0.22);
+            transform: translateY(-3px);
+        }
+        .chamfer-inner {
+            background: var(--card-bg);
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 11px 100%, 0 calc(100% - 11px));
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* CORNER CROSSHAIR ACCENTS */
+        .corner-crosshair {
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            line-height: 1;
+            color: var(--tech-dim);
+            pointer-events: none;
+            user-select: none;
+            transition: color 0.25s ease;
+        }
+        .chamfer-card:hover .corner-crosshair {
+            color: var(--laser-red);
+        }
+        .crosshair-tl { top: 8px; left: 8px; }
+        .crosshair-tr { top: 8px; right: 16px; }
+        .crosshair-bl { bottom: 8px; left: 16px; }
+        .crosshair-br { bottom: 8px; right: 8px; }
+
+        /* SECTION BASE */
+        section.section-wrap {
+            position: relative;
+            padding: 110px 6vw;
+            max-width: 1380px;
+            margin: 0 auto;
+            z-index: 20;
+        }
+        .section-header {
+            margin-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+        }
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.22em;
+            color: var(--laser-red);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-title {
+            font-size: clamp(28px, 3.8vw, 44px);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            color: var(--chalk);
+            text-transform: uppercase;
+        }
+        .section-desc {
+            font-size: 15.5px;
+            color: var(--tech-slate);
+            max-width: 680px;
+            line-height: 1.6;
+        }
 
         /* HERO SECTION */
         section.hero {
             position: relative;
             min-height: 100vh;
-            padding-top: 130px;
+            padding-top: 135px;
+            padding-bottom: 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -280,13 +434,12 @@
             overflow: hidden;
             z-index: 10;
         }
-
         .hero-left {
-            max-width: 580px;
+            max-width: 590px;
             z-index: 20;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 26px;
         }
         .hero-pill {
             align-self: flex-start;
@@ -294,97 +447,50 @@
             align-items: center;
             gap: 10px;
             background: rgba(255, 41, 44, 0.08);
-            border: 1px solid rgba(255, 41, 44, 0.3);
+            border: 1px solid var(--laser-red-border);
             padding: 6px 14px;
-            border-radius: 999px;
+            border-radius: 9999px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 700;
-            color: var(--orange);
-            letter-spacing: 1px;
+            color: var(--laser-red);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
         }
-        .hero-pill .blinker {
-            width: 6px;
-            height: 6px;
-            background: var(--orange);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--orange);
-            animation: pulse-dot 1.2s infinite;
-        }
-
         h1.hero-title {
-            font-size: clamp(38px, 5.2vw, 68px);
+            font-size: clamp(40px, 5.4vw, 68px);
             font-weight: 900;
-            line-height: 1.05;
-            letter-spacing: -1.5px;
-            color: #FFFFFF;
+            line-height: 1.04;
+            letter-spacing: -0.03em;
+            color: var(--chalk);
+            text-transform: uppercase;
         }
-        .highlight-orange {
-            color: var(--orange);
-            text-shadow: 0 0 35px var(--orange-glow);
+        .highlight-laser-red {
+            color: var(--laser-red);
+            text-shadow: 0 0 35px var(--laser-red-glow);
         }
-
         p.hero-desc {
             font-size: 16px;
-            color: #D1D5DB;
+            color: #C0C0C0;
             line-height: 1.65;
-            font-family: 'Space Grotesk', sans-serif;
             max-width: 520px;
         }
-
         .hero-ctas {
             display: flex;
             align-items: center;
             gap: 14px;
             flex-wrap: wrap;
         }
-        .btn {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12.5px;
-            font-weight: 800;
-            letter-spacing: 0.8px;
-            padding: 14px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary {
-            background: var(--orange);
-            color: #000;
-            box-shadow: 0 0 24px var(--orange-glow);
-        }
-        .btn-primary:hover {
-            background: #FFF;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.35);
-        }
-        .btn-secondary {
-            background: #101018;
-            color: #FFF;
-            border: 1px solid var(--border);
-        }
-        .btn-secondary:hover {
-            border-color: var(--orange);
-            background: #181824;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255,41,44,0.15);
-        }
 
-        /* 3D WEBGL HERO CANVAS */
+        /* 3D WEBGL HERO CANVAS CONTAINER */
         .hero-right {
             flex: 1;
-            height: 700px;
+            height: 720px;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 380px;
+            min-width: 420px;
         }
         #hero-webgl-canvas {
             width: 100%;
@@ -395,46 +501,47 @@
             position: absolute;
             bottom: 24px;
             right: 24px;
-            background: rgba(10, 10, 16, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 16px;
+            background: rgba(10, 10, 10, 0.88);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--graphite-border-light);
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+            padding: 12px 18px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--text-muted);
+            font-size: 10.5px;
+            color: var(--tech-slate);
             pointer-events: auto;
             display: flex;
             flex-direction: column;
             gap: 4px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
         .canvas-overlay-badge b {
-            color: var(--orange);
+            color: var(--laser-red);
         }
 
         /* METRICS STRIP */
         .metrics-strip {
             position: relative;
             z-index: 20;
-            margin: 0 auto;
+            margin: -20px auto 40px auto;
             max-width: 88vw;
-            background: rgba(12, 12, 18, 0.9);
+            background: rgba(12, 12, 12, 0.92);
             backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px 32px;
+            border: 1px solid var(--graphite-border-light);
+            clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+            padding: 26px 36px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-            transform: translateY(-30px);
+            gap: 28px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 1px 1px rgba(255, 41, 44, 0.15);
         }
         .metric-item {
             display: flex;
             flex-direction: column;
             gap: 6px;
-            border-right: 1px solid rgba(255,255,255,0.06);
-            padding-right: 20px;
+            border-right: 1px solid var(--graphite-border);
+            padding-right: 24px;
+            position: relative;
         }
         .metric-item:last-child {
             border-right: none;
@@ -442,194 +549,333 @@
         }
         .metric-val {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 900;
-            color: #FFF;
+            color: var(--chalk);
             display: flex;
             align-items: baseline;
-            gap: 4px;
+            gap: 5px;
         }
         .metric-val span {
-            color: var(--orange);
-            font-size: 14px;
+            color: var(--laser-red);
+            font-size: 13px;
+            font-weight: 700;
         }
         .metric-label {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             font-weight: 700;
-            color: var(--text-muted);
-            letter-spacing: 0.8px;
+            color: var(--tech-slate);
+            letter-spacing: 0.1em;
             text-transform: uppercase;
         }
         .metric-sub {
-            font-size: 11px;
-            color: #6B7280;
+            font-size: 11.5px;
+            color: var(--tech-dim);
         }
 
-        /* SECTION BASE */
-        section.section-wrap {
-            position: relative;
-            padding: 100px 6vw;
-            max-width: 1400px;
-            margin: 0 auto;
-            z-index: 20;
-        }
-        .section-header {
-            margin-bottom: 54px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .section-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: var(--orange);
-            text-transform: uppercase;
-        }
-        .section-title {
-            font-size: clamp(30px, 3.6vw, 44px);
-            font-weight: 900;
-            letter-spacing: -0.8px;
-            line-height: 1.15;
-            color: #FFF;
-        }
-        .section-desc {
-            font-size: 16px;
-            color: var(--text-muted);
-            max-width: 650px;
-            line-height: 1.6;
-        }
-
-        /* BENTO ARCHITECTURE GRID */
+        /* BENTO GRID (ARCHITECTURE) */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
             gap: 20px;
         }
-        .bento-card {
-            background: #0B0B11;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .bento-card:hover {
-            border-color: var(--orange);
-            transform: translateY(-4px);
-            box-shadow: 0 16px 40px rgba(255, 41, 44, 0.15);
-        }
-        .bento-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--orange), transparent);
-            opacity: 0;
-            transition: opacity 0.25s;
-        }
-        .bento-card:hover::before {
-            opacity: 1;
-        }
         .bento-span-7 { grid-column: span 7; }
         .bento-span-5 { grid-column: span 5; }
         .bento-span-4 { grid-column: span 4; }
         .bento-span-8 { grid-column: span 8; }
+        .bento-span-6 { grid-column: span 6; }
+        .bento-span-12 { grid-column: span 12; }
 
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
-            background: rgba(255, 41, 44, 0.1);
-            border: 1px solid rgba(255, 41, 44, 0.3);
+        .card-stamp-row {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 18px;
-            font-weight: 900;
-            color: var(--orange);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            margin-bottom: 16px;
         }
-        .card-num {
-            position: absolute;
-            top: 24px;
-            right: 28px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            font-weight: 800;
-            color: #333342;
+        .card-stamp-num {
+            color: var(--laser-red);
+            font-weight: 700;
+        }
+        .card-stamp-badge {
+            color: var(--tech-dim);
+            font-size: 10px;
         }
         .card-title {
-            font-size: 20px;
+            font-size: 21px;
             font-weight: 800;
-            color: #FFF;
+            color: var(--chalk);
             margin-bottom: 10px;
-            letter-spacing: -0.3px;
+            letter-spacing: -0.01em;
         }
         .card-text {
             font-size: 14px;
-            color: var(--text-muted);
+            color: #A0A0A0;
             line-height: 1.6;
+            margin-bottom: 22px;
         }
         .card-badge-row {
-            margin-top: 24px;
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
         .tech-pill {
-            background: #14141E;
-            border: 1px solid #252536;
-            color: #A1A1AA;
+            background: #121212;
+            border: 1px solid var(--graphite-border-light);
+            color: #B4B4B4;
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
             font-weight: 700;
             padding: 4px 10px;
-            border-radius: 999px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .tech-pill-accent {
+            border-color: var(--laser-red-border);
+            color: var(--laser-red);
+            background: rgba(255, 41, 44, 0.06);
         }
 
-        /* INTERACTIVE 33RD CLI TERMINAL */
-        .terminal-wrap {
-            background: #08080C;
-            border: 1px solid var(--border);
-            border-radius: 14px;
+        /* CONSENSUS SIMULATOR SECTION */
+        .simulator-box {
+            background: var(--void-surface);
+            border: 1px solid var(--graphite-border);
+            clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+            padding: 24px;
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+        }
+        #node-canvas {
+            width: 100%;
+            height: 340px;
+            display: block;
+            background: #040404;
+        }
+        .sim-telemetry-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--tech-slate);
+            flex-wrap: wrap;
+            gap: 12px;
+            border-top: 1px solid var(--graphite-border);
+            padding-top: 14px;
+        }
+
+        /* TOKENOMICS & EMISSIONS CALCULATOR */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 24px;
+        }
+        .calc-control-group {
+            margin-bottom: 20px;
+        }
+        .calc-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--tech-slate);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+        }
+        .calc-select {
+            width: 100%;
+            padding: 12px 14px;
+            background: #111111;
+            border: 1px solid var(--graphite-border-light);
+            color: var(--chalk);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            outline: none;
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+            transition: border-color 0.2s;
+        }
+        .calc-select:focus {
+            border-color: var(--laser-red);
+        }
+        .calc-range {
+            width: 100%;
+            accent-color: var(--laser-red);
+            height: 6px;
+            background: #1A1A1A;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+        .calc-result-box {
+            background: #0A0A0A;
+            border: 1px solid var(--graphite-border-light);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .calc-stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid #161616;
+            padding-bottom: 10px;
+        }
+        .calc-stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--tech-slate);
+        }
+        .calc-stat-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--chalk);
+        }
+        .calc-stat-val.accent {
+            color: var(--laser-red);
+            font-size: 20px;
+        }
+
+        /* BRAND IDENTITY MATRIX SHOWCASE (VRTL WRLD) */
+        .brand-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .medallion-display {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 10px 0 20px 0;
+            background: radial-gradient(circle, rgba(255, 41, 44, 0.16) 0%, transparent 70%);
+        }
+        .medallion-display img {
+            max-height: 220px;
+            max-width: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 25px rgba(255, 41, 44, 0.5));
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s;
+        }
+        .medallion-display:hover img {
+            transform: scale(1.06) rotate(3deg);
+            filter: drop-shadow(0 0 38px rgba(255, 41, 44, 0.75));
+        }
+
+        .cards-preview-wrap {
+            position: relative;
+            width: 100%;
+            border: 1px solid var(--graphite-border-light);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            overflow: hidden;
+            background: #050505;
+            margin-bottom: 18px;
+        }
+        .cards-preview-wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .cards-preview-wrap:hover img {
+            transform: scale(1.02);
+        }
+
+        .spec-list {
+            list-style: none;
+            margin-top: 12px;
+        }
+        .spec-list li {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--graphite-border);
+            display: flex;
+            justify-content: space-between;
+        }
+        .spec-list li .label { color: var(--tech-slate); }
+        .spec-list li .val { color: var(--chalk); font-weight: 600; }
+        .spec-list li .accent { color: var(--laser-red); font-weight: 700; }
+
+        /* PALETTE SWATCHES */
+        .swatch-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .swatch-box {
+            background: #111111;
+            border: 1px solid var(--graphite-border-light);
+            padding: 10px;
+            clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+            transition: border-color 0.2s;
+            cursor: pointer;
+        }
+        .swatch-box:hover {
+            border-color: var(--laser-red);
+        }
+        .swatch-color {
+            height: 38px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .swatch-name {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--chalk);
+            white-space: nowrap;
+        }
+        .swatch-hex {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            color: var(--tech-slate);
+        }
+
+        /* INTERACTIVE 33RD PROTOCOL TERMINAL */
+        .terminal-wrap {
+            background: #070707;
+            border: 1px solid var(--graphite-border-light);
+            clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+            overflow: hidden;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.9);
             font-family: 'JetBrains Mono', monospace;
         }
         .terminal-top {
-            background: #101018;
-            padding: 10px 18px;
-            border-bottom: 1px solid var(--border);
+            background: #0E0E0E;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--graphite-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
         .term-dots {
             display: flex;
-            gap: 7px;
+            gap: 6px;
         }
         .term-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
         }
-        .term-dot.r { background: #EF4444; }
-        .term-dot.y { background: #F59E0B; }
-        .term-dot.g { background: #10B981; }
+        .term-dot.r { background: #FF292C; }
+        .term-dot.y { background: #555555; }
+        .term-dot.g { background: #222222; }
         .terminal-title {
             font-size: 11px;
-            color: var(--text-muted);
-            letter-spacing: 0.5px;
+            color: var(--tech-slate);
+            letter-spacing: 0.1em;
         }
         .terminal-body {
             padding: 24px;
@@ -637,106 +883,92 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            font-size: 13px;
+            gap: 10px;
+            font-size: 12.5px;
             line-height: 1.6;
-            color: #D4D4D8;
+            color: #CFCFCF;
+            background: #040404;
         }
         .term-line-output {
-            color: #A1A1AA;
+            color: #A0A0A0;
             white-space: pre-wrap;
         }
         .term-prompt-row {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-top: 6px;
+            margin-top: 4px;
         }
         .term-prompt-symbol {
-            color: var(--orange);
+            color: var(--laser-red);
             font-weight: 800;
         }
         .term-input {
             background: transparent;
             border: none;
             outline: none;
-            color: #FFF;
+            color: var(--chalk);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
+            font-size: 12.5px;
             flex-grow: 1;
         }
         .term-chips {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            padding: 12px 18px;
-            background: #0C0C12;
-            border-top: 1px solid var(--border);
+            padding: 12px 20px;
+            background: #0A0A0A;
+            border-top: 1px solid var(--graphite-border);
         }
         .term-chip {
-            background: #161622;
-            border: 1px solid #28283C;
-            color: #E4E4E7;
-            font-size: 10.5px;
-            padding: 4px 10px;
-            border-radius: 4px;
+            background: #141414;
+            border: 1px solid var(--graphite-border-light);
+            color: #D0D0D0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            padding: 5px 11px;
+            clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
             cursor: pointer;
             transition: all 0.15s;
         }
         .term-chip:hover {
-            border-color: var(--orange);
+            border-color: var(--laser-red);
             color: #FFF;
-            background: #202030;
-        }
-
-        /* CONSENSUS SIMULATOR */
-        .simulator-box {
-            background: #08080E;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-        #node-canvas {
-            width: 100%;
-            height: 340px;
-            display: block;
-            border-radius: 10px;
+            background: #1D1D1D;
         }
 
         /* FOOTER */
         footer.site-footer {
-            border-top: 1px solid var(--border);
-            background: #050508;
-            padding: 70px 6vw 40px;
+            border-top: 1px solid var(--graphite-border);
+            background: #040404;
+            padding: 80px 6vw 40px;
             position: relative;
             z-index: 20;
         }
         .footer-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 40px;
             margin-bottom: 50px;
         }
         .footer-brand {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
             max-width: 380px;
         }
         .footer-desc {
             font-size: 13px;
-            color: var(--text-muted);
+            color: var(--tech-slate);
             line-height: 1.6;
         }
         .footer-col-title {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             font-weight: 800;
-            color: #FFF;
-            letter-spacing: 1.5px;
-            margin-bottom: 16px;
+            color: var(--chalk);
+            letter-spacing: 0.18em;
+            margin-bottom: 18px;
             text-transform: uppercase;
         }
         .footer-links {
@@ -747,113 +979,120 @@
             font-size: 13px;
         }
         .footer-links a {
-            color: var(--text-muted);
+            color: var(--tech-slate);
             text-decoration: none;
             transition: color 0.2s;
         }
         .footer-links a:hover {
-            color: var(--orange);
+            color: var(--laser-red);
         }
         .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.06);
+            border-top: 1px solid var(--graphite-border);
             padding-top: 28px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--text-dark);
+            font-size: 10.5px;
+            color: var(--tech-dim);
             flex-wrap: wrap;
             gap: 14px;
         }
 
-        @media (max-width: 1024px) {
-            section.hero { flex-direction: column; padding-top: 150px; text-align: center; }
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1120px) {
+            .pill-links { display: none; }
+            section.hero { flex-direction: column; padding-top: 140px; text-align: center; }
             .hero-left { align-items: center; max-width: 100%; }
-            .hero-right { width: 100%; height: 500px; }
+            .hero-right { width: 100%; height: 520px; min-width: unset; }
             .metrics-strip { grid-template-columns: repeat(2, 1fr); gap: 20px; }
             .bento-card { grid-column: span 12 !important; }
+            .calc-grid { grid-template-columns: 1fr; }
+            .brand-showcase-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 640px) {
+            .pill-navbar-container { width: calc(100% - 24px); }
+            .pill-status-badge { display: none; }
             .metrics-strip { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
+            .fixed-watermark { display: none; }
+            .swatch-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
 
-    <!-- CUSTOM RETICLE CURSOR -->
-    <div id="custom-cursor"></div>
+    <!-- MINIMALIST LASER RED RETICLE CURSOR FOLLOWER -->
+    <div id="custom-cursor-dot"></div>
+    <div id="custom-cursor-follower"></div>
 
-    <!-- TOP TELEMETRY BAR -->
-    <div class="telemetry-bar">
-        <div class="telemetry-left">
-            <span><span class="live-dot"></span> <b>SINGULARITY MAINNET</b>: CANARY ONLINE</span>
-            <span style="color:var(--text-muted);">// EPOCH 338,912</span>
-            <span style="color:var(--orange);">// 142.8 PFLOPS VERIFIED</span>
-        </div>
-        <div class="telemetry-right">
-            <span>AUDIO FX:</span>
-            <button class="mini-btn" id="audio-toggle" onclick="toggleAudio()">[SFX: OFF]</button>
-            <div style="display:flex; gap:4px; align-items:center;">
-                <span style="color:var(--text-muted);">THEME:</span>
-                <button class="mini-btn active" onclick="setGlobalTheme('#FF292C', this)">ORANGE</button>
-                <button class="mini-btn" onclick="setGlobalTheme('#00F0FF', this)">CYAN</button>
-                <button class="mini-btn" onclick="setGlobalTheme('#FFFFFF', this)">STARK</button>
-                <button class="mini-btn" onclick="setGlobalTheme('#00FF66', this)">EMERALD</button>
+    <!-- TECHNICAL WATERMARKS (CORNERS) -->
+    <div class="fixed-watermark watermark-tl">+ 33RD TREE LABS // SINGULARITY FABRIC</div>
+    <div class="fixed-watermark watermark-tr">[ SOLANA // DEPIN ] +</div>
+    <div class="fixed-watermark watermark-bl">+ COORD: 37.7749°N, 122.4194°W</div>
+    <div class="fixed-watermark watermark-br">[ LATENCY: 12.0s ] +</div>
+
+    <!-- FLOATING GLASSMORHPIC PILL NAVBAR (VRTL WRLD) -->
+    <div class="pill-navbar-container">
+        <header class="pill-navbar">
+            <a href="#hero" class="pill-left">
+                <div class="pill-logo-wrap">
+                    <img src="assets/nav_logo.png" alt="33rd Tree Labs Nav Mark">
+                </div>
+                <span class="pill-brand-title">33RD TREE LABS</span>
+                <span class="pill-status-badge">
+                    <span class="pulse-beacon"></span>
+                    <span>[ MAINNET CANARY ]</span>
+                </span>
+            </a>
+
+            <ul class="pill-links">
+                <li><a href="#architecture">PROTOCOL</a></li>
+                <li><a href="nodes.html">NODES</a></li>
+                <li><a href="tokenomics.html">TOKENOMICS</a></li>
+                <li><a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank">WHITEPAPER</a></li>
+                <li><a href="#calculator">CALCULATOR</a></li>
+                <li><a href="#brand">BRAND</a></li>
+            </ul>
+
+            <div class="pill-right">
+                <button class="pill-sfx-btn" id="audio-toggle" onclick="toggleAudio()">[ SFX: OFF ]</button>
+                <a href="#interactive-terminal" class="btn-chamfer btn-chamfer-primary" onclick="playSfx('click')">
+                    [ LAUNCH APP ]
+                </a>
             </div>
-        </div>
+        </header>
     </div>
 
-    <!-- NAVIGATION HEADER WITH EXACT BRAND MARK -->
-    <header class="site-nav">
-        <a href="#hero" class="brand-logo-wrap">
-            <div class="logo-symbol" style="background:#000;border:1px solid #FF292C;box-shadow:0 0 16px rgba(255,41,44,0.45);padding:3px;">
-                <img src="assets/nav_logo.png" alt="33rd Tree Labs" style="width:100%;height:100%;object-fit:contain;display:block;">
-            </div>
-            <div class="brand-text">
-                <span class="brand-name">33RD TREE LABS</span>
-                <span class="brand-sub">SINGULARITY PROTOCOL</span>
-            </div>
-        </a>
-
-                <ul class="nav-links">
-            <li><a href="index.html" class="active">HOME</a></li>
-            <li><a href="whitepaper.html">WHITEPAPER</a></li>
-            <li><a href="nodes.html">NODE RUNNERS</a></li>
-            <li><a href="tokenomics.html">TOKENOMICS</a></li>
-            <li><a href="research.html">RESEARCH</a></li>
-            <li><a href="nodes.html" class="nav-cta">CONNECT NODE</a></li>
-        </ul>
-    </header>
-
-    <!-- HERO SECTION WITH LIVE 3D ARBOR -->
+    <!-- HERO SECTION -->
     <section class="hero" id="hero">
         <div class="hero-left">
             <div class="hero-pill">
-                <span class="blinker"></span>
-                <span>PROOF OF INTELLIGENCE // MAINNET DEPLOYED</span>
+                <span class="pulse-beacon"></span>
+                <span>PROOF OF INTELLIGENCE // MAINNET CANARY</span>
             </div>
 
             <h1 class="hero-title">
                 DECENTRALIZED <br>
-                <span class="highlight-orange">COMPUTE FABRIC</span> <br>
+                <span class="highlight-laser-red">COMPUTE FABRIC</span> <br>
                 FOR POST-AGI.
             </h1>
 
             <p class="hero-desc">
-                By pairing cryptographic consensus with zero-knowledge inference and Proof of Intelligence, 33rd Tree Labs turns global tensor compute into an immutable public utility.
+                By pairing cryptographic consensus with zero-knowledge inference and Proof of Intelligence, 33rd Tree Labs turns global tensor compute into an immutable public utility on Solana.
             </p>
 
             <div class="hero-ctas">
-                <a href="#interactive-terminal" class="btn btn-primary" onclick="playSfx('click')">
-                    <span>LAUNCH TERMINAL</span>
+                <a href="#interactive-terminal" class="btn-chamfer btn-chamfer-primary" onclick="playSfx('click')">
+                    <span>[ LAUNCH TERMINAL ]</span>
                     <span>→</span>
                 </a>
-                <a href="#architecture" class="btn btn-secondary" onclick="playSfx('click')">
-                    <span>EXPLORE ARCHITECTURE</span>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="btn-chamfer btn-chamfer-secondary" onclick="playSfx('click')">
+                    <span>[ VIEW WHITEPAPER ]</span>
+                </a>
+                <a href="nodes.html" class="btn-chamfer btn-chamfer-secondary" onclick="playSfx('click')">
+                    <span>[ CONNECT NODE ]</span>
                 </a>
             </div>
         </div>
@@ -863,8 +1102,10 @@
 
             <div class="canvas-overlay-badge">
                 <div><b>SINGULARITY TENSOR ARBOR</b> [3D LIVE]</div>
-                <div>Left click &amp; drag to orbit 360° • Scroll zoom</div>
-                <div style="font-size:10px; color:#777; margin-top:2px;">Mathematical surface: r(y) = r₀ + A·(e^(ky) - 1)/(e^k - 1)</div>
+                <div>Left-click &amp; drag to orbit 360° | Scroll to zoom</div>
+                <div style="font-size:9.5px; color:#666; margin-top:2px;">
+                    r(y) = r₀ + A·(e^(ky) - 1)/(e^k - 1) // [ k=3.8, R=1.50, r₀=0.09 ]
+                </div>
             </div>
         </div>
     </section>
@@ -889,100 +1130,363 @@
         <div class="metric-item">
             <div class="metric-val" id="stat-uptime">99.998 <span>%</span></div>
             <div class="metric-label">Consensus Finality</div>
-            <div class="metric-sub">Slashing-resistant Byzantine agreement</div>
+            <div class="metric-sub">Slashing-resistant Byzantine agreement on Solana</div>
         </div>
     </div>
 
-    <!-- ARCHITECTURE BENTO GRID -->
+    <!-- PROTOCOL ARCHITECTURE (BENTO GRID) -->
     <section class="section-wrap" id="architecture">
         <div class="section-header">
-            <span class="section-tag">// PROTOCOL ARCHITECTURE</span>
+            <span class="section-tag">+ 01 // ARCHITECTURE &bull; [ SOLANA // DEPIN ]</span>
             <h2 class="section-title">ENGINEERED FOR THE POST-AGI HORIZON</h2>
-            <p class="section-desc">Traditional AI compute is trapped in closed silicon silos. 33rd Tree Labs liberates tensor operations through cryptographically verified peer coordination.</p>
+            <p class="section-desc">
+                Traditional AI compute is trapped in closed silicon silos. 33rd Tree Labs liberates tensor operations through cryptographically verified peer coordination.
+            </p>
         </div>
 
         <div class="bento-grid">
-            <div class="bento-card bento-span-7">
-                <span class="card-num">01 // CONSENSUS</span>
-                <div class="card-icon" style="font-size:12px; font-weight:800; font-family:JetBrains Mono, monospace; color:var(--orange);">POI</div>
-                <h3 class="card-title">Proof of Intelligence (PoI) Engine</h3>
-                <p class="card-text">
-                    Replaces wasteful SHA-256 hash grinding with verifiable transformer tensor matrix multiplications. Validators earn consensus weight by computing real zero-knowledge forward passes and verifiable LLM inference batches.
-                </p>
-                <div class="card-badge-row">
-                    <span class="tech-pill">Halo2 SNARKs</span>
-                    <span class="tech-pill">Bilinear Pairings</span>
-                    <span class="tech-pill">Slashing Collateral</span>
+            <!-- 01 // Consensus -->
+            <div class="chamfer-card bento-span-7">
+                <span class="corner-crosshair crosshair-tl">+</span>
+                <span class="corner-crosshair crosshair-tr">+</span>
+                <span class="corner-crosshair crosshair-bl">+</span>
+                <span class="corner-crosshair crosshair-br">+</span>
+                <div class="chamfer-inner">
+                    <div>
+                        <div class="card-stamp-row">
+                            <span class="card-stamp-num">+ 01.1 // CONSENSUS</span>
+                            <span class="card-stamp-badge">[ HARDWARE-GATED ]</span>
+                        </div>
+                        <h3 class="card-title">Proof of Intelligence (PoI) Engine</h3>
+                        <p class="card-text">
+                            Replaces wasteful SHA-256 hash grinding with verifiable transformer tensor matrix multiplications. Validators earn consensus weight by computing real zero-knowledge forward passes and verifiable LLM inference batches.
+                        </p>
+                    </div>
+                    <div class="card-badge-row">
+                        <span class="tech-pill tech-pill-accent">Halo2 SNARKs</span>
+                        <span class="tech-pill">BN254 Pairings</span>
+                        <span class="tech-pill">Slashing Collateral</span>
+                        <span class="tech-pill">FP8 Tensor Cores</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="bento-card bento-span-5">
-                <span class="card-num">02 // CRYPTOGRAPHY</span>
-                <div class="card-icon" style="font-size:11px; font-weight:800; font-family:JetBrains Mono, monospace; color:var(--orange);">ZK-TI</div>
-                <h3 class="card-title">Zero-Knowledge Tensor Inference</h3>
-                <p class="card-text">
-                    Execute proprietary neural weights on untrusted global nodes with zero weight leakage. Clients verify model outputs in O(1) time without exposing private inputs.
-                </p>
-                <div class="card-badge-row">
-                    <span class="tech-pill">zk-SNARKs</span>
-                    <span class="tech-pill">Plonky3</span>
-                    <span class="tech-pill">O(1) Verification</span>
+            <!-- 02 // Cryptography -->
+            <div class="chamfer-card bento-span-5">
+                <span class="corner-crosshair crosshair-tl">+</span>
+                <span class="corner-crosshair crosshair-tr">+</span>
+                <span class="corner-crosshair crosshair-bl">+</span>
+                <span class="corner-crosshair crosshair-br">+</span>
+                <div class="chamfer-inner">
+                    <div>
+                        <div class="card-stamp-row">
+                            <span class="card-stamp-num">+ 01.2 // PRIVACY</span>
+                            <span class="card-stamp-badge">[ O(1) PROOF ]</span>
+                        </div>
+                        <h3 class="card-title">Zero-Knowledge Tensor Inference</h3>
+                        <p class="card-text">
+                            Execute proprietary neural weights on untrusted global nodes with zero weight leakage. Clients verify model outputs in O(1) time without exposing private inputs or architecture.
+                        </p>
+                    </div>
+                    <div class="card-badge-row">
+                        <span class="tech-pill tech-pill-accent">zk-SNARKs</span>
+                        <span class="tech-pill">Plonky3</span>
+                        <span class="tech-pill">Weight Masking</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="bento-card bento-span-4">
-                <span class="card-num">03 // ROUTING</span>
-                <div class="card-icon" style="font-size:11px; font-weight:800; font-family:JetBrains Mono, monospace; color:var(--orange);">MESH</div>
-                <h3 class="card-title">Exponential Plunge Fabric</h3>
-                <p class="card-text">
-                    Dynamic hyperboloid topology matches traffic spikes with ultra-low latency routing across global clusters.
-                </p>
-                <div class="card-badge-row">
-                    <span class="tech-pill">Hyperboloid Mesh</span>
-                    <span class="tech-pill">Sub-10ms P99</span>
+            <!-- 03 // Routing -->
+            <div class="chamfer-card bento-span-4">
+                <span class="corner-crosshair crosshair-tl">+</span>
+                <span class="corner-crosshair crosshair-tr">+</span>
+                <span class="corner-crosshair crosshair-bl">+</span>
+                <span class="corner-crosshair crosshair-br">+</span>
+                <div class="chamfer-inner">
+                    <div>
+                        <div class="card-stamp-row">
+                            <span class="card-stamp-num">+ 01.3 // TOPOLOGY</span>
+                            <span class="card-stamp-badge">[ LATENCY: 12.0s ]</span>
+                        </div>
+                        <h3 class="card-title">Exponential Plunge Fabric</h3>
+                        <p class="card-text">
+                            Dynamic hyperboloid coordinate topology matches traffic spikes with ultra-low latency routing across global clusters, bounding diameter to 4.21 mean hops.
+                        </p>
+                    </div>
+                    <div class="card-badge-row">
+                        <span class="tech-pill tech-pill-accent">Hyperboloid Mesh</span>
+                        <span class="tech-pill">Sub-10ms P99</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="bento-card bento-span-8">
-                <span class="card-num">04 // ORCHESTRATION</span>
-                <div class="card-icon" style="font-size:11px; font-weight:800; font-family:JetBrains Mono, monospace; color:var(--orange);">LEDGER</div>
-                <h3 class="card-title">Immutable Singularity Model Checkpoint Ledger</h3>
-                <p class="card-text">
-                    Decentralized, content-addressed tensor storage anchored across cryptographic shards. Checkpoints are automatically checkpointed, signed by validator multisig, and protected against Byzantine weight poisoning.
-                </p>
-                <div class="card-badge-row">
-                    <span class="tech-pill">IPFS/Arweave Sharding</span>
-                    <span class="tech-pill">PoI Multi-Sig</span>
-                    <span class="tech-pill">Anti-Poisoning Filter</span>
+            <!-- 04 // Ledger -->
+            <div class="chamfer-card bento-span-8">
+                <span class="corner-crosshair crosshair-tl">+</span>
+                <span class="corner-crosshair crosshair-tr">+</span>
+                <span class="corner-crosshair crosshair-bl">+</span>
+                <span class="corner-crosshair crosshair-br">+</span>
+                <div class="chamfer-inner">
+                    <div>
+                        <div class="card-stamp-row">
+                            <span class="card-stamp-num">+ 01.4 // CHECKPOINTS</span>
+                            <span class="card-stamp-badge">[ BYZANTINE FAULT TOLERANT ]</span>
+                        </div>
+                        <h3 class="card-title">Immutable Singularity Model Checkpoint Ledger</h3>
+                        <p class="card-text">
+                            Decentralized, content-addressed tensor storage anchored across cryptographic shards on Arweave and Solana. Checkpoints are signed by validator multisig, guaranteeing byte-level model provenance and resilience against weight poisoning.
+                        </p>
+                    </div>
+                    <div class="card-badge-row">
+                        <span class="tech-pill tech-pill-accent">Arweave Sharding</span>
+                        <span class="tech-pill">PoI Multi-Sig</span>
+                        <span class="tech-pill">Anti-Poisoning Filter</span>
+                        <span class="tech-pill">Merkle Trees</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PROOF OF INTELLIGENCE SIMULATOR SECTION -->
-    <section class="section-wrap" id="proof-of-intelligence">
+    <!-- REAL-TIME CONSENSUS SIMULATOR -->
+    <section class="section-wrap" id="consensus">
         <div class="section-header">
-            <span class="section-tag">// LIVE CONSENSUS SIMULATOR</span>
-            <h2 class="section-title">REAL-TIME TENSOR VERIFICATION</h2>
-            <p class="section-desc">Watch 33rd Tree Labs validators coordinate matrix multiplication proofs in real time.</p>
+            <span class="section-tag">+ 02 // CONSENSUS &bull; [ REAL-TIME TELEMETRY ]</span>
+            <h2 class="section-title">REAL-TIME TENSOR VERIFICATION MESH</h2>
+            <p class="section-desc">
+                Watch 33rd Tree Labs validator nodes coordinate zero-knowledge matrix multiplication proofs across the global hyperboloid topology.
+            </p>
         </div>
 
         <div class="simulator-box">
             <canvas id="node-canvas"></canvas>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-muted);">
-                <span>STATUS: <b style="color:var(--green)">CONSENSUS ROUND IN PROGRESS</b></span>
-                <span>DIFFICULTY: <b style="color:var(--orange)">33.84 TERA-OPS</b></span>
-                <span>LATEST BLOCK: <b style="color:#FFF">#3,389,124 [ZK-PROVEN]</b></span>
+            <div class="sim-telemetry-bar">
+                <span>STATUS: <b style="color:var(--status-green)">[ CONSENSUS ROUND ACTIVE ]</b></span>
+                <span>DIFFICULTY: <b style="color:var(--laser-red)">33.84 TERA-OPS</b></span>
+                <span>EPOCH: <b style="color:var(--chalk)">#338,912</b></span>
+                <span>BLOCK: <b style="color:var(--laser-red)">#3,389,124 [ZK-PROVEN BN254]</b></span>
             </div>
         </div>
     </section>
 
-    <!-- INTERACTIVE 33RD TERMINAL / CLI -->
+    <!-- TOKENOMICS & DEFLATIONARY EMISSIONS CALCULATOR -->
+    <section class="section-wrap" id="calculator">
+        <div class="section-header">
+            <span class="section-tag">+ 03 // TOKENOMICS &bull; [ COMPUTE EMISSION SCHEDULE ]</span>
+            <h2 class="section-title">DEFLATIONARY POI EMISSION &amp; YIELD CALCULATOR</h2>
+            <p class="section-desc">
+                Model validator node yields across halving epochs, hardware specifications, and network staking tiers. Built with Solana SPL settlement and an unforgeable Proof-of-Intelligence hardware gate.
+            </p>
+        </div>
+
+        <div class="chamfer-card">
+            <span class="corner-crosshair crosshair-tl">+</span>
+            <span class="corner-crosshair crosshair-tr">+</span>
+            <span class="corner-crosshair crosshair-bl">+</span>
+            <span class="corner-crosshair crosshair-br">+</span>
+            <div class="chamfer-inner" style="padding: 36px;">
+                <div class="calc-grid">
+                    <!-- Controls -->
+                    <div>
+                        <div class="calc-control-group">
+                            <label class="calc-label">
+                                <span>1. Select Hardware Configuration:</span>
+                                <span style="color:var(--laser-red);">[ HARDWARE SPEC ]</span>
+                            </label>
+                            <select id="calc-hardware" class="calc-select" onchange="recalculateYield()">
+                                <option value="18">1x NVIDIA RTX 4090 (24GB VRAM) &bull; Tier 1 Compute (18 $33RD/day)</option>
+                                <option value="94" selected>1x NVIDIA H100 SXM5 (80GB VRAM) &bull; Tier 2 Compute (94 $33RD/day)</option>
+                                <option value="640">8x NVIDIA H100 SXM5 (640GB VRAM) &bull; Tier 3 Supercluster (640 $33RD/day)</option>
+                                <option value="1850">16x NVIDIA B200 NVL (3,072GB VRAM) &bull; Tier 4 Hyperscale (1,850 $33RD/day)</option>
+                            </select>
+                        </div>
+
+                        <div class="calc-control-group">
+                            <label class="calc-label">
+                                <span>2. Halving Cycle &amp; Epoch:</span>
+                                <span style="color:var(--laser-red);">[ 16-YR CURVE ]</span>
+                            </label>
+                            <select id="calc-epoch" class="calc-select" onchange="recalculateYield()">
+                                <option value="1.0" selected>Year 1 &bull; Genesis Canary (100% Emission: 15,410.96 $33RD/day pool)</option>
+                                <option value="0.5">Year 2 &bull; 1st Halving (50% Emission: 7,705.48 $33RD/day pool)</option>
+                                <option value="0.25">Year 3 &bull; 2nd Halving (25% Emission: 3,852.74 $33RD/day pool)</option>
+                                <option value="0.125">Year 4 &bull; 3rd Halving (12.5% Emission: 1,926.37 $33RD/day pool)</option>
+                                <option value="0.08">Year 5+ &bull; Tail Subsidy (Commercial inference fees + tail emission)</option>
+                            </select>
+                        </div>
+
+                        <div class="calc-control-group">
+                            <div class="calc-label">
+                                <span>3. Validator Staked Bond:</span>
+                                <span id="staked-display" style="color:var(--chalk); font-weight:700;">25,000 $33RD (Min Bond)</span>
+                            </div>
+                            <input type="range" id="calc-stake" class="calc-range" min="25000" max="250000" step="5000" value="25000" oninput="recalculateYield()">
+                            <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--tech-dim); margin-top:6px;">
+                                <span>25,000 $33RD</span>
+                                <span>125,000 $33RD</span>
+                                <span>250,000 $33RD</span>
+                            </div>
+                        </div>
+
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--tech-slate); line-height:1.6; border-left:2px solid var(--laser-red); padding-left:14px; margin-top:20px;">
+                            Hard Cap: <b>33,333,333 $33RD</b> &bull; Mint Authority Revoked (None) &bull; 10% Buyback &amp; Incinerator Burn automated on commercial inference settlement.
+                        </div>
+                    </div>
+
+                    <!-- Readout Display -->
+                    <div class="calc-result-box">
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; color:var(--tech-dim); text-transform:uppercase;">
+                            + PROJECTED PROTOCOL REWARDS +
+                        </div>
+
+                        <div class="calc-stat-row">
+                            <span class="calc-stat-label">DAILY ESTIMATED YIELD:</span>
+                            <span class="calc-stat-val accent" id="res-daily">94.00 $33RD</span>
+                        </div>
+
+                        <div class="calc-stat-row">
+                            <span class="calc-stat-label">MONTHLY ESTIMATED YIELD:</span>
+                            <span class="calc-stat-val" id="res-monthly">2,820 $33RD</span>
+                        </div>
+
+                        <div class="calc-stat-row">
+                            <span class="calc-stat-label">ANNUALIZED PROJECTED:</span>
+                            <span class="calc-stat-val" id="res-annual">34,310 $33RD</span>
+                        </div>
+
+                        <div class="calc-stat-row">
+                            <span class="calc-stat-label">ESTIMATED APY ON STAKE:</span>
+                            <span class="calc-stat-val" style="color:var(--status-green);" id="res-apy">137.2 %</span>
+                        </div>
+
+                        <div class="calc-stat-row">
+                            <span class="calc-stat-label">NETWORK COMPUTE SHARE:</span>
+                            <span class="calc-stat-val" id="res-share">0.056 %</span>
+                        </div>
+
+                        <div class="calc-stat-row" style="border-bottom:none;">
+                            <span class="calc-stat-label">10% DEFLATIONARY BURN:</span>
+                            <span class="calc-stat-val" style="color:var(--laser-red);" id="res-burn">9.40 $33RD/day</span>
+                        </div>
+
+                        <div style="margin-top:10px;">
+                            <a href="tokenomics.html" class="btn-chamfer btn-chamfer-secondary" style="width:100%; text-align:center;">
+                                [ VIEW FULL TOKENOMICS BREAKDOWN ]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OFFICIAL BRAND IDENTITY MATRIX & MANIFOLD (VRTL WRLD) -->
+    <section class="section-wrap" id="brand">
+        <div class="section-header">
+            <span class="section-tag">+ 04 // BRAND MATRIX &bull; [ TOPOLOGY &amp; CHROMATICS ]</span>
+            <h2 class="section-title">THE OFFICIAL BRAND IDENTITY &amp; MANIFOLD</h2>
+            <p class="section-desc">
+                Official cryptographic emblems, chromatic tokens, and geometric manifold specifications governing the 33rd Tree Labs verifiable tensor compute network on Solana.
+            </p>
+        </div>
+
+        <div class="brand-showcase-grid">
+            <!-- Official Emblem Showcase -->
+            <div class="chamfer-card bento-span-5">
+                <span class="corner-crosshair crosshair-tl">+</span>
+                <span class="corner-crosshair crosshair-tr">+</span>
+                <span class="corner-crosshair crosshair-bl">+</span>
+                <span class="corner-crosshair crosshair-br">+</span>
+                <div class="chamfer-inner">
+                    <div>
+                        <div class="card-stamp-row">
+                            <span class="card-stamp-num">+ 04.1 // PRIMARY CREST</span>
+                            <span class="card-stamp-badge">[ OFFICIAL MARK ]</span>
+                        </div>
+                        <h3 class="card-title">Exponential Manifold Medallion</h3>
+                        <p class="card-text">
+                            The core insignia embodies the non-Euclidean throat manifold of revolution. Features dual singularity foci in Laser Red (#FF292C) bounded by concentric orbital rings.
+                        </p>
+                        <div class="medallion-display">
+                            <img src="assets/official_logo.png" alt="33rd Tree Labs Official Logo Emblem">
+                        </div>
+                    </div>
+                    <ul class="spec-list">
+                        <li><span class="label">Top Arc</span><span class="val">33RD TREE LABS // DECENTRALIZED COMPUTE</span></li>
+                        <li><span class="label">Bottom Arc</span><span class="accent">SINGULARITY PROTOCOL // PROOF OF INTELLIGENCE</span></li>
+                        <li><span class="label">Focal Nodes</span><span class="accent">Dual Singularity Radii (Throat &amp; Canopy)</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Brand Cards Composite Showcase -->
+            <div class="chamfer-card bento-span-7">
+                <span class="corner-crosshair crosshair-tl">+</span>
+                <span class="corner-crosshair crosshair-tr">+</span>
+                <span class="corner-crosshair crosshair-bl">+</span>
+                <span class="corner-crosshair crosshair-br">+</span>
+                <div class="chamfer-inner">
+                    <div>
+                        <div class="card-stamp-row">
+                            <span class="card-stamp-num">+ 04.2 // DESIGN SYSTEM</span>
+                            <span class="card-stamp-badge">[ 4-CARD MATRIX ]</span>
+                        </div>
+                        <h3 class="card-title">Official Brand Specification Cards</h3>
+                        <p class="card-text">
+                            Complete tactical reference sheets detailing the Exponential Plunge Hyperboloid ($k=3.8$), high-voltage chromatic tokens, and Solana settlement architecture.
+                        </p>
+                        <div class="cards-preview-wrap">
+                            <img src="assets/brand_cards/33rd_tree_labs_brand_cards.png" alt="33rd Tree Labs Brand Specification Cards">
+                        </div>
+                    </div>
+
+                    <!-- Chromatic Tokens -->
+                    <div>
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--tech-slate); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px;">
+                            + HIGH-VOLTAGE THERMAL PALETTE (CLICK TO COPY):
+                        </div>
+                        <div class="swatch-grid">
+                            <div class="swatch-box" onclick="copyHex('#FF292C', this)">
+                                <div class="swatch-color" style="background:#FF292C; box-shadow:0 0 10px rgba(255,41,44,0.4);"></div>
+                                <div class="swatch-name">Laser Red</div>
+                                <div class="swatch-hex">#FF292C</div>
+                            </div>
+                            <div class="swatch-box" onclick="copyHex('#060606', this)">
+                                <div class="swatch-color" style="background:#060606;"></div>
+                                <div class="swatch-name">Deep Void</div>
+                                <div class="swatch-hex">#060606</div>
+                            </div>
+                            <div class="swatch-box" onclick="copyHex('#F1F1F1', this)">
+                                <div class="swatch-color" style="background:#F1F1F1;"></div>
+                                <div class="swatch-name">Chalk White</div>
+                                <div class="swatch-hex">#F1F1F1</div>
+                            </div>
+                            <div class="swatch-box" onclick="copyHex('#181818', this)">
+                                <div class="swatch-color" style="background:#181818;"></div>
+                                <div class="swatch-name">Graphite</div>
+                                <div class="swatch-hex">#181818</div>
+                            </div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+                            <a href="assets/brand_cards/index.html" target="_blank" class="btn-chamfer btn-chamfer-primary">
+                                [ LAUNCH FULL BRAND CARDS VIEWER ]
+                            </a>
+                            <span id="copy-status" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--laser-red);"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE 33RD PROTOCOL TERMINAL / CLI -->
     <section class="section-wrap" id="interactive-terminal">
         <div class="section-header">
-            <span class="section-tag">// DEVELOPER INTERFACE</span>
+            <span class="section-tag">+ 05 // DEVELOPER INTERFACE &bull; [ REPL CLI ]</span>
             <h2 class="section-title">THE 33RD CLI &amp; PROTOCOL RUNTIME</h2>
-            <p class="section-desc">Interact directly with the Singularity Protocol. Run commands, query validator state, benchmark compute, or switch visual themes.</p>
+            <p class="section-desc">
+                Interact directly with the Singularity Protocol. Run commands, query validator cluster state, benchmark local compute against network PFLOPS, or verify ZK proofs.
+            </p>
         </div>
 
         <div class="terminal-wrap">
@@ -993,14 +1497,14 @@
                     <div class="term-dot g"></div>
                 </div>
                 <div class="terminal-title">33rd-tree-cli // v3.3.0-canary (x86_64-tensor-darwin)</div>
-                <div style="color:var(--orange); font-size:10px;">[ONLINE]</div>
+                <div style="color:var(--laser-red); font-size:10px; font-weight:700;">[CANARY ONLINE]</div>
             </div>
 
             <div class="terminal-body" id="term-output">
                 <div class="term-line-output">33RD TREE LABS // SINGULARITY PROTOCOL v3.3.0
 Connecting to global coordinator node (wss://canary.33rdtreelabs.ai:8443)...
- Authenticated via Ed25519 node keypair
- Proof of Intelligence consensus engine: READY
+Authenticated via Ed25519 node keypair
+Proof of Intelligence consensus engine: READY
 Type 'help' for available commands, or click the quick command chips below.</div>
             </div>
 
@@ -1009,12 +1513,12 @@ Type 'help' for available commands, or click the quick command chips below.</div
                 <button class="term-chip" onclick="executeCmd('nodes --list')">nodes --list</button>
                 <button class="term-chip" onclick="executeCmd('bench --tflops')">bench --tflops</button>
                 <button class="term-chip" onclick="executeCmd('proof --verify 0x33')">proof --verify</button>
-                <button class="term-chip" onclick="executeCmd('theme cyan')">theme cyan</button>
-                <button class="term-chip" onclick="executeCmd('theme orange')">theme orange</button>
+                <button class="term-chip" onclick="executeCmd('tokenomics')">tokenomics</button>
+                <button class="term-chip" onclick="executeCmd('brand')">brand</button>
                 <button class="term-chip" onclick="executeCmd('clear')">clear</button>
             </div>
 
-            <form class="terminal-top" style="background:#09090E;" onsubmit="handleTermSubmit(event)">
+            <form class="terminal-top" style="background:#080808;" onsubmit="handleTermSubmit(event)">
                 <div class="term-prompt-row" style="width:100%;">
                     <span class="term-prompt-symbol">33rd@singularity:~#</span>
                     <input class="term-input" id="term-input" type="text" placeholder="Type a command (e.g. help, singularity --status)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
@@ -1027,19 +1531,19 @@ Type 'help' for available commands, or click the quick command chips below.</div
     <footer class="site-footer">
         <div class="footer-grid">
             <div class="footer-brand">
-                <div class="brand-logo-wrap">
-                    <div class="logo-symbol" style="background:#000;border:1px solid #FF292C;box-shadow:0 0 16px rgba(255,41,44,0.45);padding:3px;">
-                <img src="assets/nav_logo.png" alt="33rd Tree Labs" style="width:100%;height:100%;object-fit:contain;display:block;">
-            </div>
-                    <div class="brand-text">
-                        <span class="brand-name">33RD TREE LABS</span>
-                        <span class="brand-sub">SINGULARITY PROTOCOL</span>
+                <div class="pill-left" style="gap:12px;">
+                    <div class="pill-logo-wrap" style="width:36px; height:36px;">
+                        <img src="assets/nav_logo.png" alt="33rd Tree Labs">
+                    </div>
+                    <div>
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:800; color:var(--chalk);">33RD TREE LABS</div>
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--laser-red); letter-spacing:0.12em;">SINGULARITY PROTOCOL</div>
                     </div>
                 </div>
                 <p class="footer-desc">
-                    33rd Tree Labs is building the decentralized compute fabric for post-AGI coordination. Cryptographic consensus, zero-knowledge inference, and Proof of Intelligence.
+                    33rd Tree Labs is building the decentralized compute fabric for post-AGI coordination. Cryptographic consensus, zero-knowledge inference, and Proof of Intelligence on Solana.
                 </p>
-                <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--orange);">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--laser-red);">
                     // DECENTRALIZED COMPUTE // SINGULARITY PROTOCOL // PROOF OF INTELLIGENCE
                 </div>
             </div>
@@ -1047,48 +1551,78 @@ Type 'help' for available commands, or click the quick command chips below.</div
             <div>
                 <h5 class="footer-col-title">Protocol</h5>
                 <ul class="footer-links">
-                    <li><a href="#proof-of-intelligence">Proof of Intelligence</a></li>
+                    <li><a href="#architecture">Proof of Intelligence</a></li>
                     <li><a href="#architecture">Zero-Knowledge Inference</a></li>
                     <li><a href="#architecture">Hyperboloid Routing</a></li>
-                    <li><a href="#interactive-terminal">Canary Network</a></li>
-                    <li><a href="#interactive-terminal">Node Staking</a></li>
+                    <li><a href="nodes.html">Validator Nodes</a></li>
+                    <li><a href="research.html">Cryptographic Research</a></li>
                 </ul>
             </div>
 
             <div>
-                <h5 class="footer-col-title">Coordination</h5>
+                <h5 class="footer-col-title">Economics &amp; Specs</h5>
+                <ul class="footer-links">
+                    <li><a href="tokenomics.html">Tokenomics &amp; Emission</a></li>
+                    <li><a href="#calculator">Yield Estimator</a></li>
+                    <li><a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank">Whitepaper (PDF)</a></li>
+                    <li><a href="whitepaper_academic.html">Academic Specification</a></li>
+                    <li><a href="assets/brand_cards/index.html" target="_blank">Brand Identity Cards</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h5 class="footer-col-title">Network</h5>
                 <ul class="footer-links">
                     <li><a href="https://x.com" target="_blank">X (Twitter)</a></li>
-                    <li><a href="https://github.com" target="_blank">GitHub</a></li>
-                    <li><a href="#">Discord Community</a></li>
-                    <li><a href="#">Governance Forum</a></li>
+                    <li><a href="https://github.com" target="_blank">GitHub Repository</a></li>
+                    <li><a href="#">Solana Canary RPC</a></li>
                     <li><a href="#">Status Monitor</a></li>
+                    <li><a href="#">Security Audits</a></li>
                 </ul>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <div>© 2026 33RD TREE LABS FOUNDATION. ALL RIGHTS RESERVED.</div>
-            <div style="font-family:'JetBrains Mono',monospace; color:var(--text-muted);">
-                CONTRACT: <span style="color:var(--orange);">0x3333333333333333333333333333333333333333</span>
+            <div>&copy; 2026 33RD TREE LABS FOUNDATION. ALL RIGHTS RESERVED.</div>
+            <div>
+                SOLANA CONTRACT: <span style="color:var(--laser-red); font-weight:700;">0x3333333333333333333333333333333333333333</span>
             </div>
             <div>[SECURED BY PROOF OF INTELLIGENCE]</div>
         </div>
     </footer>
 
+    <!-- INTERACTIVE SCRIPTS -->
     <script>
-        // RETICLE CURSOR
-        const cursor = document.getElementById('custom-cursor');
+        // RETICLE CURSOR FOLLOWER
+        const dot = document.getElementById('custom-cursor-dot');
+        const follower = document.getElementById('custom-cursor-follower');
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let followerX = mouseX;
+        let followerY = mouseY;
+
         window.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-        document.querySelectorAll('a, button, .bento-card, .term-chip').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            dot.style.left = mouseX + 'px';
+            dot.style.top = mouseY + 'px';
         });
 
-        // AUDIO
+        function animateCursor() {
+            followerX += (mouseX - followerX) * 0.18;
+            followerY += (mouseY - followerY) * 0.18;
+            follower.style.left = followerX + 'px';
+            follower.style.top = followerY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        document.querySelectorAll('a, button, input, select, .chamfer-card, .term-chip, .swatch-box').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+        });
+
+        // AUDIO FX SYNTHESIZER
         let audioCtx = null;
         let sfxEnabled = false;
 
@@ -1097,11 +1631,11 @@ Type 'help' for available commands, or click the quick command chips below.</div
             const btn = document.getElementById('audio-toggle');
             if (sfxEnabled) {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                btn.textContent = '[SFX: ON]';
+                btn.textContent = '[ SFX: ON ]';
                 btn.classList.add('active');
                 playSfx('boot');
             } else {
-                btn.textContent = '[SFX: OFF]';
+                btn.textContent = '[ SFX: OFF ]';
                 btn.classList.remove('active');
             }
         }
@@ -1141,19 +1675,19 @@ Type 'help' for available commands, or click the quick command chips below.</div
             }
         }
 
-        // THREE.JS 3D HERO CANVAS
+        // THREE.JS 3D HERO CANVAS (CALIBRATED LASER RED // NO PINK WASHOUT)
         const heroCanvas = document.getElementById('hero-webgl-canvas');
         const heroScene = new THREE.Scene();
-        heroScene.fog = new THREE.FogExp2(0x030306, 0.04);
+        heroScene.fog = new THREE.FogExp2(0x060606, 0.035);
 
         const heroCamera = new THREE.PerspectiveCamera(40, (heroCanvas.clientWidth || 600) / (heroCanvas.clientHeight || 700), 0.1, 100);
         heroCamera.position.set(2.8, 2.2, 3.8);
 
-        const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+        const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
         heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         heroRenderer.setSize(heroCanvas.clientWidth || 600, heroCanvas.clientHeight || 700);
         heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
-        heroRenderer.toneMappingExposure = 1.3;
+        heroRenderer.toneMappingExposure = 0.95; // Keeps laser red hyper-saturated without white/pink bleaching
 
         const heroControls = new THREE.OrbitControls(heroCamera, heroRenderer.domElement);
         heroControls.enableDamping = true;
@@ -1162,22 +1696,20 @@ Type 'help' for available commands, or click the quick command chips below.</div
         heroControls.minDistance = 1.2;
         heroControls.enablePan = false;
 
-        const ambLight = new THREE.AmbientLight(0xFFFFFF, 0.6);
+        // PURE DEEP LASER RED & CRIMSON LIGHTING (Zero white specular highlights)
+        const ambLight = new THREE.AmbientLight(0x1A0203, 1.8);
         heroScene.add(ambLight);
 
-        let activeHex = 0xFF292C; // Official Laser Red #FF292C
-        let activeColor = new THREE.Color(activeHex);
-
-        const coreLight = new THREE.PointLight(activeColor, 4, 10);
+        const coreLight = new THREE.PointLight(0xFF292C, 4.5, 12);
         coreLight.position.set(0, 0, 0);
         heroScene.add(coreLight);
 
-        const topDir = new THREE.DirectionalLight(0xFFFFFF, 2.2);
-        topDir.position.set(0, 6, 2);
+        const topDir = new THREE.DirectionalLight(0xFF292C, 2.2);
+        topDir.position.set(2, 6, 3);
         heroScene.add(topDir);
 
-        const botDir = new THREE.DirectionalLight(activeColor, 1.8);
-        botDir.position.set(0, -6, -2);
+        const botDir = new THREE.DirectionalLight(0x770003, 1.4);
+        botDir.position.set(-2, -6, -3);
         heroScene.add(botDir);
 
         const arborRoot = new THREE.Group();
@@ -1193,15 +1725,15 @@ Type 'help' for available commands, or click the quick command chips below.</div
             return R_THROAT + (R_TOP - R_THROAT) * (Math.exp(EXP_K * normY) - 1.0) / (Math.exp(EXP_K) - 1.0);
         }
 
-        // RIBS
+        // RIBS (Pure Laser Red #FF292C, low metalness and moderate roughness to eliminate pink glare)
         const ribsGroup = new THREE.Group();
         arborRoot.add(ribsGroup);
         const ribMat = new THREE.MeshStandardMaterial({
-            color: activeColor,
-            emissive: activeColor,
-            emissiveIntensity: 0.95,
-            metalness: 0.8,
-            roughness: 0.2
+            color: 0xFF292C,
+            emissive: 0x550002,
+            emissiveIntensity: 0.75,
+            metalness: 0.05,
+            roughness: 0.45
         });
         const numRibs = 32;
         const ribSegs = 70;
@@ -1223,11 +1755,11 @@ Type 'help' for available commands, or click the quick command chips below.</div
         const ringsGroup = new THREE.Group();
         arborRoot.add(ringsGroup);
         const ringMat = new THREE.MeshStandardMaterial({
-            color: activeColor,
-            emissive: activeColor,
-            emissiveIntensity: 0.7,
-            metalness: 0.7,
-            roughness: 0.3
+            color: 0xFF292C,
+            emissive: 0x440001,
+            emissiveIntensity: 0.65,
+            metalness: 0.05,
+            roughness: 0.45
         });
         const numRings = 21;
         for (let i = 0; i < numRings; i++) {
@@ -1240,13 +1772,13 @@ Type 'help' for available commands, or click the quick command chips below.</div
             ringsGroup.add(tor);
         }
 
-        // HALO RIMS
+        // HALO RIMS (Crisp Stark White Collar)
         const haloMat = new THREE.MeshStandardMaterial({
-            color: 0xFFFFFF,
-            emissive: 0xFFFFFF,
-            emissiveIntensity: 0.9,
-            metalness: 0.9,
-            roughness: 0.1
+            color: 0xF1F1F1,
+            emissive: 0x333333,
+            emissiveIntensity: 0.4,
+            metalness: 0.8,
+            roughness: 0.2
         });
         const topRim = new THREE.Mesh(new THREE.TorusGeometry(R_TOP, 0.022, 12, 80), haloMat);
         topRim.rotation.x = Math.PI / 2;
@@ -1258,77 +1790,45 @@ Type 'help' for available commands, or click the quick command chips below.</div
         botRim.position.y = -H / 2;
         arborRoot.add(botRim);
 
-        // SINGULARITY CORE & NODES (Official Red #FF292C)
+        // SINGULARITY CORE & NODES (Pure Unshaded Laser Red #FF292C MeshBasicMaterial)
         const coreNode = new THREE.Mesh(
-            new THREE.SphereGeometry(0.12, 32, 32),
-            new THREE.MeshStandardMaterial({
-                color: activeColor,
-                emissive: activeColor,
-                emissiveIntensity: 2.2,
-                metalness: 0.2,
-                roughness: 0.1
-            })
+            new THREE.SphereGeometry(0.14, 32, 32),
+            new THREE.MeshBasicMaterial({ color: 0xFF292C })
         );
         arborRoot.add(coreNode);
 
         const topNode = new THREE.Mesh(
-            new THREE.SphereGeometry(0.08, 24, 24),
-            new THREE.MeshStandardMaterial({
-                color: activeColor,
-                emissive: activeColor,
-                emissiveIntensity: 2.0,
-                metalness: 0.2,
-                roughness: 0.1
-            })
+            new THREE.SphereGeometry(0.09, 24, 24),
+            new THREE.MeshBasicMaterial({ color: 0xFF292C })
         );
         topNode.position.set(0, H / 2, 0);
         arborRoot.add(topNode);
 
-        // SKIN
-        let skinGeom = new THREE.CylinderGeometry(R_TOP, R_TOP, H, 64, 40, true);
-        const skinPos = skinGeom.attributes.position;
-        for (let i = 0; i < skinPos.count; i++) {
-            const y = skinPos.getY(i);
-            const x = skinPos.getX(i);
-            const z = skinPos.getZ(i);
-            const currR = Math.sqrt(x*x + z*z);
-            const targetR = radiusAtY(y);
-            const scale = targetR / (currR || 1);
-            skinPos.setX(i, x * scale);
-            skinPos.setZ(i, z * scale);
-        }
-        skinGeom.computeVertexNormals();
-        const skinMat = new THREE.MeshPhysicalMaterial({
-            color: activeColor,
-            transparent: true,
-            opacity: 0.18,
-            roughness: 0.1,
-            metalness: 0.1,
-            transmission: 0.85,
-            ior: 1.5,
-            side: THREE.DoubleSide
-        });
-        const skinMesh = new THREE.Mesh(skinGeom, skinMat);
-        arborRoot.add(skinMesh);
+        const botNode = new THREE.Mesh(
+            new THREE.SphereGeometry(0.09, 24, 24),
+            new THREE.MeshBasicMaterial({ color: 0xFF292C })
+        );
+        botNode.position.set(0, -H / 2, 0);
+        arborRoot.add(botNode);
 
-        // PARTICLES
-        const pCount = 180;
+        // PARTICLES (Laser Red)
+        const pCount = 160;
         const pGeom = new THREE.BufferGeometry();
         const pCoords = new Float32Array(pCount * 3);
-        for(let i=0; i<pCount; i++) {
-            pCoords[i*3] = (Math.random() - 0.5) * 5.5;
-            pCoords[i*3+1] = (Math.random() - 0.5) * 5.5;
-            pCoords[i*3+2] = (Math.random() - 0.5) * 5.5;
+        for (let i = 0; i < pCount; i++) {
+            pCoords[i * 3] = (Math.random() - 0.5) * 5.5;
+            pCoords[i * 3 + 1] = (Math.random() - 0.5) * 5.5;
+            pCoords[i * 3 + 2] = (Math.random() - 0.5) * 5.5;
         }
         pGeom.setAttribute('position', new THREE.BufferAttribute(pCoords, 3));
-        const pMat = new THREE.PointsMaterial({ color: activeColor, size: 0.025, transparent: true, opacity: 0.65 });
+        const pMat = new THREE.PointsMaterial({ color: 0xFF292C, size: 0.022, transparent: true, opacity: 0.55 });
         const particles = new THREE.Points(pGeom, pMat);
         heroScene.add(particles);
 
-        let mouseX = 0, mouseY = 0;
+        let orbitMouseX = 0, orbitMouseY = 0;
         window.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth - 0.5) * 0.4;
-            mouseY = (e.clientY / window.innerHeight - 0.5) * 0.4;
+            orbitMouseX = (e.clientX / window.innerWidth - 0.5) * 0.35;
+            orbitMouseY = (e.clientY / window.innerHeight - 0.5) * 0.35;
         });
 
         function animateHero() {
@@ -1336,11 +1836,11 @@ Type 'help' for available commands, or click the quick command chips below.</div
             arborRoot.rotation.y += 0.006;
             particles.rotation.y += 0.001;
 
-            arborRoot.rotation.x = THREE.MathUtils.lerp(arborRoot.rotation.x, mouseY, 0.05);
-            arborRoot.rotation.z = THREE.MathUtils.lerp(arborRoot.rotation.z, -mouseX, 0.05);
+            arborRoot.rotation.x = THREE.MathUtils.lerp(arborRoot.rotation.x, orbitMouseY, 0.05);
+            arborRoot.rotation.z = THREE.MathUtils.lerp(arborRoot.rotation.z, -orbitMouseX, 0.05);
 
             const time = performance.now() * 0.0025;
-            const scale = 1.0 + Math.sin(time) * 0.09;
+            const scale = 1.0 + Math.sin(time) * 0.08;
             coreNode.scale.set(scale, scale, scale);
 
             heroControls.update();
@@ -1360,27 +1860,7 @@ Type 'help' for available commands, or click the quick command chips below.</div
         window.addEventListener('resize', handleResize);
         setTimeout(handleResize, 100);
 
-        // THEME
-        function setGlobalTheme(hex, btn) {
-            document.querySelectorAll('.telemetry-right .mini-btn').forEach(b => b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-
-            activeColor = new THREE.Color(hex);
-            ribMat.color = activeColor;
-            ribMat.emissive = activeColor;
-            ringMat.color = activeColor;
-            ringMat.emissive = activeColor;
-            skinMat.color = activeColor;
-            coreLight.color = activeColor;
-            botDir.color = activeColor;
-            pMat.color = activeColor;
-
-            document.documentElement.style.setProperty('--orange', hex);
-            document.documentElement.style.setProperty('--orange-glow', hex + '77');
-            playSfx('command');
-        }
-
-        // LIVE METRICS
+        // LIVE METRICS TICKER
         function animateLiveMetrics() {
             const tflopsEl = document.getElementById('stat-tflops');
             const latencyEl = document.getElementById('stat-latency');
@@ -1399,7 +1879,145 @@ Type 'help' for available commands, or click the quick command chips below.</div
         }
         animateLiveMetrics();
 
-        // 33RD CLI
+        // 2D CANVAS CONSENSUS SIMULATOR
+        const nodeCanvas = document.getElementById('node-canvas');
+        const nodeCtx = nodeCanvas.getContext('2d');
+
+        function resizeNodeCanvas() {
+            nodeCanvas.width = nodeCanvas.parentElement.clientWidth - 48;
+            nodeCanvas.height = 340;
+        }
+        window.addEventListener('resize', resizeNodeCanvas);
+        resizeNodeCanvas();
+
+        const simNodes = [];
+        const simNodeCount = 28;
+        for (let i = 0; i < simNodeCount; i++) {
+            simNodes.push({
+                x: Math.random() * nodeCanvas.width,
+                y: Math.random() * nodeCanvas.height,
+                vx: (Math.random() - 0.5) * 0.8,
+                vy: (Math.random() - 0.5) * 0.8,
+                radius: Math.random() * 2.5 + 2,
+                pulse: Math.random() * Math.PI
+            });
+        }
+
+        const simPackets = [];
+
+        function renderSimulator() {
+            nodeCtx.fillStyle = 'rgba(6, 6, 6, 0.28)';
+            nodeCtx.fillRect(0, 0, nodeCanvas.width, nodeCanvas.height);
+
+            // Mesh lines in Laser Red
+            for (let i = 0; i < simNodes.length; i++) {
+                const n1 = simNodes[i];
+                for (let j = i + 1; j < simNodes.length; j++) {
+                    const n2 = simNodes[j];
+                    const dist = Math.hypot(n1.x - n2.x, n1.y - n2.y);
+                    if (dist < 130) {
+                        const alpha = (1 - dist / 130) * 0.3;
+                        nodeCtx.strokeStyle = 'rgba(255, 41, 44, ' + alpha + ')';
+                        nodeCtx.lineWidth = 1;
+                        nodeCtx.beginPath();
+                        nodeCtx.moveTo(n1.x, n1.y);
+                        nodeCtx.lineTo(n2.x, n2.y);
+                        nodeCtx.stroke();
+                    }
+                }
+            }
+
+            // Nodes
+            simNodes.forEach(n => {
+                n.x += n.vx;
+                n.y += n.vy;
+                if (n.x < 10 || n.x > nodeCanvas.width - 10) n.vx *= -1;
+                if (n.y < 10 || n.y > nodeCanvas.height - 10) n.vy *= -1;
+                n.pulse += 0.05;
+
+                nodeCtx.fillStyle = '#F1F1F1';
+                nodeCtx.beginPath();
+                nodeCtx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+                nodeCtx.fill();
+
+                nodeCtx.strokeStyle = 'rgba(255, 41, 44, ' + (0.4 + Math.sin(n.pulse) * 0.3) + ')';
+                nodeCtx.beginPath();
+                nodeCtx.arc(n.x, n.y, n.radius + 4 + Math.sin(n.pulse) * 2, 0, Math.PI * 2);
+                nodeCtx.stroke();
+            });
+
+            // Proof Packets
+            if (Math.random() < 0.08 && simNodes.length > 2) {
+                const src = simNodes[Math.floor(Math.random() * simNodes.length)];
+                const dst = simNodes[Math.floor(Math.random() * simNodes.length)];
+                if (src !== dst) {
+                    simPackets.push({
+                        x: src.x, y: src.y,
+                        tx: dst.x, ty: dst.y,
+                        progress: 0,
+                        speed: 0.02 + Math.random() * 0.02
+                    });
+                }
+            }
+
+            for (let i = simPackets.length - 1; i >= 0; i--) {
+                const p = simPackets[i];
+                p.progress += p.speed;
+                const px = p.x + (p.tx - p.x) * p.progress;
+                const py = p.y + (p.ty - p.y) * p.progress;
+
+                nodeCtx.fillStyle = '#FF292C';
+                nodeCtx.shadowColor = '#FF292C';
+                nodeCtx.shadowBlur = 8;
+                nodeCtx.beginPath();
+                nodeCtx.arc(px, py, 2.5, 0, Math.PI * 2);
+                nodeCtx.fill();
+                nodeCtx.shadowBlur = 0;
+
+                if (p.progress >= 1) simPackets.splice(i, 1);
+            }
+
+            requestAnimationFrame(renderSimulator);
+        }
+        renderSimulator();
+
+        // INTERACTIVE EMISSIONS & YIELD CALCULATOR
+        function recalculateYield() {
+            const baseDaily = parseFloat(document.getElementById('calc-hardware').value);
+            const epochMultiplier = parseFloat(document.getElementById('calc-epoch').value);
+            const stakedAmount = parseInt(document.getElementById('calc-stake').value);
+
+            // Staking bond bonus: 1.0 at 25,000 up to 1.35 at 250,000
+            const stakeMultiplier = 1.0 + ((stakedAmount - 25000) / 225000) * 0.35;
+            
+            document.getElementById('staked-display').textContent = stakedAmount.toLocaleString() + ' $33RD (' + (stakedAmount === 25000 ? 'Min Bond' : '+' + Math.round((stakeMultiplier - 1)*100) + '% Staking Boost') + ')';
+
+            const netDaily = baseDaily * epochMultiplier * stakeMultiplier;
+            const netMonthly = netDaily * 30;
+            const netAnnual = netDaily * 365;
+            const apy = (netAnnual / stakedAmount) * 100;
+            const burnDaily = netDaily * 0.10;
+            const share = (netDaily / 15410.96) * 100;
+
+            document.getElementById('res-daily').textContent = netDaily.toFixed(2) + ' $33RD';
+            document.getElementById('res-monthly').textContent = Math.round(netMonthly).toLocaleString() + ' $33RD';
+            document.getElementById('res-annual').textContent = Math.round(netAnnual).toLocaleString() + ' $33RD';
+            document.getElementById('res-apy').textContent = apy.toFixed(1) + ' %';
+            document.getElementById('res-burn').textContent = burnDaily.toFixed(2) + ' $33RD/day';
+            document.getElementById('res-share').textContent = share.toFixed(3) + ' %';
+        }
+
+        // SWATCH COPY FUNCTION
+        function copyHex(hex, el) {
+            navigator.clipboard.writeText(hex).then(() => {
+                const status = document.getElementById('copy-status');
+                status.textContent = 'COPIED ' + hex + ' TO CLIPBOARD';
+                playSfx('click');
+                setTimeout(() => { status.textContent = ''; }, 2000);
+            });
+        }
+
+        // 33RD CLI REPL TERMINAL
         const termOutput = document.getElementById('term-output');
         const termInput = document.getElementById('term-input');
 
@@ -1407,7 +2025,7 @@ Type 'help' for available commands, or click the quick command chips below.</div
             const line = document.createElement('div');
             line.className = 'term-line-output';
             if (isCmd) {
-                line.innerHTML = '<span style="color:var(--orange)">33rd@singularity:~#</span> <span style="color:#FFF">' + text + '</span>';
+                line.innerHTML = '<span style="color:var(--laser-red)">33rd@singularity:~#</span> <span style="color:#FFF">' + text + '</span>';
             } else {
                 line.textContent = text;
             }
@@ -1428,28 +2046,30 @@ Type 'help' for available commands, or click the quick command chips below.</div
   nodes --list             View active Tier-4 global compute nodes
   bench --tflops           Benchmark local browser vs network throughput
   proof --verify           Simulate zk-SNARK tensor verification
-  theme <color>            Change theme: orange, cyan, stark, emerald
+  tokenomics               View supply, mint revocation & emission pool
+  brand                    Inspect manifold constants & color tokens
   clear                    Clear terminal screen
   help                     Show this help directory`
                     );
                 } else if (lower.includes('status')) {
                     appendTermLine(
 `[SINGULARITY PROTOCOL STATUS]
- Epoch: #338,912
- Consensus Algorithm: Proof of Intelligence (PoI)
- Global Tensor Capacity: 142.8 PFLOPS
- Active Nodes: 3,333 / 3,333 (100% quorum)
- Slashing Conditions: 0 infractions in current epoch
- Cryptographic Proof: Plonky3 / Halo2 zk-SNARK Verified`
+  Epoch: #338,912
+  Consensus Algorithm: Proof of Intelligence (PoI)
+  Global Tensor Capacity: 142.8 PFLOPS
+  Active Nodes: 3,333 / 3,333 (100% quorum)
+  Solana State Commit: 280 bytes every 12s (~30 slots)
+  Slashing Conditions: 0 infractions in current epoch
+  Cryptographic Proof: Plonky3 / Halo2 zk-SNARK Verified`
                     );
                 } else if (lower.includes('nodes')) {
                     appendTermLine(
-`NODE ID          LOCATION           GPU SPEC       LATENCY   STATUS
-node-033-sf      San Francisco, US  8x H100 SXM5   1.2ms     ONLINE
-node-077-zh      Zurich, CH         16x B200 NVL   2.4ms     ONLINE
-node-108-ty      Tokyo, JP          8x H200 PCIe   3.1ms     ONLINE
-node-224-sg      Singapore, SG      8x H100 SXM5   2.8ms     ONLINE
-node-333-is      Reykjavik, IS      32x H100 Liquid 1.8ms     ONLINE`
+`NODE ID          LOCATION           GPU SPEC         LATENCY   STATUS
+node-033-sf      San Francisco, US  8x H100 SXM5     1.2ms     ONLINE
+node-077-zh      Zurich, CH         16x B200 NVL     2.4ms     ONLINE
+node-108-ty      Tokyo, JP          8x H200 PCIe     3.1ms     ONLINE
+node-224-sg      Singapore, SG      8x H100 SXM5     2.8ms     ONLINE
+node-333-is      Reykjavik, IS      32x H100 Liquid  1.8ms     ONLINE`
                     );
                 } else if (lower.includes('bench')) {
                     appendTermLine(
@@ -1462,20 +2082,29 @@ Speedup vs Local: 77,608x factor`
                 } else if (lower.includes('verify')) {
                     appendTermLine(
 `[ZK-VERIFICATION ROUND]
-Generated Proof Hash: 0x33e8a49c901bfb72a...
+Generated Proof Hash: 0x33e8a49c901bfb72a44d82...
 Validating bilinear pairing constraints over BN254 curve...
- Gate checks: 1,048,576 / 1,048,576 passed
- Verification Time: 1.418 ms
-Verdict: PROOF VALID. BLOCK #3,389,124 SEALED.`
+  Gate checks: 1,048,576 / 1,048,576 passed
+  Verification Time: 1.418 ms
+Verdict: PROOF VALID. BLOCK #3,389,124 SEALED ON SOLANA.`
                     );
-                } else if (lower.startsWith('theme')) {
-                    const color = lower.split(' ')[1];
-                    if (color === 'cyan') setGlobalTheme('#00F0FF', null);
-                    else if (color === 'orange') setGlobalTheme('#FF292C', null);
-                    else if (color === 'stark' || color === 'white') setGlobalTheme('#FFFFFF', null);
-                    else if (color === 'emerald' || color === 'green') setGlobalTheme('#00FF66', null);
-                    else appendTermLine("Unknown theme. Choices: orange, cyan, stark, emerald");
-                    appendTermLine("Theme applied: " + color.toUpperCase());
+                } else if (lower.includes('tokenomics')) {
+                    appendTermLine(
+`[TOKENOMICS SPECIFICATION]
+  Hard Cap: 33,333,333 $33RD
+  Mint Authority: Revoked (None) at Genesis
+  PoI Compute Subsidy Pool: 15,000,000 (45%) over 16-yr halving curve
+  Validator Staking Bond: >= 25,000 $33RD
+  Automated Deflation: 10% Buyback & Incinerator Burn`
+                    );
+                } else if (lower.includes('brand')) {
+                    appendTermLine(
+`[BRAND IDENTITY & MANIFOLD]
+  Manifold: Exponential Plunge Hyperboloid
+  Formula: r(y) = r0 + A*(e^(ky) - 1)/(e^k - 1)
+  Parameters: k=3.8, R=1.50, r0=0.09, H=2.40
+  Palette: Laser Red #FF292C, Deep Void #060606, Chalk White #F1F1F1, Graphite #181818`
+                    );
                 } else if (lower === 'clear') {
                     termOutput.innerHTML = '';
                 } else {
@@ -1492,105 +2121,6 @@ Verdict: PROOF VALID. BLOCK #3,389,124 SEALED.`
                 termInput.value = '';
             }
         }
-
-        // SIMULATOR CANVAS
-        const nodeCanvas = document.getElementById('node-canvas');
-        const nodeCtx = nodeCanvas.getContext('2d');
-
-        function resizeNodeCanvas() {
-            nodeCanvas.width = nodeCanvas.parentElement.clientWidth - 48;
-            nodeCanvas.height = 340;
-        }
-        window.addEventListener('resize', resizeNodeCanvas);
-        resizeNodeCanvas();
-
-        const simNodes = [];
-        const simNodeCount = 28;
-        for (let i = 0; i < simNodeCount; i++) {
-            simNodes.push({
-                x: Math.random() * nodeCanvas.width,
-                y: Math.random() * nodeCanvas.height,
-                vx: (Math.random() - 0.5) * 0.8,
-                vy: (Math.random() - 0.5) * 0.8,
-                radius: Math.random() * 3 + 2,
-                pulse: Math.random() * Math.PI
-            });
-        }
-
-        const packets = [];
-
-        function renderSimulator() {
-            nodeCtx.fillStyle = 'rgba(8, 8, 14, 0.25)';
-            nodeCtx.fillRect(0, 0, nodeCanvas.width, nodeCanvas.height);
-
-            for (let i = 0; i < simNodes.length; i++) {
-                const n1 = simNodes[i];
-                for (let j = i + 1; j < simNodes.length; j++) {
-                    const n2 = simNodes[j];
-                    const dist = Math.hypot(n1.x - n2.x, n1.y - n2.y);
-                    if (dist < 130) {
-                        const alpha = (1 - dist / 130) * 0.35;
-                        nodeCtx.strokeStyle = 'rgba(255, 41, 44, ' + alpha + ')';
-                        nodeCtx.lineWidth = 1;
-                        nodeCtx.beginPath();
-                        nodeCtx.moveTo(n1.x, n1.y);
-                        nodeCtx.lineTo(n2.x, n2.y);
-                        nodeCtx.stroke();
-                    }
-                }
-            }
-
-            simNodes.forEach(n => {
-                n.x += n.vx;
-                n.y += n.vy;
-                if (n.x < 10 || n.x > nodeCanvas.width - 10) n.vx *= -1;
-                if (n.y < 10 || n.y > nodeCanvas.height - 10) n.vy *= -1;
-                n.pulse += 0.05;
-
-                nodeCtx.fillStyle = '#FFFFFF';
-                nodeCtx.beginPath();
-                nodeCtx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-                nodeCtx.fill();
-
-                nodeCtx.strokeStyle = 'rgba(255, 41, 44, ' + (0.4 + Math.sin(n.pulse) * 0.3) + ')';
-                nodeCtx.beginPath();
-                nodeCtx.arc(n.x, n.y, n.radius + 4 + Math.sin(n.pulse) * 2, 0, Math.PI * 2);
-                nodeCtx.stroke();
-            });
-
-            if (Math.random() < 0.08 && simNodes.length > 2) {
-                const src = simNodes[Math.floor(Math.random() * simNodes.length)];
-                const dst = simNodes[Math.floor(Math.random() * simNodes.length)];
-                if (src !== dst) {
-                    packets.push({
-                        x: src.x, y: src.y,
-                        tx: dst.x, ty: dst.y,
-                        progress: 0,
-                        speed: 0.02 + Math.random() * 0.02
-                    });
-                }
-            }
-
-            for (let i = packets.length - 1; i >= 0; i--) {
-                const p = packets[i];
-                p.progress += p.speed;
-                const px = p.x + (p.tx - p.x) * p.progress;
-                const py = p.y + (p.ty - p.y) * p.progress;
-
-                nodeCtx.fillStyle = '#FF5E1E';
-                nodeCtx.shadowColor = '#FF292C';
-                nodeCtx.shadowBlur = 8;
-                nodeCtx.beginPath();
-                nodeCtx.arc(px, py, 2.5, 0, Math.PI * 2);
-                nodeCtx.fill();
-                nodeCtx.shadowBlur = 0;
-
-                if (p.progress >= 1) packets.splice(i, 1);
-            }
-
-            requestAnimationFrame(renderSimulator);
-        }
-        renderSimulator();
     </script>
 </body>
 </html>
