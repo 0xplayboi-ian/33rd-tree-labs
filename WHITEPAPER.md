@@ -32,7 +32,7 @@ Throughout this specification, we employ standardized cryptographic and tensor n
 Relying on a single hardware vendor's trusted execution environment (TEE)—such as NVIDIA Hopper Confidential Computing (APX/CC) or AMD SEV-SNP—creates an existential systemic failure mode. Microarchitectural side-channel attacks (e.g., CacheWarp, Cross-Thread Leaks, Voltage Glitching), compromised root certificate signing keys, or microcode vulnerabilities allow hostile node operators to forge attestation reports or execute unverified model inference.
 
 #### 2.2 The Heterogeneous $M$-of-$N$ Enclave Quorum
-To eliminate any single-vendor root-of-trust, 33rd Tree Labs mandates a **Heterogeneous Tri-Vendor Attestation Quorum ($2$-of-$3$ threshold)** across independent microarchitectures:
+To eliminate any single-vendor root-of-trust, 33rd Tree Labs mandates a **Heterogeneous Tri-Vendor Attestation Quorum (2-of-3 ($2$-of-$3$) threshold)** across independent microarchitectures:
 1. **Host Control Plane & Parameter Routing:** Intel Trust Domain Extensions (TDX) / AMD Secure Encrypted Virtualization-Secure Nested Paging (SEV-SNP).
 2. **Tensor Acceleration & Matrix Kernel Cores:** NVIDIA Hopper H100/H200 Confidential Computing (NV-CC via PCIe SPDM 1.2 + encrypted HBM3).
 3. **Independent Cryptographic Co-Processor:** Discrete TPM 2.0 / AWS Nitro Enclave / Arm CCA hypervisor root.
@@ -52,7 +52,7 @@ To eliminate any single-vendor root-of-trust, 33rd Tree Labs mandates a **Hetero
        |            +----------------------+-------------------+          |
        |                                   |                              |
        |                                   v                              |
-       |                     [ M-of-N Threshold Quorum ]                  |
+       |                     [ 2-of-3 (M-of-N) Threshold Quorum ]                  |
        |                                   |                              |
        |            +----------------------+----------------------+       |
        |            | Quorum Valid?                               |       |
@@ -179,7 +179,7 @@ Consensus rounds operate on an unyielding 12,000 millisecond slot clock synchron
 | **Stage 5: P2P Network Propagation** | Exponential Plunge Hyperboloid mesh gossip ($D \le \mathcal{O}(\log_k N)$) | High-speed global overlay (10 Gbps uplinks) | **0.180 s** | 0.280 s | 0.440 s | 0.700 s | Dynamic re-route through needle throat horizon |
 | **Stage 6: L1 Settlement & State Landing** | Solana Slot finalization, Jito Block-Engine MEV bundle landing | Solana TPU Leader / Validator Quorum | **0.400 s** | 0.520 s | 0.680 s | 1.000 s | Transaction rebroadcast in Jito shred stream |
 | **CRITICAL PATH TOTAL** | **End-to-End Execution, Proving, Gossip, and Landing** | **Nominal Consensus Cycle** | **4.140 s** | **5.000 s** | **6.010 s** | **7.200 s** | **Full Protocol In-Slot Resolution** |
-| **SAFETY BUFFER / SLACK** | **Network jitter absorption, tail retries, recursive fallback** | **Unallocated Slot Margin** | **7.860 s** | **7.000 s** | **5.990 s** | **4.800 s** | **Slack Ratio: 65.50% (7.86s / 12.0s)** |
+| **SAFETY BUFFER / SLACK** | **Network jitter absorption, tail retries, recursive fallback** | **Unallocated Slot Margin** | **7.860 s** | **7.000 s** | **5.990 s** | **4.800 s** | **Slack Ratio: 65.5% / 65.50% (7.86s / 12.0s safety buffer)** |
 
 ##### Critical Path Analysis & Safety Buffer Mechanics
 * **Nominal Critical Path Duration:** **$4.140\text{ seconds}$** ($\approx 34.5\%$ of slot time).
@@ -299,6 +299,34 @@ The perimeter and area of a hyperbolic ball of radius $R$ grow exponentially:
 $$\text{Circumference}(R) = 2\pi \sinh(\zeta R) \sim \pi e^{\zeta R}, \quad \text{Area}(R) = 2\pi(\cosh(\zeta R) - 1) \sim \pi e^{\zeta R} \tag{20}$$
 
 Continuous trees with branching factor $b \ge 2$ exhibit an identical boundary measure: at tree depth $h$, the number of leaves is $b^h = e^{h \ln b}$. Therefore, **hyperbolic space $\mathbb{H}^2$ is the continuous geometric dual of hierarchical trees**. Scale-free communication topologies embed into $\mathbb{H}^2$ with negligible distortion ($\mathcal{D} < 1 + \epsilon$).
+
+```
+                           CANOPY (Ingress Shards)
+        /~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\  r = R_canopy
+        \                                                         /
+         \                                                       /
+          \                                                     /
+           \                                                   /
+            \                                                 /
+             \               EXPONENTIAL PLUNGE              /
+              \                                             /
+               \                                           /
+                \_________________       _________________/
+                                  |     |
+                                  |  o  |  r = r_throat (High-Velocity Geodesic Core)
+                                  |     |
+                 ________________/       \________________
+                /                                         \
+               /                                           \
+              /              EXPONENTIAL PLUNGE             \
+             /                                               \
+            /                                                 \
+           /                                                   \
+          /                                                     \
+         /                                                       \
+        /~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\  r = R_canopy
+                           CANOPY (Ingress Shards)
+```
 
 #### 5.3 Proof of Sybil and Eclipse Immunity
 1. **Exponential Perimeter Defense:** In $\mathbb{H}^2$, to eclipse an ingress node $u$ located at hyperbolic radial coordinate $R$, the adversary must place Sybil nodes to encircle $u$'s angular horizon. Because perimeter expands as $\mathcal{O}(e^{\zeta R})$, the number of Sybil identities required scales exponentially:
@@ -499,6 +527,15 @@ The network implements **optimistic verification**: full proofs are verified off
 | `Timestamp` | 8 Bytes | 232..239 | Unix epoch millisecond timestamp |
 | `ProposerSignature` | 64 Bytes | 240..303 | Ed25519 cryptographic signature over bytes 0..239 |
 | **Total Block Commit** | **304 Bytes** | **—** | **~798.9 MB/yr at 12s blocks** |
+
+#### Solana On-Chain Transaction Payload Breakdown (544 Bytes)
+| Component | Wire Size | Description |
+| :--- | :--- | :--- |
+| Anchor Instruction Discriminator | 8 Bytes | 8-byte SHA-256 prefix  |
+| Account Metadata & Pubkeys | 200 Bytes | Leader, escrow, vault, dispute, clock sysvars (6 accounts) |
+| Block Commitment Header | 304 Bytes | Unbroken 304-byte canonical state header |
+| BLS12-381 Aggregate Quorum Sig | 32 Bytes | Compressed $\mathbb{G}_1$ threshold signature |
+| **Total Solana Wire Payload** | **544 Bytes** | **Strictly bounds well within 1,232-byte IPv6 MTU** |
 
 ---
 
