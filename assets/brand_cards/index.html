@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>33rd Tree Labs // Official Brand Cards & Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --laser-red: #FF292C;
+    --laser-glow: rgba(255, 41, 44, 0.45);
+    --void-black: #060606;
+    --card-bg: #0C0C0C;
+    --card-border: rgba(255, 41, 44, 0.3);
+    --chalk: #F1F1F1;
+    --graphite: #1F1F1F;
+    --muted: #8E8E93;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--void-black);
+    color: var(--chalk);
+    font-family: 'Space Grotesk', -apple-system, sans-serif;
+    padding: 3rem 2rem;
+    min-height: 100vh;
+}
+
+/* Watermarks */
+.watermark-tl {
+    position: fixed;
+    top: 1.5rem;
+    left: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    z-index: 100;
+}
+
+.watermark-tr {
+    position: fixed;
+    top: 1.5rem;
+    right: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--laser-red);
+    text-transform: uppercase;
+    z-index: 100;
+}
+
+.header-section {
+    text-align: center;
+    max-width: 800px;
+    margin: 2rem auto 3.5rem auto;
+}
+
+.header-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--laser-red);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: inline-block;
+}
+
+.header-title {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.header-desc {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Tactical Chamfered Card */
+.brand-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    position: relative;
+    padding: 2.2rem;
+    clip-path: polygon(
+        16px 0, 
+        100% 0, 
+        100% calc(100% - 16px), 
+        calc(100% - 16px) 100%, 
+        0 100%, 
+        0 16px
+    );
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.brand-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--laser-red);
+    box-shadow: 0 12px 36px rgba(255, 41, 44, 0.22);
+}
+
+.card-index {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--laser-red);
+    letter-spacing: 0.2em;
+    margin-bottom: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.01em;
+}
+
+.card-body {
+    font-size: 0.95rem;
+    color: #B0B0B0;
+    line-height: 1.6;
+    margin-bottom: 1.8rem;
+}
+
+/* Emblem Container */
+.emblem-wrapper {
+    width: 240px;
+    height: 240px;
+    margin: 1rem auto 1.5rem auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.emblem-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    box-shadow: 0 0 35px var(--laser-glow);
+}
+
+/* Color Swatches */
+.swatch-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.swatch-item {
+    background: #141414;
+    border: 1px solid #282828;
+    padding: 0.8rem;
+    border-radius: 4px;
+}
+
+.swatch-preview {
+    height: 50px;
+    border-radius: 3px;
+    margin-bottom: 0.6rem;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.swatch-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.swatch-hex {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+/* Spec Table */
+.spec-list {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.spec-list li {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #1C1C1C;
+    display: flex;
+    justify-content: space-between;
+}
+
+.spec-list li span.label {
+    color: var(--muted);
+}
+
+.spec-list li span.val {
+    color: var(--chalk);
+    font-weight: 500;
+}
+
+.spec-list li span.accent {
+    color: var(--laser-red);
+    font-weight: 600;
+}
+
+.pill-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    border: 1px solid var(--laser-red);
+    color: var(--laser-red);
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+</style>
+</head>
+<body>
+
+<div class="watermark-tl">+ 33RD TREE LABS // OFFICIAL BRAND SPECIFICATION</div>
+<div class="watermark-tr">CANARY V3.7 // SOLANA DEPIN +</div>
+
+<header class="header-section">
+    <span class="header-tag">( 00 ) &bull; BRAND IDENTITY MATRIX</span>
+    <h1 class="header-title">The Singularity Protocol</h1>
+    <p class="header-desc">
+        Official cryptographic emblems, chromatic tokens, and geometric manifold specifications governing the 33rd Tree Labs verifiable tensor compute network on Solana.
+    </p>
+</header>
+
+<div class="cards-grid">
+
+    <!-- Card 1: Official Emblem -->
+    <div class="brand-card">
+        <div class="card-index">
+            <span>( 01 ) &bull; PRIMARY CREST</span>
+            <span class="pill-badge">OFFICIAL</span>
+        </div>
+        <div class="emblem-wrapper">
+            <img src="../official_logo.png" alt="33rd Tree Labs Official Logo" class="emblem-img">
+        </div>
+        <h2 class="card-title">Exponential Manifold Medallion</h2>
+        <p class="card-body">
+            The core insignia embodies the non-Euclidean throat manifold of revolution. Features dual singularity foci in Laser Red (#FF292C) bounded by concentric orbital rings.
+        </p>
+        <ul class="spec-list">
+            <li><span class="label">Top Arc</span><span class="val">33RD TREE LABS // DECENTRALIZED COMPUTE</span></li>
+            <li><span class="label">Bottom Arc</span><span class="accent">SINGULARITY PROTOCOL // PROOF OF INTELLIGENCE</span></li>
+            <li><span class="label">Focal Nodes</span><span class="accent">Dual Singularity Radii (Throat &amp; Canopy)</span></li>
+        </ul>
+    </div>
+
+    <!-- Card 2: Color Palette -->
+    <div class="brand-card">
+        <div class="card-index">
+            <span>( 02 ) &bull; CHROMATIC TOKENS</span>
+            <span class="pill-badge">HEX CODES</span>
+        </div>
+        <h2 class="card-title">High-Voltage Thermal Palette</h2>
+        <p class="card-body">
+            Grounded in deep void blacks, high-contrast architectural chalk, and an electrifying Singularity Laser Red accent representing raw GPU compute potential.
+        </p>
+        <div class="swatch-group">
+            <div class="swatch-item">
+                <div class="swatch-preview" style="background: #FF292C; box-shadow: 0 0 16px rgba(255,41,44,0.5);"></div>
+                <div class="swatch-name">Laser Red</div>
+                <div class="swatch-hex">#FF292C &bull; RGB(255, 41, 44)</div>
+            </div>
+            <div class="swatch-item">
+                <div class="swatch-preview" style="background: #060606;"></div>
+                <div class="swatch-name">Deep Void</div>
+                <div class="swatch-hex">#060606 &bull; RGB(6, 6, 6)</div>
+            </div>
+            <div class="swatch-item">
+                <div class="swatch-preview" style="background: #F1F1F1;"></div>
+                <div class="swatch-name" style="color: #F1F1F1;">Chalk White</div>
+                <div class="swatch-hex">#F1F1F1 &bull; RGB(241, 241, 241)</div>
+            </div>
+            <div class="swatch-item">
+                <div class="swatch-preview" style="background: #1C1C1C;"></div>
+                <div class="swatch-name">Hairline Graphite</div>
+                <div class="swatch-hex">#1C1C1C &bull; RGB(28, 28, 28)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 3: Manifold Geometry -->
+    <div class="brand-card">
+        <div class="card-index">
+            <span>( 03 ) &bull; GEOMETRIC MANIFOLD</span>
+            <span class="pill-badge">SECTION 5</span>
+        </div>
+        <h2 class="card-title">Exponential Plunge Hyperboloid</h2>
+        <p class="card-body">
+            Non-Euclidean coordinate space embedding 33,000 validator nodes to bound overlay diameter while neutralizing Sybil clustering via epoch-rotating stake derivations.
+        </p>
+        <ul class="spec-list">
+            <li><span class="label">Expansion Factor (k)</span><span class="accent">3.8</span></li>
+            <li><span class="label">Canopy Radius (R)</span><span class="val">1.50</span></li>
+            <li><span class="label">Throat Radius (r)</span><span class="accent">0.09</span></li>
+            <li><span class="label">Manifold Height (H)</span><span class="val">2.40</span></li>
+            <li><span class="label">Overlay Diameter</span><span class="accent">&le; 8 Hops (Mean: 4.21)</span></li>
+            <li><span class="label">Epoch VRF Beacon</span><span class="val">Rotates Every 300 Blocks (1h)</span></li>
+        </ul>
+    </div>
+
+    <!-- Card 4: Protocol Tokenomics -->
+    <div class="brand-card">
+        <div class="card-index">
+            <span>( 04 ) &bull; SETTLEMENT SPEC</span>
+            <span class="pill-badge">SOLANA SPL</span>
+        </div>
+        <h2 class="card-title">Tokenomics &amp; Settlement</h2>
+        <p class="card-body">
+            Native SPL utility asset deployed on Solana mainnet with an unforgeable Proof-of-Intelligence hardware gate and automated revenue-driven deflation.
+        </p>
+        <ul class="spec-list">
+            <li><span class="label">Native Token</span><span class="accent">$33RD (Hard Cap: 33,333,333)</span></li>
+            <li><span class="label">Mint Authority</span><span class="val">Revoked (`None` at Genesis)</span></li>
+            <li><span class="label">PoI Subsidy Pool</span><span class="val">15,000,000 (16-Year Halving)</span></li>
+            <li><span class="label">Validator Staking Bond</span><span class="accent">&ge; 25,000 $33RD</span></li>
+            <li><span class="label">Automated Deflation</span><span class="accent">10% Buyback &amp; Incinerator Burn</span></li>
+            <li><span class="label">Solana State Commit</span><span class="val">280 Bytes Every 12s (~30 slots)</span></li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>

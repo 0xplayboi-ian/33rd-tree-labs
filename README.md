@@ -62,14 +62,16 @@ Consensus operates via a dual-mechanism architecture:
 
 ```
 .
-├── 33rd_Tree_Labs_Whitepaper.pdf   # Formal Canary v3.5 Academic Whitepaper (9 Pages)
+├── 33rd_Tree_Labs_Whitepaper.pdf   # Formal Canary v3.7 Academic Whitepaper (9 Pages)
 ├── WHITEPAPER.md                   # Full Markdown Specification
 ├── whitepaper_academic.html        # Academic Print-to-PDF Source
-├── build_v35_bulletproof.py        # Chrome-Headless KaTeX PDF Compiler
+├── build_whitepaper.py             # Chrome-Headless KaTeX PDF Compiler
 ├── index.html                      # Luxury Dark Web Experience & Three.js Canvas
 ├── tokenomics.html                 # Interactive Emission & Staking Models
 ├── nodes.html                      # Validator Registration & Hardware Requirements
 ├── research.html                   # Cryptographic & Non-Euclidean Routing Papers
+├── server.py                       # Production ASGI / WSGI Server
+├── requirements.txt                # Production Dependencies
 └── assets/                         # Vector Brand Geometry, 3D Assets & Textures
 ```
 

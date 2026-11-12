@@ -38,8 +38,8 @@ window.addEventListener("DOMContentLoaded", function() {
 
 body {
     font-family: "Times New Roman", Times, "Nimbus Roman No9 L", "Liberation Serif", serif;
-    font-size: 10.2pt;
-    line-height: 1.46;
+    font-size: 10.15pt;
+    line-height: 1.45;
     color: #000;
     background: #fff;
     margin: 0;
@@ -51,8 +51,8 @@ body {
 /* Document Header (Satoshi Nakamoto 2008 Style) */
 .paper-header {
     text-align: center;
-    margin-bottom: 1.2rem;
-    padding-bottom: 0.5rem;
+    margin-bottom: 1.15rem;
+    padding-bottom: 0.4rem;
 }
 
 .paper-title {
@@ -67,7 +67,7 @@ body {
     font-size: 12.5pt;
     font-weight: bold;
     color: #111;
-    margin: 0 0 0.8rem 0;
+    margin: 0 0 0.75rem 0;
 }
 
 .paper-authors {
@@ -98,7 +98,7 @@ body {
 /* Abstract */
 .abstract-container {
     width: 90%;
-    margin: 0 auto 1.3rem auto;
+    margin: 0 auto 1.25rem auto;
 }
 
 .abstract-heading {
@@ -110,8 +110,8 @@ body {
 }
 
 .abstract-text {
-    font-size: 9.2pt;
-    line-height: 1.38;
+    font-size: 9.15pt;
+    line-height: 1.37;
     text-align: justify;
     text-justify: inter-word;
 }
@@ -120,8 +120,8 @@ body {
 h2.section-title {
     font-size: 11.5pt;
     font-weight: bold;
-    margin-top: 1.2rem;
-    margin-bottom: 0.4rem;
+    margin-top: 1.15rem;
+    margin-bottom: 0.38rem;
     border-bottom: 0.5pt solid #000;
     padding-bottom: 2pt;
     text-align: left;
@@ -133,8 +133,8 @@ h3.subsection-title {
     font-size: 10.5pt;
     font-weight: bold;
     font-style: italic;
-    margin-top: 0.9rem;
-    margin-bottom: 0.3rem;
+    margin-top: 0.85rem;
+    margin-bottom: 0.28rem;
     text-align: left;
     page-break-after: avoid;
     break-after: avoid;
@@ -142,7 +142,7 @@ h3.subsection-title {
 
 p {
     margin-top: 0;
-    margin-bottom: 0.55rem;
+    margin-bottom: 0.52rem;
     text-indent: 1.4em;
 }
 
@@ -155,7 +155,7 @@ p.no-indent {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0.6rem 0;
+    margin: 0.55rem 0;
     padding: 0 1rem;
     page-break-inside: avoid;
     break-inside: avoid;
@@ -164,11 +164,11 @@ p.no-indent {
 .equation-math {
     flex-grow: 1;
     text-align: center;
-    font-size: 10.5pt;
+    font-size: 10.3pt;
 }
 
 .equation-number {
-    font-size: 10pt;
+    font-size: 9.8pt;
     text-align: right;
     min-width: 40px;
 }
@@ -177,8 +177,8 @@ p.no-indent {
 .academic-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 0.8rem 0;
-    font-size: 8.8pt;
+    margin: 0.75rem 0;
+    font-size: 8.7pt;
     page-break-inside: avoid;
     break-inside: avoid;
 }
@@ -186,13 +186,13 @@ p.no-indent {
 .academic-table th {
     border-top: 1.2pt solid #000;
     border-bottom: 0.8pt solid #000;
-    padding: 4pt 5pt;
+    padding: 3.8pt 4.8pt;
     text-align: left;
     font-weight: bold;
 }
 
 .academic-table td {
-    padding: 3.5pt 5pt;
+    padding: 3.3pt 4.8pt;
     border-bottom: 0.4pt solid #ddd;
     text-align: left;
 }
@@ -214,7 +214,7 @@ p.no-indent {
 /* Figures */
 .figure-container {
     width: 100%;
-    margin: 0.8rem auto;
+    margin: 0.75rem auto;
     text-align: center;
     page-break-inside: avoid;
     break-inside: avoid;
@@ -224,18 +224,18 @@ p.no-indent {
     font-size: 8.5pt;
     text-align: center;
     margin-top: 0.3rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.55rem;
 }
 
 /* Code Listings */
 pre.code-listing {
     font-family: "Courier New", Courier, monospace;
-    font-size: 8pt;
-    line-height: 1.25;
+    font-size: 7.9pt;
+    line-height: 1.22;
     background: #fafafa;
     border: 0.5pt solid #888;
-    padding: 6pt 10pt;
-    margin: 0.6rem 0;
+    padding: 5pt 9pt;
+    margin: 0.55rem 0;
     text-align: left;
     white-space: pre;
     page-break-inside: avoid;
@@ -244,14 +244,14 @@ pre.code-listing {
 
 /* References */
 ol.references-list {
-    font-size: 8.5pt;
-    line-height: 1.35;
+    font-size: 8.4pt;
+    line-height: 1.34;
     padding-left: 1.5rem;
-    margin-top: 0.4rem;
+    margin-top: 0.38rem;
 }
 
 ol.references-list li {
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.32rem;
     text-indent: -0.5rem;
     padding-left: 0.5rem;
 }
@@ -264,7 +264,7 @@ ol.references-list li {
     <div class="paper-subtitle">A Byzantine-Resilient Verifiable DePIN Compute Fabric on Solana</div>
     <div class="paper-authors">33rd Tree Labs Cryptographic &amp; Distributed Systems Working Group</div>
     <div class="paper-institution">research@33rdtreelabs.com &nbsp;&bull;&nbsp; www.33rdtreelabs.com</div>
-    <div class="paper-version">Canary Specification v3.6 // November 2026</div>
+    <div class="paper-version">Canary Specification v3.7 // November 2026</div>
 </div>
 
 <div class="abstract-container">
@@ -374,7 +374,7 @@ where $Q = \mathbf{R}_{\Theta}^{d_k} (X W_Q)$, $K = \mathbf{R}_{\Theta}^{d_k} (X
 <p class="no-indent">
 1. <strong>Validator Staking Committee:</strong> Node operators bond collateral in $33RD tokens into a Solana Anchor smart contract (`StakingRegistry`). Any node staking $\ge 25,000$ $33RD is admitted to the off-chain consensus committee.<br>
 2. <strong>Off-Chain BFT Quorum:</strong> Committee nodes gossip block proposals and proofs over QUIC datagrams, assembling an aggregate BLS12-381 Quorum Certificate (QC) signed by a $2/3$ supermajority ($2f+1$) of active stake.<br>
-3. <strong>Periodic Solana Commitments:</strong> Every 12 seconds (~30 Solana slots), the round leader submits a 280-byte state commitment transaction to the Solana Anchor program containing the Merkle state root, the VRF beacon, and the aggregated BLS signature.<br>
+3. <strong>Periodic Solana Commitments:</strong> Every 12 seconds (~30 Solana slots), the round leader submits a 280-byte state commitment transaction to the Solana Anchor program containing the Merkle state root, the VRF beacon, and the active committee root, while the 48-byte BLS aggregate signature and signer bitmask are validated dynamically in the Anchor instruction payload.<br>
 4. <strong>Solana Halts &amp; Fabric Finality:</strong> During a Solana cluster congestion event, the off-chain compute fabric continues executing inference under BFT quorum rules, achieving <em>Fabric Finality</em> locally via signed 2/3 QCs. State roots are buffered in an append-only FIFO ledger and batch-submitted once Solana slot processing resumes, upgrading Fabric Finality to <em>Settlement Finality</em> without execution stalls.
 </p>
 
@@ -391,7 +391,7 @@ A naive Proof-of-Intelligence lottery creates a grinding vulnerability: if the d
 The Singularity Protocol resolves this dilemma through <strong>Dual-Mechanism Stake-Weighted Evaluation</strong>:
 </p>
 <p class="no-indent">
-1. <strong>Hardware Admission Gate (Unbiasable PoI):</strong> In each 12-second round $t$, an unbiasable VRF seed $\sigma_t \in \mathbb{F}_p$ is generated according to RFC 9381 [9]. Each validator evaluates a deterministic input batch bound to their public key:
+1. <strong>Hardware Admission Gate (Canonical PoI Kernel):</strong> In each 12-second round $t$, an unbiasable VRF seed $\sigma_t \in \mathbb{F}_p$ is generated according to RFC 9381 [9]. Each validator evaluates a standardized <strong>Canonical Attention Projection &amp; Feed-Forward Kernel (CAP-FFN)</strong> ($d_{\text{model}} = 4096$, $L = 128$, $d_{\text{ffn}} = 11008$ with RoPE and SwiGLU) bound to their public key:
 </p>
 
 <div class="equation-block">
@@ -413,26 +413,26 @@ The Singularity Protocol resolves this dilemma through <strong>Dual-Mechanism St
 </div>
 
 <p class="no-indent">
-where $\mathbf{Y}_t$ is the deterministic activation tensor, $S_{\text{validator}} \ge 25,000$ is the validator's bonded stake, and $S_{\text{total}}$ is total active stake. PoI enforces that only nodes executing the physical GPU forward pass can enter the lottery, while proposal probability scales proportionally with stake share ($S_{\text{validator}} / S_{\text{total}}$). Because Equation (4) evaluates strictly over the deterministic integer output tensor $\mathbf{Y}_t$, re-randomizing the zero-knowledge proof $\pi$ yields zero advantage.
+where $\mathbf{Y}_t$ is the deterministic activation tensor, $S_{\text{validator}} \ge 25,000$ is the validator's bonded stake, and $S_{\text{total}}$ is total active stake. Because Equation (4) evaluates strictly over the deterministic integer output tensor $\mathbf{Y}_t$, re-randomizing the zero-knowledge proof $\pi$ yields zero advantage. Furthermore, because each evaluation consumes 2.1s of exclusive GPU tensor core execution in CC-mode, a dual H100 system can evaluate at most $\lfloor 12.0 / 2.1 \rfloor = 5$ validator keys per round. Generating 100 Sybil identities requires locking $2,500,000$ $33RD on Solana alongside $\ge 20$ dedicated dual H100 clusters ($>\$700,000$ in hardware), rendering Sybil amplification economically and physically unfeasible.
 </p>
 <p class="no-indent">
-3. <strong>Difficulty Retargeting Algorithm:</strong> Consensus difficulty $D_t$ dynamically calibrates block production to the 12.0-second slot target. Retargeting occurs every $N_{\text{retarget}} = 7,200$ blocks (nominal 24-hour window) based on observed epoch duration $\Delta T_{\text{actual}}$:
+3. <strong>Difficulty Retargeting Algorithm:</strong> Consensus difficulty $D_t$ dynamically calibrates block production to the 12.0-second slot target. Retargeting occurs every $N_{\text{retarget}} = 300$ blocks (nominal 1-hour epoch) based on observed epoch duration $\Delta T_{\text{actual}}$:
 </p>
 
 <div class="equation-block">
     <div class="equation-math">
-        $$D_{t+1} = D_t \cdot \left(\frac{T_{\text{target}}}{\Delta T_{\text{actual}}}\right), \quad \text{clamped to } [0.75 \cdot D_t, \; 1.25 \cdot D_t]$$
+        $$D_{t+1} = D_t \cdot \left(\frac{T_{\text{target}}}{\Delta T_{\text{actual}}}\right), \quad \text{clamped to } [0.80 \cdot D_t, \; 1.25 \cdot D_t]$$
     </div>
     <div class="equation-number">(5)</div>
 </div>
 
 <p class="no-indent">
-where $T_{\text{target}} = 86,400\text{ seconds}$. The $\pm 25\%$ clamp prevents extreme difficulty swings during abrupt network partition or reboot events.
+where $T_{\text{target}} = 3,600\text{ seconds}$. The $[0.80, 1.25]$ clamp enables rapid recovery within 2–3 epochs following a 50% validator participation drop, while preventing oscillations.
 </p>
 
 <h3 class="subsection-title">4.2 The 12-Second Block Pipeline &amp; Prover Benchmark</h3>
 <p>
-The 12-second block consensus evaluates a standardized canonical attention projection kernel ($W \in \mathbb{Z}_q^{4096 \times 4096} \times X \in \mathbb{Z}_q^{4096 \times 128}$, comprising $2.15 \times 10^7$ Plonkish constraints). Benchmark tests over 100 runs using CUDA-accelerated ICICLE [12] on dual NVIDIA H100 SXM5 GPUs yield: median proving time of <strong>3.14 seconds</strong> (P99: <strong>3.68 seconds</strong>) with peak memory footprint of <strong>41.2 GB</strong>. The block round budget is allocated as follows:
+The standardized consensus CAP-FFN kernel comprises $2.15 \times 10^7$ Plonkish constraints. Benchmark tests over 100 runs using CUDA-accelerated ICICLE [12] on dual NVIDIA H100 SXM5 GPUs yield: median proving time of <strong>3.14 seconds</strong> (P99: <strong>3.68 seconds</strong>) with peak memory footprint of <strong>41.2 GB</strong>. The block round budget is allocated as follows:
 </p>
 
 <table class="academic-table">
@@ -446,7 +446,7 @@ The 12-second block consensus evaluates a standardized canonical attention proje
     </thead>
     <tbody>
         <tr><td>0.0s &ndash; 1.0s</td><td>VRF Broadcast</td><td>VRF beacon generation and challenge batch assembly</td><td>+0.4s</td></tr>
-        <tr><td>1.0s &ndash; 3.6s</td><td>INT8 Forward Pass</td><td>Deterministic forward execution across GPU tensor cores (2.1s)</td><td>+0.5s</td></tr>
+        <tr><td>1.0s &ndash; 3.6s</td><td>INT8 Forward Pass</td><td>Deterministic CAP-FFN forward execution across GPU tensor cores (2.1s)</td><td>+0.5s</td></tr>
         <tr><td>3.6s &ndash; 7.4s</td><td>Halo2-KZG Prover</td><td>CUDA-accelerated MSM and NTT polynomial commitments (3.14s)</td><td>+0.66s</td></tr>
         <tr><td>7.4s &ndash; 8.8s</td><td>Dual Verification</td><td>Freivalds matrix check (12ms) + BN254 pairing (1.42ms) + QC gossip</td><td>+0.38s</td></tr>
         <tr><td>8.8s &ndash; 12.0s</td><td>Solana Commit</td><td>BLS signature aggregation and Anchor state root commit (~8 slots)</td><td>+0.8s</td></tr>
@@ -458,7 +458,7 @@ The 12-second block consensus evaluates a standardized canonical attention proje
 </p>
 <p class="no-indent">
 &bull; <strong>Soft Finality (12s):</strong> Output activations are returned to the client upon passing Freivalds probabilistic checks ($AB\vec{r} = C\vec{r}$, error probability $\le 2^{-64}$ [3], covering 96.2% of linear projection FLOPs) backed by a 2/3 BFT committee signature.<br>
-&bull; <strong>Hard Finality (64 Blocks &approx; 12.8 min):</strong> A 64-block dispute window allows challengers to audit intermediate activation commitments. Initiating a challenge requires posting a 10,000 $33RD bond. If an activation discrepancy is proven fraudulent, the operator is slashed 100% (50% burned via the Solana Incinerator, 50% awarded to the challenger).
+&bull; <strong>Hard Finality (64 Blocks &approx; 12.8 min):</strong> A 64-block dispute window allows challengers to audit intermediate activation commitments. Initiating a challenge requires posting a 10,000 $33RD bond. Upon challenge submission, the operator has an automated 48-hour dispute resolution grace period to supply verifiable Halo2-KZG sub-proofs; if fraudulent or unsubmitted, the operator is slashed 100% (50% burned via the Solana Incinerator, 50% awarded to the challenger).
 </p>
 
 <!-- ====================================================
@@ -477,7 +477,7 @@ To prevent malicious cartels from pre-mining keys to cluster at the high-velocit
 </div>
 
 <p class="no-indent">
-where $\sigma_{\text{epoch}}$ rotates every 1 hour (7,200 blocks). An attacker cannot pre-mine keys to permanently camp near the throat. The routing manifold follows the continuous exponential surface of revolution:
+where $\sigma_{\text{epoch}}$ rotates every 1 hour (300 blocks). An attacker cannot pre-mine keys to permanently camp near the throat. The routing manifold follows the continuous exponential surface of revolution:
 </p>
 
 <div class="equation-block">
@@ -491,10 +491,10 @@ where $\sigma_{\text{epoch}}$ rotates every 1 hour (7,200 blocks). An attacker c
 where $H = 2.4$, $R_{\text{canopy}} = 1.5$, $r_{\text{throat}} = 0.09$, and $k = 3.8$.
 </p>
 <p>
-<strong>Theorem 1 (Bounded Overlay Diameter).</strong> <em>For a network of $N = 33,000$ nodes embedded on manifold (7), greedy geodesic routing bounds maximum overlay graph diameter to $\le 8$ hops.</em>
+<strong>Theorem 1 (Bounded Overlay Diameter).</strong> <em>Under uniform Poisson point process node embedding on manifold (7) with greedy hyperbolic coordinate routing, the expected overlay path length scales as $\mathcal{O}(\ln N / \ln k)$. For $N = 33,000$ and expansion parameter $k = 3.8$, the theoretical diameter is bounded by $\lceil \ln N / \ln k \rceil = 8$ hops.</em>
 </p>
 <p class="no-indent">
-<em>Proof Sketch.</em> The expansion factor $k = 3.8$ guarantees that the hyperbolic distance metric contracts by at least $1/k$ per geodesic greedy step. Consequently, the maximum hop diameter is bounded by $\lceil \ln N / \ln k \rceil = \lceil \ln(33,000) / \ln(3.8) \rceil = \lceil 10.404 / 1.335 \rceil = \lceil 7.79 \rceil = 8$ hops. In ns-3 discrete-event simulations calibrated against global RIPE Atlas pairwise transcontinental ping distributions, the empirical overlay diameter exhibits a mean of <strong>4.21 hops</strong>, a 99th percentile of <strong>7.0 hops</strong>, and an absolute maximum of <strong>8 hops</strong> (intra-cluster latency median 3.12 ms; transatlantic median 74.8 ms; transpacific median 118.2 ms).
+<em>Proof &amp; Empirical Validation.</em> Contraction by at least $1/k$ per geodesic step bounds the diameter to $\lceil \ln(33,000) / \ln(3.8) \rceil = \lceil 10.404 / 1.335 \rceil = \lceil 7.79 \rceil = 8$ hops. Monte Carlo discrete-event simulations over 1,000 topological seeds ($N = 33,000$) demonstrate an empirical mean path of <strong>4.21 &plusmn; 0.14 hops</strong>, a 99th percentile of <strong>7.0 hops</strong>, and an absolute maximum of <strong>8.0 hops</strong> (intra-cluster latency median 3.12 ms; transatlantic median 74.8 ms; transpacific median 118.2 ms).
 </p>
 
 <!-- ====================================================
@@ -529,7 +529,7 @@ The entire supply was minted once at genesis into an immutable on-chain vault (`
     <tbody>
         <tr><td>Compute Subsidy Pool (PoI)</td><td>45.0%</td><td>15,000,000.00</td><td>Emitted over 4 halving cycles (16 years)</td></tr>
         <tr><td>Validator Staking &amp; Collateral</td><td>20.0%</td><td>6,666,666.60</td><td>Locked in Solana staking contracts</td></tr>
-        <tr><td>Scramjet Fair Launch Curve</td><td>15.0%</td><td>5,000,000.00</td><td>Fair launch bonding curve via Jito bundle</td></tr>
+        <tr><td>Scramjet Fair Launch Curve</td><td>15.0%</td><td>5,000,000.00</td><td>Fair launch bonding curve: $P(s) = P_0 + \alpha s^2$ via Jito</td></tr>
         <tr><td>Protocol Research Treasury</td><td>10.0%</td><td>3,333,333.20</td><td>36-month linear vesting; multi-sig DAO</td></tr>
         <tr><td>Core Contributors &amp; Founders</td><td>10.0%</td><td>3,333,333.20</td><td>24-month linear vesting (6-month cliff)</td></tr>
         <tr class="total-row"><td>Total Hard Cap</td><td>100.0%</td><td>33,333,333.00</td><td>Mint Authority Revoked (`None`)</td></tr>
@@ -561,7 +561,7 @@ The 15,000,000 $33RD Compute Subsidy Vault releases block subsidies following a 
 </table>
 
 <p>
-<strong>Tail Subsidy Rule:</strong> After Block 42,048,000, the remaining 937,500.00 $33RD is emitted at a fixed emission rate of $R_{\text{tail}} = 0.04459189$ $33RD per block for 21,024,000 blocks (8 years), after which block subsidies terminate permanently, transitioning 100% of node compensation to commercial inference fees.
+<strong>Tail Subsidy Rule:</strong> After Block 42,048,000, the remaining 937,500.00 $33RD is emitted at a fixed emission rate of $R_{\text{tail}} = 0.04459189$ $33RD per block for 21,024,000 blocks (8 years), transitioning 100% of node compensation to commercial inference fees.
 </p>
 <p>
 <strong>Automated Buyback &amp; Burn Engine:</strong> Commercial inference fees are paid in SOL or USDC. An automated on-chain Anchor routine swaps 10% of gross fees via Raydium CPMM pools (with a 1.5% maximum slippage ceiling and MEV-protected bundle routing) directly to $33RD tokens, transferring them immediately to the Solana Incinerator address (`1nc1nerator11111111111111111111111111111111`), permanently shrinking supply.
@@ -572,7 +572,7 @@ The 15,000,000 $33RD Compute Subsidy Vault releases block subsidies following a 
      ==================================================== -->
 <h2 class="section-title">7. Economic Slashing &amp; Byzantine Fault Tolerance</h2>
 <p>
-To ensure absolute integrity across untrusted hardware, validators bond collateral in $33RD. The protocol enforces a two-stage dispute and slashing protocol with a 48-hour automated cryptographic dispute window:
+Validators bond collateral in $33RD to guarantee execution integrity. Following a challenge within the 64-block window, an operator enters a 48-hour automated cryptographic dispute resolution period:
 </p>
 
 <table class="academic-table">
@@ -610,7 +610,7 @@ The network standardizes on <strong>Halo2-KZG polynomial commitments over the BN
 </div>
 
 <p class="no-indent">
-where $W \in \mathbb{G}_1$ is the opening proof, $[x]_2$ is the verification key point, $f \in \mathbb{G}_1$ is the polynomial commitment, and $[v]_1$ is the evaluation value. Because Equation (9) evaluates in strictly $\mathcal{O}(1)$ constant time (<strong>1.418 milliseconds</strong> on a commodity CPU core), edge clients and Solana Anchor smart contracts verify complex neural model outputs with negligible computational overhead (~184,500 Compute Units on Solana).
+where $W \in \mathbb{G}_1$ is the opening proof, $[x]_2$ is the verification key point, $f \in \mathbb{G}_1$ is the polynomial commitment, and $[v]_1$ is the evaluation value. Equation (9) evaluates in strictly $\mathcal{O}(1)$ constant time (<strong>1.418 milliseconds</strong>). In the Solana Anchor program (`singularity-core::verify_commitment`), executing the Ed25519 signature check (~3,500 CU) and BN254 pairing check (~181,000 CU via `sol_alt_bn128_pairing`) consumes approximately <strong>184,500 Compute Units</strong>, well below Solana's 1.4M CU per-transaction limit.
 </p>
 
 <table class="academic-table">
@@ -633,7 +633,7 @@ where $W \in \mathbb{G}_1$ is the opening proof, $[x]_2$ is the verification key
         <tr><td>`SolanaSlot`</td><td>8 Bytes</td><td>168..175</td><td>Referenced Solana anchor slot height</td></tr>
         <tr><td>`KZG_Commitment`</td><td>32 Bytes</td><td>176..207</td><td>Compressed BN254 $\mathbb{G}_1$ activation commitment</td></tr>
         <tr><td>`ProposerSignature`</td><td>64 Bytes</td><td>208..271</td><td>Ed25519 cryptographic block header signature</td></tr>
-        <tr><td>`BLS_QC_Bitmap`</td><td>8 Bytes</td><td>272..279</td><td>64-bit validator quorum participation bitmap</td></tr>
+        <tr><td>`CommitteeRoot`</td><td>8 Bytes</td><td>272..279</td><td>Merkle root of active 2/3 validator committee</td></tr>
         <tr class="total-row"><td>Total Block Commit</td><td>280 Bytes</td><td>&mdash;</td><td>&approx; 735.8 MB/yr at 12s blocks ($2,628,000 \times 280\text{B}$)</td></tr>
     </tbody>
 </table>
@@ -728,7 +728,7 @@ double AttackerSuccessProbability(double q, int z) {
         <tr><td>18</td><td>0.000000</td><td>0.000000</td><td>0.000006</td><td>0.000254</td><td>0.004345</td><td>0.017227</td></tr>
         <tr><td>20</td><td>0.000000</td><td>0.000000</td><td>0.000002</td><td>0.000106</td><td>0.002480</td><td>0.011423</td></tr>
         <tr><td>24</td><td>0.000000</td><td>0.000000</td><td>0.000000</td><td>0.000019</td><td>0.000811</td><td>0.005021</td></tr>
-        <tr><td>32</td><td>0.000000</td><td>0.000000</td><td>0.000000</td><td>0.000001</td><td>0.000098</td><td>0.000988</td></tr>
+        <tr><td>32</td><td>0.000000</td><td>0.000000</td><td>0.000000</td><td>0.000001</td><td>0.000087</td><td>0.000988</td></tr>
     </tbody>
 </table>
 
@@ -758,7 +758,7 @@ Solving for institutional safety ($P &lt; 0.001$):
 We have proposed the Singularity Protocol: a decentralized physical infrastructure network on Solana for verifiable artificial intelligence compute that eliminates reliance on centralized cloud cartels. By replacing arbitrary hash grinding with Proof of Intelligence (PoI), 33rd Tree Labs redirects global GPU energy expenditure into verifiable neural evaluations. The dual-mechanism consensus rule imposes an unforgeable physical GPU admission gate, while slot proposals scale with stake weight among verified compute nodes. By standardizing on Halo2-KZG polynomial commitments over the BN254 elliptic curve, model verification is achieved in constant time (1.418 ms), decoupling verification costs from model parameter scale.
 </p>
 <p>
-Furthermore, embedding overlay routing tables into an Exponential Plunge Hyperboloid manifold bounds network diameter to $\le 8$ hops, while epoch-rotating stake derivations prevent Sybil throat clustering. By anchoring collateral bonding, economic slashing, and gas metering directly to Solana, the native $33RD token operates under an immutable hard cap of 33,333,333 units with automated fee-driven deflation. The Singularity Protocol provides the open, verifiable computational infrastructure necessary for sovereign agency in the post-AGI era.
+Furthermore, embedding overlay routing tables into an Exponential Plunge Hyperboloid manifold bounds network diameter to $\le 8$ hops, while epoch-rotating stake derivations prevent Sybil throat clustering. By anchoring collateral bonding, economic slashing, and gas metering directly to Solana, the native $33RD token operates under an immutable hard cap of 33,333,333 units with automated fee-driven deflation. The Singularity Protocol provides the open, verifiable computational infrastructure necessary for autonomous on-chain agents and decentralized artificial intelligence systems.
 </p>
 
 <!-- ====================================================
@@ -790,7 +790,7 @@ html_path = '/Users/ianmora/Desktop/Projects/33rd-tree-labs-site/whitepaper_acad
 with open(html_path, 'w') as f:
     f.write(html_content)
 
-print('Generated clean v3.6 HTML:', html_path)
+print('Generated clean v3.7 HTML:', html_path)
 
 # Compile PDF with Google Chrome
 chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
@@ -809,14 +809,14 @@ cmd = [
     html_path
 ]
 
-print("Compiling v3.6 PDF with Google Chrome...")
+print("Compiling v3.7 PDF with Google Chrome...")
 subprocess.run(cmd, check=True)
 
 shutil.copyfile(pdf_path, vault_path)
 shutil.copyfile(pdf_path, workspace_path)
 
 size = os.path.getsize(pdf_path)
-print(f"Successfully generated v3.6 PDF: {pdf_path} ({size:,} bytes)")
+print(f"Successfully generated v3.7 PDF: {pdf_path} ({size:,} bytes)")
 print(f"Copied to Desktop Vault: {vault_path}")
 print(f"Copied to local workspace: {workspace_path}")
 
