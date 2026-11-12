@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>33RD TREE LABS // Protocol Architecture &bull; 33rdtreelabs.tech</title>
+    <meta name="description" content="The Singularity Protocol Architecture Matrix: Tensor Arbor Topology, Proof of Intelligence, Heterogeneous Multi-TEE Quorum, and Byzantine consensus on Solana.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* VRTL WRLD DESIGN SYSTEM PALETTE */
+            --bg: #070707;
+            --bg-elevated: #0B0B0E;
+            --bg-card: #101014;
+            --bg-card-hover: #15151B;
+            --border: #1C1C24;
+            --border-hover: #343442;
+            --border-accent: rgba(255, 41, 44, 0.35);
+            --laser-red: #FF292C;
+            --laser-glow: rgba(255, 41, 44, 0.45);
+            --laser-subtle: rgba(255, 41, 44, 0.08);
+            --chalk: #F2F2F5;
+            --chalk-dim: #D4D4DC;
+            --slate: #8E8E98;
+            --dark-slate: #4A4A56;
+            --white: #FFFFFF;
+            --green: #00E676;
+            --green-glow: rgba(0, 230, 118, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: default;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--bg);
+            color: var(--chalk);
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+        }
+
+        body {
+            position: relative;
+            min-height: 100vh;
+            background: var(--bg);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* CUSTOM RETRO-TECH CURSOR */
+        #cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--laser-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--laser-red);
+            transition: opacity 0.2s;
+        }
+        #cursor-ring {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255, 41, 44, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99998;
+            transform: translate(-50%, -50%);
+            transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease;
+        }
+        body.cursor-hover #cursor-ring {
+            width: 48px;
+            height: 48px;
+            border-color: var(--laser-red);
+            background: rgba(255, 41, 44, 0.08);
+        }
+
+        /* FLOATING PILL NAVBAR */
+        .nav-wrapper {
+            position: fixed;
+            top: 16px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            padding: 0 16px;
+        }
+
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(11, 11, 14, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 7px 16px;
+            border-radius: 9999px;
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            max-width: 98vw;
+        }
+        .nav-pill:hover {
+            border-color: rgba(255, 41, 44, 0.35);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 41, 44, 0.15);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+        .nav-logo-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
+        }
+        .nav-logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(150%);
+            transition: filter 0.25s ease;
+        }
+        .nav-brand:hover .nav-logo-box img {
+            filter: grayscale(0%) contrast(120%);
+        }
+        .nav-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--white);
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--slate);
+            text-decoration: none;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+            position: relative;
+            padding: 4px 3px;
+            white-space: nowrap;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--white);
+        }
+        .nav-link.active {
+            color: var(--laser-red);
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 41, 44, 0.5);
+        }
+
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            letter-spacing: 0.08em;
+            color: var(--green);
+            padding: 3px 8px;
+            background: rgba(0, 230, 118, 0.06);
+            border: 1px solid rgba(0, 230, 118, 0.2);
+            border-radius: 9999px;
+            white-space: nowrap;
+        }
+        .nav-status-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--green);
+            animation: pulse-dot 1.8s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .nav-cta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--white);
+            background: var(--laser-red);
+            text-decoration: none;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+            white-space: nowrap;
+            box-shadow: 0 0 14px rgba(255, 41, 44, 0.35);
+        }
+        .nav-cta:hover {
+            background: #FF474A;
+            box-shadow: 0 0 22px rgba(255, 41, 44, 0.65);
+            transform: translateY(-1px);
+        }
+
+        /* VRTL WRLD GLITCH TEXT & CHROMATIC ABERRATION */
+        .glitch-active {
+            color: var(--laser-red) !important;
+            text-shadow: 1.5px 0 0 rgba(255, 41, 44, 0.85), -1.5px 0 0 rgba(0, 230, 118, 0.75) !important;
+        }
+
+        /* BUTTONS */
+        .btn-brutal-red {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--laser-red);
+            color: var(--white);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 13px 24px;
+            clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+            box-shadow: 0 6px 24px rgba(255, 41, 44, 0.35);
+            transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            border: none;
+        }
+        .btn-brutal-red:hover {
+            background: #FF474A;
+            box-shadow: 0 8px 30px rgba(255, 41, 44, 0.55);
+            transform: translateY(-2px);
+        }
+
+        .btn-brutal-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--chalk);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 13px 24px;
+            border: 1px solid var(--border-hover);
+            clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+        }
+        .btn-brutal-outline:hover {
+            border-color: var(--laser-red);
+            color: var(--white);
+            background: rgba(255, 41, 44, 0.05);
+        }
+
+        /* SECTION HEADERS & META TAGS */
+        .meta-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--laser-red);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(28px, 4vw, 46px);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+        .section-desc {
+            font-size: 15px;
+            line-height: 1.65;
+            color: var(--slate);
+            max-width: 720px;
+            font-weight: 400;
+            margin-bottom: 36px;
+        }
+
+        /* PAGE CONTAINER */
+        .page-wrap {
+            padding-top: 96px;
+            padding-bottom: 80px;
+            max-width: 1360px;
+            margin: 0 auto;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        /* GLOBAL FOOTER */
+        .global-footer {
+            background: #050507;
+            border-top: 1px solid var(--border);
+            padding: 48px 32px 36px;
+            margin-top: 80px;
+        }
+        .footer-inner {
+            max-width: 1360px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-brand {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            color: var(--slate);
+        }
+        .footer-brand strong {
+            color: var(--white);
+        }
+        .footer-links {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .footer-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            color: var(--slate);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: var(--laser-red);
+        }
+
+        @media (max-width: 1100px) {
+            .nav-links { display: none; }
+        }
+    
+        .arch-pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+            margin-top: 36px;
+        }
+        .pillar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 32px;
+            clip-path: polygon(0 14px, 14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.25s ease;
+        }
+        .pillar-card:hover {
+            border-color: rgba(255, 41, 44, 0.45);
+        }
+        .pillar-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--laser-red);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .pillar-heading {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 14px;
+        }
+        .pillar-text {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--slate);
+            margin-bottom: 24px;
+        }
+        .pillar-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .tag-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            background: #15151C;
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            color: var(--chalk);
+        }
+        .tag-pill strong { color: var(--laser-red); }
+
+        .spec-table-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 28px;
+            margin-top: 48px;
+            clip-path: polygon(0 12px, 12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+        }
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            margin-top: 16px;
+        }
+        .spec-table th, .spec-table td {
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .spec-table th {
+            color: var(--slate);
+            text-transform: uppercase;
+            font-weight: 700;
+            background: #0B0B0E;
+        }
+        .spec-table td {
+            color: var(--chalk);
+        }
+        .spec-table tr:hover td {
+            background: rgba(255, 41, 44, 0.04);
+        }
+
+        @media (max-width: 900px) {
+            .arch-pillars-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <!-- RETRO-TECH CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- FLOATING PILL NAVBAR -->
+    <div class="nav-wrapper">
+        <nav class="nav-pill">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo-box">
+                    <img src="assets/nav_logo.png" alt="33rd Tree Labs Wireframe">
+                </div>
+                <span class="nav-title" data-glitch>33RD TREE LABS</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" data-glitch>[ OVERVIEW ]</a>
+                <a href="protocol.html" class="nav-link active" data-glitch>[ PROTOCOL ]</a>
+                <a href="simulator.html" class="nav-link" data-glitch>[ SIMULATOR ]</a>
+                <a href="yield.html" class="nav-link" data-glitch>[ YIELD ]</a>
+                <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
+                <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
+                <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
+                <a href="whitepaper.html" class="nav-link" data-glitch>[ WHITEPAPER ]</a>
+            </div>
+
+            <div class="nav-status">
+                <span class="nav-status-dot"></span>
+                <span>MAINNET CANARY</span>
+            </div>
+
+            <a href="nodes.html" class="nav-cta" data-glitch>[ DEPLOY GPU ]</a>
+        </nav>
+    </div>
+
+
+    <div class="page-wrap">
+        <div class="meta-tag" data-glitch>( 01 ) // CORE ARCHITECTURE SPECIFICATION &bull; CANARY v4.0</div>
+        <h1 class="section-title" data-glitch>ENGINEERED FOR UNCOMPROMISING INTEGRITY</h1>
+        <p class="section-desc">
+            A fault-tolerant DePIN computing fabric designed to guarantee deterministic verification across untrusted distributed hardware without performance degradation.
+        </p>
+
+        <div class="arch-pillars-grid">
+            <!-- Pillar 01 -->
+            <div class="pillar-card">
+                <div>
+                    <div class="pillar-num">[ PILLAR 01 // COORDINATION ]</div>
+                    <h2 class="pillar-heading" data-glitch>TENSOR ARBOR TOPOLOGY</h2>
+                    <p class="pillar-text">
+                        Hierarchical tree manifold partitioning distributed model parameters across heterogeneous GPU nodes. Dynamically matches pipeline stages and tensor parallelism to physical interconnect latencies, preventing inter-node bottlenecks across global clusters.
+                    </p>
+                </div>
+                <div class="pillar-tags">
+                    <span class="tag-pill">ROUTING: <strong>NON-EUCLIDEAN DAG</strong></span>
+                    <span class="tag-pill">BANDWIDTH: <strong>900 GB/s NVLINK</strong></span>
+                    <span class="tag-pill">TOPOLOGY: <strong>MAX 8 HOPS</strong></span>
+                </div>
+            </div>
+
+            <!-- Pillar 02 -->
+            <div class="pillar-card">
+                <div>
+                    <div class="pillar-num">[ PILLAR 02 // VERIFICATION ]</div>
+                    <h2 class="pillar-heading" data-glitch>PROOF OF INFERENCE (POI)</h2>
+                    <p class="pillar-text">
+                        Zero-knowledge neural evaluations pairing randomized Chebyshev Activation Polynomial (CAP-FFN) challenges with BN254 KZG polynomial commitment schemes. Enables sub-2ms cryptographic verification directly inside Solana smart contracts without GPU re-computation.
+                    </p>
+                </div>
+                <div class="pillar-tags">
+                    <span class="tag-pill">SCHEME: <strong>BN254 KZG</strong></span>
+                    <span class="tag-pill">SOLANA ANCHOR: <strong>&lt; 184,500 CU</strong></span>
+                    <span class="tag-pill">PROOF TIME: <strong>1.418ms</strong></span>
+                </div>
+            </div>
+
+            <!-- Pillar 03 -->
+            <div class="pillar-card">
+                <div>
+                    <div class="pillar-num">[ PILLAR 03 // CONSENSUS ]</div>
+                    <h2 class="pillar-heading" data-glitch>BYZANTINE QUORUM MATRIX</h2>
+                    <p class="pillar-text">
+                        Asynchronous BFT consensus withstanding up to f &lt; K/3 malicious, compromised, or colluding nodes. Immediate automated slashing of bonded $33RD collateral upon mathematical detection of gradient poisoning, bit-rot, or block equivocation.
+                    </p>
+                </div>
+                <div class="pillar-tags">
+                    <span class="tag-pill">TOLERANCE: <strong>f &lt; 21 / 64</strong></span>
+                    <span class="tag-pill">COMMITTEE: <strong>K=64 VALIDATORS</strong></span>
+                    <span class="tag-pill">FINALITY: <strong>400ms SLOTS</strong></span>
+                </div>
+            </div>
+
+            <!-- Pillar 04 -->
+            <div class="pillar-card">
+                <div>
+                    <div class="pillar-num">[ PILLAR 04 // HARDWARE ENCLAVES ]</div>
+                    <h2 class="pillar-heading" data-glitch>HETEROGENEOUS MULTI-TEE</h2>
+                    <p class="pillar-text">
+                        Eliminates single-vendor silicon vulnerability by requiring dual independent enclave attestations (Intel SGX/TDX, AMD SEV-SNP, or NVIDIA Confidential Computing). Verifies memory integrity and firmware state before admitting compute providers into the tensor arbor.
+                    </p>
+                </div>
+                <div class="pillar-tags">
+                    <span class="tag-pill">ENCLAVES: <strong>SGX + SEV-SNP + CC</strong></span>
+                    <span class="tag-pill">ATTESTATION: <strong>DYNAMIC QUORUM</strong></span>
+                    <span class="tag-pill">QUANTIZATION: <strong>FP8 SMOOTHQUANT</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROTOCOL PARAMETERS SPECIFICATION TABLE -->
+        <div class="spec-table-box">
+            <div class="meta-tag" data-glitch>[ CRYPTOGRAPHIC &amp; NETWORK PARAMETERS ]</div>
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Specification</th>
+                        <th>Formal Bound</th>
+                        <th>Verification Target</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Curve &amp; Pairing</td>
+                        <td>BN254 (alt_bn128)</td>
+                        <td>r = 21888242871839275222246405745257275088548364400416034343698204186575808495617</td>
+                        <td>Solana <code>sol_alt_bn128_pairing</code> syscall</td>
+                    </tr>
+                    <tr>
+                        <td>Polynomial Degree</td>
+                        <td>d = 16 Chebyshev Activation</td>
+                        <td>O(1) constant-time opening proof</td>
+                        <td>Sub-2.0ms evaluation inside eBPF VM</td>
+                    </tr>
+                    <tr>
+                        <td>Consensus Quorum</td>
+                        <td>K = 64 Active Validators</td>
+                        <td>2/3 + 1 Honest Majority (f &le; 21)</td>
+                        <td>BLS aggregate multi-signature verification</td>
+                    </tr>
+                    <tr>
+                        <td>Block Commit Payload</td>
+                        <td>280 Bytes Canonical Commit</td>
+                        <td>Network MTU 1,232 Bytes</td>
+                        <td>536-byte transaction payload on Solana</td>
+                    </tr>
+                    <tr>
+                        <td>Cross-Hardware Parity</td>
+                        <td>INT8 / FP8 Deterministic Trees</td>
+                        <td>&Delta;accuracy = 0.00% drift</td>
+                        <td>Bit-exact verification across H100 vs RTX 4090</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="global-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <strong>33RD TREE LABS</strong> &bull; THE SINGULARITY PROTOCOL &bull; <code>33rdtreelabs.tech</code>
+            </div>
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">[ OVERVIEW ]</a>
+                <a href="protocol.html" class="footer-link">[ PROTOCOL ]</a>
+                <a href="simulator.html" class="footer-link">[ SIMULATOR ]</a>
+                <a href="yield.html" class="footer-link">[ YIELD ]</a>
+                <a href="nodes.html" class="footer-link">[ NODES ]</a>
+                <a href="tokenomics.html" class="footer-link">[ TOKENOMICS ]</a>
+                <a href="research.html" class="footer-link">[ RESEARCH ]</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="footer-link">[ WHITEPAPER PDF ]</a>
+            </div>
+        </div>
+    </footer>
+
+    
+    <!-- Lenis & GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        // Custom Cursor
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+        if (cursorDot && cursorRing) {
+            window.addEventListener('mousemove', (e) => {
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+                cursorRing.style.left = e.clientX + 'px';
+                cursorRing.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, input, select, [data-glitch]').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+        }
+
+        // VRTL WRLD Glitch Letters & Matrix Scramble Engine
+        class GlitchScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_/[#]=+*?<>~!$%&';
+                this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
+                el.setAttribute('data-glitch-text', this.originalText);
+                this.isGlitching = false;
+                this.animId = null;
+            }
+
+            scramble(duration = 0.5) {
+                if (this.isGlitching) return;
+                this.isGlitching = true;
+                this.el.classList.add('glitch-active');
+                const target = this.originalText;
+                const len = target.length;
+                const startTime = performance.now();
+                const durationMs = duration * 1000;
+
+                const tick = (now) => {
+                    const elapsed = now - startTime;
+                    const progress = Math.min(1, elapsed / durationMs);
+                    const revealedCount = Math.floor(progress * len);
+
+                    let result = '';
+                    for (let i = 0; i < len; i++) {
+                        const ch = target[i];
+                        if (ch === ' ' || ch === '\n' || ch === '\t') {
+                            result += ch;
+                        } else if (i < revealedCount) {
+                            result += ch;
+                        } else if (i < revealedCount + 3) {
+                            result += this.chars[Math.floor(Math.random() * this.chars.length)];
+                        } else {
+                            result += this.chars[Math.floor(Math.random() * this.chars.length)];
+                        }
+                    }
+                    this.el.innerText = result;
+
+                    if (progress < 1) {
+                        this.animId = requestAnimationFrame(tick);
+                    } else {
+                        this.el.innerText = target;
+                        this.el.classList.remove('glitch-active');
+                        this.isGlitching = false;
+                    }
+                };
+                this.animId = requestAnimationFrame(tick);
+            }
+        }
+
+        document.querySelectorAll('[data-glitch]').forEach(el => {
+            const inst = new GlitchScramble(el);
+            el.addEventListener('mouseenter', () => inst.scramble(0.42));
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            let delay = 60;
+            document.querySelectorAll('.display-word, .meta-tag, .glitch-load').forEach(el => {
+                const inst = new GlitchScramble(el);
+                setTimeout(() => inst.scramble(0.65), delay);
+                delay += 90;
+            });
+        });
+
+        document.querySelectorAll('.section-title').forEach(el => {
+            const inst = new GlitchScramble(el);
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 88%',
+                onEnter: () => inst.scramble(0.55),
+                onEnterBack: () => inst.scramble(0.4)
+            });
+            el.addEventListener('mouseenter', () => inst.scramble(0.4));
+        });
+
+        
+    </script>
+</body>
+</html>
+

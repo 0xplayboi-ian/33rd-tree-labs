@@ -225,6 +225,15 @@
         .nav-link:hover::after {
             width: 100%;
         }
+        .nav-link.active {
+            color: var(--chalk) !important;
+            text-shadow: 0 0 10px rgba(255, 41, 44, 0.45);
+        }
+        .nav-link.active::after {
+            width: 100% !important;
+            background: var(--laser-red);
+            box-shadow: 0 0 8px var(--laser-red);
+        }
 
         .nav-status {
             display: flex;
@@ -1652,9 +1661,72 @@
                 display: none;
             }
         }
+
+        /* ==========================================================================
+           TOP-EDGE SCROLL TELEMETRY PROGRESS LINE (LASER RED)
+           ========================================================================== */
+        #scroll-progress-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2.5px;
+            background: var(--laser-red);
+            box-shadow: 0 0 10px var(--laser-red), 0 0 20px rgba(255, 41, 44, 0.7);
+            z-index: 99999;
+            pointer-events: none;
+            transition: width 0.04s linear;
+            will-change: width;
+        }
+
+        /* ==========================================================================
+           INTERSECTION OBSERVER REVEAL ANIMATIONS (JANK-FREE, ZERO LAYOUT SHIFT)
+           ========================================================================== */
+        .reveal-on-scroll,
+        .stat-tile:not(.is-revealed),
+        .research-card:not(.is-revealed),
+        .section-title:not(.is-revealed),
+        .cta-title:not(.is-revealed),
+        .stage-stat-card:not(.is-revealed) {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.25s ease,
+                        box-shadow 0.25s ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal-on-scroll.is-revealed,
+        .stat-tile.is-revealed,
+        .research-card.is-revealed,
+        .section-title.is-revealed,
+        .cta-title.is-revealed,
+        .stage-stat-card.is-revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .node-tile.reveal-init {
+            opacity: 0;
+            transform: scale(0.85);
+        }
+        .node-tile.is-revealed {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Staggered transition delays */
+        .reveal-delay-1 { transition-delay: 0.08s; }
+        .reveal-delay-2 { transition-delay: 0.16s; }
+        .reveal-delay-3 { transition-delay: 0.24s; }
+        .reveal-delay-4 { transition-delay: 0.32s; }
     </style>
 </head>
 <body>
+
+    <!-- TOP-EDGE SCROLL TELEMETRY PROGRESS LINE -->
+    <div id="scroll-progress-line" class="scroll-progress-bar" aria-hidden="true"></div>
 
     <!-- CUSTOM RETRO-TECH CURSOR -->
     <div id="cursor-dot"></div>
@@ -1684,7 +1756,7 @@
 
             <div class="nav-status">
                 <span class="nav-status-dot"></span>
-                <span>MAINNET CANARY</span>
+                <span id="nav-active-section">CANARY // OVERVIEW</span>
             </div>
 
             <a href="nodes.html" class="nav-cta">DEPLOY GPU</a>
@@ -1744,15 +1816,15 @@
                     </div>
 
                     <div class="schematic-telemetry">
-                        <div class="tele-stat">
+                        <div class="tele-stat stat-tile reveal-on-scroll reveal-delay-1">
                             <span class="tele-label">P99 Latency</span>
                             <span class="tele-val accent" id="tele-lat">14.2ms</span>
                         </div>
-                        <div class="tele-stat">
+                        <div class="tele-stat stat-tile reveal-on-scroll reveal-delay-2">
                             <span class="tele-label">Solana Anchor</span>
                             <span class="tele-val" id="tele-slot">Slot #312M</span>
                         </div>
-                        <div class="tele-stat">
+                        <div class="tele-stat stat-tile reveal-on-scroll reveal-delay-3">
                             <span class="tele-label">KZG Verification</span>
                             <span class="tele-val accent">&lt; 1.84ms</span>
                         </div>
@@ -1872,19 +1944,19 @@
             </p>
 
             <div class="stage-stats-grid">
-                <div class="stage-stat-card">
+                <div class="stage-stat-card stat-tile reveal-on-scroll reveal-delay-1">
                     <div class="stage-stat-num red">142.8</div>
                     <div class="stage-stat-lbl">EFLOPS FP8 CAPACITY</div>
                 </div>
-                <div class="stage-stat-card">
+                <div class="stage-stat-card stat-tile reveal-on-scroll reveal-delay-2">
                     <div class="stage-stat-num">33,492</div>
                     <div class="stage-stat-lbl">TIER-1 SXM5 CLUSTERS</div>
                 </div>
-                <div class="stage-stat-card">
+                <div class="stage-stat-card stat-tile reveal-on-scroll reveal-delay-3">
                     <div class="stage-stat-num red">400ms</div>
                     <div class="stage-stat-lbl">SOLANA ANCHOR CADENCE</div>
                 </div>
-                <div class="stage-stat-card">
+                <div class="stage-stat-card stat-tile reveal-on-scroll reveal-delay-4">
                     <div class="stage-stat-num">0.00%</div>
                     <div class="stage-stat-lbl">SLASHING RATE (300 EPOCHS)</div>
                 </div>
@@ -1914,7 +1986,7 @@
 
             <div class="arch-grid">
                 <!-- Pillar 01 -->
-                <div class="arch-card">
+                <div class="arch-card research-card reveal-on-scroll reveal-delay-1">
                     <div>
                         <div class="card-meta-row">
                             <span class="card-number">[ 01 ]</span>
@@ -1932,7 +2004,7 @@
                 </div>
 
                 <!-- Pillar 02 -->
-                <div class="arch-card">
+                <div class="arch-card research-card reveal-on-scroll reveal-delay-2">
                     <div>
                         <div class="card-meta-row">
                             <span class="card-number">[ 02 ]</span>
@@ -1950,7 +2022,7 @@
                 </div>
 
                 <!-- Pillar 03 -->
-                <div class="arch-card">
+                <div class="arch-card research-card reveal-on-scroll reveal-delay-3">
                     <div>
                         <div class="card-meta-row">
                             <span class="card-number">[ 03 ]</span>
@@ -1968,7 +2040,7 @@
                 </div>
 
                 <!-- Pillar 04 -->
-                <div class="arch-card">
+                <div class="arch-card research-card reveal-on-scroll reveal-delay-4">
                     <div>
                         <div class="card-meta-row">
                             <span class="card-number">[ 04 ]</span>
@@ -2136,7 +2208,7 @@
                 </div>
 
                 <div class="calc-panel-right">
-                    <div class="calc-stat-box">
+                    <div class="calc-stat-box stat-tile reveal-on-scroll">
                         <div class="calc-metric-row">
                             <span class="calc-metric-name">ESTIMATED APY</span>
                             <span class="calc-metric-val highlight" id="calc-apy-val">38.4%</span>
@@ -2350,8 +2422,7 @@
 
                     let output = '';
                     for (let i = 0; i < length; i++) {
-                        if (target[i] === ' ' || target[i] === '
-') {
+                        if (target[i] === ' ' || target[i] === '\n') {
                             output += target[i];
                         } else if (i < revealedLength) {
                             output += target[i];
@@ -2697,7 +2768,7 @@
             nodeMatrix.innerHTML = '';
             for (let i = 0; i < totalCommittee; i++) {
                 const tile = document.createElement('div');
-                tile.className = 'node-tile honest';
+                tile.className = 'node-tile honest reveal-on-scroll reveal-init';
                 tile.id = 'node-' + i;
                 tile.textContent = (i + 1).toString().padStart(2, '0');
                 nodeMatrix.appendChild(tile);
@@ -2724,10 +2795,11 @@
             for (let i = 0; i < totalCommittee; i++) {
                 const tile = document.getElementById('node-' + i);
                 if (!tile) continue;
+                tile.classList.remove('byzantine', 'honest', 'slashed');
                 if (i < f) {
-                    tile.className = 'node-tile byzantine';
+                    tile.classList.add('byzantine');
                 } else {
-                    tile.className = 'node-tile honest';
+                    tile.classList.add('honest');
                 }
             }
         }
@@ -2872,6 +2944,119 @@
             document.getElementById('calc-burn-val').textContent = burnDaily.toFixed(1) + ' $33RD';
         }
         calculateRewards();
+
+        /* ==========================================================================
+           12. SCROLL TELEMETRY PROGRESS & ACTIVE SECTION TRACKER
+           ========================================================================== */
+        const trackedSections = [
+            { id: 'hero', label: 'CANARY // OVERVIEW' },
+            { id: 'singularity-stage', label: 'CANARY // STAGE' },
+            { id: 'protocol', label: 'CANARY // PROTOCOL' },
+            { id: 'simulator', label: 'CANARY // SIMULATOR' },
+            { id: 'calculator', label: 'CANARY // YIELD' },
+            { id: 'access-section', label: 'CANARY // ACCESS' }
+        ];
+
+        const navActiveBadge = document.getElementById('nav-active-section');
+        const scrollProgressBar = document.getElementById('scroll-progress-line');
+
+        function updateScrollTelemetry() {
+            const doc = document.documentElement;
+            const scrollY = window.scrollY || doc.scrollTop;
+            const maxScroll = doc.scrollHeight - window.innerHeight;
+
+            // Micro-progress line width
+            if (scrollProgressBar && maxScroll > 0) {
+                const pct = Math.min(100, Math.max(0, (scrollY / maxScroll) * 100));
+                scrollProgressBar.style.width = pct + '%';
+            }
+
+            // Determine active section
+            const triggerOffset = window.innerHeight * 0.35;
+            let currentId = 'hero';
+            let currentLabel = 'CANARY // OVERVIEW';
+
+            if (scrollY + window.innerHeight >= doc.scrollHeight - 80) {
+                currentId = 'access-section';
+                currentLabel = 'CANARY // ACCESS';
+            } else {
+                for (const sec of trackedSections) {
+                    const el = document.getElementById(sec.id);
+                    if (el) {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.top <= triggerOffset && rect.bottom > 0) {
+                            currentId = sec.id;
+                            currentLabel = sec.label;
+                        }
+                    }
+                }
+            }
+
+            // Update nav pill links
+            document.querySelectorAll('.nav-links .nav-link').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === '#' + currentId) {
+                    link.classList.add('active');
+                } else if (href && href.startsWith('#')) {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Update nav telemetry badge
+            if (navActiveBadge && navActiveBadge.textContent !== currentLabel) {
+                navActiveBadge.textContent = currentLabel;
+            }
+        }
+
+        window.addEventListener('scroll', updateScrollTelemetry, { passive: true });
+        if (typeof lenis !== 'undefined') {
+            lenis.on('scroll', updateScrollTelemetry);
+        }
+        updateScrollTelemetry();
+
+        /* ==========================================================================
+           13. INTERSECTION OBSERVER REVEAL ENGINE (JANK-FREE)
+           ========================================================================== */
+        const revealSelector = '.reveal-on-scroll, .node-tile, .stat-tile, .research-card, .section-title, .cta-title, .meta-tag, .arch-card, .stage-stat-card, .calc-stat-box';
+        const revealElements = document.querySelectorAll(revealSelector);
+
+        if ('IntersectionObserver' in window) {
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '0px 0px -40px 0px',
+                threshold: 0.08
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            const nodeMatrixEl = document.getElementById('node-matrix');
+            if (nodeMatrixEl) {
+                const matrixObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const tiles = nodeMatrixEl.querySelectorAll('.node-tile');
+                            tiles.forEach((tile, idx) => {
+                                setTimeout(() => {
+                                    tile.classList.add('is-revealed');
+                                    tile.classList.remove('reveal-init');
+                                }, idx * 8);
+                            });
+                            observer.unobserve(nodeMatrixEl);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                matrixObserver.observe(nodeMatrixEl);
+            }
+        } else {
+            revealElements.forEach(el => el.classList.add('is-revealed'));
+        }
     </script>
 </body>
 </html>

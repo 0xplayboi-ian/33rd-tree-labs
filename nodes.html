@@ -154,22 +154,39 @@ footer.site-footer {
         </div>
     </div>
 
-    <header class="site-nav">
-        <a href="index.html" class="brand-logo-wrap">
-            <div class="logo-symbol" style="background:#000;border:1px solid #FF292C;box-shadow:0 0 16px rgba(255,41,44,0.45);padding:3px;">
-                <img src="assets/nav_logo.png" alt="33rd Tree Labs" style="width:100%;height:100%;object-fit:contain;display:block;">
-            </div>
-            <div class="brand-text">
-                <span class="brand-name">33RD TREE LABS</span>
-                <span class="brand-sub">SINGULARITY PROTOCOL</span>
-            </div>
-        </a>
+    <!-- RETRO-TECH CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
 
-        <ul class="nav-links">
-            <li><a href="index.html" class="">HOME</a></li><li><a href="33rd_Tree_Labs_Whitepaper.pdf" class="">WHITEPAPER</a></li><li><a href="nodes.html" class="active">NODE RUNNERS</a></li><li><a href="tokenomics.html" class="">TOKENOMICS</a></li><li><a href="research.html" class="">RESEARCH</a></li>
-            <li><a href="nodes.html" class="nav-cta">CONNECT NODE</a></li>
-        </ul>
-    </header>
+    <!-- FLOATING PILL NAVBAR -->
+    <div class="nav-wrapper">
+        <nav class="nav-pill">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo-box">
+                    <img src="assets/nav_logo.png" alt="33rd Tree Labs Wireframe">
+                </div>
+                <span class="nav-title" data-glitch>33RD TREE LABS</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" data-glitch>[ OVERVIEW ]</a>
+                <a href="protocol.html" class="nav-link" data-glitch>[ PROTOCOL ]</a>
+                <a href="simulator.html" class="nav-link" data-glitch>[ SIMULATOR ]</a>
+                <a href="yield.html" class="nav-link" data-glitch>[ YIELD ]</a>
+                <a href="nodes.html" class="nav-link active" data-glitch>[ NODES ]</a>
+                <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
+                <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
+                <a href="whitepaper.html" class="nav-link" data-glitch>[ WHITEPAPER ]</a>
+            </div>
+
+            <div class="nav-status">
+                <span class="nav-status-dot"></span>
+                <span>MAINNET CANARY</span>
+            </div>
+
+            <a href="nodes.html" class="nav-cta" data-glitch>[ DEPLOY GPU ]</a>
+        </nav>
+    </div>
     
     <div class="page-container">
         <div class="page-tag">// INFRASTRUCTURE OPERATORS</div>
@@ -311,5 +328,50 @@ docker run -d --gpus all   --name 33rd-node   -v ~/.33rd:/root/.33rd   -e RPC_EN
         </div>
     </footer>
 
+
+    <script>
+        class GlitchScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_/[#]=+*?<>~!$%&';
+                this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
+                el.setAttribute('data-glitch-text', this.originalText);
+                this.isGlitching = false;
+            }
+            scramble(duration = 0.45) {
+                if (this.isGlitching) return;
+                this.isGlitching = true;
+                this.el.classList.add('glitch-active');
+                const target = this.originalText;
+                const len = target.length;
+                const start = performance.now();
+                const dur = duration * 1000;
+                const tick = (now) => {
+                    const elapsed = now - start;
+                    const progress = Math.min(1, elapsed / dur);
+                    const rev = Math.floor(progress * len);
+                    let res = '';
+                    for (let i = 0; i < len; i++) {
+                        const ch = target[i];
+                        if (ch === ' ' || ch === '\n' || ch === '\t') res += ch;
+                        else if (i < rev) res += ch;
+                        else res += this.chars[Math.floor(Math.random() * this.chars.length)];
+                    }
+                    this.el.innerText = res;
+                    if (progress < 1) requestAnimationFrame(tick);
+                    else {
+                        this.el.innerText = target;
+                        this.el.classList.remove('glitch-active');
+                        this.isGlitching = false;
+                    }
+                };
+                requestAnimationFrame(tick);
+            }
+        }
+        document.querySelectorAll('[data-glitch], .nav-link').forEach(el => {
+            const inst = new GlitchScramble(el);
+            el.addEventListener('mouseenter', () => inst.scramble(0.4));
+        });
+    </script>
 </body>
 </html>

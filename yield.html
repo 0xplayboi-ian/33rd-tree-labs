@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>33RD TREE LABS // Yield Calculator &bull; 33rdtreelabs.tech</title>
+    <meta name="description" content="Model validator yields, collateral requirements, APY, and deflationary buyback dynamics across GPU hardware configurations.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* VRTL WRLD DESIGN SYSTEM PALETTE */
+            --bg: #070707;
+            --bg-elevated: #0B0B0E;
+            --bg-card: #101014;
+            --bg-card-hover: #15151B;
+            --border: #1C1C24;
+            --border-hover: #343442;
+            --border-accent: rgba(255, 41, 44, 0.35);
+            --laser-red: #FF292C;
+            --laser-glow: rgba(255, 41, 44, 0.45);
+            --laser-subtle: rgba(255, 41, 44, 0.08);
+            --chalk: #F2F2F5;
+            --chalk-dim: #D4D4DC;
+            --slate: #8E8E98;
+            --dark-slate: #4A4A56;
+            --white: #FFFFFF;
+            --green: #00E676;
+            --green-glow: rgba(0, 230, 118, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: default;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--bg);
+            color: var(--chalk);
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+        }
+
+        body {
+            position: relative;
+            min-height: 100vh;
+            background: var(--bg);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* CUSTOM RETRO-TECH CURSOR */
+        #cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--laser-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--laser-red);
+            transition: opacity 0.2s;
+        }
+        #cursor-ring {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255, 41, 44, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99998;
+            transform: translate(-50%, -50%);
+            transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease;
+        }
+        body.cursor-hover #cursor-ring {
+            width: 48px;
+            height: 48px;
+            border-color: var(--laser-red);
+            background: rgba(255, 41, 44, 0.08);
+        }
+
+        /* FLOATING PILL NAVBAR */
+        .nav-wrapper {
+            position: fixed;
+            top: 16px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            padding: 0 16px;
+        }
+
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(11, 11, 14, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 7px 16px;
+            border-radius: 9999px;
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            max-width: 98vw;
+        }
+        .nav-pill:hover {
+            border-color: rgba(255, 41, 44, 0.35);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 41, 44, 0.15);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+        .nav-logo-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
+        }
+        .nav-logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(150%);
+            transition: filter 0.25s ease;
+        }
+        .nav-brand:hover .nav-logo-box img {
+            filter: grayscale(0%) contrast(120%);
+        }
+        .nav-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--white);
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--slate);
+            text-decoration: none;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+            position: relative;
+            padding: 4px 3px;
+            white-space: nowrap;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--white);
+        }
+        .nav-link.active {
+            color: var(--laser-red);
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 41, 44, 0.5);
+        }
+
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            letter-spacing: 0.08em;
+            color: var(--green);
+            padding: 3px 8px;
+            background: rgba(0, 230, 118, 0.06);
+            border: 1px solid rgba(0, 230, 118, 0.2);
+            border-radius: 9999px;
+            white-space: nowrap;
+        }
+        .nav-status-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--green);
+            animation: pulse-dot 1.8s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .nav-cta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--white);
+            background: var(--laser-red);
+            text-decoration: none;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+            white-space: nowrap;
+            box-shadow: 0 0 14px rgba(255, 41, 44, 0.35);
+        }
+        .nav-cta:hover {
+            background: #FF474A;
+            box-shadow: 0 0 22px rgba(255, 41, 44, 0.65);
+            transform: translateY(-1px);
+        }
+
+        /* VRTL WRLD GLITCH TEXT & CHROMATIC ABERRATION */
+        .glitch-active {
+            color: var(--laser-red) !important;
+            text-shadow: 1.5px 0 0 rgba(255, 41, 44, 0.85), -1.5px 0 0 rgba(0, 230, 118, 0.75) !important;
+        }
+
+        /* BUTTONS */
+        .btn-brutal-red {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--laser-red);
+            color: var(--white);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 13px 24px;
+            clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+            box-shadow: 0 6px 24px rgba(255, 41, 44, 0.35);
+            transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            border: none;
+        }
+        .btn-brutal-red:hover {
+            background: #FF474A;
+            box-shadow: 0 8px 30px rgba(255, 41, 44, 0.55);
+            transform: translateY(-2px);
+        }
+
+        .btn-brutal-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--chalk);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 13px 24px;
+            border: 1px solid var(--border-hover);
+            clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+        }
+        .btn-brutal-outline:hover {
+            border-color: var(--laser-red);
+            color: var(--white);
+            background: rgba(255, 41, 44, 0.05);
+        }
+
+        /* SECTION HEADERS & META TAGS */
+        .meta-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--laser-red);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(28px, 4vw, 46px);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+        .section-desc {
+            font-size: 15px;
+            line-height: 1.65;
+            color: var(--slate);
+            max-width: 720px;
+            font-weight: 400;
+            margin-bottom: 36px;
+        }
+
+        /* PAGE CONTAINER */
+        .page-wrap {
+            padding-top: 96px;
+            padding-bottom: 80px;
+            max-width: 1360px;
+            margin: 0 auto;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        /* GLOBAL FOOTER */
+        .global-footer {
+            background: #050507;
+            border-top: 1px solid var(--border);
+            padding: 48px 32px 36px;
+            margin-top: 80px;
+        }
+        .footer-inner {
+            max-width: 1360px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-brand {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            color: var(--slate);
+        }
+        .footer-brand strong {
+            color: var(--white);
+        }
+        .footer-links {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .footer-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            color: var(--slate);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: var(--laser-red);
+        }
+
+        @media (max-width: 1100px) {
+            .nav-links { display: none; }
+        }
+    
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 28px;
+            margin-top: 32px;
+        }
+        .calc-panel-left, .calc-panel-right {
+            background: #0E0E12;
+            border: 1px solid var(--border);
+            padding: 28px;
+            clip-path: polygon(0 14px, 14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+        }
+        .calc-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .calc-label {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .calc-select {
+            background: #161620;
+            border: 1px solid var(--border);
+            color: var(--chalk);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            padding: 10px 14px;
+            outline: none;
+        }
+        .calc-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            background: #1C1C26;
+            height: 6px;
+            border-radius: 3px;
+            outline: none;
+        }
+        .calc-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--laser-red);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--laser-red);
+        }
+
+        .calc-stat-box {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: #14141B;
+            border: 1px solid var(--border);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .calc-metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding-bottom: 10px;
+        }
+        .calc-metric-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .calc-metric-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            color: var(--slate);
+            text-transform: uppercase;
+        }
+        .calc-metric-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--chalk);
+        }
+        .calc-metric-val.highlight {
+            color: var(--laser-red);
+            font-size: 24px;
+        }
+        .calc-disclaimer {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            line-height: 1.5;
+            color: var(--slate);
+        }
+
+        /* HARDWARE COMPARISON */
+        .hw-table-box {
+            background: #0E0E12;
+            border: 1px solid var(--border);
+            padding: 28px;
+            margin-top: 48px;
+            clip-path: polygon(0 12px, 12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+        }
+        .hw-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            margin-top: 16px;
+        }
+        .hw-table th, .hw-table td {
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .hw-table th {
+            color: var(--slate);
+            text-transform: uppercase;
+            font-weight: 700;
+            background: #0B0B0E;
+        }
+        .hw-table td {
+            color: var(--chalk);
+        }
+        .hw-table tr:hover td {
+            background: rgba(255, 41, 44, 0.04);
+        }
+
+        @media (max-width: 900px) {
+            .calc-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <!-- RETRO-TECH CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- FLOATING PILL NAVBAR -->
+    <div class="nav-wrapper">
+        <nav class="nav-pill">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo-box">
+                    <img src="assets/nav_logo.png" alt="33rd Tree Labs Wireframe">
+                </div>
+                <span class="nav-title" data-glitch>33RD TREE LABS</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" data-glitch>[ OVERVIEW ]</a>
+                <a href="protocol.html" class="nav-link" data-glitch>[ PROTOCOL ]</a>
+                <a href="simulator.html" class="nav-link" data-glitch>[ SIMULATOR ]</a>
+                <a href="yield.html" class="nav-link active" data-glitch>[ YIELD ]</a>
+                <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
+                <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
+                <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
+                <a href="whitepaper.html" class="nav-link" data-glitch>[ WHITEPAPER ]</a>
+            </div>
+
+            <div class="nav-status">
+                <span class="nav-status-dot"></span>
+                <span>MAINNET CANARY</span>
+            </div>
+
+            <a href="nodes.html" class="nav-cta" data-glitch>[ DEPLOY GPU ]</a>
+        </nav>
+    </div>
+
+
+    <div class="page-wrap">
+        <div class="meta-tag" data-glitch>( 03 ) // TOKENOMICS &bull; REWARDS SIMULATOR</div>
+        <h1 class="section-title" data-glitch>VALIDATOR YIELD CALCULATOR</h1>
+        <p class="section-desc">
+            Model validator yields, collateral requirements, and deflationary buyback dynamics across hardware configurations and halving epochs.
+        </p>
+
+        <div class="calc-grid">
+            <div class="calc-panel-left">
+                <div class="calc-field">
+                    <label class="calc-label">Validator Hardware Configuration</label>
+                    <select id="calc-hw-select" class="calc-select" onchange="calculateRewards()">
+                        <option value="dual-h100" selected>Tier-1: Dual NVIDIA H100 SXM5 (160GB VRAM)</option>
+                        <option value="quad-h100">Tier-1 Heavy: Quad NVIDIA H100 SXM5 (320GB VRAM)</option>
+                        <option value="cluster-b200">Tier-1 Ultra: NVIDIA B200 NVL72 Cluster</option>
+                        <option value="single-4090">Tier-2 Edge: NVIDIA RTX 4090 (24GB VRAM)</option>
+                    </select>
+                </div>
+
+                <div class="calc-field">
+                    <label class="calc-label">
+                        <span>Bonded Collateral</span>
+                        <span id="calc-stake-display" style="color:var(--chalk); font-weight:700;">25,000 $33RD</span>
+                    </label>
+                    <input type="range" id="calc-stake-slider" class="calc-slider" min="25000" max="500000" step="5000" value="25000" oninput="calculateRewards()">
+                </div>
+
+                <div class="calc-field">
+                    <label class="calc-label">Emission Halving Epoch</label>
+                    <select id="calc-epoch-select" class="calc-select" onchange="calculateRewards()">
+                        <option value="0" selected>Epoch 0 (Years 1&ndash;4) &bull; 0.7135 $33RD / block</option>
+                        <option value="1">Epoch 1 (Years 5&ndash;8) &bull; 0.3567 $33RD / block</option>
+                        <option value="2">Epoch 2 (Years 9&ndash;12) &bull; 0.1784 $33RD / block</option>
+                        <option value="3">Epoch 3 (Years 13&ndash;16) &bull; 0.0892 $33RD / block</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="calc-panel-right">
+                <div class="calc-stat-box">
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-name">ESTIMATED APY</span>
+                        <span class="calc-metric-val highlight" id="calc-apy-val">38.4%</span>
+                    </div>
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-name">EST. DAILY REWARDS</span>
+                        <span class="calc-metric-val" id="calc-daily-val">26.3 $33RD</span>
+                    </div>
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-name">EST. MONTHLY REWARDS</span>
+                        <span class="calc-metric-val" id="calc-monthly-val">789.0 $33RD</span>
+                    </div>
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-name">10% BUYBACK-BURN BURNED / DAY</span>
+                        <span class="calc-metric-val" id="calc-burn-val" style="color:var(--laser-red);">513.7 $33RD</span>
+                    </div>
+                </div>
+
+                <div class="calc-disclaimer">
+                    Calculations assume constant network compute demand and bonded stake distribution. Model parameters defined in Canary Specification v4.0.
+                </div>
+            </div>
+        </div>
+
+        <!-- HARDWARE TIER BENCHMARK TABLE -->
+        <div class="hw-table-box">
+            <div class="meta-tag" data-glitch>[ HARDWARE TIER REWARD WEIGHTS ]</div>
+            <table class="hw-table">
+                <thead>
+                    <tr>
+                        <th>Hardware Tier</th>
+                        <th>Accelerator Spec</th>
+                        <th>VRAM Pool</th>
+                        <th>Interconnect</th>
+                        <th>Weight Multiplier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tier-1 Ultra</td>
+                        <td>NVIDIA B200 NVL72</td>
+                        <td>1,440 GB HBM3e</td>
+                        <td>1.8 TB/s NVLink Switch</td>
+                        <td>5.4x</td>
+                    </tr>
+                    <tr>
+                        <td>Tier-1 Heavy</td>
+                        <td>Quad NVIDIA H100 SXM5</td>
+                        <td>320 GB HBM3</td>
+                        <td>900 GB/s NVLink</td>
+                        <td>2.1x</td>
+                    </tr>
+                    <tr>
+                        <td>Tier-1 Standard</td>
+                        <td>Dual NVIDIA H100 SXM5</td>
+                        <td>160 GB HBM3</td>
+                        <td>900 GB/s NVLink</td>
+                        <td>1.0x (Baseline)</td>
+                    </tr>
+                    <tr>
+                        <td>Tier-2 Edge</td>
+                        <td>NVIDIA RTX 4090</td>
+                        <td>24 GB GDDR6X</td>
+                        <td>PCIe Gen 4.0 x16</td>
+                        <td>0.28x</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="global-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <strong>33RD TREE LABS</strong> &bull; THE SINGULARITY PROTOCOL &bull; <code>33rdtreelabs.tech</code>
+            </div>
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">[ OVERVIEW ]</a>
+                <a href="protocol.html" class="footer-link">[ PROTOCOL ]</a>
+                <a href="simulator.html" class="footer-link">[ SIMULATOR ]</a>
+                <a href="yield.html" class="footer-link">[ YIELD ]</a>
+                <a href="nodes.html" class="footer-link">[ NODES ]</a>
+                <a href="tokenomics.html" class="footer-link">[ TOKENOMICS ]</a>
+                <a href="research.html" class="footer-link">[ RESEARCH ]</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="footer-link">[ WHITEPAPER PDF ]</a>
+            </div>
+        </div>
+    </footer>
+
+    
+    <!-- Lenis & GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        // Custom Cursor
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+        if (cursorDot && cursorRing) {
+            window.addEventListener('mousemove', (e) => {
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+                cursorRing.style.left = e.clientX + 'px';
+                cursorRing.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, input, select, [data-glitch]').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+        }
+
+        // VRTL WRLD Glitch Letters & Matrix Scramble Engine
+        class GlitchScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_/[#]=+*?<>~!$%&';
+                this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
+                el.setAttribute('data-glitch-text', this.originalText);
+                this.isGlitching = false;
+                this.animId = null;
+            }
+
+            scramble(duration = 0.5) {
+                if (this.isGlitching) return;
+                this.isGlitching = true;
+                this.el.classList.add('glitch-active');
+                const target = this.originalText;
+                const len = target.length;
+                const startTime = performance.now();
+                const durationMs = duration * 1000;
+
+                const tick = (now) => {
+                    const elapsed = now - startTime;
+                    const progress = Math.min(1, elapsed / durationMs);
+                    const revealedCount = Math.floor(progress * len);
+
+                    let result = '';
+                    for (let i = 0; i < len; i++) {
+                        const ch = target[i];
+                        if (ch === ' ' || ch === '\n' || ch === '\t') {
+                            result += ch;
+                        } else if (i < revealedCount) {
+                            result += ch;
+                        } else if (i < revealedCount + 3) {
+                            result += this.chars[Math.floor(Math.random() * this.chars.length)];
+                        } else {
+                            result += this.chars[Math.floor(Math.random() * this.chars.length)];
+                        }
+                    }
+                    this.el.innerText = result;
+
+                    if (progress < 1) {
+                        this.animId = requestAnimationFrame(tick);
+                    } else {
+                        this.el.innerText = target;
+                        this.el.classList.remove('glitch-active');
+                        this.isGlitching = false;
+                    }
+                };
+                this.animId = requestAnimationFrame(tick);
+            }
+        }
+
+        document.querySelectorAll('[data-glitch]').forEach(el => {
+            const inst = new GlitchScramble(el);
+            el.addEventListener('mouseenter', () => inst.scramble(0.42));
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            let delay = 60;
+            document.querySelectorAll('.display-word, .meta-tag, .glitch-load').forEach(el => {
+                const inst = new GlitchScramble(el);
+                setTimeout(() => inst.scramble(0.65), delay);
+                delay += 90;
+            });
+        });
+
+        document.querySelectorAll('.section-title').forEach(el => {
+            const inst = new GlitchScramble(el);
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 88%',
+                onEnter: () => inst.scramble(0.55),
+                onEnterBack: () => inst.scramble(0.4)
+            });
+            el.addEventListener('mouseenter', () => inst.scramble(0.4));
+        });
+
+        
+        function calculateRewards() {
+            const hwSelect = document.getElementById('calc-hw-select');
+            const stakeSlider = document.getElementById('calc-stake-slider');
+            const epochSelect = document.getElementById('calc-epoch-select');
+            if (!hwSelect || !stakeSlider || !epochSelect) return;
+
+            const hw = hwSelect.value;
+            const stake = parseInt(stakeSlider.value);
+            const epoch = parseInt(epochSelect.value);
+
+            document.getElementById('calc-stake-display').textContent = stake.toLocaleString() + ' $33RD';
+
+            let baseRewardsPerDay = 5136.99;
+            if (epoch === 1) baseRewardsPerDay = 2568.49;
+            if (epoch === 2) baseRewardsPerDay = 1284.25;
+            if (epoch === 3) baseRewardsPerDay = 642.12;
+
+            let hwMultiplier = 1.0;
+            if (hw === 'dual-h100') hwMultiplier = 1.0;
+            if (hw === 'quad-h100') hwMultiplier = 2.1;
+            if (hw === 'cluster-b200') hwMultiplier = 5.4;
+            if (hw === 'single-4090') hwMultiplier = 0.28;
+
+            const validatorShare = (stake / 2500000) * hwMultiplier;
+            const daily = baseRewardsPerDay * validatorShare;
+            const monthly = daily * 30;
+            const apy = ((daily * 365) / stake) * 100;
+            const burnDaily = baseRewardsPerDay * 0.10;
+
+            document.getElementById('calc-apy-val').textContent = apy.toFixed(1) + '%';
+            document.getElementById('calc-daily-val').textContent = daily.toFixed(1) + ' $33RD';
+            document.getElementById('calc-monthly-val').textContent = monthly.toFixed(1) + ' $33RD';
+            document.getElementById('calc-burn-val').textContent = burnDaily.toFixed(1) + ' $33RD';
+        }
+        calculateRewards();
+    
+    </script>
+</body>
+</html>
+
