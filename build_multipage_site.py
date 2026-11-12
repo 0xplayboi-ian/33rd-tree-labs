@@ -444,18 +444,20 @@ def get_script_footer():
             });
         }
 
-        // VRTL WRLD Authentic Glitch Letters Scramble Engine
+        // VRTL WRLD Authentic Glitch Letters Scramble Engine (Calibrated Deliberate Rate)
         class GlitchScramble {
             constructor(el) {
                 this.el = el;
-                this.chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_/[#]=+*?<>~!$%&';
+                this.chars = '01X_/*+-[]#';
                 this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
                 el.setAttribute('data-glitch-text', this.originalText);
                 this.isGlitching = false;
                 this.animId = null;
+                this.lastTickTime = 0;
+                this.tickInterval = 160; // 160ms throttle: calm, deliberate, readable (~6fps)
             }
 
-            scramble(duration = 0.5) {
+            scramble(duration = 2.4) {
                 if (this.isGlitching) return;
                 this.isGlitching = true;
                 this.el.classList.add('glitch-active');
@@ -463,23 +465,40 @@ def get_script_footer():
                 const len = target.length;
                 const startTime = performance.now();
                 const durationMs = duration * 1000;
+                let activeGlyphs = new Array(len);
+                for (let i = 0; i < len; i++) {
+                    const ch = target[i];
+                    activeGlyphs[i] = (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9))
+                        ? ch
+                        : this.chars[Math.floor(Math.random() * this.chars.length)];
+                }
 
                 const tick = (now) => {
                     const elapsed = now - startTime;
                     const progress = Math.min(1, elapsed / durationMs);
                     const revealedCount = Math.floor(progress * len);
 
+                    if (now - this.lastTickTime > this.tickInterval) {
+                        this.lastTickTime = now;
+                        for (let i = revealedCount; i < len; i++) {
+                            const ch = target[i];
+                            if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
+                                activeGlyphs[i] = ch;
+                            } else if (Math.random() < 0.4) {
+                                activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
+                            }
+                        }
+                    }
+
                     let result = '';
                     for (let i = 0; i < len; i++) {
                         const ch = target[i];
-                        if (ch === ' ' || ch === '\\n' || ch === '\\t') {
+                        if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
                             result += ch;
                         } else if (i < revealedCount) {
                             result += ch;
-                        } else if (i < revealedCount + 3) {
-                            result += this.chars[Math.floor(Math.random() * this.chars.length)];
                         } else {
-                            result += this.chars[Math.floor(Math.random() * this.chars.length)];
+                            result += activeGlyphs[i] || ch;
                         }
                     }
                     this.el.innerText = result;
@@ -496,17 +515,17 @@ def get_script_footer():
             }
         }
 
-        document.querySelectorAll('[data-glitch]').forEach(el => {
+        document.querySelectorAll('[data-glitch], .nav-link').forEach(el => {
             const inst = new GlitchScramble(el);
-            el.addEventListener('mouseenter', () => inst.scramble(0.45));
+            el.addEventListener('mouseenter', () => inst.scramble(2.0));
         });
 
         window.addEventListener('DOMContentLoaded', () => {
-            let delay = 80;
+            let delay = 100;
             document.querySelectorAll('.display-word, .meta-tag, .glitch-load').forEach(el => {
                 const inst = new GlitchScramble(el);
-                setTimeout(() => inst.scramble(0.7), delay);
-                delay += 110;
+                setTimeout(() => inst.scramble(2.4), delay);
+                delay += 220;
             });
         });
 
@@ -515,10 +534,10 @@ def get_script_footer():
             ScrollTrigger.create({
                 trigger: el,
                 start: 'top 88%',
-                onEnter: () => inst.scramble(0.6),
-                onEnterBack: () => inst.scramble(0.45)
+                onEnter: () => inst.scramble(2.4),
+                onEnterBack: () => inst.scramble(2.0)
             });
-            el.addEventListener('mouseenter', () => inst.scramble(0.45));
+            el.addEventListener('mouseenter', () => inst.scramble(2.0));
         });
     </script>
 </body>

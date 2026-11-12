@@ -698,47 +698,80 @@ The CAP-FFN benchmark circuit comprises $2.15 \times 10^7$ Plonkish constraints 
 
 
     <script>
+        // VRTL WRLD Glitch Letters Scramble Engine (Calibrated Deliberate Rate)
+        // VRTL WRLD Glitch Letters Scramble Engine (Calibrated Deliberate Rate)
+        // VRTL WRLD Glitch Letters Scramble Engine (Calibrated Deliberate Rate)
         class GlitchScramble {
             constructor(el) {
                 this.el = el;
-                this.chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_/[#]=+*?<>~!$%&';
+                this.chars = '01X_/*+-[]#';
                 this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
                 el.setAttribute('data-glitch-text', this.originalText);
                 this.isGlitching = false;
+                this.animId = null;
+                this.lastTickTime = 0;
+                this.tickInterval = 160; // 160ms throttle: calm, deliberate, readable (~6fps)
             }
-            scramble(duration = 0.45) {
+            scramble(duration = 2.4) {
                 if (this.isGlitching) return;
                 this.isGlitching = true;
                 this.el.classList.add('glitch-active');
                 const target = this.originalText;
                 const len = target.length;
-                const start = performance.now();
-                const dur = duration * 1000;
+                const startTime = performance.now();
+                const durationMs = duration * 1000;
+                let activeGlyphs = new Array(len);
+                for (let i = 0; i < len; i++) {
+                    const ch = target[i];
+                    activeGlyphs[i] = (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9))
+                        ? ch
+                        : this.chars[Math.floor(Math.random() * this.chars.length)];
+                }
+
                 const tick = (now) => {
-                    const elapsed = now - start;
-                    const progress = Math.min(1, elapsed / dur);
-                    const rev = Math.floor(progress * len);
-                    let res = '';
+                    const elapsed = now - startTime;
+                    const progress = Math.min(1, elapsed / durationMs);
+                    const revealedCount = Math.floor(progress * len);
+
+                    if (now - this.lastTickTime > this.tickInterval) {
+                        this.lastTickTime = now;
+                        for (let i = revealedCount; i < len; i++) {
+                            const ch = target[i];
+                            if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
+                                activeGlyphs[i] = ch;
+                            } else if (Math.random() < 0.4) {
+                                activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
+                            }
+                        }
+                    }
+
+                    let result = '';
                     for (let i = 0; i < len; i++) {
                         const ch = target[i];
-                        if (ch === ' ' || ch === '\n' || ch === '\t') res += ch;
-                        else if (i < rev) res += ch;
-                        else res += this.chars[Math.floor(Math.random() * this.chars.length)];
+                        if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
+                            result += ch;
+                        } else if (i < revealedCount) {
+                            result += ch;
+                        } else {
+                            result += activeGlyphs[i] || ch;
+                        }
                     }
-                    this.el.innerText = res;
-                    if (progress < 1) requestAnimationFrame(tick);
-                    else {
+                    this.el.innerText = result;
+
+                    if (progress < 1) {
+                        this.animId = requestAnimationFrame(tick);
+                    } else {
                         this.el.innerText = target;
                         this.el.classList.remove('glitch-active');
                         this.isGlitching = false;
                     }
                 };
-                requestAnimationFrame(tick);
+                this.animId = requestAnimationFrame(tick);
             }
         }
         document.querySelectorAll('[data-glitch], .nav-link').forEach(el => {
             const inst = new GlitchScramble(el);
-            el.addEventListener('mouseenter', () => inst.scramble(0.4));
+            el.addEventListener('mouseenter', () => inst.scramble(2.0));
         });
     </script>
 </body>

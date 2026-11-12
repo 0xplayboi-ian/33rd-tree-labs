@@ -2418,64 +2418,91 @@ html_code = """<!DOCTYPE html>
         });
 
         /* 2. TEXT SCRAMBLE & PIXEL GLYPH DECODING ENGINE */
-        class TextScramble {
+        class GlitchScramble {
             constructor(el) {
                 this.el = el;
-                this.chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_/[#]=+*?<>~!$%&';
-                this.originalText = el.getAttribute('data-original-text') || el.innerText.trim();
+                this.chars = '01X_/*+-[]#';
+                this.originalText = el.getAttribute('data-original-text') || el.getAttribute('data-glitch-text') || el.innerText.trim();
                 el.setAttribute('data-original-text', this.originalText);
-                this.el.classList.remove('glitch-active'); this.isScrambling = false;
+                el.setAttribute('data-glitch-text', this.originalText);
+                this.isScrambling = false;
+                this.isGlitching = false;
+                this.animId = null;
+                this.lastTickTime = 0;
+                this.tickInterval = 160; // 160ms throttle: calm, deliberate, readable (~6fps)
             }
 
-            scramble(duration = 1.1) {
-                if (this.isScrambling) return;
-                this.isScrambling = true; this.el.classList.add('glitch-active');
+            scramble(duration = 2.4) {
+                if (this.isScrambling || this.isGlitching) return;
+                this.isScrambling = true;
+                this.isGlitching = true;
+                this.el.classList.add('glitch-active');
                 const target = this.originalText;
                 const length = target.length;
-                const startTime = Date.now();
+                const startTime = performance.now();
                 const durationMs = duration * 1000;
+                let activeGlyphs = new Array(length);
+                for (let i = 0; i < length; i++) {
+                    const ch = target[i];
+                    activeGlyphs[i] = (ch === ' ' || ch === '\\n' || ch === '\\t')
+                        ? ch
+                        : this.chars[Math.floor(Math.random() * this.chars.length)];
+                }
 
-                const update = () => {
-                    const now = Date.now();
+                const tick = (now) => {
                     const elapsed = now - startTime;
                     const progress = Math.min(1, elapsed / durationMs);
                     const revealedLength = Math.floor(progress * length);
 
+                    if (now - this.lastTickTime > this.tickInterval) {
+                        this.lastTickTime = now;
+                        for (let i = revealedLength; i < length; i++) {
+                            const ch = target[i];
+                            if (ch === ' ' || ch === '\\n' || ch === '\\t') {
+                                activeGlyphs[i] = ch;
+                            } else if (Math.random() < 0.4) {
+                                activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
+                            }
+                        }
+                    }
+
                     let output = '';
                     for (let i = 0; i < length; i++) {
-                        if (target[i] === ' ' || target[i] === '\\n') {
-                            output += target[i];
+                        const ch = target[i];
+                        if (ch === ' ' || ch === '\\n' || ch === '\\t') {
+                            output += ch;
                         } else if (i < revealedLength) {
-                            output += target[i];
-                        } else if (i < revealedLength + 3) {
-                            output += this.chars[Math.floor(Math.random() * this.chars.length)];
+                            output += ch;
                         } else {
-                            output += this.chars[Math.floor(Math.random() * this.chars.length)];
+                            output += activeGlyphs[i] || ch;
                         }
                     }
                     this.el.innerText = output;
 
                     if (progress < 1) {
-                        requestAnimationFrame(update);
+                        this.animId = requestAnimationFrame(tick);
                     } else {
                         this.el.innerText = target;
-                        this.el.classList.remove('glitch-active'); this.isScrambling = false;
+                        this.el.classList.remove('glitch-active');
+                        this.isScrambling = false;
+                        this.isGlitching = false;
                     }
                 };
-                requestAnimationFrame(update);
+                this.animId = requestAnimationFrame(tick);
             }
         }
+        const TextScramble = GlitchScramble;
 
         // Attach Scramble Engine to Targets
         document.querySelectorAll('[data-scramble], [data-glitch], .nav-link, .btn-brutal-red, .btn-brutal-outline, .nav-cta').forEach(el => {
-            const scrambler = new TextScramble(el);
+            const scrambler = new GlitchScramble(el);
             ScrollTrigger.create({
                 trigger: el,
                 start: 'top 88%',
-                onEnter: () => scrambler.scramble(1.1),
-                onEnterBack: () => scrambler.scramble(0.8)
+                onEnter: () => scrambler.scramble(2.4),
+                onEnterBack: () => scrambler.scramble(2.0)
             });
-            el.addEventListener('mouseenter', () => scrambler.scramble(0.8));
+            el.addEventListener('mouseenter', () => scrambler.scramble(2.0));
         });
 
         /* 3. SCATTERED RECTANGULAR WIPE TILES SCROLLTRIGGER ANIMATION */

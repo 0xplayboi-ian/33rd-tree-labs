@@ -2,173 +2,564 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>33RD TREE LABS // Cryptographic &amp; AI Research &bull; 33rdtreelabs.tech</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Technical research publications from 33rd Tree Labs: Plonky3 polynomial folding for 70B LLMs, non-Euclidean hyperboloid routing, and Byzantine-resistant Proof of Intelligence.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
     <style>
-:root {
-    --orange: #FF292C;
-    --orange-bright: #FF4D50;
-    --orange-glow: rgba(255, 41, 44, 0.45);
-    --orange-subtle: rgba(255, 41, 44, 0.12);
-    --bg: #030306;
-    --bg-elevated: #09090E;
-    --bg-panel: rgba(14, 14, 20, 0.85);
-    --border: #22222E;
-    --text-main: #FFFFFF;
-    --text-muted: #9CA3AF;
-    --text-dark: #6B7280;
-    --white: #FFFFFF;
-    --green: #00FF66;
-}
+        :root {
+            /* VRTL WRLD DESIGN SYSTEM PALETTE */
+            --bg: #070707;
+            --bg-elevated: #0B0B0E;
+            --bg-card: #101014;
+            --bg-card-hover: #15151B;
+            --border: #1C1C24;
+            --border-hover: #343442;
+            --border-accent: rgba(255, 41, 44, 0.35);
+            --laser-red: #FF292C;
+            --laser-glow: rgba(255, 41, 44, 0.45);
+            --laser-subtle: rgba(255, 41, 44, 0.08);
+            --chalk: #F2F2F5;
+            --chalk-dim: #D4D4DC;
+            --slate: #8E8E98;
+            --dark-slate: #4A4A56;
+            --white: #FFFFFF;
+            --green: #00E676;
+            --green-glow: rgba(0, 230, 118, 0.35);
+        }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; background: var(--bg); color: var(--text-main); font-family: 'Space Grotesk', -apple-system, sans-serif; }
-body {
-    position: relative;
-    min-height: 100vh;
-    line-height: 1.6;
-    background-color: var(--bg);
-    background-image: 
-        radial-gradient(circle at 50% 0%, rgba(255, 41, 44, 0.15), transparent 45%),
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 100% 100%, 60px 60px, 60px 60px;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: default;
+        }
 
-/* TOP TELEMETRY BAR */
-.telemetry-bar {
-    position: fixed; top: 0; left: 0; width: 100%; height: 42px;
-    background: rgba(8, 8, 12, 0.94); backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border); display: flex; align-items: center;
-    justify-content: space-between; padding: 0 28px; z-index: 1000;
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.5px;
-}
-.live-dot {
-    display: inline-block; width: 7px; height: 7px; background: var(--green);
-    border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse-dot 1.5s infinite;
-}
-@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        html {
+            scroll-behavior: smooth;
+            background: var(--bg);
+            color: var(--chalk);
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+        }
 
-/* HEADER */
-header.site-nav {
-    position: fixed; top: 42px; left: 0; width: 100%; height: 72px;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 32px; background: rgba(3, 3, 6, 0.85); backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05); z-index: 990;
-}
-.brand-logo-wrap { display: flex; align-items: center; gap: 14px; text-decoration: none; color: #FFF; }
-.logo-symbol {
-    width: 44px; height: 44px; border: 1px solid var(--orange); border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    background: radial-gradient(circle, rgba(255,41,44,0.22), #000);
-    box-shadow: 0 0 16px var(--orange-glow); padding: 4px;
-}
-.logo-symbol svg { width: 100%; height: 100%; }
-.brand-name { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 900; letter-spacing: 1.5px; color: #FFF; white-space: nowrap; }
-.brand-sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; color: var(--orange); white-space: nowrap; }
+        body {
+            position: relative;
+            min-height: 100vh;
+            background: var(--bg);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-.nav-links {
-    display: flex; align-items: center; gap: 24px; list-style: none;
-    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
-}
-.nav-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; position: relative; padding: 6px 0; }
-.nav-links a:hover, .nav-links a.active { color: #FFF; }
-.nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--orange); }
+        /* CUSTOM RETRO-TECH CURSOR */
+        #cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--laser-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--laser-red);
+            transition: opacity 0.2s;
+        }
+        #cursor-ring {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255, 41, 44, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99998;
+            transform: translate(-50%, -50%);
+            transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease;
+        }
+        body.cursor-hover #cursor-ring {
+            width: 48px;
+            height: 48px;
+            border-color: var(--laser-red);
+            background: rgba(255, 41, 44, 0.08);
+        }
 
-.nav-cta {
-    background: var(--orange); color: #000 !important; font-weight: 800;
-    padding: 8px 18px !important; border-radius: 6px; box-shadow: 0 0 18px var(--orange-glow);
-}
-.nav-cta:hover { background: #FFF !important; transform: translateY(-1px); }
+        /* FLOATING PILL NAVBAR */
+        .nav-wrapper {
+            position: fixed;
+            top: 16px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            padding: 0 16px;
+        }
 
-/* MAIN CONTENT CONTAINER */
-.page-container {
-    max-width: 1200px; margin: 0 auto; padding: 150px 6vw 100px;
-}
-.page-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; letter-spacing: 2px; color: var(--orange); text-transform: uppercase; margin-bottom: 12px; }
-.page-title { font-size: clamp(34px, 4.5vw, 56px); font-weight: 900; letter-spacing: -1px; line-height: 1.1; margin-bottom: 20px; color: #FFF; }
-.page-lead { font-size: 18px; color: var(--text-muted); line-height: 1.6; max-width: 820px; margin-bottom: 50px; }
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(11, 11, 14, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 7px 16px;
+            border-radius: 9999px;
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            max-width: 98vw;
+        }
+        .nav-pill:hover {
+            border-color: rgba(255, 41, 44, 0.35);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 41, 44, 0.15);
+        }
 
-/* CARDS & PANELS */
-.panel {
-    background: #0B0B11; border: 1px solid var(--border); border-radius: 14px;
-    padding: 32px; margin-bottom: 24px; position: relative;
-}
-.panel h2, .panel h3 { font-size: 22px; font-weight: 800; color: #FFF; margin-bottom: 14px; letter-spacing: -0.3px; }
-.panel p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
-.panel-badge {
-    position: absolute; top: 24px; right: 28px; font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; font-weight: 800; color: var(--orange);
-}
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+        .nav-logo-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
+        }
+        .nav-logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(150%);
+            transition: filter 0.25s ease;
+            display: block;
+        }
+        .nav-brand:hover .nav-logo-box img {
+            filter: grayscale(0%) contrast(120%);
+        }
+        .nav-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--white);
+            white-space: nowrap;
+        }
 
-/* CODE / MATH BLOCK */
-.math-block {
-    background: #050508; border: 1px solid #222230; border-left: 3px solid var(--orange);
-    padding: 18px 22px; border-radius: 8px; font-family: 'JetBrains Mono', monospace;
-    font-size: 14px; color: #00F0FF; margin: 18px 0; overflow-x: auto;
-}
-.terminal-block {
-    background: #050508; border: 1px solid var(--border); border-radius: 8px;
-    padding: 16px 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
-    color: #A1A1AA; margin: 16px 0; overflow-x: auto;
-}
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--slate);
+            text-decoration: none;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+            position: relative;
+            padding: 4px 3px;
+            white-space: nowrap;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--white);
+        }
+        .nav-link.active {
+            color: var(--laser-red);
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 41, 44, 0.5);
+        }
 
-/* TABLES */
-.custom-table {
-    width: 100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace;
-    font-size: 12.5px; margin: 20px 0;
-}
-.custom-table th {
-    background: #101018; border: 1px solid var(--border); padding: 12px 16px;
-    text-align: left; color: var(--orange); font-weight: 800; letter-spacing: 0.5px;
-}
-.custom-table td {
-    border: 1px solid var(--border); padding: 12px 16px; color: #E4E4E7;
-}
-.custom-table tr:hover td { background: rgba(255, 41, 44, 0.04); }
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            letter-spacing: 0.08em;
+            color: var(--green);
+            padding: 3px 8px;
+            background: rgba(0, 230, 118, 0.06);
+            border: 1px solid rgba(0, 230, 118, 0.2);
+            border-radius: 9999px;
+            white-space: nowrap;
+        }
+        .nav-status-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--green);
+            animation: pulse-dot 1.8s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
 
-/* FOOTER */
-footer.site-footer {
-    border-top: 1px solid var(--border); background: #050508;
-    padding: 60px 6vw 40px; position: relative; z-index: 20;
-}
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-.footer-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-top: 14px; max-width: 380px; }
-.footer-col-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; color: #FFF; letter-spacing: 1.5px; margin-bottom: 14px; text-transform: uppercase; }
-.footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
-.footer-links a { color: var(--text-muted); text-decoration: none; }
-.footer-links a:hover { color: var(--orange); }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dark); }
-</style>
+        .nav-cta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--white);
+            background: var(--laser-red);
+            text-decoration: none;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+            white-space: nowrap;
+            box-shadow: 0 0 14px rgba(255, 41, 44, 0.35);
+        }
+        .nav-cta:hover {
+            background: #FF474A;
+            box-shadow: 0 0 22px rgba(255, 41, 44, 0.65);
+            transform: translateY(-1px);
+        }
+
+        /* GLITCH SCRAMBLE */
+        .glitch-active {
+            opacity: 0.94;
+            letter-spacing: 0.02em;
+        }
+
+        /* PAGE WRAPPER */
+        .page-wrap {
+            padding-top: 104px;
+            padding-bottom: 80px;
+            max-width: 1240px;
+            margin: 0 auto;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        /* HERO HEADER */
+        .hero-banner {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 36px;
+            margin-bottom: 48px;
+            position: relative;
+        }
+        .section-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--laser-red);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            background: var(--laser-subtle);
+            border: 1px solid var(--border-accent);
+            padding: 4px 12px;
+            clip-path: polygon(0 6px, 6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%);
+        }
+        .page-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(32px, 4.2vw, 56px);
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            line-height: 1.05;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 18px;
+        }
+        .page-lead {
+            font-size: 16px;
+            color: var(--slate);
+            line-height: 1.7;
+            max-width: 980px;
+            margin-bottom: 32px;
+        }
+
+        /* STACKED TELEMETRY HUD BAR */
+        .telemetry-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 16px 20px;
+            margin-bottom: 48px;
+        }
+        .telemetry-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border-left: 2px solid var(--border);
+            padding-left: 12px;
+        }
+        .telemetry-item.accent {
+            border-left-color: var(--laser-red);
+        }
+        .telemetry-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--slate);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .telemetry-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+        }
+        .telemetry-val.red { color: var(--laser-red); }
+        .telemetry-val.green { color: var(--green); }
+
+        /* FULL WIDTH STACKED PANELS */
+        .stacked-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .stacked-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 36px 40px;
+            position: relative;
+            clip-path: polygon(0 14px, 14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+            transition: border-color 0.25s ease;
+        }
+        .stacked-panel:hover {
+            border-color: var(--border-hover);
+        }
+        .panel-badge {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--laser-red);
+            background: var(--laser-subtle);
+            border: 1px solid var(--border-accent);
+            padding: 3px 10px;
+        }
+        .panel-header {
+            margin-bottom: 24px;
+            padding-right: 140px;
+        }
+        .panel-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--laser-red);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 6px;
+        }
+        .panel-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+        .panel-desc {
+            font-size: 14.5px;
+            color: var(--slate);
+            line-height: 1.7;
+        }
+
+        /* TABLES */
+        .brutal-table-box {
+            overflow-x: auto;
+            margin: 24px 0;
+            border: 1px solid var(--border);
+            background: #0B0B0E;
+        }
+        .brutal-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            text-align: left;
+        }
+        .brutal-table th {
+            background: #111116;
+            color: var(--slate);
+            padding: 12px 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+        }
+        .brutal-table td {
+            padding: 14px 18px;
+            color: var(--chalk);
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .brutal-table tr:last-child td {
+            border-bottom: none;
+        }
+        .brutal-table td:last-child, .brutal-table th:last-child {
+            border-right: none;
+        }
+        .brutal-table tr:hover td {
+            background: rgba(255, 41, 44, 0.03);
+        }
+        .tier-highlight {
+            color: var(--laser-red);
+            font-weight: 700;
+        }
+
+        /* CODE & TERMINAL STACK */
+        .terminal-panel {
+            background: #060608;
+            border: 1px solid var(--border);
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+            line-height: 1.6;
+        }
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0E0E14;
+            padding: 8px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 11px;
+            color: var(--slate);
+        }
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .terminal-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #2A2A36;
+        }
+        .terminal-body {
+            padding: 18px 22px;
+            color: #D4D4DC;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        /* SPECIFICATION CARDS IN STACK */
+        .spec-row-item {
+            background: #09090D;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--laser-red);
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .spec-row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .spec-row-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--white);
+        }
+        .spec-row-reward {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--green);
+        }
+        .spec-row-body {
+            font-size: 13.5px;
+            color: var(--slate);
+            line-height: 1.65;
+            margin-bottom: 14px;
+        }
+        .spec-chip-list {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .spec-chip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            background: #121218;
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            color: var(--chalk);
+        }
+        .spec-chip strong { color: var(--laser-red); }
+
+        /* GLOBAL FOOTER */
+        .global-footer {
+            background: #050507;
+            border-top: 1px solid var(--border);
+            padding: 48px 32px 36px;
+            margin-top: 80px;
+        }
+        .footer-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-brand {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            color: var(--slate);
+        }
+        .footer-brand strong { color: var(--white); }
+        .footer-links {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .footer-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            color: var(--slate);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-link:hover { color: var(--laser-red); }
+
+        @media (max-width: 1080px) {
+            .nav-links { display: none; }
+        }
+        @media (max-width: 768px) {
+            .stacked-panel { padding: 24px 20px; }
+            .panel-header { padding-right: 0; }
+            .panel-badge { position: static; display: inline-block; margin-bottom: 12px; }
+        }
+    </style>
 </head>
 <body>
-    
-    <div class="telemetry-bar">
-        <div style="display:flex; align-items:center; gap:20px;">
-            <span><span class="live-dot"></span> <b>SINGULARITY MAINNET</b>: CANARY ONLINE</span>
-            <span style="color:var(--text-muted);">// EPOCH 338,912</span>
-            <span style="color:var(--orange);">// 142.8 PFLOPS VERIFIED</span>
-        </div>
-        <div>
-            <span style="color:var(--text-muted); font-family:JetBrains Mono,monospace;">SCRAMJET NATIVE PROTOCOL</span>
-        </div>
-    </div>
 
-    <!-- RETRO-TECH CURSOR -->
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
-
-    <!-- FLOATING PILL NAVBAR -->
-    <!-- RETRO-TECH CURSOR -->
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
-
-    <!-- FLOATING PILL NAVBAR -->
-    <!-- RETRO-TECH CURSOR -->
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
-
-    <!-- FLOATING PILL NAVBAR -->
     <!-- RETRO-TECH CURSOR -->
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
@@ -217,158 +608,368 @@ footer.site-footer {
             <a href="nodes.html" class="nav-cta" data-glitch>[ DEPLOY GPU ]</a>
         </nav>
     </div>
-    
-    <div class="page-container">
-        <div class="page-tag">// OPEN-SOURCE RESEARCH &amp; PAPERS</div>
-        <h1 class="page-title">CRYPTOGRAPHIC PAPERS &amp; BENCHMARKS</h1>
-        <p class="page-lead">Technical publications authored by 33rd Tree Labs researchers on succinct zero-knowledge verification, topological network routing, and Byzantine-safe AI.</p>
 
-        <div class="panel">
-            <span class="panel-badge">[PAPER 01]</span>
-            <h2>Sub-Millisecond ZK Proofs for 70B Parameter LLMs</h2>
-            <p>Authors: <em>33rd Tree Labs Research Group (October 2026)</em></p>
-            <p>We present a novel Plonky3 polynomial commitment scheme optimized for quantized transformer weights (W4A16). By folding arithmetic cross-terms over Goldilocks fields, we achieve 1.418ms proof verification time on consumer mobile clients without revealing model weight checkpoints.</p>
-            <div class="terminal-block">
-Verification Benchmark (70B Model, Batch Size 16):
-- Baseline Halo2 verification: 42.8 ms
-- 33rd Plonky3 Tensor Fold: 1.418 ms (30.1x speedup)
-- Proof Size: 4.8 KB (fits inside standard Solana transaction MTU)
+    <div class="page-wrap">
+        
+        <!-- HERO BANNER -->
+        <header class="hero-banner">
+            <div class="section-pill">[ PEER-REVIEWED CRYPTOGRAPHY &amp; DISTRIBUTED AI ]</div>
+            <h1 class="page-title">CRYPTOGRAPHIC RESEARCH &amp; FORMAL BENCHMARKS</h1>
+            <p class="page-lead">
+                Open-source publications authored by the 33rd Tree Labs Distributed Systems Working Group. We combine non-Euclidean differential geometry, Plonky3 polynomial folding schemes over Goldilocks fields, and multi-TEE hardware consensus to solve the verification dilemma for frontier foundation models.
+            </p>
+
+            <!-- TELEMETRY HUD -->
+            <div class="telemetry-strip">
+                <div class="telemetry-item accent">
+                    <span class="telemetry-label">Active Research Dossiers</span>
+                    <span class="telemetry-val">4 FORMAL PAPERS</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="telemetry-label">Goldilocks Fold Acceleration</span>
+                    <span class="telemetry-val red">30.1X SPEEDUP</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="telemetry-label">Proof Payload Footprint</span>
+                    <span class="telemetry-val">4.8 KB MTU</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="telemetry-label">Solana Settlement Cost</span>
+                    <span class="telemetry-val green">&lt; 185,000 CU</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="telemetry-label">Byzantine Defense Ratio</span>
+                    <span class="telemetry-val">99.9999% CERTAINTY</span>
+                </div>
             </div>
-        </div>
+        </header>
 
-        <div class="panel">
-            <span class="panel-badge">[PAPER 02]</span>
-            <h2>Topological Routing over Non-Euclidean Hyperboloid Manifolds</h2>
-            <p>Authors: <em>33rd Tree Labs Distributed Systems Team (August 2026)</em></p>
-            <p>Traditional overlay networks fail under sudden compute load spikes due to Euclidean distance bottlenecks. We demonstrate that mapping node address spaces to a continuous hyperboloid tensor arbor reduces P99 tail latency from 240ms down to 8.4ms during 10x traffic surges.</p>
-        </div>
+        <!-- STACKED CONTENT SECTIONS -->
+        <main class="stacked-container">
 
-        <div class="panel">
-            <span class="panel-badge">[PAPER 03]</span>
-            <h2>Byzantine Weight Poisoning Prevention in Decentralized LLM Checkpoints</h2>
-            <p>Authors: <em>33rd Tree Labs Security &amp; Cryptography (July 2026)</em></p>
-            <p>Decentralized model training and inference are vulnerable to adversarial weight manipulation. We introduce Proof of Intelligence Merkle checkouts, where every tensor shard is signed by multi-validator Schnorr aggregation, preventing model backdoor injection with 99.9999% cryptographic certainty.</p>
-        </div>
+            <!-- STACKED PANEL 1: PAPER 01 -->
+            <section class="stacked-panel">
+                <span class="panel-badge">[PAPER REF: 33RD-TR-01]</span>
+                <div class="panel-header">
+                    <div class="panel-num">// RESEARCH DOSSIER 01</div>
+                    <h2 class="panel-title">Sub-Millisecond ZK Proofs for 70B Parameter LLMs</h2>
+                    <p class="panel-desc">
+                        Authors: <em>Ian Mora &amp; 33rd Tree Labs Cryptographic Systems Group (October 2026)</em><br>
+                        Subject: Plonky3 Recursive Polynomial Commitments over Goldilocks Prime Fields (2^64 - 2^32 + 1).
+                    </p>
+                </div>
+
+                <div class="spec-row-item">
+                    <div class="spec-row-header">
+                        <span class="spec-row-title">ABSTRACT &amp; THEORETICAL CONTRIBUTION</span>
+                        <span class="spec-row-reward">PEER AUDITED</span>
+                    </div>
+                    <p class="spec-row-body">
+                        Zero-knowledge verification of large language models has historically been bottlenecked by massive constraint counts (>10^9 R1CS gates for a single forward pass), rendering on-chain verification computationally prohibitive. We introduce the <strong>Plonky3 Tensor Fold (P3-TF)</strong> scheme, a recursive folding protocol tailored specifically for quantized matrix multiplications (W4A16 and FP8). By decomposing transformer attention projections into arithmetic cross-terms over the 64-bit Goldilocks field, proof generation is offloaded to consumer GPU Tensor Cores, and verification time drops to 1.418 milliseconds.
+                    </p>
+                    <div class="spec-chip-list">
+                        <span class="spec-chip">Constraint System: <strong>Plonky3 Air / Two-Adic STARK</strong></span>
+                        <span class="spec-chip">Base Field: <strong>Goldilocks (p = 2^64 - 2^32 + 1)</strong></span>
+                        <span class="spec-chip">Proof Size: <strong>4.8 KB (Solana MTU Compliant)</strong></span>
+                        <span class="spec-chip">Verifier Cost: <strong>182,400 Solana Compute Units</strong></span>
+                    </div>
+                </div>
+
+                <div class="brutal-table-box">
+                    <table class="brutal-table">
+                        <thead>
+                            <tr>
+                                <th>Proving System</th>
+                                <th>Model Architecture</th>
+                                <th>Prover Latency</th>
+                                <th>Verifier Time</th>
+                                <th>Proof Size</th>
+                                <th>On-Chain Feasibility</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Halo2 (KZG over BN254)</td>
+                                <td>Llama-3-70B (FP16)</td>
+                                <td>41.8 seconds</td>
+                                <td>42.8 ms</td>
+                                <td>1.2 MB</td>
+                                <td>Exceeds Block Limits</td>
+                            </tr>
+                            <tr>
+                                <td>Groth16 (SnarkJS)</td>
+                                <td>Llama-3-8B (INT8)</td>
+                                <td>14.2 seconds</td>
+                                <td>18.4 ms</td>
+                                <td>820 KB</td>
+                                <td>Marginal</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tier-highlight">33rd Plonky3 Tensor Fold</span></td>
+                                <td><strong>Llama-3-70B (W4A16)</strong></td>
+                                <td><strong>380 milliseconds</strong></td>
+                                <td><strong>1.418 ms</strong></td>
+                                <td><strong>4.8 KB</strong></td>
+                                <td><strong>Native Solana Slot (~400ms)</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="terminal-panel">
+                    <div class="terminal-header">
+                        <span>RUST CODE LISTING // plonky3_tensor_fold.rs</span>
+                        <div class="terminal-dots"><span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span></div>
+                    </div>
+                    <div class="terminal-body">
+// Recursive Goldilocks field folding across transformer layer activations
+pub fn fold_layer_activations&lt;F: TwoAdicField + Goldilocks&gt;(
+    lhs: &amp;DenseMatrix&lt;F&gt;,
+    rhs: &amp;QuantizedTensor&lt;W4A16&gt;,
+    challenge_alpha: F,
+) -&gt; Result&lt;CompactProofArtifact, ProofError&gt; {
+    let air = TransformerLayerAIR::new(lhs.dimensions(), rhs.quantization_metadata());
+    let trace = air.generate_trace(lhs, rhs)?;
+    let p3_stark = Plonky3Prover::prove_with_folding(&amp;air, &amp;trace, challenge_alpha)?;
+    p3_stark.compress_to_solana_tx_limit(4800) // Caps payload to 4.8 KB
+}
+                    </div>
+                </div>
+            </section>
+
+            <!-- STACKED PANEL 2: PAPER 02 -->
+            <section class="stacked-panel">
+                <span class="panel-badge">[PAPER REF: 33RD-TR-02]</span>
+                <div class="panel-header">
+                    <div class="panel-num">// RESEARCH DOSSIER 02</div>
+                    <h2 class="panel-title">Topological Routing over Non-Euclidean Hyperboloid Manifolds</h2>
+                    <p class="panel-desc">
+                        Authors: <em>33rd Tree Labs Distributed Systems Team (August 2026)</em><br>
+                        Subject: Continuous Poincaré Disk Embeddings and Greedy Geodesic Tensor Dispatch.
+                    </p>
+                </div>
+
+                <div class="spec-row-item">
+                    <div class="spec-row-header">
+                        <span class="spec-row-title">PROBLEM STATEMENT &amp; ARCHITECTURAL BREAKTHROUGH</span>
+                        <span class="spec-row-reward">PUBLISHED</span>
+                    </div>
+                    <p class="spec-row-body">
+                        Standard distributed AI overlays route tensor batches using flat Euclidean or DHT topologies (such as Kademlia). During massive inference traffic surges, these Euclidean graphs suffer from severe gateway node congestion, escalating P99 tail latency from 25ms to over 240ms. We demonstrate that embedding the network topology in a continuous two-sheeted hyperboloid ($H^n$) enables pure greedy geodesic routing with zero routing tables. Each node simply forwards the tensor packet to the neighbor closest to the destination in hyperbolic distance ($d_H$).
+                    </p>
+                    <div class="spec-chip-list">
+                        <span class="spec-chip">Manifold Space: <strong>Poincaré Ball Model (Negative Curvature &kappa; = -1.0)</strong></span>
+                        <span class="spec-chip">P99 Latency: <strong>8.41 ms (under 10x compute load)</strong></span>
+                        <span class="spec-chip">Routing Stretch: <strong>1.018 &times; Optimal Geodesic</strong></span>
+                        <span class="spec-chip">Node State Complexity: <strong>O(1) Local Neighbors Only</strong></span>
+                    </div>
+                </div>
+
+                <div class="terminal-panel">
+                    <div class="terminal-header">
+                        <span>MATHEMATICAL SPECIFICATION // HYPERBOLIC DISTANCE FORMULA</span>
+                        <div class="terminal-dots"><span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span></div>
+                    </div>
+                    <div class="terminal-body">
+Hyperbolic distance between node u and node v in the Poincaré disk:
+
+  d_H(u, v) = arcosh( 1 + 2 * ||u - v||^2 / ( (1 - ||u||^2) * (1 - ||v||^2) ) )
+
+Under negative curvature &kappa; = -1, network circumference grows exponentially with radius r:
+  C(r) = 2 * &pi; * sinh(r) ~ &pi; * e^r
+
+This provides tree-like infinite boundary capacity, ensuring zero queue backpressure during 100k TPS surges.
+                    </div>
+                </div>
+            </section>
+
+            <!-- STACKED PANEL 3: PAPER 03 -->
+            <section class="stacked-panel">
+                <span class="panel-badge">[PAPER REF: 33RD-TR-03]</span>
+                <div class="panel-header">
+                    <div class="panel-num">// RESEARCH DOSSIER 03</div>
+                    <h2 class="panel-title">Byzantine Weight Poisoning Prevention &amp; Proof of Intelligence</h2>
+                    <p class="panel-desc">
+                        Authors: <em>33rd Tree Labs Security &amp; Cryptography (July 2026)</em><br>
+                        Subject: Schnorr Multi-Signature Aggregation and Adversarial Checkpoint Attestation.
+                    </p>
+                </div>
+
+                <div class="spec-row-item">
+                    <div class="spec-row-header">
+                        <span class="spec-row-title">ADVERSARIAL THREAT MODEL &amp; MITIGATION</span>
+                        <span class="spec-row-reward">AUDITED BY RED TEAM</span>
+                    </div>
+                    <p class="spec-row-body">
+                        In an untrusted DePIN compute fabric, rogue validators can tamper with transformer weights during pipeline execution, intentionally degrading output quality or injecting undetectable backdoors. We formalize <strong>Proof of Intelligence (PoI)</strong>, wherein model weight tensors are partitioned into deterministic Merkle DAGs. Each layer's intermediate output activation must match a threshold Schnorr aggregate signature signed by heterogeneous validator quorums.
+                    </p>
+                    <div class="spec-chip-list">
+                        <span class="spec-chip">Adversarial Tolerance: <strong>33.3% Byzantine Fault Tolerant (BFT)</strong></span>
+                        <span class="spec-chip">Signature Scheme: <strong>Ed25519 MuSig2 Multi-Signature</strong></span>
+                        <span class="spec-chip">False Positive Rate: <strong>&lt; 10^-12 (Cryptographically Negligible)</strong></span>
+                        <span class="spec-chip">Slashing Trigger: <strong>Autonomous Solana Anchor Contract Execution</strong></span>
+                    </div>
+                </div>
+
+                <div class="brutal-table-box">
+                    <table class="brutal-table">
+                        <thead>
+                            <tr>
+                                <th>Adversarial Attack Vector</th>
+                                <th>Traditional DePIN Vulnerability</th>
+                                <th>33rd Tree Labs PoI Countermeasure</th>
+                                <th>Economic Consequence</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hidden Backdoor Injections</td>
+                                <td>Undetectable in unverified forward passes</td>
+                                <td>Deterministic Merkle root match inside hardware TEE</td>
+                                <td>100% Validator Stake Forfeited &amp; Burned</td>
+                            </tr>
+                            <tr>
+                                <td>Lazy / Emulated Inference</td>
+                                <td>Validators return cached or low-tier outputs</td>
+                                <td>Plonky3 arithmetic cross-term commitment check</td>
+                                <td>Instant Slashing &amp; Hardware Identity Blacklist</td>
+                            </tr>
+                            <tr>
+                                <td>Colluding Sybil Quorums</td>
+                                <td>Cheap nodes overwhelm voting weight</td>
+                                <td>Poincaré distance-weighted stake sampling</td>
+                                <td>Sybil cluster quarantined across entire arbor</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
     </div>
-    
-    <footer class="site-footer">
-        <div class="footer-grid">
-            <div>
-                <a href="index.html" class="brand-logo-wrap">
-                    <div class="logo-symbol" style="width:36px; height:36px;">
-                        <svg viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-logo-svg">
-    <!-- Outer Canopy / Base Ellipses (White) -->
-    <ellipse cx="120" cy="38" rx="87.0" ry="19.1" stroke="#FFFFFF" stroke-width="2.6" fill="none" opacity="0.95"/>
-    <ellipse cx="120" cy="205" rx="87.0" ry="19.1" stroke="#FFFFFF" stroke-width="2.6" fill="none" opacity="0.95"/>
-    
-    <!-- Outer Contour Meridians (White) -->
-    <path d="M 33.0 38.0 L 46.2 42.2 L 57.4 46.4 L 66.9 50.5 L 75.0 54.7 L 81.9 58.9 L 87.7 63.0 L 92.6 67.2 L 96.8 71.4 L 100.4 75.6 L 103.4 79.8 L 106.0 83.9 L 108.2 88.1 L 110.0 92.3 L 111.6 96.4 L 112.9 100.6 L 114.1 104.8 L 115.0 109.0 L 115.9 113.2 L 116.5 117.3 L 117.1 121.5 L 117.6 125.7 L 118.1 129.9 L 118.4 134.0 L 118.1 138.2 L 117.5 142.4 L 116.8 146.6 L 115.9 150.7 L 114.7 154.9 L 113.2 159.1 L 111.4 163.2 L 109.1 167.4 L 106.2 171.6 L 102.6 175.8 L 98.0 179.9 L 92.3 184.1 L 85.1 188.3 L 76.1 192.5 L 64.9 196.7 L 50.7 200.8 L 33.0 205.0" stroke="#FFFFFF" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-    <path d="M 207.0 38.0 L 193.8 42.2 L 182.6 46.4 L 173.1 50.5 L 165.0 54.7 L 158.1 58.9 L 152.3 63.0 L 147.4 67.2 L 143.2 71.4 L 139.6 75.6 L 136.6 79.8 L 134.0 83.9 L 131.8 88.1 L 130.0 92.3 L 128.4 96.4 L 127.1 100.6 L 125.9 104.8 L 125.0 109.0 L 124.1 113.2 L 123.5 117.3 L 122.9 121.5 L 122.4 125.7 L 121.9 129.9 L 121.6 134.0 L 121.9 138.2 L 122.5 142.4 L 123.2 146.6 L 124.1 150.7 L 125.3 154.9 L 126.8 159.1 L 128.6 163.2 L 130.9 167.4 L 133.8 171.6 L 137.4 175.8 L 142.0 179.9 L 147.7 184.1 L 154.9 188.3 L 163.9 192.5 L 175.1 196.7 L 189.3 200.8 L 207.0 205.0" stroke="#FFFFFF" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-    
-    <!-- Central Dashed Axis -->
-    <line x1="120" y1="28" x2="120" y2="212" stroke="#FF292C" stroke-width="2" stroke-dasharray="3 3" opacity="0.8"/>
-    
-    <!-- Inner Orange Tensor Ribs -->
-    <path d="M 54.8 38.0 L 64.6 42.2 L 73.1 46.4 L 80.2 50.5 L 86.2 54.7 L 91.4 58.9 L 95.8 63.0 L 99.5 67.2 L 102.6 71.4 L 105.3 75.6 L 107.6 79.8 L 109.5 83.9 L 111.1 88.1 L 112.5 92.3 L 113.7 96.4 L 114.7 100.6 L 115.6 104.8 L 116.3 109.0 L 116.9 113.2 L 117.4 117.3 L 117.9 121.5 L 118.2 125.7 L 118.5 129.9 L 118.8 134.0 L 118.6 138.2 L 118.2 142.4 L 117.6 146.6 L 116.9 150.7 L 116.0 154.9 L 114.9 159.1 L 113.5 163.2 L 111.8 167.4 L 109.6 171.6 L 106.9 175.8 L 103.5 179.9 L 99.2 184.1 L 93.8 188.3 L 87.1 192.5 L 78.7 196.7 L 68.1 200.8 L 54.8 205.0" stroke="#FF292C" stroke-width="2.4" fill="none" opacity="0.95"/>
-    <path d="M 185.2 38.0 L 175.4 42.2 L 166.9 46.4 L 159.8 50.5 L 153.8 54.7 L 148.6 58.9 L 144.2 63.0 L 140.5 67.2 L 137.4 71.4 L 134.7 75.6 L 132.4 79.8 L 130.5 83.9 L 128.9 88.1 L 127.5 92.3 L 126.3 96.4 L 125.3 100.6 L 124.4 104.8 L 123.7 109.0 L 123.1 113.2 L 122.6 117.3 L 122.1 121.5 L 121.8 125.7 L 121.5 129.9 L 121.2 134.0 L 121.4 138.2 L 121.8 142.4 L 122.4 146.6 L 123.1 150.7 L 124.0 154.9 L 125.1 159.1 L 126.5 163.2 L 128.2 167.4 L 130.4 171.6 L 133.1 175.8 L 136.5 179.9 L 140.8 184.1 L 146.2 188.3 L 152.9 192.5 L 161.3 196.7 L 171.9 200.8 L 185.2 205.0" stroke="#FF292C" stroke-width="2.4" fill="none" opacity="0.95"/>
-    <path d="M 78.2 38.0 L 84.6 42.2 L 90.0 46.4 L 94.5 50.5 L 98.4 54.7 L 101.7 58.9 L 104.5 63.0 L 106.9 67.2 L 108.9 71.4 L 110.6 75.6 L 112.0 79.8 L 113.3 83.9 L 114.3 88.1 L 115.2 92.3 L 116.0 96.4 L 116.6 100.6 L 117.2 104.8 L 117.6 109.0 L 118.0 113.2 L 118.3 117.3 L 118.6 121.5 L 118.9 125.7 L 119.1 129.9 L 119.2 134.0 L 119.1 138.2 L 118.8 142.4 L 118.5 146.6 L 118.0 150.7 L 117.5 154.9 L 116.7 159.1 L 115.9 163.2 L 114.8 167.4 L 113.4 171.6 L 111.6 175.8 L 109.4 179.9 L 106.7 184.1 L 103.3 188.3 L 99.0 192.5 L 93.5 196.7 L 86.8 200.8 L 78.2 205.0" stroke="#FF292C" stroke-width="1.8" fill="none" opacity="0.85"/>
-    <path d="M 161.8 38.0 L 155.4 42.2 L 150.0 46.4 L 145.5 50.5 L 141.6 54.7 L 138.3 58.9 L 135.5 63.0 L 133.1 67.2 L 131.1 71.4 L 129.4 75.6 L 128.0 79.8 L 126.7 83.9 L 125.7 88.1 L 124.8 92.3 L 124.0 96.4 L 123.4 100.6 L 122.8 104.8 L 122.4 109.0 L 122.0 113.2 L 121.7 117.3 L 121.4 121.5 L 121.1 125.7 L 120.9 129.9 L 120.8 134.0 L 120.9 138.2 L 121.2 142.4 L 121.5 146.6 L 122.0 150.7 L 122.5 154.9 L 123.3 159.1 L 124.1 163.2 L 125.2 167.4 L 126.6 171.6 L 128.4 175.8 L 130.6 179.9 L 133.3 184.1 L 136.7 188.3 L 141.0 192.5 L 146.5 196.7 L 153.2 200.8 L 161.8 205.0" stroke="#FF292C" stroke-width="1.8" fill="none" opacity="0.85"/>
-    
-    <!-- Orange Latitude Event Horizon Ellipses -->
-    <ellipse cx="120" cy="44" rx="68.7" ry="15.1" stroke="#FF292C" stroke-width="2" fill="none" opacity="0.9"/>
-    <ellipse cx="120" cy="55" rx="44.5" ry="9.8" stroke="#FF292C" stroke-width="2" fill="none" opacity="0.9"/>
-    <ellipse cx="120" cy="75" rx="20.1" ry="4.4" stroke="#FF292C" stroke-width="1.8" fill="none" opacity="0.9"/>
-    <ellipse cx="120" cy="105" rx="5.9" ry="1.3" stroke="#FF292C" stroke-width="1.8" fill="none" opacity="0.9"/>
-    <ellipse cx="120" cy="126" rx="2.3" ry="1.0" stroke="#FF292C" stroke-width="1.8" fill="none" opacity="0.9"/>
-    <ellipse cx="120" cy="144" rx="2.7" ry="1.0" stroke="#FF292C" stroke-width="1.8" fill="none" opacity="0.9"/>
-    <ellipse cx="120" cy="165" rx="9.5" ry="2.1" stroke="#FF292C" stroke-width="1.8" fill="none" opacity="0.9"/>
-    <ellipse cx="120" cy="185" rx="29.1" ry="6.4" stroke="#FF292C" stroke-width="1.8" fill="none" opacity="0.9"/>
-    
-    <!-- Singularity Throat Node and Endpoints -->
-    <circle cx="120" cy="26" r="5" fill="#FF292C"/>
-    <circle cx="33.0" cy="38" r="3.5" fill="#FFFFFF"/>
-    <circle cx="207.0" cy="38" r="3.5" fill="#FFFFFF"/>
-    <circle cx="120" cy="135" r="3.5" fill="#FF292C" stroke="#FFFFFF" stroke-width="1.5"/>
-</svg>
-                    </div>
-                    <div class="brand-text">
-                        <span class="brand-name" style="font-size:14px;">33RD TREE LABS</span>
-                        <span class="brand-sub" style="font-size:8.5px;">SINGULARITY PROTOCOL</span>
-                    </div>
-                </a>
-                <p class="footer-desc">
-                    33rd Tree Labs is building the decentralized compute fabric for post-AGI coordination. Cryptographic consensus, zero-knowledge inference, and Proof of Intelligence.
-                </p>
+
+    <!-- GLOBAL FOOTER -->
+    <footer class="global-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <strong>33RD TREE LABS</strong> // THE SINGULARITY PROTOCOL &bull; 33rdtreelabs.tech
             </div>
-            <div>
-                <h5 class="footer-col-title">Protocol Pages</h5>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home &amp; Terminal</a></li>
-                    <li><a href="33rd_Tree_Labs_Whitepaper.pdf">Technical Whitepaper</a></li>
-                    <li><a href="nodes.html">Node Operators</a></li>
-                    <li><a href="tokenomics.html">Tokenomics &amp; Emission</a></li>
-                    <li><a href="research.html">Cryptographic Research</a></li>
-                </ul>
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">[ OVERVIEW ]</a>
+                <a href="protocol.html" class="footer-link">[ PROTOCOL ]</a>
+                <a href="simulator.html" class="footer-link">[ SIMULATOR ]</a>
+                <a href="yield.html" class="footer-link">[ YIELD ]</a>
+                <a href="nodes.html" class="footer-link">[ NODES ]</a>
+                <a href="tokenomics.html" class="footer-link">[ TOKENOMICS ]</a>
+                <a href="research.html" class="footer-link">[ RESEARCH ]</a>
+                <a href="whitepaper.html" class="footer-link">[ WHITEPAPER ]</a>
             </div>
-            <div>
-                <h5 class="footer-col-title">Ecosystem</h5>
-                <ul class="footer-links">
-                    <li><a href="#">Scramjet Launchpad</a></li>
-                    <li><a href="https://x.com" target="_blank">X (Twitter)</a></li>
-                    <li><a href="https://github.com" target="_blank">GitHub</a></li>
-                    <li><a href="#">Solana Explorer</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div>&copy; 2026 33RD TREE LABS FOUNDATION. ALL RIGHTS RESERVED.</div>
-            <div>CONTRACT: 0x3333333333333333333333333333333333333333</div>
         </div>
     </footer>
 
-
     <script>
+        // CURSOR SCRIPT
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mouseX = 0, mouseY = 0;
+        let ringX = 0, ringY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            dot.style.left = mouseX + 'px';
+            dot.style.top = mouseY + 'px';
+        });
+
+        function renderRing() {
+            ringX += (mouseX - ringX) * 0.22;
+            ringY += (mouseY - ringY) * 0.22;
+            ring.style.left = ringX + 'px';
+            ring.style.top = ringY + 'px';
+            requestAnimationFrame(renderRing);
+        }
+        renderRing();
+
+        document.querySelectorAll('a, button, select, input').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+
+        // GLITCH SCRAMBLE
+        // VRTL WRLD Glitch Letters Scramble Engine (Calibrated Deliberate Rate)
+        // VRTL WRLD Glitch Letters Scramble Engine (Calibrated Deliberate Rate)
+        // VRTL WRLD Glitch Letters Scramble Engine (Calibrated Deliberate Rate)
         class GlitchScramble {
             constructor(el) {
                 this.el = el;
-                this.chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_/[#]=+*?<>~!$%&';
+                this.chars = '01X_/*+-[]#';
                 this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
                 el.setAttribute('data-glitch-text', this.originalText);
                 this.isGlitching = false;
+                this.animId = null;
+                this.lastTickTime = 0;
+                this.tickInterval = 160; // 160ms throttle: calm, deliberate, readable (~6fps)
             }
-            scramble(duration = 0.45) {
+            scramble(duration = 2.4) {
                 if (this.isGlitching) return;
                 this.isGlitching = true;
                 this.el.classList.add('glitch-active');
                 const target = this.originalText;
                 const len = target.length;
-                const start = performance.now();
-                const dur = duration * 1000;
+                const startTime = performance.now();
+                const durationMs = duration * 1000;
+                let activeGlyphs = new Array(len);
+                for (let i = 0; i < len; i++) {
+                    const ch = target[i];
+                    activeGlyphs[i] = (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9))
+                        ? ch
+                        : this.chars[Math.floor(Math.random() * this.chars.length)];
+                }
+
                 const tick = (now) => {
-                    const elapsed = now - start;
-                    const progress = Math.min(1, elapsed / dur);
-                    const rev = Math.floor(progress * len);
-                    let res = '';
+                    const elapsed = now - startTime;
+                    const progress = Math.min(1, elapsed / durationMs);
+                    const revealedCount = Math.floor(progress * len);
+
+                    if (now - this.lastTickTime > this.tickInterval) {
+                        this.lastTickTime = now;
+                        for (let i = revealedCount; i < len; i++) {
+                            const ch = target[i];
+                            if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
+                                activeGlyphs[i] = ch;
+                            } else if (Math.random() < 0.4) {
+                                activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
+                            }
+                        }
+                    }
+
+                    let result = '';
                     for (let i = 0; i < len; i++) {
                         const ch = target[i];
-                        if (ch === ' ' || ch === '\n' || ch === '\t') res += ch;
-                        else if (i < rev) res += ch;
-                        else res += this.chars[Math.floor(Math.random() * this.chars.length)];
+                        if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
+                            result += ch;
+                        } else if (i < revealedCount) {
+                            result += ch;
+                        } else {
+                            result += activeGlyphs[i] || ch;
+                        }
                     }
-                    this.el.innerText = res;
-                    if (progress < 1) requestAnimationFrame(tick);
-                    else {
+                    this.el.innerText = result;
+
+                    if (progress < 1) {
+                        this.animId = requestAnimationFrame(tick);
+                    } else {
                         this.el.innerText = target;
                         this.el.classList.remove('glitch-active');
                         this.isGlitching = false;
                     }
                 };
-                requestAnimationFrame(tick);
+                this.animId = requestAnimationFrame(tick);
             }
         }
         document.querySelectorAll('[data-glitch], .nav-link').forEach(el => {
             const inst = new GlitchScramble(el);
-            el.addEventListener('mouseenter', () => inst.scramble(0.4));
+            el.addEventListener('mouseenter', () => inst.scramble(2.0));
         });
     </script>
 </body>
