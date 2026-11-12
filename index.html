@@ -47,7 +47,7 @@
             --green-glow: rgba(0, 230, 118, 0.35);
         }
 
-        * {
+        *, *:before, *:after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -55,20 +55,71 @@
         }
 
         html {
+            -webkit-text-size-adjust: 100%;
+            overflow-x: clip;
+            scrollbar-width: none;
             background: var(--bg);
             color: var(--chalk);
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-            overflow-x: hidden;
         }
+        html::-webkit-scrollbar { display: none; }
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-stopped { overflow: hidden; }
 
         /* DYNAMIC BODY THEME TRANSITIONS (SMOOTH 0.5s INVERSION) */
         body {
+            margin: 0;
+            width: 100%;
             background: var(--bg);
             min-height: 100vh;
             position: relative;
+            line-height: 1.45;
+            overflow-x: clip;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* BOOLEANSEQUENCE HAIRLINE VERTICAL SCROLLBAR */
+        .sbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 998;
+            width: 7px;
+            background: rgba(7, 7, 7, 0.5);
+            border-left: 1px solid rgba(255, 41, 44, 0.25);
+            touch-action: none;
+            cursor: pointer;
+        }
+        .sbar[hidden] { display: none; }
+        .sbar i {
+            display: block;
+            width: 100%;
+            background: var(--laser-red);
+            box-shadow: 0 0 10px rgba(255, 41, 44, 0.85);
+            will-change: transform;
+            border-radius: 1px;
+        }
+        .sbar:hover i, .sbar.is-drag i {
+            background: #FF5A5D;
+            box-shadow: 0 0 14px rgba(255, 41, 44, 1);
+        }
+        @media (hover: none) {
+            .sbar { display: none; }
+        }
+
+        /* BOOLEANSEQUENCE GENERATIVE WORDS SCRUB */
+        [data-words] {
+            will-change: opacity;
+        }
+        [data-words] .word {
+            display: inline-block;
+            margin-right: 0.28em;
+            transition: opacity 0.12s ease;
+            will-change: opacity;
         }
 
         body.theme-chalk {
@@ -293,29 +344,33 @@
             margin: 0 auto;
         }
 
-        /* 1. HERO SECTION */
+        /* 1. HERO SECTION (100% ZOOM VIEWPORT FRAMING) */
         .hero {
-            min-height: 94vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            padding-top: 150px;
-            padding-bottom: 80px;
+            padding: clamp(75px, 11vh, 105px) clamp(16px, 2.5vw, 36px) clamp(24px, 4vh, 40px);
+            position: relative;
+            box-sizing: border-box;
+            width: 100%;
         }
         .hero-inner {
-            max-width: 1360px;
+            max-width: 1380px;
             margin: 0 auto;
             width: 100%;
             display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 50px;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+            gap: clamp(24px, 3.2vw, 44px);
             align-items: center;
+            min-width: 0;
+            box-sizing: border-box;
         }
         .meta-tag {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             color: var(--laser-red);
             letter-spacing: 0.16em;
-            margin-bottom: 24px;
+            margin-bottom: clamp(14px, 1.8vh, 22px);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -324,33 +379,38 @@
         .hero-split-words {
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            margin-bottom: 32px;
+            gap: 2px;
+            margin-bottom: clamp(16px, 2.2vh, 26px);
         }
         .hero-word-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 18px;
+            gap: 14px;
             align-items: baseline;
             will-change: transform;
         }
         .display-word {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
-            font-size: clamp(48px, 6.2vw, 92px);
-            line-height: 0.94;
-            letter-spacing: -0.04em;
+            font-size: clamp(26px, 3.6vw, 54px);
+            line-height: 0.92;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+            color: var(--chalk);
             text-transform: uppercase;
+            transition: color 0.3s ease;
+            display: inline-block;
         }
         .display-word.red-accent {
             color: var(--laser-red);
+            text-shadow: 0 0 30px rgba(255, 41, 44, 0.4);
         }
         .hero-desc {
-            font-size: 17px;
-            line-height: 1.6;
+            font-size: clamp(14px, 1.1vw, 16px);
+            line-height: 1.55;
             color: var(--slate);
             max-width: 580px;
-            margin-bottom: 38px;
+            margin-bottom: clamp(20px, 2.6vh, 32px);
         }
         .hero-actions {
             display: flex;
@@ -407,30 +467,35 @@
         .schematic-box {
             background: #09090D;
             border: 1px solid var(--border);
-            clip-path: polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
-            padding: 24px;
+            clip-path: polygon(0 16px, 16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+            padding: clamp(16px, 1.8vw, 22px);
             position: relative;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 41, 44, 0.15);
             will-change: transform, box-shadow;
+            width: 100%;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: 0;
+            min-width: 0;
         }
         .schematic-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 14px;
+            padding-bottom: 12px;
             border-bottom: 1px solid var(--border);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
         .schematic-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 700;
             color: var(--chalk);
             letter-spacing: 0.12em;
         }
         .schematic-badge {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 9.5px;
+            font-size: 9px;
             color: var(--laser-red);
             background: rgba(255, 41, 44, 0.1);
             padding: 3px 8px;
@@ -439,7 +504,7 @@
         }
         .schematic-canvas-wrap {
             width: 100%;
-            height: 380px;
+            height: clamp(230px, 30vh, 290px);
             position: relative;
         }
         #schematic-canvas {
@@ -1054,7 +1119,7 @@
                     </div>
                 </div>
 
-                <p class="hero-desc">
+                <p class="hero-desc" data-words>
                     A Byzantine-Resilient Verifiable DePIN Compute Fabric anchored on Solana. Pairing cryptographic consensus with zero-knowledge neural evaluations on an Exponential Plunge Hyperboloid manifold.
                 </p>
 
@@ -1113,7 +1178,7 @@
         <div class="section-inner">
             <div class="meta-tag" data-glitch>( 02 ) // COMPUTE FABRIC &bull; GLOBAL NETWORK TELEMETRY</div>
             <h2 class="section-title" data-glitch>AUTONOMOUS AGENT CONVERGENCE</h2>
-            <p class="section-desc">
+            <p class="section-desc" data-words>
                 Anchored on Solana mainnet, the Singularity Protocol synchronizes decentralized GPU clusters into a single unified tensor arbor. Untrusted compute providers submit zero-knowledge KZG polynomial evaluations directly into on-chain Anchor programs, guaranteeing Byzantine-safe execution of trillion-parameter neural models.
             </p>
 
@@ -1228,7 +1293,7 @@
         <div class="section-inner">
             <div class="meta-tag" data-glitch>( 04 ) // VERIFICATION BENCHMARKS &bull; CAP-FFN KERNEL</div>
             <h2 class="section-title" data-glitch>HARDWARE PROVING PERFORMANCE</h2>
-            <p class="section-desc">
+            <p class="section-desc" data-words>
                 Empirical benchmarks executing the canonical 20-million-constraint CAP-FFN Halo2-KZG circuit across enterprise and edge GPU architectures.
             </p>
 
@@ -1288,7 +1353,7 @@
         <div class="section-inner">
             <div class="meta-tag" data-glitch>( 05 ) // ANCHOR BRIDGE &bull; SOLANA MAINNET SETTLEMENT</div>
             <h2 class="section-title" data-glitch>ON-CHAIN TRANSACTION ARCHITECTURE</h2>
-            <p class="section-desc">
+            <p class="section-desc" data-words>
                 Every 12.0 seconds, the elected proposal leader commits a 304-byte state header to Solana Anchor programs. Total annual chain footprint is constrained to 798.9 MB/yr, fitting well within Solana's 1,232-byte MTU limit.
             </p>
 
@@ -1358,7 +1423,7 @@
         <div class="section-inner">
             <div class="meta-tag" data-glitch>( 06 ) // ADVERSARIAL CONSENSUS &bull; LIVE SIMULATOR &bull; TERMINAL</div>
             <h2 class="section-title" data-glitch>BYZANTINE COMMITTEE &amp; CLI ENGINE</h2>
-            <p class="section-desc">
+            <p class="section-desc" data-words>
                 Simulate adversarial fault injection across the 64-node validator lattice or execute Anchor CLI commands directly against the consensus state machine.
             </p>
 
@@ -1409,7 +1474,7 @@
         <div class="section-inner">
             <div class="meta-tag" data-glitch>( 07 ) // TOKENOMICS &bull; REWARDS SIMULATOR</div>
             <h2 class="section-title" data-glitch>VALIDATOR YIELD CALCULATOR</h2>
-            <p class="section-desc">
+            <p class="section-desc" data-words>
                 Model hardware rewards and staking APY for compute node operators participating in the 15,000,000 $33RD Proof-of-Inference emission schedule.
             </p>
 
@@ -1479,7 +1544,7 @@
         <div class="section-inner">
             <div class="meta-tag" data-glitch>( 08 ) // TOKEN ARCHITECTURE &bull; ASYMPTOTIC SUPPLY</div>
             <h2 class="section-title" data-glitch>HARD-CAPPED MONETARY POLICY</h2>
-            <p class="section-desc">
+            <p class="section-desc" data-words>
                 The $33RD token is hard-capped at 33,333,333 tokens with on-chain mint and freeze authority permanently disabled at genesis. 10% of all protocol inference fees are routed directly to the Solana Incinerator for permanent destruction.
             </p>
 
@@ -1541,7 +1606,7 @@
         <div class="section-inner">
             <div class="meta-tag" data-glitch>( 09 ) // JOIN THE FABRIC &bull; GENESIS ENROLLMENT</div>
             <h2 class="section-title" data-glitch>DEPLOY VERIFIABLE COMPUTE</h2>
-            <p class="section-desc">
+            <p class="section-desc" data-words>
                 Submit your cluster public key and hardware attestation parameters to enter the Canary Testnet queue for the K=64 Byzantine consensus committee.
             </p>
 
@@ -1674,14 +1739,15 @@
 
     <!-- JAVASCRIPT ENGINES (LENIS + GSAP + GLITCH DECODER + 2D SCHEMATIC + SIMULATORS) -->
     <script>
-        /* 1. FAST & SNAPPY LENIS SMOOTH SCROLLING */
+        /* 1. BOOLEANSEQUENCE LENIS SMOOTH INERTIA SCROLL ENGINE */
         gsap.registerPlugin(ScrollTrigger);
 
         const lenis = new Lenis({
-            duration: 0.65, // Fast & snappy response
-            wheelMultiplier: 1.4, // Responsive wheel tracking
-            touchMultiplier: 1.8,
-            smoothWheel: true
+            lerp: 0.085, // Exact booleansequence fluid inertia interpolation
+            wheelMultiplier: 1.0, // Natural 1:1 wheel response
+            touchMultiplier: 1.4,
+            smoothWheel: true,
+            smoothTouch: false
         });
 
         lenis.on('scroll', ScrollTrigger.update);
@@ -1689,8 +1755,9 @@
             lenis.raf(time * 1000);
         });
         gsap.ticker.lagSmoothing(0);
+        window.__lenis = lenis;
 
-        // Smooth Anchor Links
+        // Smooth Anchor Links via Lenis
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
@@ -1698,98 +1765,153 @@
                     const targetEl = document.querySelector(targetId);
                     if (targetEl) {
                         e.preventDefault();
-                        lenis.scrollTo(targetEl, { offset: -30, duration: 0.7 });
+                        lenis.scrollTo(targetId === '#top' || targetId === '#hero' ? 0 : targetEl, {
+                            duration: 1.2,
+                            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                        });
                     }
                 }
             });
         });
 
-        /* 2. CALM & LEGIBLE VRTL GLITCH SCRAMBLE DECODER */
-        class GlitchDecoder {
-            constructor(el) {
-                this.el = el;
-                this.chars = '01X_/*+-[]#';
-                this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
-                el.setAttribute('data-glitch-text', this.originalText);
-                this.isGlitching = false;
-                this.animId = null;
-                this.lastTickTime = 0;
-                this.tickInterval = 85; // 85ms stepped interval: calm, legible, no strobing
-            }
+        /* 2. BOOLEANSEQUENCE HAIRLINE SCROLLBAR TRACKER */
+        const sbar = document.createElement('div');
+        sbar.className = 'sbar';
+        sbar.setAttribute('aria-hidden', 'true');
+        sbar.innerHTML = '<i></i>';
+        document.body.appendChild(sbar);
+        const sbarThumb = sbar.firstChild;
+        const docEl = document.documentElement;
+        let isDraggingSbar = false;
+        let dragStartY = null;
 
-            scramble(duration = 1.25) {
-                if (this.isGlitching) return;
-                this.isGlitching = true;
-                this.el.classList.add('glitch-active');
-                const target = this.originalText;
-                const len = target.length;
-                const startTime = performance.now();
-                const durationMs = duration * 1000;
-                let activeGlyphs = new Array(len).fill('');
+        const updateSbar = () => {
+            const maxScroll = docEl.scrollHeight - window.innerHeight;
+            if (sbar.hidden = maxScroll <= 1, sbar.hidden) return;
+            const thumbH = Math.max(36, window.innerHeight * window.innerHeight / docEl.scrollHeight);
+            sbarThumb.style.height = thumbH + 'px';
+            const curScroll = window.scrollY || docEl.scrollTop;
+            sbarThumb.style.transform = `translateY(${curScroll / maxScroll * (window.innerHeight - thumbH)}px)`;
+        };
+        window.addEventListener('scroll', updateSbar, { passive: true });
+        window.addEventListener('resize', updateSbar);
+        lenis.on('scroll', updateSbar);
+        new ResizeObserver(updateSbar).observe(document.body);
+        updateSbar();
 
-                const tick = (now) => {
-                    const elapsed = now - startTime;
-                    const progress = Math.min(1, elapsed / durationMs);
-                    const revealedCount = Math.floor(progress * len);
+        const scrubSbar = (clientY) => {
+            const maxScroll = docEl.scrollHeight - window.innerHeight;
+            const thumbH = sbarThumb.offsetHeight;
+            const fraction = Math.min(1, Math.max(0, (clientY - dragStartY) / (window.innerHeight - thumbH)));
+            const target = fraction * maxScroll;
+            lenis.scrollTo(target, { immediate: true });
+        };
+        sbar.addEventListener('pointerdown', (e) => {
+            const rect = sbarThumb.getBoundingClientRect();
+            dragStartY = e.target === sbarThumb ? e.clientY - rect.top : rect.height / 2;
+            sbar.setPointerCapture(e.pointerId);
+            sbar.classList.add('is-drag');
+            scrubSbar(e.clientY);
+        });
+        sbar.addEventListener('pointermove', (e) => {
+            if (dragStartY !== null) scrubSbar(e.clientY);
+        });
+        const endSbarDrag = () => {
+            dragStartY = null;
+            sbar.classList.remove('is-drag');
+        };
+        sbar.addEventListener('pointerup', endSbarDrag);
+        sbar.addEventListener('pointercancel', endSbarDrag);
 
-                    if (now - this.lastTickTime > this.tickInterval) {
-                        this.lastTickTime = now;
-                        for (let i = revealedCount; i < len; i++) {
-                            const ch = target[i];
-                            if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
-                                activeGlyphs[i] = ch;
-                            } else if (Math.random() < 0.5) {
-                                activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
-                            }
-                        }
+        /* 3. BOOLEANSEQUENCE GENERATIVE WORDS READING ILLUMINATION */
+        document.querySelectorAll('[data-words]').forEach((el) => {
+            const raw = el.textContent.trim();
+            if (!raw) return;
+            const words = raw.split(/[ 	
+]+/);
+            el.innerHTML = words.map(w => `<span class="word" style="opacity: 0.18; display: inline-block; margin-right: 0.28em;">${w}</span>`).join('');
+            
+            gsap.fromTo(
+                el.querySelectorAll('.word'),
+                { opacity: 0.18 },
+                {
+                    opacity: 1,
+                    ease: 'none',
+                    stagger: 0.06,
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 82%',
+                        end: 'bottom 48%',
+                        scrub: true
                     }
+                }
+            );
+        });
 
-                    let result = '';
-                    for (let i = 0; i < len; i++) {
-                        const ch = target[i];
-                        if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
-                            result += ch;
-                        } else if (i < revealedCount) {
-                            result += ch;
-                        } else {
-                            result += activeGlyphs[i] || ch;
-                        }
-                    }
-                    this.el.innerText = result;
+        /* 4. BOOLEANSEQUENCE LINE & HEADING SLIDE REVEALS */
+        document.querySelectorAll('[data-lines]').forEach((el) => {
+            gsap.from(el, {
+                y: 35,
+                opacity: 0,
+                duration: 1.0,
+                ease: 'expo.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 88%'
+                }
+            });
+        });
 
-                    if (progress < 1) {
-                        this.animId = requestAnimationFrame(tick);
-                    } else {
-                        this.el.innerText = target;
-                        this.el.classList.remove('glitch-active');
-                        this.isGlitching = false;
+        /* 5. STEPPED GLYPH SCRAMBLE ENGINE */
+        const glyphChars = '01X_/*+-[]#<>';
+        function scrambleElement(el, targetText, duration = 0.8) {
+            const orig = targetText || el.getAttribute('data-original-text') || el.textContent.trim();
+            el.setAttribute('data-original-text', orig);
+            const m = { p: 0 };
+            let lastStep = -1;
+            const len = orig.length;
+            gsap.to(m, {
+                p: 1,
+                duration: duration,
+                ease: 'none',
+                onUpdate() {
+                    const step = Math.floor(m.p * 14);
+                    if (step === lastStep) return;
+                    lastStep = step;
+                    const revealed = Math.floor(m.p * len);
+                    let out = orig.slice(0, revealed);
+                    for (let i = revealed; i < len; i++) {
+                        const c = orig[i];
+                        out += (c === ' ' || c === String.fromCharCode(10)) ? c : glyphChars[Math.floor(Math.random() * glyphChars.length)];
                     }
-                };
-                this.animId = requestAnimationFrame(tick);
-            }
+                    el.textContent = out;
+                },
+                onComplete() {
+                    el.textContent = orig;
+                }
+            });
         }
 
-        document.querySelectorAll('[data-glitch]').forEach(el => {
-            const decoder = new GlitchDecoder(el);
+        document.querySelectorAll('[data-glitch], [data-scramble], .nav-link, .btn-brutal-red, .btn-brutal-outline').forEach((el) => {
             ScrollTrigger.create({
                 trigger: el,
                 start: 'top 88%',
-                onEnter: () => decoder.scramble(1.1),
-                onEnterBack: () => decoder.scramble(0.8)
+                onEnter: () => scrambleElement(el, null, 0.8),
+                onEnterBack: () => scrambleElement(el, null, 0.5)
             });
-            el.addEventListener('mouseenter', () => decoder.scramble(0.8));
+            el.addEventListener('mouseenter', () => scrambleElement(el, null, 0.5));
         });
 
-        /* 3. HERO WORDS STAGGERED PARALLAX & PINNED STAGE SCALING */
+        /* 6. HERO WORDS PARALLAX & HARDWARE STAGE SCALING */
         gsap.to('.hero-word-row', {
-            y: (i) => -60 * (i + 1),
+            y: (i) => -35 * (i + 1),
             opacity: 0.35,
             ease: 'none',
             scrollTrigger: {
                 trigger: '#hero',
                 start: 'top top',
                 end: 'bottom 20%',
-                scrub: 0.5
+                scrub: 0.6
             }
         });
 
@@ -1798,26 +1920,25 @@
                 trigger: '#hero',
                 start: 'top top',
                 end: 'bottom 40%',
-                scrub: 0.8
+                scrub: 0.6
             },
-            scale: 1.05,
-            y: 35,
-            boxShadow: '0 25px 70px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 41, 44, 0.35)',
+            scale: 1.03,
+            y: 25,
             ease: 'power1.out'
         });
 
-        /* 4. SCATTERED RECTANGULAR WIPE TILES SCRUB */
+        /* 7. SCATTERED RECTANGULAR WIPE TILES SCRUB */
         gsap.utils.toArray('.wipe-tile-scatter-wrap').forEach((wrap) => {
             const tiles = wrap.querySelectorAll('.scatter-tile');
             gsap.fromTo(tiles, 
                 { 
-                    x: (i) => (i % 2 === 0 ? -140 : 140),
+                    x: (i) => (i % 2 === 0 ? -120 : 120),
                     scaleX: 0.2,
                     opacity: 0 
                 }, 
                 { 
-                    x: (i) => (i % 2 === 0 ? 90 : -90),
-                    scaleX: (i) => 1.2 + (i % 3) * 0.4,
+                    x: (i) => (i % 2 === 0 ? 80 : -80),
+                    scaleX: (i) => 1.2 + (i % 3) * 0.3,
                     opacity: 0.95,
                     stagger: 0.04,
                     scrollTrigger: {
@@ -1830,7 +1951,7 @@
             );
         });
 
-        /* 5. SEAMLESS DYNAMIC THEME COLOR SHIFTS ON SCROLL */
+        /* 8. SEAMLESS DYNAMIC THEME COLOR SHIFTS ON SCROLL */
         const themeTransitions = [
             { id: '#hero', theme: 'theme-chalk' },
             { id: '#singularity-stage', theme: 'theme-obsidian' },
@@ -1854,7 +1975,7 @@
             });
         });
 
-        /* 6. FLOATING MINIMAP VIEWPORT NAVIGATOR ENGINE */
+        /* 9. FLOATING MINIMAP VIEWPORT NAVIGATOR ENGINE */
         const minimapTrack = document.getElementById('minimap-track');
         const minimapViewport = document.getElementById('minimap-viewport-box');
         const minimapPct = document.getElementById('minimap-pct');
@@ -1863,9 +1984,8 @@
             const doc = document.documentElement;
             const scrollY = window.scrollY || doc.scrollTop;
             const maxScroll = doc.scrollHeight - window.innerHeight;
+            if (!minimapTrack || !minimapViewport || !minimapPct || maxScroll <= 0) return;
             const trackHeight = minimapTrack.clientHeight;
-
-            if (maxScroll <= 0) return;
 
             const scrollFraction = Math.min(1, Math.max(0, scrollY / maxScroll));
             const viewFraction = Math.min(1, window.innerHeight / doc.scrollHeight);
@@ -1877,12 +1997,13 @@
             minimapPct.textContent = Math.round(scrollFraction * 100).toString().padStart(2, '0') + '%';
         }
 
-        window.addEventListener('scroll', updateMinimap);
+        window.addEventListener('scroll', updateMinimap, { passive: true });
         lenis.on('scroll', updateMinimap);
         updateMinimap();
 
         let isDraggingMinimap = false;
         function handleMinimapInteraction(e) {
+            if (!minimapTrack) return;
             const rect = minimapTrack.getBoundingClientRect();
             const clickY = e.clientY - rect.top;
             const fraction = Math.min(1, Math.max(0, clickY / rect.height));
@@ -1890,19 +2011,21 @@
             lenis.scrollTo(targetScroll, { duration: 0.6 });
         }
 
-        minimapTrack.addEventListener('click', handleMinimapInteraction);
-        minimapTrack.addEventListener('mousedown', (e) => {
-            isDraggingMinimap = true;
-            handleMinimapInteraction(e);
-        });
-        window.addEventListener('mousemove', (e) => {
-            if (isDraggingMinimap) handleMinimapInteraction(e);
-        });
-        window.addEventListener('mouseup', () => {
-            isDraggingMinimap = false;
-        });
+        if (minimapTrack) {
+            minimapTrack.addEventListener('click', handleMinimapInteraction);
+            minimapTrack.addEventListener('mousedown', (e) => {
+                isDraggingMinimap = true;
+                handleMinimapInteraction(e);
+            });
+            window.addEventListener('mousemove', (e) => {
+                if (isDraggingMinimap) handleMinimapInteraction(e);
+            });
+            window.addEventListener('mouseup', () => {
+                isDraggingMinimap = false;
+            });
+        }
 
-        /* 7. CUSTOM RETRO-TECH CURSOR */
+        /* 10. CUSTOM RETRO-TECH CURSOR */
         const cursorDot = document.getElementById('cursor-dot');
         const cursorRing = document.getElementById('cursor-ring');
         if (cursorDot && cursorRing) {
