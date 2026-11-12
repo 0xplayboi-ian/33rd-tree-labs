@@ -1165,7 +1165,7 @@ Type 'help' for available commands, or click the quick command chips below.</div
         const ambLight = new THREE.AmbientLight(0xFFFFFF, 0.6);
         heroScene.add(ambLight);
 
-        let activeHex = 0xFF4500;
+        let activeHex = 0xFF292C; // Official Laser Red #FF292C
         let activeColor = new THREE.Color(activeHex);
 
         const coreLight = new THREE.PointLight(activeColor, 4, 10);
@@ -1258,18 +1258,31 @@ Type 'help' for available commands, or click the quick command chips below.</div
         botRim.position.y = -H / 2;
         arborRoot.add(botRim);
 
-        // SINGULARITY CORE
+        // SINGULARITY CORE & NODES (Official Red #FF292C)
         const coreNode = new THREE.Mesh(
             new THREE.SphereGeometry(0.12, 32, 32),
             new THREE.MeshStandardMaterial({
-                color: 0xFFFFFF,
-                emissive: 0xFFFFFF,
-                emissiveIntensity: 1.6,
+                color: activeColor,
+                emissive: activeColor,
+                emissiveIntensity: 2.2,
                 metalness: 0.2,
                 roughness: 0.1
             })
         );
         arborRoot.add(coreNode);
+
+        const topNode = new THREE.Mesh(
+            new THREE.SphereGeometry(0.08, 24, 24),
+            new THREE.MeshStandardMaterial({
+                color: activeColor,
+                emissive: activeColor,
+                emissiveIntensity: 2.0,
+                metalness: 0.2,
+                roughness: 0.1
+            })
+        );
+        topNode.position.set(0, H / 2, 0);
+        arborRoot.add(topNode);
 
         // SKIN
         let skinGeom = new THREE.CylinderGeometry(R_TOP, R_TOP, H, 64, 40, true);
