@@ -3,7 +3,7 @@
 
 **33rd Tree Labs Cryptographic & Distributed Systems Working Group**  
 `research@33rdtreelabs.com` | [www.33rdtreelabs.com](https://33rdtreelabs.com)  
-*Canary Specification v3.6 // November 2026*
+*Canary Specification v3.7 // November 2026*
 
 ---
 
@@ -63,7 +63,7 @@ $$\mathcal{H}\Big(\sigma_t \;\Vert\; pk_{\text{validator}} \;\Vert\; \text{Posei
 
 where $\mathbf{Y}_t$ is the deterministic activation tensor, $S_{\text{validator}} \ge 25,000$ is the validator's bonded stake, and $S_{\text{total}}$ is total active stake. PoI enforces that only nodes executing the physical GPU forward pass can enter the lottery, while proposal probability scales proportionally with stake share ($S_{\text{validator}} / S_{\text{total}}$). Because Equation (4) evaluates strictly over the deterministic integer output tensor $\mathbf{Y}_t$, re-randomizing the zero-knowledge proof $\pi$ yields zero advantage.
 
-3. **Difficulty Retargeting Algorithm:** Consensus difficulty $D_t$ dynamically calibrates block production to the 12.0-second slot target. Retargeting occurs every $N_{\text{retarget}} = 7,200$ blocks (nominal 24-hour window) based on observed epoch duration $\Delta T_{\text{actual}}$:
+3. **Difficulty Retargeting Algorithm:** Consensus difficulty $D_t$ dynamically calibrates block production to the 12.0-second slot target. Retargeting occurs every $N_{\text{retarget}} = 300$ blocks (nominal 1-hour window, $T_{\text{target}} = 3,600$s) based on observed duration $\Delta T_{\text{actual}}$ clamped to $[0.80, 1.25]$:
 $$D_{t+1} = D_t \cdot \left(\frac{T_{\text{target}}}{\Delta T_{\text{actual}}}\right), \quad \text{clamped to } [0.75 \cdot D_t, \; 1.25 \cdot D_t] \tag{5}$$
 
 where $T_{\text{target}} = 86,400\text{ seconds}$. The $\pm 25\%$ clamp prevents extreme difficulty swings during abrupt network partition or reboot events.
@@ -81,7 +81,8 @@ The 12-second block consensus evaluates a standardized canonical attention proje
 
 **Two-Tier Finality for Enterprise Production (70B / 405B):** For large production models requiring $\approx 8.1 \times 10^{11} \text{ FLOPs per token}$, the network operates a two-tier finality architecture:
 * **Soft Finality (12s):** Output activations are returned to the client upon passing Freivalds probabilistic checks ($AB\vec{r} = C\vec{r}$, error probability $\le 2^{-64}$ [3], covering 96.2% of linear projection FLOPs) backed by a 2/3 BFT committee signature.
-* **Hard Finality (64 Blocks ≈ 12.8 min):** A 64-block dispute window allows challengers to audit intermediate activation commitments. Initiating a challenge requires posting a 10,000 $33RD bond. If an activation discrepancy is proven fraudulent, the operator is slashed 100% (50% burned via the Solana Incinerator, 50% awarded to the challenger).
+* **Fabric Dispute Detection (64 Blocks ≈ 12.8 min):** A 64-block dispute detection window allows network participants to flag intermediate activation discrepancies with a 10,000 $33RD challenger bond.
+* **Settlement Finality (48-Hour Appeal Period):** On-chain Solana bisection arbitration allows a 48-hour challenge resolution grace period before final collateral slashing is irreversible. Initiating a challenge requires posting a 10,000 $33RD bond. If an activation discrepancy is proven fraudulent, the operator is slashed 100% (50% burned via the Solana Incinerator, 50% awarded to the challenger).
 
 ---
 
@@ -89,7 +90,7 @@ The 12-second block consensus evaluates a standardized canonical attention proje
 To prevent malicious cartels from pre-mining keys to cluster at the high-velocity throat horizon, node coordinates $(\theta, y)$ are derived deterministically using the validator's public key and the epoch VRF beacon:
 $$(\theta, y)_t = \text{HashToManifold}\Big(pk_{\text{validator}} \;\Vert\; \sigma_{\text{epoch}}\Big) \tag{6}$$
 
-where $\sigma_{\text{epoch}}$ rotates every 1 hour (7,200 blocks). An attacker cannot pre-mine keys to permanently camp near the throat. The routing manifold follows the continuous exponential surface of revolution:
+where $\sigma_{\text{epoch}}$ rotates every 1 hour (300 blocks). An attacker cannot pre-mine keys to permanently camp near the throat. The routing manifold follows the continuous exponential surface of revolution:
 $$r(y) = r_{\text{throat}} + (R_{\text{canopy}} - r_{\text{throat}}) \cdot \frac{e^{\frac{k \cdot |y|}{H}} - 1}{e^k - 1} \tag{7}$$
 
 where $H = 2.4$, $R_{\text{canopy}} = 1.5$, $r_{\text{throat}} = 0.09$, and $k = 3.8$.
@@ -110,7 +111,7 @@ The entire supply was minted once at genesis into an immutable on-chain vault (`
 | :--- | :--- | :--- | :--- |
 | Compute Subsidy Pool (PoI) | 45.0% | 15,000,000.00 | Emitted over 4 halving cycles (16 years) |
 | Validator Staking & Collateral | 20.0% | 6,666,666.60 | Locked in Solana staking contracts |
-| Scramjet Fair Launch Curve | 15.0% | 5,000,000.00 | Fair launch bonding curve via Jito bundle |
+| Scramjet Fair Launch Curve | 15.0% | 5,000,000.00 | Fair launch bonding curve ($P(s) = P_0 + \alpha s^2$) with locked Raydium CPMM liquidity |
 | Protocol Research Treasury | 10.0% | 3,333,333.20 | 36-month linear vesting; multi-sig DAO |
 | Core Contributors & Founders | 10.0% | 3,333,333.20 | 24-month linear vesting (6-month cliff) |
 | **Total Hard Cap** | **100.0%** | **33,333,333.00** | **Mint Authority Revoked (`None`)** |
@@ -225,7 +226,7 @@ double AttackerSuccessProbability(double q, int z) {
 | 18 | 0.000000 | 0.000000 | 0.000006 | 0.000254 | 0.004345 | 0.017227 |
 | 20 | 0.000000 | 0.000000 | 0.000002 | 0.000106 | 0.002480 | 0.011423 |
 | 24 | 0.000000 | 0.000000 | 0.000000 | 0.000019 | 0.000811 | 0.005021 |
-| 32 | 0.000000 | 0.000000 | 0.000000 | 0.000001 | 0.000098 | 0.000988 |
+| 32 | 0.000000 | 0.000000 | 0.000000 | 0.000001 | 0.000087 | 0.000988 |
 
 Solving for institutional safety ($P < 0.001$):
 $$\begin{aligned}
