@@ -1,5 +1,13 @@
 # 33rd Tree Labs // The Singularity Protocol
 
+<p align="left">
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" alt="License: MIT"></a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.10+-3776AB.svg?style=flat-square&logo=python&logoColor=white" alt="Python 3.10+"></a>
+  <img src="https://img.shields.io/badge/Status-prototype-orange.svg?style=flat-square" alt="Status: prototype">
+  <a href="https://github.com/0xplayboi-ian/33rd-tree-labs/stargazers"><img src="https://img.shields.io/github/stars/0xplayboi-ian/33rd-tree-labs?style=flat-square&logo=github&color=181717" alt="GitHub stars"></a>
+  <a href="https://solana.com"><img src="https://img.shields.io/badge/Solana-DePIN-black.svg?style=flat-square&logo=solana&logoColor=14F195" alt="Solana DePIN"></a>
+</p>
+
 > **A Byzantine-Resilient Verifiable DePIN Compute Fabric on Solana**  
 > *Canary Specification v3.5 &bull; November 2026*  
 > Website: [33rdtreelabs.com](https://33rdtreelabs.com) &bull; Research: `research@33rdtreelabs.com`
@@ -77,4 +85,4 @@ The formal paper is compiled in the classic Satoshi Nakamoto (2008) academic typ
 
 ## License
 
-Apache-2.0 © 2026 33rd Tree Labs Cryptographic & Distributed Systems Working Group.
+MIT License © 2026 33rd Tree Labs Cryptographic & Distributed Systems Working Group.
