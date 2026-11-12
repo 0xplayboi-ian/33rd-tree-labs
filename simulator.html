@@ -230,10 +230,10 @@
             transform: translateY(-1px);
         }
 
-        /* VRTL WRLD GLITCH TEXT & CHROMATIC ABERRATION */
+        /* VRTL WRLD CALM GLITCH DECODER */
         .glitch-active {
-            color: var(--laser-red) !important;
-            text-shadow: 1.5px 0 0 rgba(255, 41, 44, 0.85), -1.5px 0 0 rgba(0, 230, 118, 0.75) !important;
+            opacity: 0.94;
+            letter-spacing: 0.02em;
         }
 
         /* BUTTONS */
@@ -730,14 +730,16 @@
         class GlitchScramble {
             constructor(el) {
                 this.el = el;
-                this.chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_/[#]=+*?<>~!$%&';
+                this.chars = '01X_/*+-[]#';
                 this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
                 el.setAttribute('data-glitch-text', this.originalText);
                 this.isGlitching = false;
                 this.animId = null;
+                this.lastTickTime = 0;
+                this.tickInterval = 85; // 85ms throttle: calm, readable, zero seizure strobe (~12fps)
             }
 
-            scramble(duration = 0.5) {
+            scramble(duration = 1.25) {
                 if (this.isGlitching) return;
                 this.isGlitching = true;
                 this.el.classList.add('glitch-active');
@@ -745,23 +747,35 @@
                 const len = target.length;
                 const startTime = performance.now();
                 const durationMs = duration * 1000;
+                let activeGlyphs = new Array(len).fill('');
 
                 const tick = (now) => {
                     const elapsed = now - startTime;
                     const progress = Math.min(1, elapsed / durationMs);
                     const revealedCount = Math.floor(progress * len);
 
+                    // Throttle symbol updates so glyphs stay legible rather than strobing
+                    if (now - this.lastTickTime > this.tickInterval) {
+                        this.lastTickTime = now;
+                        for (let i = revealedCount; i < len; i++) {
+                            const ch = target[i];
+                            if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
+                                activeGlyphs[i] = ch;
+                            } else if (Math.random() < 0.5) {
+                                activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
+                            }
+                        }
+                    }
+
                     let result = '';
                     for (let i = 0; i < len; i++) {
                         const ch = target[i];
-                        if (ch === ' ' || ch === '\n' || ch === '\t') {
+                        if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
                             result += ch;
                         } else if (i < revealedCount) {
                             result += ch;
-                        } else if (i < revealedCount + 3) {
-                            result += this.chars[Math.floor(Math.random() * this.chars.length)];
                         } else {
-                            result += this.chars[Math.floor(Math.random() * this.chars.length)];
+                            result += activeGlyphs[i] || ch;
                         }
                     }
                     this.el.innerText = result;
@@ -780,15 +794,15 @@
 
         document.querySelectorAll('[data-glitch]').forEach(el => {
             const inst = new GlitchScramble(el);
-            el.addEventListener('mouseenter', () => inst.scramble(0.42));
+            el.addEventListener('mouseenter', () => inst.scramble(0.8));
         });
 
         window.addEventListener('DOMContentLoaded', () => {
             let delay = 60;
             document.querySelectorAll('.display-word, .meta-tag, .glitch-load').forEach(el => {
                 const inst = new GlitchScramble(el);
-                setTimeout(() => inst.scramble(0.65), delay);
-                delay += 90;
+                setTimeout(() => inst.scramble(1.2), delay);
+                delay += 180;
             });
         });
 
@@ -797,10 +811,10 @@
             ScrollTrigger.create({
                 trigger: el,
                 start: 'top 88%',
-                onEnter: () => inst.scramble(0.55),
-                onEnterBack: () => inst.scramble(0.4)
+                onEnter: () => inst.scramble(1.0),
+                onEnterBack: () => inst.scramble(0.8)
             });
-            el.addEventListener('mouseenter', () => inst.scramble(0.4));
+            el.addEventListener('mouseenter', () => inst.scramble(0.8));
         });
 
         
@@ -905,7 +919,7 @@
                 appendTermLine('[STATE] Epoch 300 &bull; D_t = 1.042 &bull; Quorum: 2/3 BLS BN254 Verified', 'success');
                 appendTermLine('[METRICS] Network Latency: 14.2ms &bull; 0 Slashing Events Recorded');
             } else if (c === 'nodes') {
-                appendTermLine('ACTIVE VALIDATOR CLUSTERS (Sampling 4 of 33,492 clusters):', 'highlight');
+                appendTermLine('ACTIVE VALIDATOR CLUSTERS (Candidate Genesis Validators (K=64 Quorum Committee)):', 'highlight');
                 appendTermLine('  0x7F2A...9C1D [Tier-1 Dual H100 SXM5] &bull; Stake: 150,000 $33RD &bull; Status: OPTIMAL');
                 appendTermLine('  0x3E11...B450 [Tier-1 Quad H100 SXM5] &bull; Stake: 250,000 $33RD &bull; Status: OPTIMAL');
                 appendTermLine('  0x992B...C01F [Tier-1 B200 NVL72]    &bull; Stake: 500,000 $33RD &bull; Status: OPTIMAL');
