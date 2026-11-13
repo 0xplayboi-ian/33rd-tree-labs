@@ -1497,9 +1497,161 @@ html_template = """<!doctype html>
       .spec-row:nth-child(odd) { border-right: none; }
       .hero__aside { flex-direction: column; align-items: flex-start; }
     }
+
+    /* ===================================================================
+       FLOATING PILL NAVIGATION (UNIFIED VRTL WRLD SYSTEM)
+       =================================================================== */
+    .nav-wrapper {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      width: fit-content;
+      max-width: 98vw;
+      pointer-events: none;
+    }
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      padding: 6px 14px 6px 10px;
+      border-radius: 9999px;
+      background: rgba(11, 11, 14, 0.85);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid #1C1C24;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 41, 44, 0.15);
+      pointer-events: auto;
+      white-space: nowrap;
+    }
+    .nav-wrapper.nav-scrolled .nav-pill {
+      background: rgba(11, 11, 14, 0.96);
+      border-color: rgba(255, 41, 44, 0.35);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 41, 44, 0.15);
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #FFFFFF;
+      border-right: 1px solid #1C1C24;
+      padding-right: 12px;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .nav-logo-box {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #FFFFFF;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.60);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      border: 1px solid transparent;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-link:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+    .nav-link.active {
+      color: #FFFFFF;
+      background: rgba(255, 41, 44, 0.14);
+      border-color: #FF292C;
+      box-shadow: 0 0 10px rgba(255, 41, 44, 0.35);
+    }
+    .nav-link.active::before {
+      content: "";
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #FF292C;
+      box-shadow: 0 0 6px #FF292C;
+      display: inline-block;
+    }
+    @media (max-width: 900px) {
+      .nav-wrapper {
+        top: 10px;
+        max-width: 96vw;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-pill {
+        padding: 4px 8px;
+      }
+      .nav-link {
+        font-size: 9.5px;
+        padding: 4px 6px;
+      }
+    }
+    @media print {
+      .nav-wrapper { display: none !important; }
+    }
+
   </style>
 </head>
 <body id="top">
+  <!-- FLOATING PILL NAVBAR -->
+  <div class="nav-wrapper">
+    <nav class="nav-pill">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-logo-box">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="12" cy="4" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+            <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+            <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+            <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
+          </svg>
+        </div>
+        <span class="nav-title" data-glitch>33RD TREE LABS</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active" data-glitch>[ OVERVIEW ]</a>
+        <a href="protocol.html" class="nav-link" data-glitch>[ PROTOCOL ]</a>
+        <a href="simulator.html" class="nav-link" data-glitch>[ SIMULATOR ]</a>
+        <a href="yield.html" class="nav-link" data-glitch>[ YIELD ]</a>
+        <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
+        <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
+        <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
+        <a href="whitepaper.html" class="nav-link" data-glitch>[ WHITEPAPER ]</a>
+      </div>
+    </nav>
+  </div>
+
 
   <!-- RIGHT HAIRLINE SCROLLBAR & TELEMETRY RAIL -->
   <div class="sbar" id="sbar" aria-hidden="true">
