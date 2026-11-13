@@ -1,43 +1,30 @@
 import os
 
-# ==============================================================================
-# 33RD TREE LABS // THE SINGULARITY PROTOCOL
-# MASTER STORY SCROLL BUILD ENGINE (build_master_story_scroll.py)
-#
-# ARCHITECTURAL COMPLIANCE:
-# 1. NO TOP MENU BAR / HEADER (Unified Floating Pill Navigation only).
-# 2. Complete, deep technical story explaining 33rd Tree Labs in full depth:
-#    - Chapter 01 (Architectural Thesis): Floating-Point Non-Determinism Crisis (FMA reordering,
-#      cuBLAS microcode variance, non-associative addition, bit-exact integer reduction trees,
-#      heterogeneous tri-vendor attestation quorum, calibrated SmoothQuant FP8/INT8).
-#    - Chapter 02 (Topology & Altitude Descent): Gromov delta-hyperbolic geometry, negative
-#      Gaussian curvature (kappa = -1.414), Exponential Plunge Hyperboloid, tree isomorphism,
-#      logarithmic diameter <= 8 hops planet-scale under 40% churn.
-#    - Chapter 03 (Four-Phase Consensus Engine): Dispatch, Byzantine Consensus (K=64 Quorum),
-#      ZK Commitment (Plonky2 recursive folding / BN254 KZG opening), Settle & 10% Burn.
-#    - Chapter 04 (Horizontal Hardware Rail): H100 SXM5, B200 Blackwell, RTX 4090/5090 Edge,
-#      Tokenomics Deflation Engine, Gromov Metric Card with full technical specs.
-#    - Chapter 05 (Mathematical Invariants & Byzantine Slashing): Formal verification, quadratic
-#      slashing loss formula S_penal(n) = min(1.0, k * n^2 * S_base), equivocation proofs,
-#      slashing penalty matrix table.
-#    - Chapter 06 (Hardware & Schematic Exhibition): Pinned expanding schematic film with
-#      Exponential Plunge Tensor Arbor architecture, Mark #06 wireframe, apex singularity nodes.
-#    - Chapter 07 (Overhauled Live Simulator): "BYZANTINE QUORUM LATTICE // LIVE TENSOR REDUCTION
-#      SIMULATOR" with Crimson Nodes (#FF2424), Obsidian Nodes (#070707), Slider 1 Quorum K=16..64,
-#      Slider 2 Poincaré Disk Sharding Density, Slider 3 Geodesic Propagation Velocity, Live Consensus
-#      Telemetry HUD, and operators TENSOR [⊗ / ∇], HYPERBOLIC [λ / Δ], LATTICE [┼ / ·].
-#    - Chapter 08 (Specifications Matrix & Protocol Economics): Tokenomics breakdown (33,333,333 $33RD,
-#      zero mint authority, 100% LP burned to 1nc1nerator11111111111111111111111111111111,
-#      25k node stake bond, deflationary volume threshold > 51,370 $33RD/day).
-# 3. STRICT COMPLIANCE:
-#    - ZERO EMOJIS anywhere.
-#    - NO MADE-UP operational telemetry numbers (only exact protocol parameters).
-#    - Official domain strictly 33rdtreelabs.tech.
-#    - Lenis smooth scrolling (lerp: 0.085) and right hairline telemetry rail (.sbar) 000 -> 999.
-# ==============================================================================
+# Python script to generate the complete, pristine index.html for 33rd Tree Labs
+# Strict adherence to all user rules & requirements:
+# 1. NO TOP MENU BAR / HUD.
+# 2. Compelling, deep technical story explaining 33rd Tree Labs.
+# 3. Longer than booleansequence.
+# 4. Sideways scrolling section (pinned horizontal scroll track).
+# 5. Exact booleansequence aesthetic:
+#    - Living Generative Matrix / Cellular Automaton Field with cursor repulsion
+#    - Pinned Hero kinetic split typography
+#    - Chapter 01: The Thesis / Concept with brutalist badges & dual-column
+#    - Chapter 02: Pinned Altitude Descent (1208m -> 8m)
+#    - Chapter 03: Pinned 4-Instruction Stepper with animated bars & live canvas
+#    - Chapter 04: Pinned Horizontal Rail for hardware clusters & tokenomics
+#    - Chapter 05: Pinned Expanding Schematic Film with Tensor Arbor wireframe
+#    - Chapter 06: Interactive Consensus & Cellular Playground with sliders & export
+#    - Chapter 07: Inverted Colorway Finale & Technical Specification Table
+#    - Lenis smooth scrolling (lerp: 0.085)
+#    - Right hairline scroll rail (.sbar) tracking 000 -> 999 with thumb & ticks
+#    - Bottom-right floating interactive minimap preview
+#    - ZERO EMOJIS anywhere
+#    - NO MADE-UP operational telemetry numbers
+#    - Obel Mono fonts & official logo mark
 
-html_template = r"""<!doctype html>
-<html lang="en" class="lenis" style="--t: #FF2424; --f: #070707;">
+html_template = """<!doctype html>
+<html lang="en" class="lenis" style="--t: #FF292C; --f: #070707;">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,9 +76,9 @@ html_template = r"""<!doctype html>
     }
 
     :root {
-      --t: #FF2424; /* Official Primary Crimson */
+      --t: #FF292C; /* Crimson Accent */
       --t-glow: rgba(255, 36, 36, 0.45);
-      --f: #070707; /* Pure Obsidian Void */
+      --f: #070707; /* Pure Obsidian */
       --chalk: #F2F2F5;
       --dim: #8E8E98;
       --border: #1C1C24;
@@ -621,7 +608,6 @@ html_template = r"""<!doctype html>
       border-radius: 0 4px 4px 0;
       color: var(--chalk);
       font-size: 13.5px;
-      margin-top: 20px;
     }
 
     /* =====================================================================
@@ -1170,7 +1156,7 @@ html_template = r"""<!doctype html>
     }
 
     /* =====================================================================
-       CHAPTER 07: OVERHAULED LIVE TENSOR REDUCTION & BYZANTINE SIMULATOR
+       CHAPTER 07: INTERACTIVE CONSENSUS & CELLULAR PLAYGROUND
        ===================================================================== */
     .play {
       padding: clamp(90px, 14vh, 160px) var(--pad);
@@ -1183,13 +1169,13 @@ html_template = r"""<!doctype html>
       max-width: 1320px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.25fr 0.85fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: clamp(36px, 5vw, 64px);
-      align-items: flex-start;
+      align-items: center;
     }
     .play__canvas-box {
       width: 100%;
-      height: 480px;
+      height: 420px;
       background: #000000;
       border: 1px solid var(--border);
       border-radius: 8px;
@@ -1198,128 +1184,19 @@ html_template = r"""<!doctype html>
       box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 36, 36, 0.2);
     }
     #playground-canvas { width: 100%; height: 100%; cursor: crosshair; }
-
-    /* INTEGRATED LIVE CONSENSUS TELEMETRY HUD */
-    .consensus-hud {
+    .play__canvas-badge {
       position: absolute;
       top: 14px;
       left: 14px;
-      right: 14px;
-      background: rgba(8, 8, 12, 0.90);
-      border: 1px solid rgba(255, 36, 36, 0.35);
-      border-radius: 6px;
-      padding: 12px 18px;
-      backdrop-filter: blur(14px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
-      z-index: 10;
+      font-family: var(--fm);
+      font-size: 9.5px;
+      color: var(--chalk);
+      background: rgba(0, 0, 0, 0.75);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
       pointer-events: none;
     }
-    .consensus-hud__header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      font-family: var(--fm);
-      font-size: 10px;
-      color: var(--chalk);
-      letter-spacing: 0.12em;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 8px;
-    }
-    .consensus-hud__title {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      color: var(--chalk);
-    }
-    .hud-status-badge {
-      font-family: var(--fm);
-      font-size: 9px;
-      font-weight: 700;
-      color: var(--t);
-      background: rgba(255, 36, 36, 0.15);
-      border: 1px solid rgba(255, 36, 36, 0.4);
-      padding: 2px 8px;
-      border-radius: 3px;
-      letter-spacing: 0.08em;
-      transition: all 0.3s ease;
-    }
-    .consensus-hud__grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      font-family: var(--fm);
-    }
-    .hud-metric {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .hud-label {
-      font-size: 8.5px;
-      color: var(--dim);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .hud-value {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--chalk);
-      letter-spacing: 0.02em;
-    }
-    .hud-sub {
-      font-size: 8px;
-      color: var(--dim);
-    }
-    @media (max-width: 860px) {
-      .consensus-hud__grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    /* NODE CONTEXT LEGEND CARDS */
-    .node-context-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 18px;
-    }
-    .node-legend-card {
-      background: #08080C;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 16px 18px;
-      position: relative;
-    }
-    .node-legend-card.crimson {
-      border-left: 3px solid var(--t);
-    }
-    .node-legend-card.obsidian {
-      border-left: 3px solid #383846;
-    }
-    .legend-badge {
-      font-family: var(--fm);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      margin-bottom: 6px;
-    }
-    .node-legend-card.crimson .legend-badge { color: var(--t); }
-    .node-legend-card.obsidian .legend-badge { color: var(--dim); }
-    .legend-title {
-      font-family: var(--fh);
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--chalk);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .node-legend-card p {
-      font-family: var(--fm);
-      font-size: 12px;
-      color: var(--dim);
-      line-height: 1.55;
-    }
-
     .play__controls {
       display: flex;
       flex-direction: column;
@@ -1332,7 +1209,7 @@ html_template = r"""<!doctype html>
     }
     .play__controls h3 {
       font-family: var(--fh);
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: -0.02em;
@@ -1350,12 +1227,6 @@ html_template = r"""<!doctype html>
       color: var(--dim);
     }
     .play__row-head span:last-child { color: var(--t); font-weight: 700; }
-    .play__row-desc {
-      font-family: var(--fm);
-      font-size: 9.5px;
-      color: var(--dim);
-      line-height: 1.4;
-    }
     input[type=range] {
       -webkit-appearance: none;
       width: 100%;
@@ -1451,10 +1322,10 @@ html_template = r"""<!doctype html>
       margin: 0 auto;
     }
     .finale .kicker {
-      color: #FF2424;
+      color: #FF292C;
     }
     .finale .kicker::before {
-      background: #FF2424;
+      background: #FF292C;
       box-shadow: 0 0 8px rgba(255, 36, 36, 0.6);
     }
     .finale__headline {
@@ -1513,7 +1384,7 @@ html_template = r"""<!doctype html>
       text-align: right;
     }
     .spec-val.crimson {
-      color: #FF2424;
+      color: #FF292C;
     }
     .spec-val code {
       font-size: 12px;
@@ -1527,6 +1398,8 @@ html_template = r"""<!doctype html>
       align-items: center;
       flex-wrap: wrap;
       gap: 20px;
+      padding-top: 24px;
+      border-top: 1px solid #D5D5DF;
     }
     .finale__links {
       display: flex;
@@ -1537,26 +1410,26 @@ html_template = r"""<!doctype html>
       background: #070707;
       color: #FFFFFF;
       font-family: var(--fm);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      text-decoration: none;
-      padding: 14px 28px;
+      padding: 12px 24px;
       border-radius: 4px;
-      border: 2px solid #070707;
+      text-decoration: none;
+      letter-spacing: 0.08em;
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
       gap: 8px;
     }
     .btn-finale:hover {
-      background: #FF2424;
-      border-color: #FF2424;
-      box-shadow: 0 10px 24px rgba(255, 36, 36, 0.4);
+      background: #FF292C;
+      box-shadow: 0 0 20px rgba(255, 36, 36, 0.45);
+      color: #FFFFFF;
     }
     .btn-finale.outline {
       background: transparent;
       color: #070707;
+      border: 1.5px solid #070707;
     }
     .btn-finale.outline:hover {
       background: #070707;
@@ -1564,127 +1437,28 @@ html_template = r"""<!doctype html>
     }
     .start-over {
       font-family: var(--fm);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: #070707;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .start-over:hover { color: #FF2424; }
-
-    /* NEWSLETTER & SOCIAL MODULE */
-    .newsletter-card {
-      margin-top: 48px;
-      padding: clamp(28px, 3.5vw, 44px);
-      background: #EAEAEF;
-      border: 1.5px solid #070707;
-      border-radius: 6px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .newsletter-head h3 {
-      font-family: var(--fh);
-      font-size: clamp(20px, 2.2vw, 30px);
-      font-weight: 800;
-      color: #070707;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      margin: 6px 0 10px;
-    }
-    .newsletter-head p {
-      font-family: var(--fm);
-      font-size: 13px;
-      line-height: 1.6;
-      color: #4A4A5A;
-      max-width: 680px;
-    }
-    .newsletter-form {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .newsletter-input-group {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .newsletter-input {
-      flex: 1;
-      min-width: 260px;
-      background: #FFFFFF;
-      border: 1.5px solid #070707;
-      padding: 12px 16px;
-      font-family: var(--fm);
-      font-size: 12px;
-      color: #070707;
-      border-radius: 4px;
-      outline: none;
-      transition: border-color 0.2s ease;
-    }
-    .newsletter-input:focus {
-      border-color: #FF2424;
-    }
-    .newsletter-submit {
-      background: #070707;
-      color: #FFFFFF;
-      border: 1.5px solid #070707;
-      padding: 12px 24px;
-      font-family: var(--fm);
-      font-size: 11.5px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .newsletter-submit:hover {
-      background: #FF2424;
-      border-color: #FF2424;
-      color: #FFFFFF;
-    }
-    .social-links-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 1px solid #D5D5DF;
-    }
-    .social-link {
-      font-family: var(--fm);
       font-size: 11px;
       font-weight: 700;
       color: #070707;
       text-decoration: none;
-      padding: 8px 16px;
+      padding: 10px 18px;
       border: 1px solid #070707;
-      border-radius: 4px;
-      letter-spacing: 0.08em;
+      border-radius: 9999px;
       transition: all 0.2s ease;
     }
-    .social-link:hover {
-      background: #070707;
+    .start-over:hover {
+      background: #FF292C;
+      border-color: #FF292C;
       color: #FFFFFF;
-    }
-    .social-link.highlight {
-      background: #070707;
-      color: #FFFFFF;
-    }
-    .social-link.highlight:hover {
-      background: #FF2424;
-      border-color: #FF2424;
     }
 
     /* FOOTER */
     .foot {
-      padding: 32px var(--pad);
-      background: #000000;
+      padding: clamp(40px, 6vh, 60px) var(--pad);
+      background: #020204;
       border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 10;
       font-family: var(--fm);
       font-size: 11px;
       color: var(--dim);
@@ -1696,157 +1470,36 @@ html_template = r"""<!doctype html>
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 20px;
     }
     .foot__brand {
       display: flex;
       align-items: center;
       gap: 10px;
       color: var(--chalk);
+      text-decoration: none;
       font-weight: 700;
+    }
+    .foot__brand img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      border-radius: 3px;
     }
 
-    /* ===================================================================
-       FLOATING PILL NAVIGATION (UNIFIED VRTL WRLD SYSTEM)
-       =================================================================== */
-    .nav-wrapper {
-      position: fixed;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 9999;
-      width: fit-content;
-      max-width: 98vw;
-      pointer-events: none;
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 960px) {
+      .concept__cols { grid-template-columns: 1fr; }
+      .above__pin { grid-template-columns: 1fr; }
+      .rule__pin { grid-template-columns: 1fr; }
+      .play__inner { grid-template-columns: 1fr; }
+      .spec-table-grid { grid-template-columns: 1fr; }
+      .spec-row:nth-child(odd) { border-right: none; }
+      .hero__aside { flex-direction: column; align-items: flex-start; }
     }
-    .nav-pill {
-      display: flex;
-      align-items: center;
-      padding: 6px 14px 6px 10px;
-      border-radius: 9999px;
-      background: rgba(11, 11, 14, 0.85);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid #1C1C24;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 36, 36, 0.15);
-      pointer-events: auto;
-      white-space: nowrap;
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: #FFFFFF;
-      border-right: 1px solid #1C1C24;
-      padding-right: 12px;
-      margin-right: 12px;
-      flex-shrink: 0;
-    }
-    .nav-logo-box {
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .nav-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: #FFFFFF;
-      white-space: nowrap;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      list-style: none;
-    }
-    .nav-link {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.60);
-      text-decoration: none;
-      padding: 6px 10px;
-      border-radius: 9999px;
-      border: 1px solid transparent;
-      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .nav-link:hover {
-      color: #FFFFFF;
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.18);
-    }
-    .nav-link.active {
-      color: #FFFFFF;
-      background: rgba(255, 36, 36, 0.14);
-      border-color: #FF2424;
-      box-shadow: 0 0 10px rgba(255, 36, 36, 0.35);
-    }
-    .nav-link.active::before {
-      content: "";
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: #FF2424;
-      box-shadow: 0 0 6px #FF2424;
-      display: inline-block;
-    }
-    @media (max-width: 900px) {
-      .nav-wrapper {
-        top: 10px;
-        max-width: 96vw;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-      .nav-pill { padding: 4px 8px; }
-      .nav-link { font-size: 9.5px; padding: 4px 6px; }
-    }
-    @media print { .nav-wrapper { display: none !important; } }
   </style>
 </head>
 <body id="top">
-
-  <!-- UNIFIED FLOATING PILL NAVIGATION -->
-  <div class="nav-wrapper">
-    <nav class="nav-pill">
-      <a href="index.html" class="nav-brand">
-        <div class="nav-logo-box">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <ellipse cx="12" cy="4" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
-            <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
-            <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-            <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF2424" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
-            <circle cx="12" cy="12" r="1.8" fill="#FF2424"/>
-          </svg>
-        </div>
-        <span class="nav-title" data-glitch>33RD TREE LABS</span>
-      </a>
-
-      <div class="nav-links">
-        <a href="index.html" class="nav-link active" data-glitch>[ OVERVIEW ]</a>
-        <a href="protocol.html" class="nav-link" data-glitch>[ PROTOCOL ]</a>
-        <a href="simulator.html" class="nav-link" data-glitch>[ SIMULATOR ]</a>
-        <a href="yield.html" class="nav-link" data-glitch>[ YIELD ]</a>
-        <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
-        <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
-        <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
-        <a href="whitepaper.html" class="nav-link" data-glitch>[ WHITEPAPER ]</a>
-      </div>
-    </nav>
-  </div>
 
   <!-- RIGHT HAIRLINE SCROLLBAR & TELEMETRY RAIL -->
   <div class="sbar" id="sbar" aria-hidden="true">
@@ -1865,15 +1518,15 @@ html_template = r"""<!doctype html>
     <i></i>
   </div>
 
-  <!-- FLOATING MINIMAP HUD -->
+  <!-- FLOATING BOTTOM-RIGHT MINIMAP PREVIEW -->
   <div class="minimap-hud" id="minimap" title="Click to scrub viewport">
     <div class="minimap-header">
-      <span>TOPOLOGY MINIMAP</span>
+      <span>TOPOLOGY</span>
       <span id="minimap-pct">0%</span>
     </div>
     <div class="minimap-preview">
       <div class="minimap-sections">
-        <div class="minimap-dot active"></div>
+        <div class="minimap-dot"></div>
         <div class="minimap-dot"></div>
         <div class="minimap-dot"></div>
         <div class="minimap-dot"></div>
@@ -1893,10 +1546,10 @@ html_template = r"""<!doctype html>
          =================================================================== -->
     <section class="hero" id="hero">
       <canvas class="hero__field-canvas" id="hero-field-canvas"></canvas>
-
+      
       <div class="hero__top-meta">
-        <span class="hero__protocol-tag">CANARY SPECIFICATION V4.0 // ACTIVE CONSENSUS</span>
-        <span>SETTLEMENT: SOLANA MAINNET // POI VERIFIED</span>
+        <div class="hero__protocol-tag">33RD TREE LABS // THE SINGULARITY PROTOCOL</div>
+        <div>SOLANA MAINNET-BETA // 33RDTREELABS.TECH</div>
       </div>
 
       <div class="hero__content">
@@ -1908,25 +1561,16 @@ html_template = r"""<!doctype html>
 
       <div class="hero__aside">
         <div class="hero__scroll-indicator">
-          <span class="hero__scroll-pulse"></span>
+          <div class="hero__scroll-pulse"></div>
           <div class="hero__scroll-text-group">
-            <span class="hero__scroll-action">SCROLL TO COMMENCE DESCENT</span>
-            <span class="hero__scroll-sub">K=64 BYZANTINE QUORUM COMMITTEE</span>
+            <span class="hero__scroll-action">[ SCROLL TO COMMENCE CONSENSUS ]</span>
+            <span class="hero__scroll-sub">VERIFIABLE TENSOR ARBOR &bull; CANARY V4.0</span>
           </div>
         </div>
         <div class="hero__foot-badges">
-          <div class="hero__badge-tag">
-            <span>MANIFOLD</span>
-            <strong>GROMOV &delta;-HYPERBOLIC</strong>
-          </div>
-          <div class="hero__badge-tag">
-            <span>INVARIANT</span>
-            <strong>&Delta;&epsilon; = 0.00 INT8</strong>
-          </div>
-          <div class="hero__badge-tag">
-            <span>SUPPLY CAP</span>
-            <strong>33,333,333 $33RD</strong>
-          </div>
+          <span class="hero__badge-tag">TOPOLOGY: <strong>GROMOV &delta;-HYPERBOLIC</strong></span>
+          <span class="hero__badge-tag">PRECISION: <strong>&Delta;&epsilon; = 0.00 INT8</strong></span>
+          <span class="hero__badge-tag">CONSENSUS: <strong>K=64 QUORUM</strong></span>
         </div>
       </div>
     </section>
@@ -1966,43 +1610,36 @@ html_template = r"""<!doctype html>
               <span class="manifesto-metric__label">EVALUATION TOLERANCE</span>
               <span class="manifesto-metric__val">&Delta;&epsilon; = 0.00 INT8 INVARIANT</span>
             </div>
-            <div class="manifesto-metric">
-              <span class="manifesto-metric__label">BURN DESTINATION</span>
-              <span class="manifesto-metric__val">SOLANA INCINERATOR (10% FEE)</span>
-            </div>
           </div>
         </div>
         
         <div class="concept__cols">
           <div class="concept__col">
-            <h3>THE FLOATING-POINT NON-DETERMINISM CRISIS</h3>
+            <h3>THE DEPIN COMPUTE TRILEMMA</h3>
             <p data-words>
-              Decentralized artificial intelligence faces a fatal mathematical barrier: floating-point arithmetic is non-associative. In IEEE 754 floating-point operations, $(a + b) + c \ne a + (b + c)$. On physical GPU hardware, warp schedulers, divergent thread interleaving, and Fused Multiply-Add (FMA) instruction reordering cause minor variations in the least significant mantissa bits.
+              Decentralized AI inference faces a silent mathematical catastrophe: floating-point non-determinism. Two distinct GPU architectures (e.g. Hopper H100 vs Blackwell B200) executing identical FP32 weights generate divergent lower-order bits due to fused multiply-add (FMA) reordering and divergent compiler kernels.
             </p>
             <p data-words>
-              When a transformer matrix kernel executes across disparate silicon architectures—such as an NVIDIA Hopper H100 (4th-Gen Tensor Cores), a Blackwell B200 (5th-Gen Tensor Cores), or a consumer Ada Lovelace RTX 4090—cuBLAS microcode variations yield subtle output differences ($10^{-7}$ numerical delta).
-            </p>
-            <p data-words>
-              This is why Ethereum and Solana cannot execute AI inference natively: blockchains require bit-exact deterministic state transitions. A single-bit mantissa discrepancy produces completely distinct cryptographic state hashes ($H(\mathbf{Y}_A) \ne H(\mathbf{Y}_B)$), destroying Byzantine majority voting, preventing automated slashing, and forcing validators to re-execute entire 70B+ parameter neural networks on-chain.
+              Under standard Byzantine fault-tolerant consensus, bit divergence makes majority voting mathematically impossible. Without bit-exact consensus, verifiers cannot slash rogue nodes or validate execution integrity without re-running the entire neural network from scratch—destroying scalability.
             </p>
             <div class="concept__callout">
-              <strong>CANARY PRINCIPLE:</strong> "Execution without bit-exact determinism is not consensus—it is merely statistical guesswork. The Singularity Protocol eliminates floating-point drift at the hardware boundary."
+              <strong>CANARY PRINCIPLE:</strong> "Execution without bit-exact determinism is not consensus—it is merely statistical guesswork."
             </div>
           </div>
 
           <div class="concept__col">
-            <h3>THE 33RD TREE LABS DETERMINISTIC SOLUTION</h3>
+            <h3>THE TENSOR ARBOR SOLUTION</h3>
             <p data-words>
-              33rd Tree Labs resolves the non-determinism crisis through three core cryptographic and mathematical primitives engineered for production GPU clusters:
+              33rd Tree Labs solves the trilemma through three foundational cryptographic and mathematical primitives:
             </p>
             <p data-words>
-              <strong>1. Bit-Exact Integer Reduction Trees (&Delta;&epsilon; = 0.00):</strong> All dot-product tensor reductions are executed over calibrated integer representations: $\langle \mathbf{x}, \mathbf{w} \rangle = \gamma_x \gamma_w \sum_{k=1}^K \mathcal{Q}(\hat{x}_k) \cdot \mathcal{Q}(\hat{w}_k)$. Accumulations run through fixed-width signed 32-bit integer registers (`int32`) in a deterministic binary reduction tree $\text{TreeSum}(v_1, \dots, v_n)$. This eliminates asynchronous accumulation drift, guaranteeing identical outputs down to the lowest bit on H100, B200, and RTX 4090 hardware.
+              <strong>1. Gromov &delta;-Hyperbolic Routing:</strong> Mapping cluster coordinates into negative-curvature hyperbolic spaces, guaranteeing maximum packet routing diameter &le; 8 hops across planet-scale topologies.
             </p>
             <p data-words>
-              <strong>2. Heterogeneous Tri-Vendor Attestation Quorum (2-of-3):</strong> Eliminating single-silicon vulnerabilities by pairing Intel TDX / AMD SEV-SNP (host parameter control) with NVIDIA Hopper Confidential Computing (NV-CC via PCIe SPDM 1.2) and discrete cryptographic co-processor roots.
+              <strong>2. INT8 Quantized Invariants (&Delta;&epsilon; = 0.00):</strong> Enforcing cross-architecture integer quantization so execution produces identical tensor matrices down to the lowest bit on all verified hardware.
             </p>
             <p data-words>
-              <strong>3. Calibrated SmoothQuant INT8 / FP8 (OCP E4M3/E5M2):</strong> Outlier activations exceeding $100\sigma$ are mathematically scaled ($\alpha = 0.85$), bounding perplexity divergence $\Delta \mathcal{L} \le 1.2 \times 10^{-4}$ on 70B+ parameter MoE architectures while achieving absolute zero output delta.
+              <strong>3. Succinct ZK Commitments:</strong> Generating recursive Plonky2 validity proofs of neural states anchored on Solana with sub-second finality.
             </p>
           </div>
         </div>
@@ -2022,7 +1659,7 @@ html_template = r"""<!doctype html>
           </div>
           <div class="above__label">[ TOPOLOGICAL RADIAL ALTITUDE // DESCENT TO SINGULARITY ]</div>
           <p data-words style="color: var(--chalk); font-size: 15px; line-height: 1.65;">
-            Seen from above, the network unfolds as a living neural lattice. As the observer descends through hyperbolic coordinate layers, individual tensor clusters resolve into verified validator nodes on the Poincaré disk.
+            Seen from above, the network unfolds as a living neural lattice. As the observer descends through hyperbolic coordinate layers, individual tensor clusters resolve into deterministic validator nodes.
           </p>
           <div class="above__telemetry-grid">
             <div class="above__telemetry-item">
@@ -2044,16 +1681,7 @@ html_template = r"""<!doctype html>
           <div class="kicker">CHAPTER 02 // NETWORK TOPOLOGY</div>
           <h2>SEEN FROM ABOVE,<br>IT LOOKS LIKE A<br>NEURAL LATTICE.</h2>
           <p data-words>
-            Traditional peer-to-peer compute networks rely on flat Euclidean or XOR-distance DHT topologies (e.g. Kademlia). At planet scale, they degrade catastrophically: $O(N^2)$ communication complexity creates routing table explosion, high-latency multi-hop relays, and extreme vulnerability to Sybil eclipse partitions.
-          </p>
-          <p data-words>
-            The Singularity Protocol embeds the entire validator overlay into a continuous Riemannian 2-manifold with negative Gaussian curvature $\mathbb{H}^2$, parameterized as the Exponential Plunge Hyperboloid:
-          </p>
-          <p style="font-family: var(--fm); font-size: 13px; color: var(--chalk); background: rgba(0,0,0,0.6); padding: 10px 14px; border-left: 2px solid var(--t); margin-bottom: 20px;">
-            r(y) = r_throat + (R_canopy - r_throat) &bull; (e^(k|y|/H) - 1) / (e^k - 1)
-          </p>
-          <p data-words>
-            In Gromov &delta;-hyperbolic geometry, triangles are &delta;-thin: all geodesics plunge inward through the central arbor throat and fan outward with tree-like exponential metric expansion. This mathematically bounds the maximum cluster routing diameter to &le; 8 hops across planet-wide nodes under &gt; 40% adversarial churn.
+            Traditional peer-to-peer compute networks degrade exponentially with scale: $O(N^2)$ communication complexity suffocates latency. By embedding cluster nodes into a Poincaré disk model of Gromov hyperbolic geometry, routing paths follow geodesics that plunge toward the center and branch outward with logarithmic efficiency.
           </p>
           <div style="display: flex; gap: 14px; flex-wrap: wrap;">
             <a href="whitepaper.html" class="btn-action primary">[ READ WHITEPAPER ]</a>
@@ -2079,25 +1707,25 @@ html_template = r"""<!doctype html>
               <span class="step__nr">INSTRUCTION 01</span>
               <span class="step__verb">DISPATCH</span>
             </div>
-            <div class="step__desc">Inference tasks mapped into hyperbolic arbor coordinates; input activations quantized to deterministic INT8 invariants with exact scaling factors (&gamma;_x, &gamma;_w).</div>
+            <div class="step__desc">Inference tasks mapped into hyperbolic arbor coordinates; neural weights quantized to deterministic INT8 invariants.</div>
             <div class="step__bar"><i style="transform: scaleX(1);"></i></div>
           </div>
 
           <div class="step" data-step="1">
             <div class="step__header">
               <span class="step__nr">INSTRUCTION 02</span>
-              <span class="step__verb">BYZANTINE CONSENSUS</span>
+              <span class="step__verb">CONSENSUS</span>
             </div>
-            <div class="step__desc">K=64 validator committee evaluates integer reduction trees in int32 registers. Because &Delta;&epsilon; = 0.00, honest nodes generate bit-exact identical activation hashes H(Y_t) with &gt; 2/3 agreement.</div>
+            <div class="step__desc">K=64 Byzantine validator committee evaluates execution output hashes with bit-exact zero delta verification.</div>
             <div class="step__bar"><i></i></div>
           </div>
 
           <div class="step" data-step="2">
             <div class="step__header">
               <span class="step__nr">INSTRUCTION 03</span>
-              <span class="step__verb">ZK COMMITMENT</span>
+              <span class="step__verb">COMMITMENT</span>
             </div>
-            <div class="step__desc">Plonky2 recursive STARK folding and BN254 KZG polynomial opening proofs compress the neural execution boundary into a compact 304-byte header anchored to Solana.</div>
+            <div class="step__desc">Plonky2 / KZG zero-knowledge validity proof generated and anchored directly to Solana blockchain state.</div>
             <div class="step__bar"><i></i></div>
           </div>
 
@@ -2106,7 +1734,7 @@ html_template = r"""<!doctype html>
               <span class="step__nr">INSTRUCTION 04</span>
               <span class="step__verb">SETTLE & BURN</span>
             </div>
-            <div class="step__desc">On-chain Solana Anchor program verifies the proof header in sub-second time. Automatically distributes 75% hardware yield, 15% treasury R&D, and permanently burns 10% to the Solana Incinerator.</div>
+            <div class="step__desc">75% hardware yield distributed, 15% R&D multisig, 10% perpetually burned to Solana Incinerator.</div>
             <div class="step__bar"><i></i></div>
           </div>
         </div>
@@ -2141,7 +1769,7 @@ html_template = r"""<!doctype html>
           <div class="pair-card">
             <div class="pair-card__tag">CLUSTER 01 // H100 SXM5 80GB HBM3</div>
             <div class="pair-card__title">FRONTIER DEEP LEARNING</div>
-            <div class="pair-card__desc">Ultra-high bandwidth NVLink 4.0 clusters (900 GB/s bidirectional) dedicated to massive 70B - 405B MoE inference, multi-billion parameter checkpoint evaluations, and parallel tensor reduction trees.</div>
+            <div class="pair-card__desc">Ultra-high bandwidth NVLink clusters dedicated to large MoE inference, multi-billion parameter checkpoint evaluations, and parallel tensor reduction.</div>
             <div class="pair-card__stat-grid">
               <div>
                 <div class="pair-card__stat-val">3,350 GB/s</div>
@@ -2158,11 +1786,11 @@ html_template = r"""<!doctype html>
           <div class="pair-card">
             <div class="pair-card__tag">CLUSTER 02 // B200 BLACKWELL</div>
             <div class="pair-card__title">NEXT-GEN QUANTUM-RESILIENT</div>
-            <div class="pair-card__desc">Dual-die Blackwell accelerators with NVLink 5.0 (1.8 TB/s) executing 5th-Gen Tensor Core operations (4,500 TFLOPS FP4, 2,250 TFLOPS FP8) and live sub-1.84ms KZG polynomial proof generation.</div>
+            <div class="pair-card__desc">Dedicated FP4 / FP8 neural pipeline accelerators executing live real-time KZG polynomial commitments and recursive STARK verification.</div>
             <div class="pair-card__stat-grid">
               <div>
                 <div class="pair-card__stat-val">8,000 GB/s</div>
-                <div class="pair-card__stat-lbl">HBM3e Bandwidth</div>
+                <div class="pair-card__stat-lbl">Memory Bandwidth</div>
               </div>
               <div>
                 <div class="pair-card__stat-val">&lt; 1.84ms</div>
@@ -2175,11 +1803,11 @@ html_template = r"""<!doctype html>
           <div class="pair-card">
             <div class="pair-card__tag">CLUSTER 03 // RTX 4090 & 5090 EDGE</div>
             <div class="pair-card__title">DECENTRALIZED WORKERS</div>
-            <div class="pair-card__desc">Dense consumer-tier GPU nodes providing distributed edge inference (8B models), Freivalds random matrix checks, and QUIC overlay routing across sovereign hardware owners.</div>
+            <div class="pair-card__desc">Dense consumer-tier GPU clusters providing distributed edge inference and zero-knowledge batch proof generation across sovereign nodes.</div>
             <div class="pair-card__stat-grid">
               <div>
                 <div class="pair-card__stat-val">24GB - 32GB</div>
-                <div class="pair-card__stat-lbl">GDDR6X/7 VRAM</div>
+                <div class="pair-card__stat-lbl">VRAM Capacity</div>
               </div>
               <div>
                 <div class="pair-card__stat-val">75% Yield</div>
@@ -2192,7 +1820,7 @@ html_template = r"""<!doctype html>
           <div class="pair-card">
             <div class="pair-card__tag">TOKENOMICS // VERIFIED IMMUTABLE</div>
             <div class="pair-card__title">33,333,333 HARD CAP</div>
-            <div class="pair-card__desc">Strict deflationary mechanics with 100% of initial DEX LP tokens burned forever to Solana Incinerator. Daily inference fees exceeding 51,370 $33RD trigger net deflation (Burn > Emissions).</div>
+            <div class="pair-card__desc">Strict deflationary mechanics with 100% of initial LP tokens sent directly to Solana Incinerator. Protocol burns fees perpetually on every compute cycle.</div>
             <div class="pair-card__stat-grid">
               <div>
                 <div class="pair-card__stat-val">33,333,333</div>
@@ -2209,15 +1837,15 @@ html_template = r"""<!doctype html>
           <div class="pair-card">
             <div class="pair-card__tag">GEOMETRY // TOPOLOGY</div>
             <div class="pair-card__title">POINCARÉ DISK EMBEDDING</div>
-            <div class="pair-card__desc">Nodes mapped to negative curvature coordinates (&kappa; = -1.414). Packets navigate along geodesic hyperbolas, bounding global diameter to &le; 8 hops and rendering Sybil eclipse attacks exponentially expensive.</div>
+            <div class="pair-card__desc">Nodes mapped to negative curvature coordinates. Packets navigate along geodesic hyperbolas, preventing mesh congestion and network partitioning.</div>
             <div class="pair-card__stat-grid">
               <div>
                 <div class="pair-card__stat-val">&le; 8 Hops</div>
                 <div class="pair-card__stat-lbl">Max Global Diameter</div>
               </div>
               <div>
-                <div class="pair-card__stat-val">&gt; 40%</div>
-                <div class="pair-card__stat-lbl">Churn Fault Tolerance</div>
+                <div class="pair-card__stat-val">&kappa; = -1.414</div>
+                <div class="pair-card__stat-lbl">Negative Curvature</div>
               </div>
             </div>
           </div>
@@ -2226,8 +1854,8 @@ html_template = r"""<!doctype html>
     </section>
 
     <!-- ===================================================================
-         CHAPTER 05: MATHEMATICAL INVARIANTS & FORMAL VERIFICATION
-         ===================================================================== -->
+         CHAPTER 05: MATHEMATICAL INVARIANTS & BYZANTINE SLASHING
+         =================================================================== -->
     <section class="invariants" id="invariants">
       <div class="invariants__inner">
         <div class="kicker">CHAPTER 05 // MATHEMATICAL INVARIANTS &amp; FORMAL VERIFICATION</div>
@@ -2247,7 +1875,7 @@ html_template = r"""<!doctype html>
               <div class="invariant-card__title">DETERMINISTIC INT8 REDUCTION</div>
               <div class="invariant-card__formula">&Delta;&epsilon; = 0.00 &bull; BIT-EXACT</div>
               <div class="invariant-card__desc" data-words>
-                Eliminating floating-point divergence (FMA reordering) across heterogeneous hardware backends (Hopper, Blackwell, Ada) via bit-exact integer reduction trees. Execution produces identical tensor outputs across all verified architectures down to the lowest bit.
+                Eliminating floating-point divergence (FMA reordering) across heterogeneous hardware backends (Hopper, Blackwell, Ada) via bit-exact integer reduction trees. Execution produces identical tensor outputs across all verified architectures.
               </div>
             </div>
             <div class="invariant-card__foot">
@@ -2261,7 +1889,7 @@ html_template = r"""<!doctype html>
               <div class="invariant-card__title">QUADRATIC SLASHING ESCALATION</div>
               <div class="invariant-card__formula">S_penal(n) = min(1.0, k &bull; n&sup2; &bull; S_base)</div>
               <div class="invariant-card__desc" data-words>
-                Correlated Byzantine faults within an unbonding epoch trigger quadratic capital destruction. Sybil cartels attempting coordinated state divergence suffer total staked collateral annihilation: S_penal(n) = min(1.0, k &bull; n&sup2; &bull; S_base) where k=0.0016.
+                Correlated Byzantine faults within an unbonding epoch trigger quadratic capital destruction. Sybil cartels attempting coordinated state divergence suffer total staked collateral annihilation.
               </div>
             </div>
             <div class="invariant-card__foot">
@@ -2275,11 +1903,11 @@ html_template = r"""<!doctype html>
               <div class="invariant-card__title">10% INCINERATOR BURN FLOOR</div>
               <div class="invariant-card__formula">1nc1nerator...1111 &bull; DEFLATIONARY</div>
               <div class="invariant-card__desc" data-words>
-                10% of every inference micro-fee is atomically routed to the Solana Incinerator for permanent destruction. When daily volume exceeds 51,370 $33RD, burn exceeds emissions, locking in strict monetary deflation.
+                10% of every inference micro-fee is atomically routed to the Solana Incinerator for permanent destruction. When daily volume exceeds 51,370 RD, burn exceeds emissions, locking in strict monetary deflation.
               </div>
             </div>
             <div class="invariant-card__foot">
-              <span>TIPPING POINT: &gt; 51,370 $33RD / DAY</span>
+              <span>TIPPING POINT: &gt; 51,370 RD / DAY</span>
             </div>
           </div>
         </div>
@@ -2288,7 +1916,7 @@ html_template = r"""<!doctype html>
         <div class="slashing-table-wrap">
           <div class="slashing-table-header">
             <span>BYZANTINE SLASHING PENALTY MATRIX // SOLANA ANCHOR ESCROW</span>
-            <span>MIN STAKE: 25,000 $33RD</span>
+            <span>MIN STAKE: 25,000 RD</span>
           </div>
           <div class="slashing-table-grid">
             <div class="slashing-row header">
@@ -2320,7 +1948,7 @@ html_template = r"""<!doctype html>
               <span style="color: #FF9800; font-weight: 700;">HIGH</span>
               <span class="slashing-val-crimson">25%</span>
               <span>25% Burned to Incinerator</span>
-              <span>Challenger rewarded with 5,000 $33RD bounty</span>
+              <span>Challenger rewarded with 5,000 RD bounty</span>
             </div>
 
             <div class="slashing-row">
@@ -2342,7 +1970,7 @@ html_template = r"""<!doctype html>
             <div class="slashing-row">
               <span style="color: var(--chalk); font-weight: 700;">Tier-1 Speculative Fraud Execution</span>
               <span style="color: #FF9800; font-weight: 700;">HIGH</span>
-              <span class="slashing-val-crimson">50,000 $33RD</span>
+              <span class="slashing-val-crimson">50,000 RD</span>
               <span>100% Proposer Bond Slashed</span>
               <span>Client awarded 10x refund; slot slashed</span>
             </div>
@@ -2361,118 +1989,69 @@ html_template = r"""<!doctype html>
       </div>
       <div class="film-overlay-text">
         <span class="dot"></span>
-        <span style="display: inline-flex; flex-direction: column; gap: 6px; text-align: left;">
+        <span style="display: inline-flex; flex-direction: column; gap: 4px; text-align: center;">
           <span style="font-family: var(--fm); font-size: 10px; color: var(--t); letter-spacing: 0.16em; font-weight: 700;">CHAPTER 06 // HARDWARE &amp; SCHEMATIC EXHIBITION</span>
-          <span style="font-size: 13px; font-weight: 700; color: #FFFFFF;">EXPONENTIAL PLUNGE TENSOR ARBOR WIREFRAME // MARK #06 SPECIFICATION</span>
-          <span style="font-family: var(--fm); font-size: 10px; color: var(--dim); max-width: 680px; line-height: 1.45;">
-            Manifold parameters: H = 2.4, R_canopy = 1.50, r_throat = 0.09, plunge curvature k = 3.80. Stark white canopy rim nodes coordinate incoming QUIC ingress streams, while crimson red (#FF2424) apex and needle-throat singularity coordinates execute recursive BN254 KZG polynomial root aggregation and global state tree folding.
-          </span>
+          <span>EXPONENTIAL PLUNGE TENSOR ARBOR WIREFRAME // MARK #06 SINGULARITY SPECIFICATION</span>
         </span>
       </div>
     </section>
 
     <!-- ===================================================================
-         CHAPTER 07: POINCARÉ HYPERBOLIC TENSOR ARBOR SIMULATOR
+         CHAPTER 07: INTERACTIVE CONSENSUS & CELLULAR PLAYGROUND
          =================================================================== -->
     <section class="play" id="playground">
       <div class="play__inner">
-        <div>
-          <div class="play__canvas-box" style="position: relative; height: 500px; background: #050508; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 36, 36, 0.2);">
-            <!-- INTEGRATED LIVE CONSENSUS TELEMETRY HUD -->
-            <div class="consensus-hud">
-              <div class="consensus-hud__header">
-                <span class="consensus-hud__title">
-                  <span class="hud-live-dot"></span>
-                  <span>CONSENSUS TELEMETRY HUD // REAL-TIME ANCHOR MONITOR</span>
-                </span>
-                <span id="hud-status" class="hud-status-badge">SUPERMAJORITY ATTAINED</span>
-              </div>
-              <div class="consensus-hud__grid">
-                <div class="hud-metric">
-                  <span class="hud-label">ACTIVE QUORUM CONVERGENCE</span>
-                  <span class="hud-value" id="hud-quorum">64 / 64 Nodes Converged</span>
-                  <span class="hud-sub" id="hud-quorum-sub">&gt; 2/3 Supermajority Attained</span>
-                </div>
-                <div class="hud-metric">
-                  <span class="hud-label">BIT-EXACT INFERENCE PRECISION</span>
-                  <span class="hud-value" id="hud-invariant" style="color: var(--t);">&Delta;&epsilon; = 0.00 INT8</span>
-                  <span class="hud-sub">cuBLAS/FMA Invariant Guaranteed</span>
-                </div>
-                <div class="hud-metric">
-                  <span class="hud-label">SOLANA ANCHOR SETTLEMENT</span>
-                  <span class="hud-value" id="hud-slot">Sub-second Commit</span>
-                  <span class="hud-sub">Slot Finality: 400ms Speculative</span>
-                </div>
-                <div class="hud-metric">
-                  <span class="hud-label">SOLANA INCINERATOR BURN</span>
-                  <span class="hud-value" style="color: var(--t);">10% Fee Burned</span>
-                  <span class="hud-sub">1nc1nerator...1111 Permanent</span>
-                </div>
-              </div>
-            </div>
-
-            <canvas id="playground-canvas"></canvas>
-            <div id="play-flash-banner" style="position: absolute; top: 90px; left: 50%; transform: translateX(-50%); background: rgba(255, 36, 36, 0.2); border: 1px solid #FF2424; color: #FFFFFF; font-family: var(--fm); font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; padding: 4px 16px; border-radius: 4px; pointer-events: none; opacity: 0; transition: opacity 0.25s; z-index: 12;">STATE COMMITTED // ANCHOR VERIFIED</div>
-          </div>
-
-          <!-- PROTOCOL CONTEXT EXPLANATORY CALLOUT CARDS -->
-          <div class="node-context-grid">
-            <div class="node-legend-card crimson">
-              <div class="legend-badge">TIER 1 &amp; 2 // H100 SXM5 &amp; B200 BLACKWELL HUBS</div>
-              <div class="legend-title">COORDINATORS &amp; REDUCTION HUBS</div>
-              <p>
-                Inner and middle hyperbolic horocycles (&rho; = 0.29, &rho; = 0.66). Primary coordinators and tensor reduction hubs executing bit-exact INT8 matrix consensus (&Delta;&epsilon; = 0.00) with sub-second Solana anchor settlement.
-              </p>
-            </div>
-            <div class="node-legend-card obsidian">
-              <div class="legend-badge">TIER 3 // RTX 4090 DISTRIBUTED EDGE QUORUM</div>
-              <div class="legend-title">GROMOV GEODESIC EDGE MANIFOLD</div>
-              <p>
-                Outer hyperbolic perimeter (&rho; = 1.25, K=64). Edge compute nodes routing tensor packets (&otimes;, &nabla;, &lambda;, &Delta;) along Gromov geodesics (&le; 8 hops). Automatic Byzantine isolation and tree bypass routing.
-              </p>
-            </div>
-          </div>
+        <div class="play__canvas-box">
+          <canvas id="playground-canvas"></canvas>
+          <div class="play__canvas-badge">CELLULAR TENSOR MATRIX // INTERACTIVE FIELD</div>
         </div>
 
         <div class="play__controls">
-          <div class="kicker">CHAPTER 07 // POINCARÉ HYPERBOLIC SIMULATOR</div>
-          <h3>POINCARÉ DISK MODEL // GROMOV &delta;-HYPERBOLIC ARBOR</h3>
-          <p style="font-size: 13px; color: var(--dim); line-height: 1.55; margin-bottom: 6px;">
-            Circular Poincaré disk model of Gromov &delta;-hyperbolic geometry (&kappa; = -1.414). Scale the quorum committee from K=16 to 64, inject Byzantine floating-point drift, and watch traffic route around rogue nodes via geodesic bypass!
-          </p>
+          <div class="kicker">CHAPTER 07 // LIVE PROTOCOL SIMULATOR &amp; CONSENSUS SANDBOX</div>
+          <h3>CONSENSUS PLAYGROUND</h3>
           
           <div class="play__row">
             <div class="play__row-head">
-              <span>QUORUM COMMITTEE SLIDER (K=16 TO 64)</span>
+              <span>BYZANTINE QUORUM COMMITTEE (K)</span>
               <span id="k-out">64</span>
             </div>
-            <input type="range" id="k-slider" min="16" max="64" value="64" step="1">
-            <span class="play__row-desc">Controls committee size. Agreement threshold &gt; 2/3 K triggers crimson pulse: STATE COMMITTED // ANCHOR VERIFIED.</span>
+            <input type="range" id="k-slider" min="16" max="64" value="64" step="8">
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-family: var(--fm); font-size: 10px; margin-top: 4px;">
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 8px 10px; border-radius: 4px;">
-              <div style="color: var(--slate); font-size: 8.5px;">ROUTING DIAMETER</div>
-              <div style="color: #FFFFFF; font-weight: 700; margin-top: 2px;">&le; 8 Hops (Geodesic)</div>
+          <div class="play__row">
+            <div class="play__row-head">
+              <span>CELL RESOLUTION</span>
+              <span id="res-out">32</span>
             </div>
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 8px 10px; border-radius: 4px;">
-              <div style="color: var(--slate); font-size: 8.5px;">CONSENSUS INVARIANT</div>
-              <div id="play-invariant-tag" style="color: #00E676; font-weight: 700; margin-top: 2px;">&Delta;&epsilon; = 0.00 INT8</div>
+            <input type="range" id="res-slider" min="16" max="64" value="32" step="4">
+          </div>
+
+          <div class="play__row">
+            <div class="play__row-head">
+              <span>MANIFOLD VELOCITY</span>
+              <span id="speed-out">0.6</span>
             </div>
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 8px 10px; border-radius: 4px;">
-              <div style="color: var(--slate); font-size: 8.5px;">SOLANA SETTLEMENT</div>
-              <div style="color: #FFFFFF; font-weight: 700; margin-top: 2px;">Sub-second Anchor</div>
+            <input type="range" id="speed-slider" min="0.1" max="2.5" value="0.6" step="0.1">
+          </div>
+
+          <div class="play__row">
+            <div class="play__row-head">
+              <span>TENSOR SYMBOL FIELD SWITCHER</span>
+              <span id="mode-out">TENSOR [⊗ / ∇]</span>
             </div>
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 8px 10px; border-radius: 4px;">
-              <div style="color: var(--slate); font-size: 8.5px;">CUMULATIVE BURN</div>
-              <div style="color: var(--t); font-weight: 700; margin-top: 2px;">10% to 1nc1nerator</div>
+            <div class="play__charset-grid">
+              <button type="button" class="play__charset-btn active" data-mode="tensor">&otimes; / &nabla;</button>
+              <button type="button" class="play__charset-btn" data-mode="hyperbolic">&lambda; / &Delta;</button>
+              <button type="button" class="play__charset-btn" data-mode="lattice">&#9532; / &middot;</button>
+              <button type="button" class="play__charset-btn" data-mode="reduction">&Sigma; / T</button>
             </div>
           </div>
 
-          <div style="display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap;">
-            <button type="button" id="btn-play-fault" class="btn-action" style="background: #FF2424; color: #000; border-color: #FF2424; font-weight: 700;">[ INJECT BYZANTINE FAULT ]</button>
-            <button type="button" id="btn-play-reset" class="btn-action" style="background: transparent; color: #FFF; border-color: rgba(255,255,255,0.4); font-weight: 700;">[ RESET / SYNC QUORUM ]</button>
-            <a href="simulator.html" class="btn-action primary">FULL SIMULATOR SUITE &rarr;</a>
+          <div class="play__btn-row">
+            <button type="button" id="btn-pause" class="btn-action">PAUSE</button>
+            <button type="button" id="btn-random" class="btn-action">RANDOM SEED</button>
+            <button type="button" id="btn-save-png" class="btn-action">EXPORT PNG</button>
+            <a href="simulator.html" class="btn-action primary">FULL SIMULATOR &rarr;</a>
           </div>
         </div>
       </div>
@@ -2491,7 +2070,7 @@ html_template = r"""<!doctype html>
         <div class="spec-table-wrap">
           <div class="spec-table-head">
             <span>TECHNICAL SPECIFICATION MATRIX // CANARY V4.0</span>
-            <span>OFFICIAL DOMAIN: 33RDTREELABS.TECH</span>
+            <span>DOMAIN: 33RDTREELABS.TECH</span>
           </div>
           <div class="spec-table-grid">
             <div class="spec-row">
@@ -2503,15 +2082,11 @@ html_template = r"""<!doctype html>
               <span class="spec-val">SOLANA MAINNET-BETA</span>
             </div>
             <div class="spec-row">
-              <span class="spec-key">TOTAL TOKEN HARD CAP</span>
+              <span class="spec-key">HARD CAP TOKEN SUPPLY</span>
               <span class="spec-val crimson">33,333,333 $33RD</span>
             </div>
             <div class="spec-row">
-              <span class="spec-key">MINT AUTHORITY STATUS</span>
-              <span class="spec-val crimson">REVOKED AT GENESIS (IMMUTABLE)</span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-key">INITIAL LP LIQUIDITY</span>
+              <span class="spec-key">LP LIQUIDITY STATUS</span>
               <span class="spec-val crimson">100% BURNED TO INCINERATOR</span>
             </div>
             <div class="spec-row">
@@ -2519,78 +2094,39 @@ html_template = r"""<!doctype html>
               <span class="spec-val"><code>1nc1nerator11111111111111111111111111111111</code></span>
             </div>
             <div class="spec-row">
-              <span class="spec-key">MINIMUM NODE STAKE BOND</span>
+              <span class="spec-key">MINIMUM NODE STAKE</span>
               <span class="spec-val">25,000 $33RD</span>
             </div>
             <div class="spec-row">
-              <span class="spec-key">DEFLATIONARY VOLUME TIPPING POINT</span>
-              <span class="spec-val crimson">&gt; 51,370 $33RD / DAY (BURN &gt; EMISSIONS)</span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-key">FEE DISTRIBUTION SPLIT</span>
-              <span class="spec-val">75% OPERATORS / 15% R&D / 10% BURN</span>
-            </div>
-            <div class="spec-row">
               <span class="spec-key">BYZANTINE QUORUM SIZE</span>
-              <span class="spec-val">K = 64 NODES (&gt; 2/3 SUPERMAJORITY)</span>
+              <span class="spec-val">K = 64 NODES</span>
             </div>
             <div class="spec-row">
               <span class="spec-key">MAX ROUTING DIAMETER</span>
               <span class="spec-val">&le; 8 HOPS (GROMOV HYPERBOLIC)</span>
             </div>
             <div class="spec-row">
-              <span class="spec-key">EVALUATION TOLERANCE</span>
+              <span class="spec-key">EVALUATION PRECISION</span>
               <span class="spec-val">&Delta;&epsilon; = 0.00 DETERMINISTIC INT8</span>
             </div>
             <div class="spec-row">
-              <span class="spec-key">ZK VALIDITY COMMITMENTS</span>
-              <span class="spec-val">RECURSIVE PLONKY2 / BN254 KZG</span>
+              <span class="spec-key">ZK VALIDITY PROOFS</span>
+              <span class="spec-val">RECURSIVE PLONKY2 / KZG</span>
             </div>
             <div class="spec-row">
-              <span class="spec-key">UNBONDING ESCROW PERIOD</span>
-              <span class="spec-val">7 DAYS (10,080 SOLANA BLOCKS)</span>
+              <span class="spec-key">HARDWARE YIELD ALLOCATION</span>
+              <span class="spec-val">75% OPERATORS / 15% R&D / 10% BURN</span>
             </div>
             <div class="spec-row">
-              <span class="spec-key">CANONICAL PROTOCOL DOMAIN</span>
+              <span class="spec-key">CANONICAL DOMAIN</span>
               <span class="spec-val"><code>33rdtreelabs.tech</code></span>
             </div>
-            <div class="spec-row">
-              <span class="spec-key">SMART CONTRACT FRAMEWORK</span>
-              <span class="spec-val">ANCHOR SEALEVEL EBPF RUNTIME</span>
-            </div>
           </div>
-        </div>
-
-        <!-- NEWSLETTER SUBSCRIPTION DISPATCH -->
-        <div class="newsletter-card">
-          <div class="newsletter-head">
-            <span class="kicker" style="margin-bottom: 4px;">PROTOCOL TELEMETRY // DISPATCH</span>
-            <h3>SUBSCRIBE TO THE ARBOR DISPATCH</h3>
-            <p>Receive verified consensus telemetry, validator slashing audits, and epoch burn reports directly to your terminal or inbox.</p>
-          </div>
-          <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('.newsletter-success').style.display='block'; this.querySelector('.newsletter-input-group').style.display='none';">
-            <div class="newsletter-input-group">
-              <input type="email" placeholder="ENTER VALIDATOR OR OPERATOR EMAIL..." required class="newsletter-input">
-              <button type="submit" class="newsletter-submit">[ SUBSCRIBE ]</button>
-            </div>
-            <div class="newsletter-success" style="display: none; color: #FF2424; font-family: var(--fm); font-size: 12px; margin-top: 10px; font-weight: 700;">
-              [ SUBSCRIPTION CONFIRMED // TELEMETRY LINKED ]
-            </div>
-          </form>
-        </div>
-
-        <!-- SOCIAL LINKS GRID -->
-        <div class="social-links-grid">
-          <a href="https://x.com/33rdTreeLabs" target="_blank" rel="noopener noreferrer" class="social-link">[ X // TWITTER ]</a>
-          <a href="https://github.com/0xplayboi-ian/33rd-tree-labs" target="_blank" rel="noopener noreferrer" class="social-link">[ GITHUB REPO ]</a>
-          <a href="https://t.me/33rdTreeLabs" target="_blank" rel="noopener noreferrer" class="social-link">[ TELEGRAM COMMS ]</a>
-          <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="social-link highlight">[ DOWNLOAD WHITEPAPER PDF ]</a>
-          <a href="https://33rdtreelabs.tech/" class="social-link">[ CANONICAL DOMAIN ]</a>
         </div>
 
         <div class="finale__actions">
           <div class="finale__links">
-            <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="btn-finale">[ DOWNLOAD WHITEPAPER PDF ]</a>
+            <a href="whitepaper.html" class="btn-finale">[ READ FULL WHITEPAPER ]</a>
             <a href="protocol.html" class="btn-finale outline">[ PROTOCOL SPECS ]</a>
             <a href="nodes.html" class="btn-finale outline">[ JOIN NODE NETWORK ]</a>
           </div>
@@ -2664,10 +2200,10 @@ html_template = r"""<!doctype html>
 
     /* B. GENERATIVE TENSOR & HYPERBOLIC FIELD MODES */
     const MODES = {
-      tensor:     { key: "tensor",     t: "⊗", f: "∇", tc: "#FF2424", fc: "#383846", scale: 0.015, label: "TENSOR [⊗ / ∇]" },
-      hyperbolic: { key: "hyperbolic", t: "λ", f: "Δ", tc: "#FF2424", fc: "#383846", scale: 0.014, label: "HYPERBOLIC [λ / Δ]" },
+      tensor:     { key: "tensor",     t: "⊗", f: "∇", tc: "#FF292C", fc: "#383846", scale: 0.015, label: "TENSOR [⊗ / ∇]" },
+      hyperbolic: { key: "hyperbolic", t: "λ", f: "Δ", tc: "#FF292C", fc: "#383846", scale: 0.014, label: "HYPERBOLIC [λ / Δ]" },
       lattice:    { key: "lattice",    t: "┼", f: "·", tc: "#F2F2F5", fc: "#2B2B38", scale: 0.018, label: "LATTICE [┼ / ·]" },
-      reduction:  { key: "reduction",  t: "Σ", f: "T", tc: "#FF2424", fc: "#383846", scale: 0.013, label: "REDUCTION [Σ / T]" }
+      reduction:  { key: "reduction",  t: "Σ", f: "T", tc: "#FF292C", fc: "#383846", scale: 0.013, label: "REDUCTION [Σ / T]" }
     };
     let currentMode = "tensor";
 
@@ -2685,7 +2221,6 @@ html_template = r"""<!doctype html>
         this.mouseY = -1000;
         this.mouseRadius = 140;
         this.tiles = new Map();
-        this.activeRatio = 0.75;
         
         this.resize();
         window.addEventListener('resize', () => this.resize());
@@ -2738,7 +2273,7 @@ html_template = r"""<!doctype html>
 
         if (excited) {
           // Cursor hover excitement: brilliant crimson pulse with stark white tensor symbol
-          ctx.fillStyle = "#FF2424";
+          ctx.fillStyle = "#FF292C";
           ctx.fillRect(0, 0, s, s);
           ctx.strokeStyle = "#FFFFFF";
           ctx.lineWidth = Math.max(1, s * 0.05);
@@ -2749,22 +2284,22 @@ html_template = r"""<!doctype html>
           ctx.textBaseline = "middle";
           ctx.fillText(val ? m.t : m.f, s / 2, s / 2);
         } else if (val) {
-          // Verified Crimson Node (#FF2424): Deterministic INT8 execution with valid KZG proof
-          ctx.fillStyle = "#120506";
+          // Active Tensor Node: Deep obsidian background, razor-sharp hairline frame, crimson symbol
+          ctx.fillStyle = "#0c0607";
           ctx.fillRect(0, 0, s, s);
-          ctx.strokeStyle = "rgba(255, 36, 36, 0.40)";
+          ctx.strokeStyle = "rgba(255, 36, 36, 0.28)";
           ctx.lineWidth = 1;
           ctx.strokeRect(0.5, 0.5, s - 1, s - 1);
-          ctx.fillStyle = m.tc || "#FF2424";
+          ctx.fillStyle = m.tc || "#FF292C";
           ctx.font = `700 ${Math.max(9, Math.round(s * 0.52))}px "JetBrains Mono", "Obel Mono", monospace`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           ctx.fillText(m.t, s / 2, s / 2);
         } else {
-          // Obsidian Node (#070707): Unsynchronized, partitioned, or divergent node
-          ctx.fillStyle = "#070707";
+          // Quiescent Lattice State: Pure obsidian plate, faint hairline border, muted vector glyph
+          ctx.fillStyle = "#050507";
           ctx.fillRect(0, 0, s, s);
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.04)";
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.035)";
           ctx.lineWidth = 1;
           ctx.strokeRect(0.5, 0.5, s - 1, s - 1);
           ctx.fillStyle = m.fc || "#32323E";
@@ -2785,8 +2320,6 @@ html_template = r"""<!doctype html>
         const m = MODES[this.mode];
         const ctx = this.ctx;
         const radSq = (this.mouseRadius * this.dpr) * (this.mouseRadius * this.dpr);
-        let activeCount = 0;
-        const total = this.rows * this.cols;
 
         for (let r = 0; r < this.rows; r++) {
           const cy = (r + 0.5) * this.ch;
@@ -2801,14 +2334,10 @@ html_template = r"""<!doctype html>
             const distSq = dx * dx + dy * dy;
             const isExcited = distSq < radSq;
 
-            const n = Noise.noise(cx * m.scale, cy * m.scale, this.t) > 0.45;
-            if (n) activeCount++;
+            const n = Noise.noise(cx * m.scale, cy * m.scale, this.t) > 0.5;
             const tImg = this.tile(m, n ? 1 : 0, isExcited);
             ctx.drawImage(tImg, px, py);
           }
-        }
-        if (total > 0) {
-          this.activeRatio = activeCount / total;
         }
       }
     }
@@ -2827,100 +2356,21 @@ html_template = r"""<!doctype html>
       aboveField = new MatrixField(aboveCanvas, { cell: 38, mode: "hyperbolic", speed: 0.3 });
     }
 
-    // Initialize Poincaré Hyperbolic Tensor Arbor Simulator on playground-canvas
+    // Initialize Playground Field
     const playCanvas = document.getElementById('playground-canvas');
-    let playSim = null;
-    const hudQuorum = document.getElementById('hud-quorum');
-    const hudQuorumSub = document.getElementById('hud-quorum-sub');
-    const hudStatus = document.getElementById('hud-status');
-    const hudSlot = document.getElementById('hud-slot');
-    const hudInvariant = document.getElementById('hud-invariant');
-    const playInvariantTag = document.getElementById('play-invariant-tag');
-    const kOut = document.getElementById('k-out');
-    let simulatedSlot = 318492040;
-
-    function updatePlaygroundHUD(m) {
-      if (!m) return;
-      if (kOut) kOut.textContent = `${m.k} (${m.honestCount}/${m.totalActive} Honest)`;
-      if (hudQuorum) hudQuorum.textContent = `${m.honestCount} / ${m.totalActive} Nodes Converged`;
-      if (hudQuorumSub) {
-        const pct = Math.round(m.honestRatio * 100);
-        hudQuorumSub.textContent = `${pct}% Agreement (> 66.7% Required)`;
-      }
-      if (hudInvariant) {
-        hudInvariant.textContent = m.faultCount === 0 ? 'Δε = 0.00 INT8' : 'Δε = +0.47 FP16 (BYPASS)';
-        hudInvariant.style.color = m.faultCount === 0 ? 'var(--t)' : '#FFAA00';
-      }
-      if (playInvariantTag) {
-        playInvariantTag.textContent = m.faultCount === 0 ? 'Δε = 0.00 INT8' : 'Δε = +0.47 FP16 (BYPASS)';
-        playInvariantTag.style.color = m.faultCount === 0 ? '#00E676' : '#FFAA00';
-      }
-      if (hudStatus) {
-        if (m.isQuorum) {
-          hudStatus.textContent = 'SUPERMAJORITY ATTAINED';
-          hudStatus.style.color = '#FF2424';
-          hudStatus.style.borderColor = 'rgba(255, 36, 36, 0.4)';
-          hudStatus.style.background = 'rgba(255, 36, 36, 0.15)';
-        } else {
-          hudStatus.textContent = 'PARTITION RECONCILING';
-          hudStatus.style.color = '#FFAA00';
-          hudStatus.style.borderColor = 'rgba(255, 170, 0, 0.4)';
-          hudStatus.style.background = 'rgba(255, 170, 0, 0.15)';
-        }
-      }
-      if (hudSlot && Math.random() < 0.1) {
-        simulatedSlot += 1;
-        hudSlot.textContent = `Slot #${simulatedSlot} Commit`;
-      }
-    }
-
-    if (playCanvas && typeof PoincareHyperbolicSimulator !== 'undefined') {
-      playSim = new PoincareHyperbolicSimulator(playCanvas, {
-        k: 64,
-        speed: 1.0,
-        interactive: true,
-        flashBannerElement: document.getElementById('play-flash-banner'),
-        onQuorumChange: (m) => updatePlaygroundHUD(m),
-        onByzantineEvent: (node, m) => updatePlaygroundHUD(m)
-      });
-    }
-
-    const kSlider = document.getElementById('k-slider');
-    if (kSlider) {
-      kSlider.addEventListener('input', (e) => {
-        const val = parseInt(e.target.value, 10);
-        if (playSim) playSim.setK(val);
-      });
-    }
-
-    const btnPlayFault = document.getElementById('btn-play-fault');
-    if (btnPlayFault) {
-      btnPlayFault.addEventListener('click', () => {
-        if (playSim) playSim.injectByzantineFault();
-      });
-    }
-
-    const btnPlayReset = document.getElementById('btn-play-reset');
-    if (btnPlayReset) {
-      btnPlayReset.addEventListener('click', () => {
-        if (playSim) playSim.resetQuorum();
-      });
+    let playField = null;
+    if (playCanvas) {
+      playField = new MatrixField(playCanvas, { cell: 32, mode: currentMode, speed: 0.6 });
     }
 
     // Global Animation Render Loop
     let lastTime = performance.now();
-    let lastHudUpdate = 0;
     function renderLoop(now) {
       const dt = Math.min((now - lastTime) / 1000, 0.1);
       lastTime = now;
       if (heroField) heroField.frame(dt);
       if (aboveField) aboveField.frame(dt);
-      // PoincareHyperbolicSimulator animates via its own loop
-      
-      if (now - lastHudUpdate > 300) {
-        lastHudUpdate = now;
-        // Consensus telemetry managed by PoincareHyperbolicSimulator
-      }
+      if (playField) playField.frame(dt);
       requestAnimationFrame(renderLoop);
     }
     requestAnimationFrame(renderLoop);
@@ -2980,7 +2430,7 @@ html_template = r"""<!doctype html>
       const minimapIndicator = document.getElementById('minimap-indicator');
       const minimapPct = document.getElementById('minimap-pct');
       if (minimapIndicator) {
-        const miniHeight = 60;
+        const miniHeight = 60; // preview inner height approx
         const indH = Math.max(8, (window.innerHeight / docEl.scrollHeight) * miniHeight);
         minimapIndicator.style.height = indH + 'px';
         minimapIndicator.style.transform = `translateY(${progress * (miniHeight - indH)}px)`;
@@ -3072,14 +2522,15 @@ html_template = r"""<!doctype html>
     const activeStepName = document.getElementById('active-step-name');
     const stepLabels = [
       'INSTRUCTION 01 // DISPATCH',
-      'INSTRUCTION 02 // BYZANTINE CONSENSUS',
-      'INSTRUCTION 03 // ZK COMMITMENT',
+      'INSTRUCTION 02 // CONSENSUS',
+      'INSTRUCTION 03 // COMMITMENT',
       'INSTRUCTION 04 // SETTLE & BURN'
     ];
 
     // Mini-matrix step canvas
     const ruleCanvas = document.getElementById('rule-canvas');
     let ruleCtx = ruleCanvas ? ruleCanvas.getContext('2d') : null;
+    let currentStepIndex = 0;
 
     function drawRuleVisual(stepIdx, frac) {
       if (!ruleCanvas || !ruleCtx) return;
@@ -3104,13 +2555,10 @@ html_template = r"""<!doctype html>
           ruleCtx.lineTo(cx + Math.cos(rad) * (w * 0.4), cy + Math.sin(rad) * (h * 0.4));
           ruleCtx.stroke();
         }
-        ruleCtx.fillStyle = '#FF2424';
+        ruleCtx.fillStyle = '#FF292C';
         ruleCtx.beginPath();
         ruleCtx.arc(cx, cy, 6, 0, Math.PI * 2);
         ruleCtx.fill();
-        ruleCtx.fillStyle = '#FFFFFF';
-        ruleCtx.font = '700 11px "Obel Mono", monospace';
-        ruleCtx.fillText("DISPATCH // INT8 QUANTIZATION", 16, 24);
       } else if (stepIdx === 1) {
         // Step 2: Consensus Quorum Rings
         ruleCtx.strokeStyle = 'rgba(255, 36, 36, 0.7)';
@@ -3122,14 +2570,11 @@ html_template = r"""<!doctype html>
         }
         for (let i = 0; i < 16; i++) {
           const ang = (i / 16) * Math.PI * 2;
-          ruleCtx.fillStyle = i % 2 === 0 ? '#FFFFFF' : '#FF2424';
+          ruleCtx.fillStyle = i % 2 === 0 ? '#FFFFFF' : '#FF292C';
           ruleCtx.beginPath();
           ruleCtx.arc(cx + Math.cos(ang) * 84, cy + Math.sin(ang) * 84, 4, 0, Math.PI * 2);
           ruleCtx.fill();
         }
-        ruleCtx.fillStyle = '#FF2424';
-        ruleCtx.font = '700 11px "Obel Mono", monospace';
-        ruleCtx.fillText("K=64 QUORUM // \u0394\u03B5 = 0.00 CONVERGED", 16, 24);
       } else if (stepIdx === 2) {
         // Step 3: Commitment ZK Polynomial Curve
         ruleCtx.strokeStyle = '#FFFFFF';
@@ -3141,22 +2586,21 @@ html_template = r"""<!doctype html>
           else ruleCtx.lineTo(x, y);
         }
         ruleCtx.stroke();
-        ruleCtx.fillStyle = '#FF2424';
-        ruleCtx.font = '700 11px "Obel Mono", monospace';
-        ruleCtx.fillText("PLONKY2 / BN254 KZG // VERIFIED", 16, 24);
+        ruleCtx.fillStyle = '#FF292C';
+        ruleCtx.fillText("KZG_OPENING_PROOF // VERIFIED", 16, 24);
       } else {
         // Step 4: Settle & Burn Flare
         ruleCtx.fillStyle = 'rgba(255, 36, 36, 0.15)';
         ruleCtx.beginPath();
         ruleCtx.arc(cx, cy, 70 + Math.sin(frac * 8) * 15, 0, Math.PI * 2);
         ruleCtx.fill();
-        ruleCtx.strokeStyle = '#FF2424';
+        ruleCtx.strokeStyle = '#FF292C';
         ruleCtx.lineWidth = 2;
         ruleCtx.stroke();
         ruleCtx.fillStyle = '#FFFFFF';
-        ruleCtx.font = '700 11px "Obel Mono", monospace';
+        ruleCtx.font = '700 12px "Obel Mono", monospace';
         ruleCtx.textAlign = 'center';
-        ruleCtx.fillText("10% DESTROYED VIA SOLANA INCINERATOR", cx, cy + 4);
+        ruleCtx.fillText("100% LP BURNED TO INCINERATOR", cx, cy + 4);
       }
     }
 
@@ -3169,6 +2613,7 @@ html_template = r"""<!doctype html>
       onUpdate: (self) => {
         const raw = self.progress * 3.99;
         const idx = Math.min(3, Math.floor(raw));
+        currentStepIndex = idx;
         const currentFrac = raw - idx;
 
         steps.forEach((st, i) => {
@@ -3298,13 +2743,12 @@ html_template = r"""<!doctype html>
       window.addEventListener('resize', drawFilmCanvas);
     }
 
-    /* L. CHAPTER 07: LIVE SIMULATOR CONTROLS */
+    /* L. CHAPTER 07: PLAYGROUND CONTROLS */
     const kSlider = document.getElementById('k-slider');
     const kOut = document.getElementById('k-out');
     if (kSlider) {
       kSlider.addEventListener('input', (e) => {
-        if (kOut) kOut.textContent = e.target.value;
-        // Consensus telemetry managed by PoincareHyperbolicSimulator
+        kOut.textContent = e.target.value;
       });
     }
 
@@ -3312,9 +2756,8 @@ html_template = r"""<!doctype html>
     const resOut = document.getElementById('res-out');
     if (resSlider) {
       resSlider.addEventListener('input', (e) => {
-        if (resOut) resOut.textContent = e.target.value;
+        resOut.textContent = e.target.value;
         if (playField) playField.setCell(e.target.value);
-        // Consensus telemetry managed by PoincareHyperbolicSimulator
       });
     }
 
@@ -3322,12 +2765,12 @@ html_template = r"""<!doctype html>
     const speedOut = document.getElementById('speed-out');
     if (speedSlider) {
       speedSlider.addEventListener('input', (e) => {
-        if (speedOut) speedOut.textContent = e.target.value;
+        speedOut.textContent = e.target.value;
         if (playField) playField.speed = parseFloat(e.target.value);
       });
     }
 
-    // Charset switchers (Tensor, Hyperbolic, Lattice, Reduction)
+    // Charset switchers
     const modeOut = document.getElementById('mode-out');
     document.querySelectorAll('.play__charset-btn').forEach(btn => {
       btn.addEventListener('click', function() {
@@ -3359,7 +2802,6 @@ html_template = r"""<!doctype html>
     if (btnRandom) {
       btnRandom.addEventListener('click', () => {
         Noise.seed(Math.floor(Math.random() * 100000));
-        // Consensus telemetry managed by PoincareHyperbolicSimulator
       });
     }
 
@@ -3376,7 +2818,7 @@ html_template = r"""<!doctype html>
 
     /* M. WORDS READING ILLUMINATION ([data-words]) */
     document.querySelectorAll('[data-words]').forEach((el) => {
-      const words = el.textContent.trim().split(/\s+/);
+      const words = el.textContent.trim().split(/\\s+/);
       el.innerHTML = words.map(w => `<span class="word" style="opacity: 0.22;">${w}</span>`).join(' ');
       gsap.fromTo(el.querySelectorAll('.word'), 
         { opacity: 0.22 },
@@ -3408,7 +2850,7 @@ html_template = r"""<!doctype html>
       });
     });
 
-    // VRTL WRLD Glitch Letters & Tensor Scramble Engine (Calibrated 250ms Rate)
+    // VRTL WRLD Glitch Letters & Tensor Scramble Engine (Calibrated Deliberate Rate)
     class GlitchScramble {
       constructor(el) {
         this.el = el;
@@ -3432,7 +2874,7 @@ html_template = r"""<!doctype html>
         let activeGlyphs = new Array(len);
         for (let i = 0; i < len; i++) {
           const ch = target[i];
-          activeGlyphs[i] = /\s/.test(ch)
+          activeGlyphs[i] = /\\s/.test(ch)
             ? ch
             : this.chars[Math.floor(Math.random() * this.chars.length)];
         }
@@ -3446,7 +2888,7 @@ html_template = r"""<!doctype html>
             this.lastTickTime = now;
             for (let i = revealedCount; i < len; i++) {
               const ch = target[i];
-              if (/\s/.test(ch)) {
+              if (/\\s/.test(ch)) {
                 activeGlyphs[i] = ch;
               } else if (Math.random() < 0.4) {
                 activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
@@ -3457,7 +2899,7 @@ html_template = r"""<!doctype html>
           let result = '';
           for (let i = 0; i < len; i++) {
             const ch = target[i];
-            if (/\s/.test(ch)) {
+            if (/\\s/.test(ch)) {
               result += ch;
             } else if (i < revealedCount) {
               result += ch;
