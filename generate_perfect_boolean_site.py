@@ -899,9 +899,51 @@ html_code = """<!doctype html>
       transition: opacity 0.12s ease;
       will-change: opacity;
     }
+    /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
+    #scroll-progress-line, .scroll-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #FF292C;
+      box-shadow: 0 0 8px #FF292C, 0 0 16px rgba(255, 41, 44, 0.6);
+      z-index: 100000;
+      pointer-events: none;
+      transition: width 0.04s linear;
+      will-change: width;
+    }
+
+    /* INTERSECTION OBSERVER REVEAL ANIMATIONS (GPU-ACCELERATED, JANK-FREE) */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.25s ease,
+                  box-shadow 0.25s ease;
+      will-change: opacity, transform;
+    }
+    .reveal-on-scroll.is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
+
+    /* MECHANICAL GLITCH TARGETS (ENFORCE TABULAR-NUMS TO PREVENT JANK) */
+    [data-glitch], .mechanical-glitch {
+      font-variant-numeric: tabular-nums;
+      display: inline-block;
+    }
   </style>
 </head>
 <body id="top">
+
+  <!-- TOP-EDGE SCROLL TELEMETRY PROGRESS LINE -->
+  <div id="scroll-progress-line" class="scroll-progress-bar" aria-hidden="true"></div>
 
   <!-- RIGHT TELEMETRY RAIL -->
   <div class="sbar" id="sbar" aria-hidden="true">
@@ -1097,7 +1139,7 @@ html_code = """<!doctype html>
           </div>
 
           <!-- Card 1 -->
-          <div class="pair-card" data-mode-card="plus">
+          <div class="pair-card reveal-on-scroll" data-mode-card="plus">
             <div class="pair-card__tag">H100 SXM5 // 80GB HBM3</div>
             <div class="pair-card__title">FRONTIER DEEP LEARNING</div>
             <div class="pair-card__desc">Ultra-high bandwidth NVLink clusters for distributed MoE inference and multi-billion parameter checkpoint evaluations.</div>
@@ -1114,7 +1156,7 @@ html_code = """<!doctype html>
           </div>
 
           <!-- Card 2 -->
-          <div class="pair-card" data-mode-card="bin">
+          <div class="pair-card reveal-on-scroll" data-mode-card="bin">
             <div class="pair-card__tag">B200 BLACKWELL // CANARY</div>
             <div class="pair-card__title">NEXT-GEN QUANTUM-RESILIENT</div>
             <div class="pair-card__desc">Dedicated FP4 / FP8 neural pipeline accelerators executing live real-time KZG polynomial proof synthesis.</div>
@@ -1131,7 +1173,7 @@ html_code = """<!doctype html>
           </div>
 
           <!-- Card 3 -->
-          <div class="pair-card" data-mode-card="cmp">
+          <div class="pair-card reveal-on-scroll" data-mode-card="cmp">
             <div class="pair-card__tag">RTX 4090 / 5090 // EDGE</div>
             <div class="pair-card__title">DECENTRALIZED WORKERS</div>
             <div class="pair-card__desc">High-density decentralized GPU nodes handling low-latency zero-knowledge neural verification tasks.</div>
@@ -1148,7 +1190,7 @@ html_code = """<!doctype html>
           </div>
 
           <!-- Card 4 -->
-          <div class="pair-card" data-mode-card="plus">
+          <div class="pair-card reveal-on-scroll" data-mode-card="plus">
             <div class="pair-card__tag">TOKENOMICS // VERIFIED</div>
             <div class="pair-card__title">IMMUTABLE METRICS</div>
             <div class="pair-card__desc">Hard cap fixed at 33,333,333 $33RD with 100% of initial LP tokens sent directly to Solana Incinerator.</div>
@@ -1419,6 +1461,11 @@ html_code = """<!doctype html>
       sbarThumb.style.height = h + 'px';
       const sy = window.scrollY || docEl.scrollTop;
       sbarThumb.style.transform = `translateY(${sy / max * (window.innerHeight - h)}px)`;
+
+      const scrollProgressBar = document.getElementById('scroll-progress-line');
+      if (scrollProgressBar && max > 0) {
+        scrollProgressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
+      }
       
       const coordVal = Math.round((sy / max) * 999);
       if (sbarCoord) sbarCoord.textContent = coordVal.toString().padStart(3, '0');
@@ -1719,7 +1766,7 @@ html_code = """<!doctype html>
         let activeGlyphs = new Array(len);
         for (let i = 0; i < len; i++) {
           const ch = target[i];
-          activeGlyphs[i] = (ch === ' ' || ch === '\n' || ch === '\t')
+          activeGlyphs[i] = (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9))
             ? ch
             : this.chars[Math.floor(Math.random() * this.chars.length)];
         }
@@ -1731,7 +1778,7 @@ html_code = """<!doctype html>
             this.lastTickTime = now;
             for (let i = revealedCount; i < len; i++) {
               const ch = target[i];
-              if (ch === ' ' || ch === '\n' || ch === '\t') {
+              if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
                 activeGlyphs[i] = ch;
               } else if (Math.random() < 0.35) {
                 activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
@@ -1741,7 +1788,7 @@ html_code = """<!doctype html>
           let result = '';
           for (let i = 0; i < len; i++) {
             const ch = target[i];
-            if (ch === ' ' || ch === '\n' || ch === '\t') {
+            if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
               result += ch;
             } else if (i < revealedCount) {
               result += ch;
@@ -1779,6 +1826,93 @@ html_code = """<!doctype html>
         }
       });
     });
+
+    /* 12. INTERSECTION OBSERVER REVEAL & MECHANICAL GLITCH ENGINE */
+    const revealTargets = document.querySelectorAll('.reveal-on-scroll');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
+      revealTargets.forEach(el => io.observe(el));
+    } else {
+      revealTargets.forEach(el => el.classList.add('is-revealed'));
+    }
+
+    // Deliberate 250ms cadence / 3.5s duration Mechanical Glitch Engine
+    class MechanicalGlitch {
+      constructor(el) {
+        this.el = el;
+        this.chars = '01X_/*+-[]#';
+        this.originalText = el.getAttribute('data-glitch-text') || el.textContent.trim();
+        el.setAttribute('data-glitch-text', this.originalText);
+        this.tickInterval = 250; // 250ms deliberate mechanical relay cadence
+        this.totalDuration = 3500; // 3500ms total decode envelope = 14 ticks
+        this.totalTicks = Math.round(this.totalDuration / this.tickInterval);
+        this.currentTick = 0;
+        this.timer = null;
+        this.isRunning = false;
+        this.hasPlayed = false;
+      }
+      start() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+        this.currentTick = 0;
+        clearInterval(this.timer);
+        this.timer = setInterval(() => {
+          this.currentTick++;
+          const progress = this.currentTick / this.totalTicks;
+          const resolvedChars = Math.floor(progress * this.originalText.length);
+          let out = '';
+          for (let i = 0; i < this.originalText.length; i++) {
+            const ch = this.originalText[i];
+            if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
+              out += ch;
+            } else if (i < resolvedChars) {
+              out += ch;
+            } else {
+              out += this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+          }
+          this.el.textContent = out;
+          if (this.currentTick >= this.totalTicks) {
+            clearInterval(this.timer);
+            this.el.textContent = this.originalText;
+            this.isRunning = false;
+            this.hasPlayed = true;
+          }
+        }, this.tickInterval);
+      }
+    }
+
+    const glitchElements = document.querySelectorAll('[data-glitch], .mechanical-glitch');
+    if ('IntersectionObserver' in window) {
+      const glitchObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const mg = entry.target.__glitch || new MechanicalGlitch(entry.target);
+            entry.target.__glitch = mg;
+            if (!mg.hasPlayed) {
+              mg.start();
+            }
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      glitchElements.forEach(el => {
+        const mg = new MechanicalGlitch(el);
+        el.__glitch = mg;
+        glitchObserver.observe(el);
+        el.addEventListener('mouseenter', () => {
+          if (!mg.isRunning) mg.start();
+        });
+      });
+    }
   </script>
 </body>
 </html>

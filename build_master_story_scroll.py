@@ -949,7 +949,157 @@ html_template = """<!doctype html>
     }
 
     /* =====================================================================
-       CHAPTER 05: PINNED EXPANDING SCHEMATIC FILM (TENSOR ARBOR WIREFRAME)
+       CHAPTER 05: MATHEMATICAL INVARIANTS & FORMAL VERIFICATION
+       ===================================================================== */
+    .invariants {
+      padding: clamp(90px, 14vh, 160px) var(--pad);
+      background: #040407;
+      position: relative;
+      z-index: 5;
+      border-top: 1px solid var(--border);
+    }
+    .invariants__inner {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+    .invariants__headline {
+      font-family: var(--fh);
+      font-size: clamp(34px, 5.2vw, 80px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .invariants__lead {
+      font-family: var(--fm);
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--dim);
+      max-width: 900px;
+      margin-bottom: 48px;
+    }
+    .invariants__pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    .invariant-card {
+      background: #09090E;
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 280px;
+      transition: border-color 0.25s ease, transform 0.25s ease;
+    }
+    .invariant-card:hover {
+      border-color: var(--t);
+      transform: translateY(-2px);
+    }
+    .invariant-card__tag {
+      font-family: var(--fm);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--t);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .invariant-card__title {
+      font-family: var(--fh);
+      font-size: 19px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .invariant-card__formula {
+      font-family: var(--fm);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #FFFFFF;
+      background: rgba(255, 36, 36, 0.12);
+      border-left: 2px solid var(--t);
+      padding: 8px 12px;
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+    }
+    .invariant-card__desc {
+      font-family: var(--fm);
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--dim);
+    }
+    .invariant-card__foot {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 14px;
+      margin-top: 20px;
+      font-family: var(--fm);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+    }
+    .slashing-table-wrap {
+      border: 1px solid var(--border);
+      background: #08080C;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 32px;
+    }
+    .slashing-table-header {
+      background: #0E0E14;
+      padding: 14px 20px;
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dim);
+      display: flex;
+      justify-content: space-between;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--border);
+    }
+    .slashing-table-grid {
+      display: grid;
+    }
+    .slashing-row {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1.2fr 1.8fr 2.8fr;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-family: var(--fm);
+      font-size: 12.5px;
+      align-items: center;
+      gap: 12px;
+    }
+    .slashing-row:last-child {
+      border-bottom: none;
+    }
+    .slashing-row.header {
+      background: rgba(255, 255, 255, 0.02);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--chalk);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .slashing-val-crimson {
+      color: var(--t);
+      font-weight: 700;
+    }
+    @media (max-width: 960px) {
+      .invariants__pillars { grid-template-columns: 1fr; }
+      .slashing-row { grid-template-columns: 1fr; gap: 6px; }
+      .slashing-row.header { display: none; }
+    }
+
+    /* =====================================================================
+       CHAPTER 06: PINNED EXPANDING SCHEMATIC FILM (TENSOR ARBOR WIREFRAME)
        ===================================================================== */
     .film-section {
       position: relative;
@@ -1002,7 +1152,7 @@ html_template = """<!doctype html>
     }
 
     /* =====================================================================
-       CHAPTER 06: INTERACTIVE CONSENSUS & CELLULAR PLAYGROUND
+       CHAPTER 07: INTERACTIVE CONSENSUS & CELLULAR PLAYGROUND
        ===================================================================== */
     .play {
       padding: clamp(90px, 14vh, 160px) var(--pad);
@@ -1153,7 +1303,7 @@ html_template = """<!doctype html>
     }
 
     /* =====================================================================
-       CHAPTER 07: INVERTED COLORWAY FINALE & TECHNICAL SPECIFICATION TABLE
+       CHAPTER 08: INVERTED COLORWAY FINALE & TECHNICAL SPECIFICATION TABLE
        ===================================================================== */
     .finale {
       padding: clamp(90px, 14vh, 160px) var(--pad) clamp(60px, 10vh, 100px);
@@ -1343,9 +1493,157 @@ html_template = """<!doctype html>
       .spec-row:nth-child(odd) { border-right: none; }
       .hero__aside { flex-direction: column; align-items: flex-start; }
     }
+
+    /* ===================================================================
+       FLOATING PILL NAVIGATION (UNIFIED VRTL WRLD SYSTEM)
+       =================================================================== */
+    .nav-wrapper {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      width: fit-content;
+      max-width: 98vw;
+      pointer-events: none;
+    }
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      padding: 6px 14px 6px 10px;
+      border-radius: 9999px;
+      background: rgba(11, 11, 14, 0.85);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 41, 44, 0.15);
+      pointer-events: auto;
+      white-space: nowrap;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #FFFFFF;
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+      padding-right: 12px;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .nav-logo-box {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #FFFFFF;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.60);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      border: 1px solid transparent;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-link:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+    .nav-link.active {
+      color: #FFFFFF;
+      background: rgba(255, 41, 44, 0.14);
+      border-color: #FF292C;
+      box-shadow: 0 0 10px rgba(255, 41, 44, 0.35);
+    }
+    .nav-link.active::before {
+      content: "";
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #FF292C;
+      box-shadow: 0 0 6px #FF292C;
+      display: inline-block;
+    }
+    @media (max-width: 900px) {
+      .nav-wrapper {
+        top: 10px;
+        max-width: 96vw;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-pill {
+        padding: 4px 8px;
+      }
+      .nav-link {
+        font-size: 9.5px;
+        padding: 4px 6px;
+      }
+    }
+    .glitch-active {
+      opacity: 0.94;
+      letter-spacing: 0.02em;
+    }
+
   </style>
 </head>
 <body id="top">
+  <!-- FLOATING PILL NAVBAR -->
+  <div class="nav-wrapper">
+    <nav class="nav-pill">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-logo-box">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="12" cy="4" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+            <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+            <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+            <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
+          </svg>
+        </div>
+        <span class="nav-title" data-glitch>33RD TREE LABS</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active" data-glitch>[ OVERVIEW ]</a>
+        <a href="protocol.html" class="nav-link" data-glitch>[ PROTOCOL ]</a>
+        <a href="simulator.html" class="nav-link" data-glitch>[ SIMULATOR ]</a>
+        <a href="yield.html" class="nav-link" data-glitch>[ YIELD ]</a>
+        <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
+        <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
+        <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
+        <a href="whitepaper.html" class="nav-link" data-glitch>[ WHITEPAPER ]</a>
+      </div>
+    </nav>
+  </div>
+
 
   <!-- RIGHT HAIRLINE SCROLLBAR & TELEMETRY RAIL -->
   <div class="sbar" id="sbar" aria-hidden="true">
@@ -1358,6 +1656,7 @@ html_template = """<!doctype html>
       <span>05</span>
       <span>06</span>
       <span>07</span>
+      <span>08</span>
     </div>
     <div class="sbar__coord" id="sbar-coord">S_POS // 000</div>
     <i></i>
@@ -1371,6 +1670,7 @@ html_template = """<!doctype html>
     </div>
     <div class="minimap-preview">
       <div class="minimap-sections">
+        <div class="minimap-dot"></div>
         <div class="minimap-dot"></div>
         <div class="minimap-dot"></div>
         <div class="minimap-dot"></div>
@@ -1404,9 +1704,13 @@ html_template = """<!doctype html>
       </div>
 
       <div class="hero__aside">
-        <p class="hero__desc" data-words>
-          A Byzantine-Resilient Verifiable DePIN Compute Fabric anchored on Solana. Hierarchical Tensor Arbor coordination, zero-knowledge neural evaluations, and deterministic consensus across heterogeneous GPU clusters.
-        </p>
+        <div class="hero__scroll-indicator">
+          <div class="hero__scroll-pulse"></div>
+          <div class="hero__scroll-text-group">
+            <span class="hero__scroll-action">[ SCROLL TO COMMENCE CONSENSUS ]</span>
+            <span class="hero__scroll-sub">VERIFIABLE TENSOR ARBOR &bull; CANARY V4.0</span>
+          </div>
+        </div>
         <div class="hero__foot-badges">
           <span class="hero__badge-tag">TOPOLOGY: <strong>GROMOV &delta;-HYPERBOLIC</strong></span>
           <span class="hero__badge-tag">PRECISION: <strong>&Delta;&epsilon; = 0.00 INT8</strong></span>
@@ -1424,6 +1728,34 @@ html_template = """<!doctype html>
         <h2 class="concept__headline">
           COORDINATING <span class="badge-fill">HETEROGENEOUS COMPUTE</span> INTO <span class="badge-box">DETERMINISTIC FINALITY</span>
         </h2>
+        
+        <!-- DEDICATED HIGH-CONTRAST ARCHITECTURAL MANIFESTO CARD -->
+        <div class="manifesto-card">
+          <div class="manifesto-card__header">
+            <div class="manifesto-card__tag">
+              <span class="manifesto-dot"></span>
+              <span>CORE ARCHITECTURAL MANIFESTO // SINGULARITY PROTOCOL</span>
+            </div>
+            <div class="manifesto-card__meta">ANCHOR: SOLANA // BIT-EXACT FINALITY</div>
+          </div>
+          <p class="manifesto-card__body">
+            A <strong>Byzantine-Resilient Verifiable DePIN Compute Fabric</strong> anchored on Solana. Hierarchical <strong>Tensor Arbor coordination</strong>, zero-knowledge neural evaluations, and <strong>deterministic consensus</strong> across heterogeneous GPU clusters.
+          </p>
+          <div class="manifesto-card__footer">
+            <div class="manifesto-metric">
+              <span class="manifesto-metric__label">CONSENSUS ARCHITECTURE</span>
+              <span class="manifesto-metric__val">K=64 BYZANTINE QUORUM</span>
+            </div>
+            <div class="manifesto-metric">
+              <span class="manifesto-metric__label">ROUTING MANIFOLD</span>
+              <span class="manifesto-metric__val">GROMOV &delta;-HYPERBOLIC (&le; 8 HOPS)</span>
+            </div>
+            <div class="manifesto-metric">
+              <span class="manifesto-metric__label">EVALUATION TOLERANCE</span>
+              <span class="manifesto-metric__val">&Delta;&epsilon; = 0.00 INT8 INVARIANT</span>
+            </div>
+          </div>
+        </div>
         
         <div class="concept__cols">
           <div class="concept__col">
@@ -1666,7 +1998,134 @@ html_template = """<!doctype html>
     </section>
 
     <!-- ===================================================================
-         CHAPTER 05: PINNED EXPANDING SCHEMATIC FILM (TENSOR ARBOR WIREFRAME)
+         CHAPTER 05: MATHEMATICAL INVARIANTS & BYZANTINE SLASHING
+         =================================================================== -->
+    <section class="invariants" id="invariants">
+      <div class="invariants__inner">
+        <div class="kicker">CHAPTER 05 // MATHEMATICAL INVARIANTS &amp; FORMAL VERIFICATION</div>
+        <h2 class="invariants__headline">
+          FORMAL VERIFICATION &amp; <span class="badge-fill">BYZANTINE SLASHING</span>
+        </h2>
+        
+        <p class="invariants__lead" data-words>
+          Decentralized execution security cannot rely on probabilistic trust or statistical convergence. 33rd Tree Labs enforces five deterministic invariants encoded directly into Solana Anchor programs, mathematically binding staked hardware collateral to bit-exact neural verification.
+        </p>
+
+        <!-- 3 Invariant Pillar Cards -->
+        <div class="invariants__pillars">
+          <div class="invariant-card">
+            <div>
+              <div class="invariant-card__tag">INVARIANT 01 // PRECISION</div>
+              <div class="invariant-card__title">DETERMINISTIC INT8 REDUCTION</div>
+              <div class="invariant-card__formula">&Delta;&epsilon; = 0.00 &bull; BIT-EXACT</div>
+              <div class="invariant-card__desc" data-words>
+                Eliminating floating-point divergence (FMA reordering) across heterogeneous hardware backends (Hopper, Blackwell, Ada) via bit-exact integer reduction trees. Execution produces identical tensor outputs across all verified architectures.
+              </div>
+            </div>
+            <div class="invariant-card__foot">
+              <span>BOUND: ABSOLUTE ZERO DELTA</span>
+            </div>
+          </div>
+
+          <div class="invariant-card">
+            <div>
+              <div class="invariant-card__tag">INVARIANT 02 // GAME THEORY</div>
+              <div class="invariant-card__title">QUADRATIC SLASHING ESCALATION</div>
+              <div class="invariant-card__formula">S_penal(n) = min(1.0, k &bull; n&sup2; &bull; S_base)</div>
+              <div class="invariant-card__desc" data-words>
+                Correlated Byzantine faults within an unbonding epoch trigger quadratic capital destruction. Sybil cartels attempting coordinated state divergence suffer total staked collateral annihilation.
+              </div>
+            </div>
+            <div class="invariant-card__foot">
+              <span>UNBONDING: 7 DAYS (10,080 BLOCKS)</span>
+            </div>
+          </div>
+
+          <div class="invariant-card">
+            <div>
+              <div class="invariant-card__tag">INVARIANT 03 // VALUE ACCRUAL</div>
+              <div class="invariant-card__title">10% INCINERATOR BURN FLOOR</div>
+              <div class="invariant-card__formula">1nc1nerator...1111 &bull; DEFLATIONARY</div>
+              <div class="invariant-card__desc" data-words>
+                10% of every inference micro-fee is atomically routed to the Solana Incinerator for permanent destruction. When daily volume exceeds 51,370 RD, burn exceeds emissions, locking in strict monetary deflation.
+              </div>
+            </div>
+            <div class="invariant-card__foot">
+              <span>TIPPING POINT: &gt; 51,370 RD / DAY</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slashing Penalty Matrix Table -->
+        <div class="slashing-table-wrap">
+          <div class="slashing-table-header">
+            <span>BYZANTINE SLASHING PENALTY MATRIX // SOLANA ANCHOR ESCROW</span>
+            <span>MIN STAKE: 25,000 RD</span>
+          </div>
+          <div class="slashing-table-grid">
+            <div class="slashing-row header">
+              <span>VIOLATION TYPE</span>
+              <span>SEVERITY</span>
+              <span>SLASHED STAKE</span>
+              <span>ALLOCATION</span>
+              <span>PROTOCOL ACTION</span>
+            </div>
+            
+            <div class="slashing-row">
+              <span style="color: var(--chalk); font-weight: 700;">Dual-Signing / Equivocation</span>
+              <span class="slashing-val-crimson">CRITICAL</span>
+              <span class="slashing-val-crimson">100%</span>
+              <span>50% Burned, 50% Bounty</span>
+              <span>Permanent ban of Node ID &amp; Hardware Key</span>
+            </div>
+
+            <div class="slashing-row">
+              <span style="color: var(--chalk); font-weight: 700;">Invalid INT8 Tensor Output</span>
+              <span class="slashing-val-crimson">CRITICAL</span>
+              <span class="slashing-val-crimson">50%</span>
+              <span>50% Burned to Incinerator</span>
+              <span>Node disqualified from epoch; slot rolled back</span>
+            </div>
+
+            <div class="slashing-row">
+              <span style="color: var(--chalk); font-weight: 700;">Failed Halo2-KZG Proof Challenge</span>
+              <span style="color: #FF9800; font-weight: 700;">HIGH</span>
+              <span class="slashing-val-crimson">25%</span>
+              <span>25% Burned to Incinerator</span>
+              <span>Challenger rewarded with 5,000 RD bounty</span>
+            </div>
+
+            <div class="slashing-row">
+              <span style="color: var(--chalk); font-weight: 700;">TEE Attestation Mismatch</span>
+              <span style="color: #FF9800; font-weight: 700;">HIGH</span>
+              <span class="slashing-val-crimson">30%</span>
+              <span>100% Burned to Incinerator</span>
+              <span>Silicon attestation revoked; node deregistered</span>
+            </div>
+
+            <div class="slashing-row">
+              <span style="color: var(--chalk); font-weight: 700;">Liveness Failure (&gt;10 Omitted Slots)</span>
+              <span style="color: #00E676; font-weight: 700;">MEDIUM</span>
+              <span>5%</span>
+              <span>Protocol Treasury</span>
+              <span>Node demoted to standby queue</span>
+            </div>
+
+            <div class="slashing-row">
+              <span style="color: var(--chalk); font-weight: 700;">Tier-1 Speculative Fraud Execution</span>
+              <span style="color: #FF9800; font-weight: 700;">HIGH</span>
+              <span class="slashing-val-crimson">50,000 RD</span>
+              <span>100% Proposer Bond Slashed</span>
+              <span>Client awarded 10x refund; slot slashed</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         CHAPTER 06: PINNED EXPANDING SCHEMATIC FILM (TENSOR ARBOR WIREFRAME)
          =================================================================== -->
     <section class="film-section" id="film">
       <div class="film-clip" id="film-clip">
@@ -1679,7 +2138,7 @@ html_template = """<!doctype html>
     </section>
 
     <!-- ===================================================================
-         CHAPTER 06: INTERACTIVE CONSENSUS & CELLULAR PLAYGROUND
+         CHAPTER 07: INTERACTIVE CONSENSUS & CELLULAR PLAYGROUND
          =================================================================== -->
     <section class="play" id="playground">
       <div class="play__inner">
@@ -1689,7 +2148,7 @@ html_template = """<!doctype html>
         </div>
 
         <div class="play__controls">
-          <div class="kicker">CHAPTER 06 // PROTOCOL SIMULATION</div>
+          <div class="kicker">CHAPTER 07 // PROTOCOL SIMULATION</div>
           <h3>CONSENSUS PLAYGROUND</h3>
           
           <div class="play__row">
@@ -1718,14 +2177,14 @@ html_template = """<!doctype html>
 
           <div class="play__row">
             <div class="play__row-head">
-              <span>CHARACTER SET SWITCHER</span>
-              <span id="mode-out">0 / 1 [BINARY]</span>
+              <span>TENSOR SYMBOL FIELD SWITCHER</span>
+              <span id="mode-out">TENSOR [⊗ / ∇]</span>
             </div>
             <div class="play__charset-grid">
-              <button type="button" class="play__charset-btn active" data-mode="bin">0 / 1</button>
-              <button type="button" class="play__charset-btn" data-mode="cmp">&gt; / &lt;</button>
-              <button type="button" class="play__charset-btn" data-mode="plus">+ / -</button>
-              <button type="button" class="play__charset-btn" data-mode="lambda">&lambda; / &nabla;</button>
+              <button type="button" class="play__charset-btn active" data-mode="tensor">&otimes; / &nabla;</button>
+              <button type="button" class="play__charset-btn" data-mode="hyperbolic">&lambda; / &Delta;</button>
+              <button type="button" class="play__charset-btn" data-mode="lattice">&#9532; / &middot;</button>
+              <button type="button" class="play__charset-btn" data-mode="reduction">&Sigma; / T</button>
             </div>
           </div>
 
@@ -1740,11 +2199,11 @@ html_template = """<!doctype html>
     </section>
 
     <!-- ===================================================================
-         CHAPTER 07: INVERTED COLORWAY FINALE & TECHNICAL SPECIFICATION TABLE
+         CHAPTER 08: INVERTED COLORWAY FINALE & TECHNICAL SPECIFICATION TABLE
          =================================================================== -->
     <section class="finale" id="finale">
       <div class="finale__inner">
-        <div class="kicker">CHAPTER 07 // PROTOCOL SPECIFICATIONS</div>
+        <div class="kicker">CHAPTER 08 // PROTOCOL SPECIFICATIONS</div>
         <h2 class="finale__headline">
           VERIFIABLE <span class="badge-crimson">DEPIN COMPUTE</span> ON SOLANA
         </h2>
@@ -1880,14 +2339,14 @@ html_template = """<!doctype html>
       return { noise: f, seed: e };
     })();
 
-    /* B. GENERATIVE BINARY/TENSOR FIELD MODES */
+    /* B. GENERATIVE TENSOR & HYPERBOLIC FIELD MODES */
     const MODES = {
-      bin:    { key: "bin",    t: "1", f: "0", tc: "#FF2424", fc: "#070707", scale: 0.016, label: "0 / 1 [BINARY]" },
-      cmp:    { key: "cmp",    t: ">", f: "<", tc: "#00E676", fc: "#070707", scale: 0.012, label: "> / < [COMPARATOR]" },
-      plus:   { key: "plus",   t: "+", f: "-", tc: "#FFFFFF", fc: "#FF2424", scale: 0.009, label: "+ / - [SIGN TENSOR]" },
-      lambda: { key: "lambda", t: "λ", f: "∇", tc: "#FF2424", fc: "#111116", scale: 0.014, label: "λ / ∇ [GRADIENT]" }
+      tensor:     { key: "tensor",     t: "⊗", f: "∇", tc: "#FF2424", fc: "#383846", scale: 0.015, label: "TENSOR [⊗ / ∇]" },
+      hyperbolic: { key: "hyperbolic", t: "λ", f: "Δ", tc: "#FF2424", fc: "#383846", scale: 0.014, label: "HYPERBOLIC [λ / Δ]" },
+      lattice:    { key: "lattice",    t: "┼", f: "·", tc: "#F2F2F5", fc: "#2B2B38", scale: 0.018, label: "LATTICE [┼ / ·]" },
+      reduction:  { key: "reduction",  t: "Σ", f: "T", tc: "#FF2424", fc: "#383846", scale: 0.013, label: "REDUCTION [Σ / T]" }
     };
-    let currentMode = "bin";
+    let currentMode = "tensor";
 
     /* C. INTERACTIVE GENERATIVE FIELD CLASS WITH CURSOR REPULSION */
     class MatrixField {
@@ -1895,7 +2354,7 @@ html_template = """<!doctype html>
         this.c = canvas;
         this.ctx = canvas.getContext("2d", { alpha: false });
         this.cell = opts.cell || 30;
-        this.mode = opts.mode || "bin";
+        this.mode = opts.mode || "tensor";
         this.t = 0;
         this.speed = opts.speed ?? 0.6;
         this.paused = false;
@@ -1945,26 +2404,52 @@ html_template = """<!doctype html>
       }
 
       tile(m, val, excited = false) {
-        const key = m.key + val + this.cp + (excited ? '_ex' : '');
+        const key = m.key + '_' + (val ? '1' : '0') + '_' + this.cp + (excited ? '_ex' : '');
         if (this.tiles.has(key)) return this.tiles.get(key);
         const can = document.createElement("canvas");
-        can.width = this.cp; can.height = this.cp;
+        can.width = this.cp;
+        can.height = this.cp;
         const ctx = can.getContext("2d");
-        
+        const s = this.cp;
+
         if (excited) {
+          // Cursor hover excitement: brilliant crimson pulse with stark white tensor symbol
           ctx.fillStyle = "#FF2424";
-          ctx.fillRect(0, 0, this.cp, this.cp);
+          ctx.fillRect(0, 0, s, s);
+          ctx.strokeStyle = "#FFFFFF";
+          ctx.lineWidth = Math.max(1, s * 0.05);
+          ctx.strokeRect(0.5, 0.5, s - 1, s - 1);
           ctx.fillStyle = "#FFFFFF";
+          ctx.font = `700 ${Math.max(9, Math.round(s * 0.52))}px "JetBrains Mono", "Obel Mono", monospace`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(val ? m.t : m.f, s / 2, s / 2);
+        } else if (val) {
+          // Active Tensor Node: Deep obsidian background, razor-sharp hairline frame, crimson symbol
+          ctx.fillStyle = "#0c0607";
+          ctx.fillRect(0, 0, s, s);
+          ctx.strokeStyle = "rgba(255, 36, 36, 0.28)";
+          ctx.lineWidth = 1;
+          ctx.strokeRect(0.5, 0.5, s - 1, s - 1);
+          ctx.fillStyle = m.tc || "#FF2424";
+          ctx.font = `700 ${Math.max(9, Math.round(s * 0.52))}px "JetBrains Mono", "Obel Mono", monospace`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(m.t, s / 2, s / 2);
         } else {
-          ctx.fillStyle = val ? m.tc : m.fc;
-          ctx.fillRect(0, 0, this.cp, this.cp);
-          ctx.fillStyle = val ? m.fc : m.tc;
+          // Quiescent Lattice State: Pure obsidian plate, faint hairline border, muted vector glyph
+          ctx.fillStyle = "#050507";
+          ctx.fillRect(0, 0, s, s);
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.035)";
+          ctx.lineWidth = 1;
+          ctx.strokeRect(0.5, 0.5, s - 1, s - 1);
+          ctx.fillStyle = m.fc || "#32323E";
+          ctx.font = `500 ${Math.max(9, Math.round(s * 0.48))}px "JetBrains Mono", "Obel Mono", monospace`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(m.f, s / 2, s / 2);
         }
         
-        ctx.font = `700 ${this.cp * 0.58}px "Obel Mono", "JetBrains Mono", monospace`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(val ? m.t : m.f, this.cp / 2, this.cp / 2);
         this.tiles.set(key, can);
         return can;
       }
@@ -2009,7 +2494,7 @@ html_template = """<!doctype html>
     const aboveCanvas = document.getElementById('above-canvas');
     let aboveField = null;
     if (aboveCanvas) {
-      aboveField = new MatrixField(aboveCanvas, { cell: 40, mode: "bin", speed: 0.3 });
+      aboveField = new MatrixField(aboveCanvas, { cell: 38, mode: "hyperbolic", speed: 0.3 });
     }
 
     // Initialize Playground Field
@@ -2073,9 +2558,13 @@ html_template = """<!doctype html>
       if (sbarCoord) sbarCoord.textContent = `S_POS // ${coordStr}`;
 
       // Update tick activation
-      const activeTick = Math.min(7, Math.floor(progress * 8));
+      const activeTick = Math.min(8, Math.floor(progress * 9));
       sbarTicks.forEach((t, idx) => {
         t.classList.toggle('active', idx === activeTick);
+      });
+      const miniDots = document.querySelectorAll('.minimap-dot');
+      miniDots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === activeTick);
       });
 
       // Update Minimap indicator
@@ -2321,7 +2810,20 @@ html_template = """<!doctype html>
       });
     }
 
-    /* J. CHAPTER 05: PINNED EXPANDING SCHEMATIC FILM */
+    /* J. CHAPTER 05: MATHEMATICAL INVARIANTS ANIMATION */
+    gsap.from('.invariant-card', {
+      scrollTrigger: {
+        trigger: '.invariants',
+        start: 'top 75%',
+        end: 'top 30%',
+        scrub: 0.5
+      },
+      y: 35,
+      opacity: 0.4,
+      stagger: 0.15
+    });
+
+    /* K. CHAPTER 06: PINNED EXPANDING SCHEMATIC FILM */
     gsap.timeline({
       scrollTrigger: {
         trigger: '.film-section',
@@ -2382,7 +2884,7 @@ html_template = """<!doctype html>
       window.addEventListener('resize', drawFilmCanvas);
     }
 
-    /* K. CHAPTER 06: PLAYGROUND CONTROLS */
+    /* L. CHAPTER 07: PLAYGROUND CONTROLS */
     const kSlider = document.getElementById('k-slider');
     const kOut = document.getElementById('k-out');
     if (kSlider) {
@@ -2455,7 +2957,7 @@ html_template = """<!doctype html>
       });
     }
 
-    /* L. WORDS READING ILLUMINATION ([data-words]) */
+    /* M. WORDS READING ILLUMINATION ([data-words]) */
     document.querySelectorAll('[data-words]').forEach((el) => {
       const words = el.textContent.trim().split(/\\s+/);
       el.innerHTML = words.map(w => `<span class="word" style="opacity: 0.22;">${w}</span>`).join(' ');
@@ -2475,7 +2977,7 @@ html_template = """<!doctype html>
       );
     });
 
-    /* M. SMOOTH SCROLL ANCHORS */
+    /* N. SMOOTH SCROLL ANCHORS */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         const id = this.getAttribute('href');
