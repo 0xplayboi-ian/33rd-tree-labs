@@ -1,2096 +1,1429 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="lenis" style="--t: #FF2424; --f: #070707;">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>33RD TREE LABS // Tokenomics &amp; Singularity Economy &bull; 33rdtreelabs.tech</title>
-    <meta name="description" content="Official $33RD Tokenomics: 33,333,333 fixed max supply, non-inflationary halving schedule, 10% autonomous buyback & burn engine, and verifiable staking yield.">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            /* VRTL WRLD DESIGN SYSTEM PALETTE */
-            --bg: #070707;
-            --bg-elevated: #0B0B0E;
-            --bg-card: #101014;
-            --bg-card-hover: #15151B;
-            --border: #1C1C24;
-            --border-hover: #343442;
-            --border-accent: rgba(255, 41, 44, 0.35);
-            --laser-red: #FF292C;
-            --laser-glow: rgba(255, 41, 44, 0.45);
-            --laser-subtle: rgba(255, 41, 44, 0.08);
-            --chalk: #F2F2F5;
-            --chalk-dim: #D4D4DC;
-            --slate: #8E8E98;
-            --dark-slate: #4A4A56;
-            --white: #FFFFFF;
-            --green: #00E676;
-            --green-glow: rgba(0, 230, 118, 0.35);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            cursor: default;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            background: var(--bg);
-            color: var(--chalk);
-            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-            overflow-x: hidden;
-        }
-
-        body {
-            position: relative;
-            min-height: 100vh;
-            background: var(--bg);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* CUSTOM RETRO-TECH CURSOR */
-        #cursor-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--laser-red);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px var(--laser-red);
-            transition: opacity 0.2s;
-        }
-        #cursor-ring {
-            width: 32px;
-            height: 32px;
-            border: 1px solid rgba(255, 41, 44, 0.4);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 99998;
-            transform: translate(-50%, -50%);
-            transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease;
-        }
-        body.cursor-hover #cursor-ring {
-            width: 48px;
-            height: 48px;
-            border-color: var(--laser-red);
-            background: rgba(255, 41, 44, 0.08);
-        }
-
-        /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
-        #scroll-progress-line, .scroll-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #FF292C;
-            box-shadow: 0 0 8px #FF292C, 0 0 16px rgba(255, 41, 44, 0.6);
-            z-index: 100000;
-            pointer-events: none;
-            transition: width 0.04s linear;
-            will-change: width;
-        }
-
-        /* FLOATING PILL NAVBAR SCROLL BEHAVIOR */
-        .nav-wrapper.nav-scrolled .nav-pill {
-            background: rgba(11, 11, 14, 0.96);
-            border-color: rgba(255, 41, 44, 0.35);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 41, 44, 0.15);
-        }
-
-        /* INTERSECTION OBSERVER REVEAL ANIMATIONS (GPU-ACCELERATED, JANK-FREE) */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.25s ease,
-                        box-shadow 0.25s ease;
-            will-change: opacity, transform;
-        }
-        .reveal-on-scroll.is-revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.08s; }
-        .reveal-delay-2 { transition-delay: 0.16s; }
-        .reveal-delay-3 { transition-delay: 0.24s; }
-        .reveal-delay-4 { transition-delay: 0.32s; }
-
-        /* MECHANICAL GLITCH TARGETS (ENFORCE TABULAR-NUMS TO PREVENT JANK) */
-        [data-glitch], .mechanical-glitch {
-            font-variant-numeric: tabular-nums;
-            display: inline-block;
-        }
-
-        /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
-        #scroll-progress-line, .scroll-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #FF292C;
-            box-shadow: 0 0 8px #FF292C, 0 0 16px rgba(255, 41, 44, 0.6);
-            z-index: 100000;
-            pointer-events: none;
-            transition: width 0.04s linear;
-            will-change: width;
-        }
-
-        /* FLOATING PILL NAVBAR SCROLL BEHAVIOR */
-        .nav-wrapper.nav-scrolled .nav-pill {
-            background: rgba(11, 11, 14, 0.96);
-            border-color: rgba(255, 41, 44, 0.35);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 41, 44, 0.15);
-        }
-
-        /* INTERSECTION OBSERVER REVEAL ANIMATIONS (GPU-ACCELERATED, JANK-FREE) */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.25s ease,
-                        box-shadow 0.25s ease;
-            will-change: opacity, transform;
-        }
-        .reveal-on-scroll.is-revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.08s; }
-        .reveal-delay-2 { transition-delay: 0.16s; }
-        .reveal-delay-3 { transition-delay: 0.24s; }
-        .reveal-delay-4 { transition-delay: 0.32s; }
-
-        /* MECHANICAL GLITCH TARGETS (ENFORCE TABULAR-NUMS TO PREVENT JANK) */
-        [data-glitch], .mechanical-glitch {
-            font-variant-numeric: tabular-nums;
-            display: inline-block;
-        }
-
-        /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
-        #scroll-progress-line, .scroll-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #FF292C;
-            box-shadow: 0 0 8px #FF292C, 0 0 16px rgba(255, 41, 44, 0.6);
-            z-index: 100000;
-            pointer-events: none;
-            transition: width 0.04s linear;
-            will-change: width;
-        }
-
-        /* FLOATING PILL NAVBAR SCROLL BEHAVIOR */
-        .nav-wrapper.nav-scrolled .nav-pill {
-            background: rgba(11, 11, 14, 0.96);
-            border-color: rgba(255, 41, 44, 0.35);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 41, 44, 0.15);
-        }
-
-        /* INTERSECTION OBSERVER REVEAL ANIMATIONS (GPU-ACCELERATED, JANK-FREE) */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.25s ease,
-                        box-shadow 0.25s ease;
-            will-change: opacity, transform;
-        }
-        .reveal-on-scroll.is-revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.08s; }
-        .reveal-delay-2 { transition-delay: 0.16s; }
-        .reveal-delay-3 { transition-delay: 0.24s; }
-        .reveal-delay-4 { transition-delay: 0.32s; }
-
-        /* MECHANICAL GLITCH TARGETS (ENFORCE TABULAR-NUMS TO PREVENT JANK) */
-        [data-glitch], .mechanical-glitch {
-            font-variant-numeric: tabular-nums;
-            display: inline-block;
-        }
-
-        /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
-        #scroll-progress-line, .scroll-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #FF292C;
-            box-shadow: 0 0 8px #FF292C, 0 0 16px rgba(255, 41, 44, 0.6);
-            z-index: 100000;
-            pointer-events: none;
-            transition: width 0.04s linear;
-            will-change: width;
-        }
-
-        /* FLOATING PILL NAVBAR SCROLL BEHAVIOR */
-        .nav-wrapper.nav-scrolled .nav-pill {
-            background: rgba(11, 11, 14, 0.96);
-            border-color: rgba(255, 41, 44, 0.35);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 41, 44, 0.15);
-        }
-
-        /* INTERSECTION OBSERVER REVEAL ANIMATIONS (GPU-ACCELERATED, JANK-FREE) */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.25s ease,
-                        box-shadow 0.25s ease;
-            will-change: opacity, transform;
-        }
-        .reveal-on-scroll.is-revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.08s; }
-        .reveal-delay-2 { transition-delay: 0.16s; }
-        .reveal-delay-3 { transition-delay: 0.24s; }
-        .reveal-delay-4 { transition-delay: 0.32s; }
-
-        /* MECHANICAL GLITCH TARGETS (ENFORCE TABULAR-NUMS TO PREVENT JANK) */
-        [data-glitch], .mechanical-glitch {
-            font-variant-numeric: tabular-nums;
-            display: inline-block;
-        }
-
-        /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
-        #scroll-progress-line, .scroll-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #FF292C;
-            box-shadow: 0 0 8px #FF292C, 0 0 16px rgba(255, 41, 44, 0.6);
-            z-index: 100000;
-            pointer-events: none;
-            transition: width 0.04s linear;
-            will-change: width;
-        }
-
-        /* FLOATING PILL NAVBAR SCROLL BEHAVIOR */
-        .nav-wrapper.nav-scrolled .nav-pill {
-            background: rgba(11, 11, 14, 0.96);
-            border-color: rgba(255, 41, 44, 0.35);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 41, 44, 0.15);
-        }
-
-        /* INTERSECTION OBSERVER REVEAL ANIMATIONS (GPU-ACCELERATED, JANK-FREE) */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.25s ease,
-                        box-shadow 0.25s ease;
-            will-change: opacity, transform;
-        }
-        .reveal-on-scroll.is-revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.08s; }
-        .reveal-delay-2 { transition-delay: 0.16s; }
-        .reveal-delay-3 { transition-delay: 0.24s; }
-        .reveal-delay-4 { transition-delay: 0.32s; }
-
-        /* MECHANICAL GLITCH TARGETS (ENFORCE TABULAR-NUMS TO PREVENT JANK) */
-        [data-glitch], .mechanical-glitch {
-            font-variant-numeric: tabular-nums;
-            display: inline-block;
-        }
-
-        /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
-        #scroll-progress-line, .scroll-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #FF292C;
-            box-shadow: 0 0 8px #FF292C, 0 0 16px rgba(255, 41, 44, 0.6);
-            z-index: 100000;
-            pointer-events: none;
-            transition: width 0.04s linear;
-            will-change: width;
-        }
-
-        /* FLOATING PILL NAVBAR SCROLL BEHAVIOR */
-        .nav-wrapper.nav-scrolled .nav-pill {
-            background: rgba(11, 11, 14, 0.96);
-            border-color: rgba(255, 41, 44, 0.35);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 41, 44, 0.15);
-        }
-
-        /* INTERSECTION OBSERVER REVEAL ANIMATIONS (GPU-ACCELERATED, JANK-FREE) */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.25s ease,
-                        box-shadow 0.25s ease;
-            will-change: opacity, transform;
-        }
-        .reveal-on-scroll.is-revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.08s; }
-        .reveal-delay-2 { transition-delay: 0.16s; }
-        .reveal-delay-3 { transition-delay: 0.24s; }
-        .reveal-delay-4 { transition-delay: 0.32s; }
-
-        /* MECHANICAL GLITCH TARGETS (ENFORCE TABULAR-NUMS TO PREVENT JANK) */
-        [data-glitch], .mechanical-glitch {
-            font-variant-numeric: tabular-nums;
-            display: inline-block;
-        }
-
-        /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
-        #scroll-progress-line, .scroll-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #FF292C;
-            box-shadow: 0 0 8px #FF292C, 0 0 16px rgba(255, 41, 44, 0.6);
-            z-index: 100000;
-            pointer-events: none;
-            transition: width 0.04s linear;
-            will-change: width;
-        }
-
-        /* FLOATING PILL NAVBAR SCROLL BEHAVIOR */
-        .nav-wrapper.nav-scrolled .nav-pill {
-            background: rgba(11, 11, 14, 0.96);
-            border-color: rgba(255, 41, 44, 0.35);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 41, 44, 0.15);
-        }
-
-        /* INTERSECTION OBSERVER REVEAL ANIMATIONS (GPU-ACCELERATED, JANK-FREE) */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.25s ease,
-                        box-shadow 0.25s ease;
-            will-change: opacity, transform;
-        }
-        .reveal-on-scroll.is-revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.08s; }
-        .reveal-delay-2 { transition-delay: 0.16s; }
-        .reveal-delay-3 { transition-delay: 0.24s; }
-        .reveal-delay-4 { transition-delay: 0.32s; }
-
-        /* MECHANICAL GLITCH TARGETS (ENFORCE TABULAR-NUMS TO PREVENT JANK) */
-        [data-glitch], .mechanical-glitch {
-            font-variant-numeric: tabular-nums;
-            display: inline-block;
-        }
-
-        /* UNIFIED FLOATING PILL NAVBAR SPECIFICATION */
-        .nav-wrapper {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            width: fit-content;
-            max-width: 98vw;
-            pointer-events: none;
-        }
-
-        .nav-pill {
-            display: flex;
-            align-items: center;
-            padding: 6px 14px 6px 10px;
-            border-radius: 9999px;
-            background: rgba(11, 11, 14, 0.85);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid #1C1C24;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 41, 44, 0.15);
-            pointer-events: auto;
-            white-space: nowrap;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: #FFFFFF;
-            border-right: 1px solid #1C1C24;
-            padding-right: 12px;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-        .nav-logo-box {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .nav-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            color: #FFFFFF;
-            white-space: nowrap;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            list-style: none;
-        }
-        .nav-link {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.60);
-            text-decoration: none;
-            padding: 6px 10px;
-            border-radius: 9999px;
-            border: 1px solid transparent;
-            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .nav-link:hover {
-            color: #FFFFFF;
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.18);
-        }
-        .nav-link.active {
-            color: #FFFFFF;
-            background: rgba(255, 41, 44, 0.14);
-            border-color: #FF292C;
-            box-shadow: 0 0 10px rgba(255, 41, 44, 0.35);
-        }
-        .nav-link.active::before {
-            content: '';
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: #FF292C;
-            box-shadow: 0 0 6px #FF292C;
-            display: inline-block;
-        }
-
-        @media (max-width: 900px) {
-            .nav-wrapper {
-                top: 10px;
-                left: 0;
-                right: 0;
-                transform: none;
-                width: 100%;
-                padding: 0 12px;
-                box-sizing: border-box;
-                display: flex;
-                justify-content: center;
-                pointer-events: auto;
-            }
-            .nav-pill {
-                padding: 4px 8px;
-                width: auto;
-                max-width: calc(100vw - 24px);
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                justify-content: flex-start;
-            }
-            .nav-pill::-webkit-scrollbar {
-                display: none;
-            }
-            .nav-brand {
-                position: sticky;
-                left: 0;
-                background: rgba(11, 11, 14, 0.95);
-                z-index: 2;
-                padding-right: 8px;
-                margin-right: 8px;
-            }
-            .nav-title {
-                display: none;
-            }
-            .nav-link {
-                font-size: 10px;
-                padding: 4px 8px;
-                flex-shrink: 0;
-            }
-            .nav-cta {
-                display: none;
-            }
-        }
-
-        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
-        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum" 1;
-        }
-
-        /* GLOBAL RESPONSIVE CONTAINMENT ON SUBPAGES */
-        .page-wrap {
-            max-width: 1360px;
-            margin: 0 auto;
-            padding: 96px 24px 80px 24px;
-            box-sizing: border-box;
-            width: 100%;
-        }
-        @media (max-width: 900px) {
-            .page-wrap {
-                padding-top: 80px !important;
-                padding-bottom: 48px;
-                padding-left: 14px;
-                padding-right: 14px;
-            }
-            .section-title {
-                font-size: clamp(22px, 6.8vw, 36px) !important;
-                word-break: break-word;
-            }
-            .section-desc {
-                font-size: 13.5px !important;
-            }
-            .meta-tag {
-                font-size: 9.5px !important;
-                word-break: break-all;
-            }
-            .hero-banner {
-                padding-top: 10px;
-            }
-            .paper-header {
-                padding-top: 80px !important;
-            }
-        }
-
-        /* MOBILE LATTICE, CALC-GRID & TABLE CONTAINMENT */
-        .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-            max-width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        @media (max-width: 900px) {
-            .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-                max-width: 100% !important;
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch;
-            }
-            .calc-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .node-lattice {
-                gap: 4px !important;
-                min-width: 280px;
-            }
-            table {
-                min-width: 520px;
-            }
-        }
-
-        @media print {
-            .nav-wrapper, #cursor-dot, #cursor-ring {
-                display: none !important;
-            }
-        }
-
-        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
-        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum" 1;
-        }
-
-        /* GLOBAL RESPONSIVE CONTAINMENT ON SUBPAGES */
-        .page-wrap {
-            max-width: 1360px;
-            margin: 0 auto;
-            padding: 96px 24px 80px 24px;
-            box-sizing: border-box;
-            width: 100%;
-        }
-        @media (max-width: 900px) {
-            .page-wrap {
-                padding-top: 80px !important;
-                padding-bottom: 48px;
-                padding-left: 14px;
-                padding-right: 14px;
-            }
-            .section-title {
-                font-size: clamp(22px, 6.8vw, 36px) !important;
-                word-break: break-word;
-            }
-            .section-desc {
-                font-size: 13.5px !important;
-            }
-            .meta-tag {
-                font-size: 9.5px !important;
-                word-break: break-all;
-            }
-            .hero-banner {
-                padding-top: 10px;
-            }
-            .paper-header {
-                padding-top: 80px !important;
-            }
-        }
-
-        /* MOBILE LATTICE, CALC-GRID & TABLE CONTAINMENT */
-        .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-            max-width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        @media (max-width: 900px) {
-            .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-                max-width: 100% !important;
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch;
-            }
-            .calc-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .node-lattice {
-                gap: 4px !important;
-                min-width: 280px;
-            }
-            table {
-                min-width: 520px;
-            }
-        }
-
-        @media print {
-            .nav-wrapper, #cursor-dot, #cursor-ring {
-                display: none !important;
-            }
-        }
-
-        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
-        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum" 1;
-        }
-
-        /* GLOBAL RESPONSIVE CONTAINMENT ON SUBPAGES */
-        .page-wrap {
-            max-width: 1360px;
-            margin: 0 auto;
-            padding: 96px 24px 80px 24px;
-            box-sizing: border-box;
-            width: 100%;
-        }
-        @media (max-width: 900px) {
-            .page-wrap {
-                padding-top: 80px !important;
-                padding-bottom: 48px;
-                padding-left: 14px;
-                padding-right: 14px;
-            }
-            .section-title {
-                font-size: clamp(22px, 6.8vw, 36px) !important;
-                word-break: break-word;
-            }
-            .section-desc {
-                font-size: 13.5px !important;
-            }
-            .meta-tag {
-                font-size: 9.5px !important;
-                word-break: break-all;
-            }
-            .hero-banner {
-                padding-top: 10px;
-            }
-            .paper-header {
-                padding-top: 80px !important;
-            }
-        }
-
-        /* MOBILE LATTICE, CALC-GRID & TABLE CONTAINMENT */
-        .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-            max-width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        @media (max-width: 900px) {
-            .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-                max-width: 100% !important;
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch;
-            }
-            .calc-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .node-lattice {
-                gap: 4px !important;
-                min-width: 280px;
-            }
-            table {
-                min-width: 520px;
-            }
-        }
-
-        @media print {
-            .nav-wrapper, #cursor-dot, #cursor-ring {
-                display: none !important;
-            }
-        }
-
-        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
-        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum" 1;
-        }
-
-        /* GLOBAL RESPONSIVE CONTAINMENT ON SUBPAGES */
-        .page-wrap {
-            max-width: 1360px;
-            margin: 0 auto;
-            padding: 96px 24px 80px 24px;
-            box-sizing: border-box;
-            width: 100%;
-        }
-        @media (max-width: 900px) {
-            .page-wrap {
-                padding-top: 80px !important;
-                padding-bottom: 48px;
-                padding-left: 14px;
-                padding-right: 14px;
-            }
-            .section-title {
-                font-size: clamp(22px, 6.8vw, 36px) !important;
-                word-break: break-word;
-            }
-            .section-desc {
-                font-size: 13.5px !important;
-            }
-            .meta-tag {
-                font-size: 9.5px !important;
-                word-break: break-all;
-            }
-            .hero-banner {
-                padding-top: 10px;
-            }
-            .paper-header {
-                padding-top: 80px !important;
-            }
-        }
-
-        /* MOBILE LATTICE, CALC-GRID & TABLE CONTAINMENT */
-        .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-            max-width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        @media (max-width: 900px) {
-            .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-                max-width: 100% !important;
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch;
-            }
-            .calc-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .node-lattice {
-                gap: 4px !important;
-                min-width: 280px;
-            }
-            table {
-                min-width: 520px;
-            }
-        }
-
-        @media print {
-            .nav-wrapper, #cursor-dot, #cursor-ring {
-                display: none !important;
-            }
-        }
-
-        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
-        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum" 1;
-        }
-
-        /* GLOBAL RESPONSIVE CONTAINMENT ON SUBPAGES */
-        .page-wrap {
-            max-width: 1360px;
-            margin: 0 auto;
-            padding: 96px 24px 80px 24px;
-            box-sizing: border-box;
-            width: 100%;
-        }
-        @media (max-width: 900px) {
-            .page-wrap {
-                padding-top: 80px !important;
-                padding-bottom: 48px;
-                padding-left: 14px;
-                padding-right: 14px;
-            }
-            .section-title {
-                font-size: clamp(22px, 6.8vw, 36px) !important;
-                word-break: break-word;
-            }
-            .section-desc {
-                font-size: 13.5px !important;
-            }
-            .meta-tag {
-                font-size: 9.5px !important;
-                word-break: break-all;
-            }
-            .hero-banner {
-                padding-top: 10px;
-            }
-            .paper-header {
-                padding-top: 80px !important;
-            }
-        }
-
-        /* MOBILE LATTICE, CALC-GRID & TABLE CONTAINMENT */
-        .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-            max-width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        @media (max-width: 900px) {
-            .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-                max-width: 100% !important;
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch;
-            }
-            .calc-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .node-lattice {
-                gap: 4px !important;
-                min-width: 280px;
-            }
-            table {
-                min-width: 520px;
-            }
-        }
-
-        @media print {
-            .nav-wrapper, #cursor-dot, #cursor-ring {
-                display: none !important;
-            }
-        }
-
-        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
-        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum" 1;
-        }
-
-        /* GLOBAL RESPONSIVE CONTAINMENT ON SUBPAGES */
-        .page-wrap {
-            max-width: 1360px;
-            margin: 0 auto;
-            padding: 96px 24px 80px 24px;
-            box-sizing: border-box;
-            width: 100%;
-        }
-        @media (max-width: 768px) {
-            .page-wrap {
-                padding: 72px 14px 48px 14px;
-            }
-            .section-title {
-                font-size: clamp(22px, 6.8vw, 36px) !important;
-                word-break: break-word;
-            }
-            .section-desc {
-                font-size: 13.5px !important;
-            }
-            .meta-tag {
-                font-size: 9.5px !important;
-                word-break: break-all;
-            }
-        }
-
-        @media print {
-            .nav-wrapper, #cursor-dot, #cursor-ring {
-                display: none !important;
-            }
-        }
-
-        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
-        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum" 1;
-        }
-
-        @media print {
-            .nav-wrapper, #cursor-dot, #cursor-ring {
-                display: none !important;
-            }
-        }
-
-        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
-        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum" 1;
-        }
-
-        @media print {
-            .nav-wrapper, #cursor-dot, #cursor-ring {
-                display: none !important;
-            }
-        }
-
-        /* GLITCH SCRAMBLE */
-        .glitch-active {
-            opacity: 0.94;
-            letter-spacing: 0.02em;
-        }
-
-        /* PAGE WRAPPER */
-        .page-wrap {
-            padding-top: 104px;
-            padding-bottom: 80px;
-            max-width: 1240px;
-            margin: 0 auto;
-            padding-left: 24px;
-            padding-right: 24px;
-        }
-
-        /* HERO HEADER */
-        .hero-banner {
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 36px;
-            margin-bottom: 48px;
-            position: relative;
-        }
-        .section-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            color: var(--laser-red);
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            background: var(--laser-subtle);
-            border: 1px solid var(--border-accent);
-            padding: 4px 12px;
-            clip-path: polygon(0 6px, 6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%);
-        }
-        .page-title {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(32px, 4.2vw, 56px);
-            font-weight: 800;
-            letter-spacing: -0.01em;
-            line-height: 1.05;
-            text-transform: uppercase;
-            color: var(--white);
-            margin-bottom: 18px;
-        }
-        .page-lead {
-            font-size: 16px;
-            color: var(--slate);
-            line-height: 1.7;
-            max-width: 980px;
-            margin-bottom: 32px;
-        }
-
-        /* STACKED TELEMETRY HUD BAR */
-        .telemetry-strip {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 16px 20px;
-            margin-bottom: 48px;
-        }
-        .telemetry-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            border-left: 2px solid var(--border);
-            padding-left: 12px;
-        }
-        .telemetry-item.accent {
-            border-left-color: var(--laser-red);
-        }
-        .telemetry-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: var(--slate);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-        .telemetry-val {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--white);
-        }
-        .telemetry-val.red { color: var(--laser-red); }
-        .telemetry-val.green { color: var(--green); }
-
-        /* FULL WIDTH STACKED PANELS */
-        .stacked-container {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        .stacked-panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 36px 40px;
-            position: relative;
-            clip-path: polygon(0 14px, 14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
-            transition: border-color 0.25s ease;
-        }
-        .stacked-panel:hover {
-            border-color: var(--border-hover);
-        }
-        .panel-badge {
-            position: absolute;
-            top: 24px;
-            right: 28px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10.5px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: var(--laser-red);
-            background: var(--laser-subtle);
-            border: 1px solid var(--border-accent);
-            padding: 3px 10px;
-        }
-        .panel-header {
-            margin-bottom: 24px;
-            padding-right: 140px;
-        }
-        .panel-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--laser-red);
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            margin-bottom: 6px;
-        }
-        .panel-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 26px;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: var(--white);
-            margin-bottom: 12px;
-            letter-spacing: -0.01em;
-        }
-        .panel-desc {
-            font-size: 14.5px;
-            color: var(--slate);
-            line-height: 1.7;
-        }
-
-        /* TABLES */
-        .brutal-table-box {
-            overflow-x: auto;
-            margin: 24px 0;
-            border: 1px solid var(--border);
-            background: #0B0B0E;
-        }
-        .brutal-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            text-align: left;
-        }
-        .brutal-table th {
-            background: #111116;
-            color: var(--slate);
-            padding: 12px 18px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            border-bottom: 1px solid var(--border);
-            border-right: 1px solid var(--border);
-        }
-        .brutal-table td {
-            padding: 14px 18px;
-            color: var(--chalk);
-            border-bottom: 1px solid var(--border);
-            border-right: 1px solid var(--border);
-            vertical-align: top;
-        }
-        .brutal-table tr:last-child td {
-            border-bottom: none;
-        }
-        .brutal-table td:last-child, .brutal-table th:last-child {
-            border-right: none;
-        }
-        .brutal-table tr:hover td {
-            background: rgba(255, 41, 44, 0.03);
-        }
-        .tier-highlight {
-            color: var(--laser-red);
-            font-weight: 700;
-        }
-
-        /* STACKED ITEM CARDS */
-        .spec-row-item {
-            background: #09090D;
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--laser-red);
-            padding: 24px;
-            margin-bottom: 16px;
-        }
-        .spec-row-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .spec-row-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--white);
-        }
-        .spec-row-reward {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--green);
-        }
-        .spec-row-body {
-            font-size: 13.5px;
-            color: var(--slate);
-            line-height: 1.65;
-            margin-bottom: 14px;
-        }
-        .spec-chip-list {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .spec-chip {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            background: #121218;
-            border: 1px solid var(--border);
-            padding: 4px 10px;
-            color: var(--chalk);
-        }
-        .spec-chip strong { color: var(--laser-red); }
-
-        /* MATH DISPLAY BOX */
-        .math-hero-box {
-            background: #060608;
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--green);
-            padding: 24px;
-            margin: 24px 0;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .math-hero-title {
-            font-size: 11px;
-            color: var(--green);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-        .math-formula {
-            font-size: 15px;
-            color: #FFFFFF;
-            letter-spacing: 0.05em;
-            margin-bottom: 12px;
-            overflow-x: auto;
-            white-space: pre;
-        }
-        .math-explanation {
-            font-size: 13px;
-            color: var(--slate);
-            line-height: 1.6;
-        }
-
-        /* GLOBAL FOOTER */
-        .global-footer {
-            background: #050507;
-            border-top: 1px solid var(--border);
-            padding: 48px 32px 36px;
-            margin-top: 80px;
-        }
-        .footer-inner {
-            max-width: 1240px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .footer-brand {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            color: var(--slate);
-        }
-        .footer-brand strong { color: var(--white); }
-        .footer-links {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-        .footer-link {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10.5px;
-            color: var(--slate);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .footer-link:hover { color: var(--laser-red); }
-
-        @media (max-width: 1080px) {
-            .nav-links { display: none; }
-        }
-        @media (max-width: 768px) {
-            .stacked-panel { padding: 24px 20px; }
-            .panel-header { padding-right: 0; }
-            .panel-badge { position: static; display: inline-block; margin-bottom: 12px; }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>33RD TREE LABS // Tokenomics Architecture &amp; Monetary Policy &bull; 33rdtreelabs.tech</title>
+  <meta name="description" content="Comprehensive Tokenomics Architecture for 33rd Tree Labs: Strict 33,333,333 $33RD Hard Cap, 100% Incinerated LP, Deflationary Burn Mathematics, and PoI Emission Decay Schedule.">
+  <meta name="theme-color" content="#070707">
+
+  <!-- OpenGraph & Twitter Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://33rdtreelabs.tech/tokenomics.html">
+  <meta property="og:title" content="33RD TREE LABS // Tokenomics Architecture &amp; Monetary Policy &bull; 33rdtreelabs.tech">
+  <meta property="og:description" content="Comprehensive Tokenomics Architecture for 33rd Tree Labs: Strict 33,333,333 $33RD Hard Cap, 100% Incinerated LP, Deflationary Burn Mathematics, and PoI Emission Decay Schedule.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="33RD TREE LABS // Tokenomics Architecture &amp; Monetary Policy &bull; 33rdtreelabs.tech">
+  <meta name="twitter:description" content="Comprehensive Tokenomics Architecture for 33rd Tree Labs: Strict 33,333,333 $33RD Hard Cap, 100% Incinerated LP, Deflationary Burn Mathematics, and PoI Emission Decay Schedule.">
+
+  <!-- Core Fonts & CDN Engines -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Fast Snappy Lenis & KaTeX -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <style>
+
+    :root {
+      --t: #FF2424; /* Primary Laser Crimson */
+      --t-glow: rgba(255, 36, 36, 0.45);
+      --t-subtle: rgba(255, 36, 36, 0.08);
+      --f: #070707; /* Pure Obsidian Background */
+      --chalk: #F2F2F5;
+      --chalk-dim: #C8C8D2;
+      --dim: #8E8E98;
+      --slate: #6E6E78;
+      --border: #1C1C24;
+      --border-light: #2A2A36;
+      --border-accent: rgba(255, 36, 36, 0.35);
+      --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --fm: 'JetBrains Mono', ui-monospace, monospace;
+      --fh: 'Syne', sans-serif;
+      --green: #00E676;
+    }
+
+    *, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      -webkit-text-size-adjust: 100%;
+      scrollbar-width: none;
+      background: var(--f);
+      color: var(--chalk);
+      font-family: var(--fd);
+      overflow-x: clip;
+    }
+    html::-webkit-scrollbar { display: none; }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-stopped { overflow: hidden; }
+
+    body {
+      margin: 0;
+      background: var(--f);
+      color: var(--chalk);
+      font-family: var(--fd);
+      font-size: 15.5px;
+      line-height: 1.55;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TOP-EDGE SCROLL PROGRESS BAR */
+    #scroll-progress-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--t);
+      box-shadow: 0 0 10px var(--t), 0 0 20px var(--t-glow);
+      z-index: 100000;
+      pointer-events: none;
+      transition: width 0.03s linear;
+      will-change: width;
+    }
+
+    /* RIGHT TELEMETRY RAIL */
+    .sbar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      width: 14px;
+      background: rgba(7, 7, 7, 0.85);
+      border-left: 1px solid rgba(255, 36, 36, 0.25);
+      touch-action: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 60px 0 20px;
+    }
+    .sbar__ticks {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-family: var(--fm);
+      font-size: 8px;
+      color: var(--dim);
+      user-select: none;
+    }
+    .sbar__ticks span { line-height: 1; }
+    .sbar__ticks span.active { color: var(--t); font-weight: 700; }
+    .sbar__coord {
+      font-family: var(--fm);
+      font-size: 9px;
+      color: var(--dim);
+      writing-mode: vertical-rl;
+      letter-spacing: 0.1em;
+      user-select: none;
+    }
+    .sbar i {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--t);
+      box-shadow: 0 0 12px rgba(255, 36, 36, 0.85);
+      will-change: transform;
+      border-radius: 1px;
+    }
+    @media (hover: none) { .sbar { display: none; } }
+
+    /* UNIFIED FLOATING PILL NAVBAR */
+    .nav-wrapper {
+      position: fixed;
+      top: 24px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      z-index: 999;
+      pointer-events: none;
+    }
+    .nav-pill {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 10px 24px;
+      background: rgba(11, 11, 14, 0.94);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 36, 36, 0.12);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--chalk);
+    }
+    .nav-logo-box {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-title {
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: 13.5px;
+      letter-spacing: 0.12em;
+      color: #FFFFFF;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 16px;
+    }
+    .nav-link {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--t);
+      text-shadow: 0 0 12px rgba(255, 36, 36, 0.6);
+    }
+    @media (max-width: 1080px) {
+      .nav-links { display: none; }
+    }
+
+    /* MAIN CONTAINER & OPEN BRUTALIST EDITORIAL LAYOUT */
+    .page-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 140px clamp(20px, 4vw, 60px) 100px;
+    }
+
+    /* EDITORIAL HERO / HEADER */
+    .ed-hero {
+      margin-bottom: 70px;
+      position: relative;
+    }
+    .ed-kicker {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--t);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .ed-headline {
+      font-family: var(--fh);
+      font-weight: 900;
+      font-size: clamp(38px, 6vw, 84px);
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      line-height: 0.95;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+    .ed-headline .accent {
+      color: var(--t);
+      text-shadow: 0 0 40px rgba(255, 36, 36, 0.45);
+    }
+    .ed-lead {
+      font-size: clamp(16px, 1.3vw, 19px);
+      line-height: 1.6;
+      max-width: 920px;
+      color: var(--chalk-dim);
+      margin-bottom: 40px;
+    }
+
+    /* TELEMETRY STRIP (NO CARD WRAPPER - CLEAN HAIRLINE BORDERS) */
+    .telemetry-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+    .telemetry-cell {
+      padding: 24px 28px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .telemetry-cell:last-child {
+      border-right: none;
+    }
+    .telemetry-lbl {
+      font-family: var(--fm);
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--dim);
+    }
+    .telemetry-val {
+      font-family: var(--fm);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--chalk);
+      letter-spacing: -0.02em;
+    }
+    .telemetry-val.accent { color: var(--t); }
+    .telemetry-val.green { color: var(--green); }
+
+    /* OPEN EDITORIAL SECTIONS (DIVIDED BY STARK HAIRLINES, ZERO CARDS) */
+    .ed-section {
+      border-top: 1px solid var(--border);
+      padding: 80px 0;
+      position: relative;
+    }
+    .ed-sec-head {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 860px) {
+      .ed-sec-head { grid-template-columns: 1fr; gap: 16px; }
+    }
+    .sec-badge-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .sec-giant-num {
+      font-family: var(--fh);
+      font-size: clamp(48px, 6vw, 72px);
+      font-weight: 900;
+      line-height: 0.85;
+      color: rgba(255, 36, 36, 0.25);
+      user-select: none;
+    }
+    .sec-kicker {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--t);
+      text-transform: uppercase;
+    }
+    .sec-title {
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: clamp(28px, 3.2vw, 44px);
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      color: var(--chalk);
+      margin-bottom: 16px;
+    }
+    .sec-summary {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--chalk-dim);
+      max-width: 840px;
+    }
+
+    /* MULTI-COLUMN COMPARISON GRIDS (ZERO CARD CONTAINERS, HAIRLINE CELLS) */
+    .ed-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      margin: 40px 0;
+    }
+    .ed-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      margin: 40px 0;
+    }
+    .ed-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      margin: 40px 0;
+    }
+    @media (max-width: 1024px) {
+      .ed-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .ed-grid-3 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .ed-grid-4, .ed-grid-2 { grid-template-columns: 1fr; }
+    }
+    .ed-grid-cell {
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 36px 30px;
+      background: transparent;
+      transition: background 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .ed-grid-cell:hover {
+      background: rgba(255, 36, 36, 0.025);
+    }
+    .cell-tag {
+      font-family: var(--fm);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--t);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .cell-title {
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .cell-body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--dim);
+      margin-bottom: 24px;
+    }
+    .cell-spec-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-family: var(--fm);
+      font-size: 11.5px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 18px;
+    }
+    .cell-spec-list li {
+      display: flex;
+      justify-content: space-between;
+      color: var(--chalk-dim);
+    }
+    .cell-spec-list li strong {
+      color: #FFFFFF;
+    }
+
+    /* MONOSPACE TELEMETRY & SPECIFICATION TABLES */
+    .ed-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      margin: 32px 0 48px;
+    }
+    .ed-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--fm);
+      font-size: 12.5px;
+      text-align: left;
+    }
+    .ed-table th {
+      background: rgba(255, 36, 36, 0.05);
+      color: var(--t);
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .ed-table td {
+      padding: 15px 20px;
+      border: 1px solid var(--border);
+      color: var(--chalk-dim);
+    }
+    .ed-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .ed-table .highlight {
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+    .ed-table .accent {
+      color: var(--t);
+      font-weight: 700;
+    }
+    .ed-table .green {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* TERMINAL & CLI CODE RUNBOOK BLOCKS */
+    .ed-code-block {
+      border: 1px solid var(--border);
+      background: #030306;
+      margin: 28px 0;
+      font-family: var(--fm);
+    }
+    .ed-code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+    }
+    .ed-code-content {
+      padding: 22px 24px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #E2E2E8;
+    }
+    .cmd-prompt { color: var(--t); user-select: none; margin-right: 10px; }
+    .cmd-flag { color: #79C0FF; }
+    .cmd-val { color: #A5D6FF; }
+    .cmd-comment { color: var(--slate); font-style: italic; }
+
+    /* MATH & FORMULA CALLOUT */
+    .math-callout {
+      border-left: 2px solid var(--t);
+      background: rgba(255, 36, 36, 0.02);
+      padding: 24px 28px;
+      margin: 28px 0;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .math-callout-title {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--t);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .math-display-box {
+      background: #030305;
+      border: 1px solid var(--border);
+      padding: 24px 28px;
+      margin: 24px 0;
+      overflow-x: auto;
+      color: #FFFFFF;
+      font-size: 16px;
+    }
+
+    /* EDITORIAL LIST & TWO-COLUMN PROSE */
+    .ed-prose-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin: 32px 0;
+    }
+    @media (max-width: 860px) {
+      .ed-prose-cols { grid-template-columns: 1fr; gap: 24px; }
+    }
+    .prose-block h3 {
+      font-family: var(--fh);
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .prose-block p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--chalk-dim);
+      margin-bottom: 16px;
+    }
+
+    /* INTERACTIVE SIMULATOR INTERFACE */
+    .calc-matrix-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--border);
+      margin: 36px 0;
+    }
+    @media (max-width: 900px) {
+      .calc-matrix-grid { grid-template-columns: 1fr; }
+    }
+    .calc-controls {
+      padding: 36px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .calc-outputs {
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+      background: rgba(255, 36, 36, 0.015);
+    }
+    .calc-field label {
+      display: block;
+      font-family: var(--fm);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--dim);
+      margin-bottom: 8px;
+    }
+    .calc-field select, .calc-field input {
+      width: 100%;
+      background: #020204;
+      border: 1px solid var(--border);
+      color: #FFFFFF;
+      padding: 12px 16px;
+      font-family: var(--fm);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .calc-field select:focus, .calc-field input:focus {
+      border-color: var(--t);
+    }
+    .out-metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
+    }
+    .out-metric-lbl {
+      font-family: var(--fm);
+      font-size: 11.5px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .out-metric-val {
+      font-family: var(--fm);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--chalk);
+    }
+    .out-metric-val.accent { color: var(--t); }
+    .out-metric-val.green { color: var(--green); }
+
+    /* FOOTER */
+    .foot {
+      border-top: 1px solid var(--border);
+      background: var(--f);
+      padding: 60px 0 40px;
+      margin-top: 100px;
+    }
+    .foot__marquee {
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+    }
+    .foot__grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 60px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-family: var(--fm);
+      font-size: 11.5px;
+      color: var(--slate);
+    }
+    .foot__top {
+      color: var(--t);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    .foot__top:hover {
+      text-decoration: underline;
+    }
+    
+  </style>
 </head>
 <body>
-<!-- TOP-EDGE SCROLL TELEMETRY PROGRESS LINE -->
-    <div id="scroll-progress-line" class="scroll-progress-bar" aria-hidden="true"></div>
 
-    <!-- RETRO-TECH CURSOR -->
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
+  <!-- TOP-EDGE SCROLL PROGRESS BAR -->
+  <div id="scroll-progress-line" aria-hidden="true"></div>
 
-    <!-- FLOATING PILL NAVBAR -->
-    <div class="nav-wrapper">
-        <nav class="nav-pill">
-            <a href="index.html" class="nav-brand">
-                <div class="nav-logo-box">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <ellipse cx="12" cy="4" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
-                        <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
-                        <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-                        <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-                        <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
-                        <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
-                    </svg>
-                </div>
-                <span class="nav-title" data-glitch>33RD TREE LABS</span>
-            </a>
-
-            <div class="nav-links">
-                <a href="index.html" class="nav-link" data-glitch>[ OVERVIEW ]</a>
-                <a href="protocol.html" class="nav-link" data-glitch>[ PROTOCOL ]</a>
-                <a href="simulator.html" class="nav-link" data-glitch>[ SIMULATOR ]</a>
-                <a href="yield.html" class="nav-link" data-glitch>[ YIELD ]</a>
-                <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
-                <a href="tokenomics.html" class="nav-link active" data-glitch>[ TOKENOMICS ]</a>
-                <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
-            </div>
-        </nav>
+  <!-- RIGHT TELEMETRY RAIL -->
+  <div class="sbar" id="telemetry-rail">
+    <div class="sbar__ticks">
+      <span>00</span>
+      <span>25</span>
+      <span>50</span>
+      <span>75</span>
+      <span class="active">99</span>
     </div>
+    <div class="sbar__coord">33RDTREELABS // DEPIN // SOLANA</div>
+    <div style="font-family:var(--fm); font-size:9px; color:var(--t);" id="telemetry-scroll-pct">00%</div>
+    <i id="sbar-thumb" style="height:35px; top:0;"></i>
+  </div>
 
-<div class="page-wrap">
-        
-        <!-- HERO BANNER -->
-        <header class="hero-banner">
-            <div class="section-pill">[ MONETARY TOPOLOGY &amp; TOKEN ARCHITECTURE ]</div>
-            <h1 class="page-title">$33RD TOKENOMICS &amp; SINGULARITY ECONOMY</h1>
-            <p class="page-lead">
-                A hard-capped, non-inflationary cryptographic utility asset engineered to capture the economic productivity of decentralized foundation model inference. Backed by programmatic zero-knowledge verification gas fees, algorithmic buyback &amp; burns, and deterministic emissions anchored to Solana's high-speed state machine.
-            </p>
-
-            <!-- TELEMETRY HUD -->
-            <div class="telemetry-strip">
-                <div class="telemetry-item accent">
-                    <span class="telemetry-label">Fixed Hard Supply Cap</span>
-                    <span class="telemetry-val">33,333,333 $33RD</span>
-                </div>
-                <div class="telemetry-item">
-                    <span class="telemetry-label">Compute Mining Reserve (PoI)</span>
-                    <span class="telemetry-val red">15,000,000 (45.0%)</span>
-                </div>
-                <div class="telemetry-item">
-                    <span class="telemetry-label">Validator Staking &amp; Security</span>
-                    <span class="telemetry-val">6,666,666 (20.0%)</span>
-                </div>
-                <div class="telemetry-item">
-                    <span class="telemetry-label">Fair Launch Bonding Pool</span>
-                    <span class="telemetry-val green">5,000,000 (15.0%)</span>
-                </div>
-                <div class="telemetry-item">
-                    <span class="telemetry-label">Autonomous Fee Burn Ratio</span>
-                    <span class="telemetry-val red">10% OF INFERENCE REV</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- STACKED CONTENT SECTIONS -->
-        <main class="stacked-container">
-
-            <!-- STACKED PANEL 1: SUPPLY ALLOCATION MATRIX -->
-            <section class="stacked-panel">
-                <span class="panel-badge">[DISTRIBUTION LEDGER]</span>
-                <div class="panel-header">
-                    <div class="panel-num">// TOKENOMICS SECTION 01</div>
-                    <h2 class="panel-title">Genesis Allocation &amp; Cryptographic Vesting</h2>
-                    <p class="panel-desc">
-                        The entire supply of 33,333,333 $33RD is minted at genesis with mint and freeze authorities permanently destroyed on Solana. Distribution is programmatically constrained by Anchor smart contracts to ensure 100% mathematical alignment between token holders, validator operators, and model consumers.
-                    </p>
-                </div>
-
-                <!-- STACKED ALLOCATION 1 -->
-                <div class="spec-row-item">
-                    <div class="spec-row-header">
-                        <span class="spec-row-title">45.0% &mdash; COMPUTE MINING EMISSIONS (PROOF OF INTELLIGENCE)</span>
-                        <span class="spec-row-reward">15,000,000 $33RD</span>
-                    </div>
-                    <p class="spec-row-body">
-                        Distributed autonomously to GPU node runners who execute verifiable forward passes, maintain high-throughput TEE enclaves, and submit valid Plonky3 polynomial fold commitments. Governed by a geometric 6-year halving curve that halves daily mining issuance every 24 months.
-                    </p>
-                    <div class="spec-chip-list">
-                        <span class="spec-chip">Vesting Structure: <strong>Autonomous Halving Schedule (6 Years)</strong></span>
-                        <span class="spec-chip">Year 1 Target: <strong>7,500,000 $33RD (~20,547 / day)</strong></span>
-                        <span class="spec-chip">Contract Custody: <strong>Solana Anchor PoI Emission Vault</strong></span>
-                        <span class="spec-chip">Access Gate: <strong>Verifiable PoI Proof Signature</strong></span>
-                    </div>
-                </div>
-
-                <!-- STACKED ALLOCATION 2 -->
-                <div class="spec-row-item">
-                    <div class="spec-row-header">
-                        <span class="spec-row-title">20.0% &mdash; VALIDATOR STAKING &amp; SLASHING INSURANCE POOL</span>
-                        <span class="spec-row-reward">6,666,666 $33RD</span>
-                    </div>
-                    <p class="spec-row-body">
-                        Allocated to secure network finality and incentivize node collateralization. Tokens are locked inside the Protocol Safety Module, yielding continuous rewards to validators who maintain 99.99% uptime and zero Byzantine tensor deviations. Functions as an insurance backstop for consumer inference requests.
-                    </p>
-                    <div class="spec-chip-list">
-                        <span class="spec-chip">Vesting Structure: <strong>Continuous Dynamic Staking Rewards</strong></span>
-                        <span class="spec-chip">Minimum Lockup: <strong>14 Days Unbonding Period</strong></span>
-                        <span class="spec-chip">Slashing Mechanism: <strong>Autonomous On-Chain Penalty Routing</strong></span>
-                        <span class="spec-chip">Insurance Reserve: <strong>1,500,000 $33RD Dedicated Underwrite</strong></span>
-                    </div>
-                </div>
-
-                <!-- STACKED ALLOCATION 3 -->
-                <div class="spec-row-item">
-                    <div class="spec-row-header">
-                        <span class="spec-row-title">15.0% &mdash; FAIR LAUNCH BONDING CURVE &amp; LIQUIDITY (SCRAMJET)</span>
-                        <span class="spec-row-reward">5,000,000 $33RD</span>
-                    </div>
-                    <p class="spec-row-body">
-                        100% unlocked at Genesis to seed open-market price discovery and deep decentralized liquidity on Solana via the Scramjet Launchpad bonding curve. Zero private VC allocations, zero insider presales, and zero non-public discounts. All initial liquidity pairs are permanently burned into immutable pool accounts.
-                    </p>
-                    <div class="spec-chip-list">
-                        <span class="spec-chip">Unlock Schedule: <strong>100% Unlocked at Fair Launch TGE</strong></span>
-                        <span class="spec-chip">Trading Venue: <strong>Scramjet Native Bonding &bull; Raydium &bull; Orca</strong></span>
-                        <span class="spec-chip">LP Tokens: <strong>Permanently Burned to Solana 1111...1111</strong></span>
-                        <span class="spec-chip">Initial Float: <strong>15.0% of Total Max Supply</strong></span>
-                    </div>
-                </div>
-
-                <!-- STACKED ALLOCATION 4 -->
-                <div class="spec-row-item">
-                    <div class="spec-row-header">
-                        <span class="spec-row-title">10.0% &mdash; RESEARCH &amp; OPEN-SOURCE PROTOCOL TREASURY</span>
-                        <span class="spec-row-reward">3,333,333 $33RD</span>
-                    </div>
-                    <p class="spec-row-body">
-                        Earmarked for cryptographic R&amp;D grants, academic partnerships, Plonky3 zero-knowledge circuit optimizations, and protocol ecosystem expansions. Governed by a decentralized Multi-Sig DAO consisting of leading distributed systems researchers and validator delegates.
-                    </p>
-                    <div class="spec-chip-list">
-                        <span class="spec-chip">Vesting Structure: <strong>6-Month Hard Cliff, 36-Month Linear Vesting</strong></span>
-                        <span class="spec-chip">Monthly Tranche: <strong>~92,592 $33RD / month</strong></span>
-                        <span class="spec-chip">Custody: <strong>Squads Protocol v4 Multi-Sig (4-of-7 Threshold)</strong></span>
-                        <span class="spec-chip">Audit Standard: <strong>Quarterly Public On-Chain Disclosures</strong></span>
-                    </div>
-                </div>
-
-                <!-- STACKED ALLOCATION 5 -->
-                <div class="spec-row-item">
-                    <div class="spec-row-header">
-                        <span class="spec-row-title">10.0% &mdash; CORE ENGINEERING &amp; FOUNDATION</span>
-                        <span class="spec-row-reward">3,333,334 $33RD</span>
-                    </div>
-                    <p class="spec-row-body">
-                        Assigned to the core architecture team and 33rd Tree Labs contributors who engineered the Tensor Arbor routing layer, CUDA TEE kernels, and Solana Anchor consensus engine. Heavily backloaded to enforce decades of protocol continuity.
-                    </p>
-                    <div class="spec-chip-list">
-                        <span class="spec-chip">Vesting Structure: <strong>12-Month Hard Cliff, 24-Month Linear Monthly Vest</strong></span>
-                        <span class="spec-chip">Monthly Tranche: <strong>~138,888 $33RD / month post-cliff</strong></span>
-                        <span class="spec-chip">Smart Contract: <strong>Streamflow Solana Programmatic Vesting Escrow</strong></span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- STACKED PANEL 2: DEFLATIONARY BUYBACK & BURN ENGINE -->
-            <section class="stacked-panel">
-                <span class="panel-badge">[DEFLATIONARY VALVE]</span>
-                <div class="panel-header">
-                    <div class="panel-num">// TOKENOMICS SECTION 02</div>
-                    <h2 class="panel-title">Automated Buyback &amp; Burn Economic Engine</h2>
-                    <p class="panel-desc">
-                        Every commercial inference session executed across the 33rd Tree Labs network generates protocol settlement fees. Rather than accumulating inflationary treasury balances, the protocol operates an autonomous on-chain fee converter that constantly buys back and incinerates $33RD from circulating supply.
-                    </p>
-                </div>
-
-                <div class="math-hero-box">
-                    <div class="math-hero-title">// PROGRAMMATIC CONTINUOUS BURN FORMULATION</div>
-                    <div class="math-formula">&Delta;Supply_burned = &int; [ 0.10 &times; (Fee_inference(t) / P_33RD(t)) ] dt</div>
-                    <div class="math-explanation">
-                        Where Fee_inference(t) represents the total gross inference fees settled across the Solana contract per epoch, and P_33RD(t) is the spot oracle TWAP across decentralized liquidity pools. 10% of gross revenue is permanently removed from existence, creating net negative token supply expansion at scale.
-                    </div>
-                </div>
-
-                <div class="brutal-table-box">
-                    <table class="brutal-table">
-                        <thead>
-                            <tr>
-                                <th>Fee Distribution Channel</th>
-                                <th>Percentage</th>
-                                <th>Economic Function</th>
-                                <th>Settlement Cadence</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="tier-highlight">Compute Provider Compensation</span></td>
-                                <td><strong>75.0%</strong></td>
-                                <td>Direct payment to GPU node runners executing forward passes &amp; Plonky3 folds</td>
-                                <td>Real-time (per inference batch completion)</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tier-highlight">Staking Safety Yield</span></td>
-                                <td><strong>15.0%</strong></td>
-                                <td>Distributed to staked validator operators maintaining consensus uptime &amp; PoI proofs</td>
-                                <td>Epoch close (~every 432,000 Solana slots)</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tier-highlight">Autonomous Buyback &amp; Burn</span></td>
-                                <td><strong>10.0%</strong></td>
-                                <td>Instant market buyback executed via Anchor program; burned directly on-chain</td>
-                                <td>Continuous (per fee accumulation threshold)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- STACKED PANEL 3: 6-YEAR EMISSION HALVING CURVE -->
-            <section class="stacked-panel">
-                <span class="panel-badge">[EMISSION TIMELINE]</span>
-                <div class="panel-header">
-                    <div class="panel-num">// TOKENOMICS SECTION 03</div>
-                    <h2 class="panel-title">Deterministic 6-Year Emission Halving Schedule</h2>
-                    <p class="panel-desc">
-                        Proof of Intelligence emissions decrease exponentially over time, mirroring the scarcity dynamics of Bitcoin while rewarding early GPU infrastructure providers who bootstrap decentralized compute capacity.
-                    </p>
-                </div>
-
-                <div class="brutal-table-box">
-                    <table class="brutal-table">
-                        <thead>
-                            <tr>
-                                <th>Epoch Phase</th>
-                                <th>Calendar Duration</th>
-                                <th>Total Period Emission</th>
-                                <th>Daily Issuance Rate</th>
-                                <th>Cumulative % Emitted</th>
-                                <th>Inflation State</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="tier-highlight">Phase 1 (Genesis)</span></td>
-                                <td>Months 1 &ndash; 12</td>
-                                <td>7,500,000 $33RD</td>
-                                <td>~20,547.9 $33RD / day</td>
-                                <td>22.5% of total supply</td>
-                                <td>Bootstrapping Epoch</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tier-highlight">Phase 2 (Halving 1)</span></td>
-                                <td>Months 13 &ndash; 24</td>
-                                <td>3,750,000 $33RD</td>
-                                <td>~10,273.9 $33RD / day</td>
-                                <td>33.75% of total supply</td>
-                                <td>50% Issuance Reduction</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tier-highlight">Phase 3 (Halving 2)</span></td>
-                                <td>Months 25 &ndash; 36</td>
-                                <td>1,875,000 $33RD</td>
-                                <td>~5,136.9 $33RD / day</td>
-                                <td>39.37% of total supply</td>
-                                <td>75% Issuance Reduction</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tier-highlight">Phase 4 (Halving 3)</span></td>
-                                <td>Months 37 &ndash; 48</td>
-                                <td>937,500 $33RD</td>
-                                <td>~2,568.4 $33RD / day</td>
-                                <td>42.18% of total supply</td>
-                                <td>Deflationary Flip Transition</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tier-highlight">Phase 5 (Halving 4)</span></td>
-                                <td>Months 49 &ndash; 72</td>
-                                <td>937,500 $33RD</td>
-                                <td>~1,284.2 $33RD / day</td>
-                                <td>45.00% (Terminal Reserve)</td>
-                                <td>Full Cap Saturation</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tier-highlight">Phase 6+ (Terminal State)</span></td>
-                                <td>Month 73 Onward</td>
-                                <td>0 $33RD (New Minting Ceases)</td>
-                                <td>0.00 $33RD / day</td>
-                                <td>100.00% Circulating Cap</td>
-                                <td>Pure Fee-Driven Economy</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- STACKED PANEL 4: ON-CHAIN UTILITY & STAKING MECHANICS -->
-            <section class="stacked-panel">
-                <span class="panel-badge">[UTILITY FRAMEWORK]</span>
-                <div class="panel-header">
-                    <div class="panel-num">// TOKENOMICS SECTION 04</div>
-                    <h2 class="panel-title">Multi-Layer Utility &amp; Economic Sink Mechanics</h2>
-                    <p class="panel-desc">
-                        $33RD is not a speculative governance token; it is the fundamental fuel required to allocate, secure, and settle computing operations on the 33rd Tree Labs network.
-                    </p>
-                </div>
-
-                <div class="spec-row-item">
-                    <div class="spec-row-header">
-                        <span class="spec-row-title">1. INFERENCE GAS &amp; ZERO-KNOWLEDGE PROOF GAS</span>
-                        <span class="spec-row-reward">DEMAND SINK</span>
-                    </div>
-                    <p class="spec-row-body">
-                        Decentralized AI applications, autonomous agents, and enterprise clients pay for tensor compute in $33RD. Each API forward pass requires micro-burns of $33RD to prioritize execution across high-bandwidth InfiniBand nodes.
-                    </p>
-                </div>
-
-                <div class="spec-row-item">
-                    <div class="spec-row-header">
-                        <span class="spec-row-title">2. NODE OPERATOR COLLATERAL &amp; SLASHING INSURANCE</span>
-                        <span class="spec-row-reward">STAKING LOCKUP</span>
-                    </div>
-                    <p class="spec-row-body">
-                        Validators must stake between 1,000 $33RD (Tier-1 Canary) and 100,000 $33RD (Tier-4 Root Coordinator) to receive workload routing. Staked tokens act as slashable bond capital, ensuring that any malicious node attempting weight poisoning suffers catastrophic economic forfeiture.
-                    </p>
-                </div>
-
-                <div class="spec-row-item">
-                    <div class="spec-row-header">
-                        <span class="spec-row-title">3. TENSOR ARBOR TOPOLOGY GOVERNANCE</span>
-                        <span class="spec-row-reward">CONSENSUS VOTING</span>
-                    </div>
-                    <p class="spec-row-body">
-                        Token holders determine non-Euclidean hyperboloid routing curvature, approved TEE microarchitectures (e.g. AMD SEV-SNP vs. Intel TDX vs. NVIDIA Hopper CC), supported model architecture whitelists, and slash penalty parameters via on-chain DAO proposals.
-                    </p>
-                </div>
-
-                <div class="spec-row-item">
-                    <div class="spec-row-header">
-                        <span class="spec-row-title">4. SCRAMJET LAUNCHPAD PRIORITY ALLOCATION</span>
-                        <span class="spec-row-reward">ECOSYSTEM ACCELERATOR</span>
-                    </div>
-                    <p class="spec-row-body">
-                        Stakers receive priority compute allocation and initial access to new AI models, fine-tuned agent weights, and decentralized compute sub-networks launched via the 33rd Tree Labs Scramjet incubation platform.
-                    </p>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-    <!-- GLOBAL FOOTER -->
-    <footer class="global-footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <strong>33RD TREE LABS</strong> // THE SINGULARITY PROTOCOL &bull; 33rdtreelabs.tech
-            </div>
-            <div class="footer-links">
-                <a href="index.html" class="footer-link">[ OVERVIEW ]</a>
-                <a href="protocol.html" class="footer-link">[ PROTOCOL ]</a>
-                <a href="simulator.html" class="footer-link">[ SIMULATOR ]</a>
-                <a href="yield.html" class="footer-link">[ YIELD ]</a>
-                <a href="nodes.html" class="footer-link">[ NODES ]</a>
-                <a href="tokenomics.html" class="footer-link">[ TOKENOMICS ]</a>
-                <a href="research.html" class="footer-link">[ RESEARCH ]</a>
-                <a href="whitepaper.html" class="footer-link">[ WHITEPAPER ]</a>
-            </div>
+  <!-- UNIFIED FLOATING PILL NAVBAR -->
+  <div class="nav-wrapper">
+    <nav class="nav-pill">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-logo-box">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="12" cy="4" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+            <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+            <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+            <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
+          </svg>
         </div>
-    </footer>
+        <span class="nav-title" data-glitch>33RD TREE LABS</span>
+      </a>
 
-    <script>
-        // CURSOR SCRIPT
-        const dot = document.getElementById('cursor-dot');
-        const ring = document.getElementById('cursor-ring');
-        let mouseX = 0, mouseY = 0;
-        let ringX = 0, ringY = 0;
+      <div class="nav-links">
+        <a href="index.html" class="nav-link " data-glitch>[ OVERVIEW ]</a>
+        <a href="protocol.html" class="nav-link " data-glitch>[ PROTOCOL ]</a>
+        <a href="simulator.html" class="nav-link " data-glitch>[ SIMULATOR ]</a>
+        <a href="yield.html" class="nav-link " data-glitch>[ YIELD ]</a>
+        <a href="nodes.html" class="nav-link " data-glitch>[ NODES ]</a>
+        <a href="tokenomics.html" class="nav-link active" data-glitch>[ TOKENOMICS ]</a>
+        <a href="research.html" class="nav-link " data-glitch>[ RESEARCH ]</a>
+        <a href="whitepaper.html" class="nav-link " data-glitch>[ WHITEPAPER ]</a>
+      </div>
+    </nav>
+  </div>
 
-        window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            dot.style.left = mouseX + 'px';
-            dot.style.top = mouseY + 'px';
-        });
+  <main class="page-wrap">
+    <!-- EDITORIAL HERO / HEADER -->
+    <header class="ed-hero">
+      <div class="ed-kicker">( 006 ) // TOKEN ARCHITECTURE &amp; MONETARY POLICY &bull; 33RDTREELABS.TECH</div>
+      <h1 class="ed-headline">TOKENOMICS ARCHITECTURE &amp;<br><span class="accent">MONETARY POLICY</span></h1>
+      <p class="ed-lead">
+        A mathematically capped, anti-inflationary utility and settlement asset on Solana. Strict asymptotic ceiling of 33,333,333 $33RD tokens, 100% LP incinerated to the canonical burner, zero mint authority, and continuous deflationary burn dynamics.
+      </p>
 
-        function renderRing() {
-            ringX += (mouseX - ringX) * 0.22;
-            ringY += (mouseY - ringY) * 0.22;
-            ring.style.left = ringX + 'px';
-            ring.style.top = ringY + 'px';
-            requestAnimationFrame(renderRing);
-        }
-        renderRing();
+      <!-- TELEMETRY STRIP (NO CARD CONTAINERS) -->
+      <div class="telemetry-strip">
+        <div class="telemetry-cell">
+          <span class="telemetry-lbl">Immutable Hard Cap</span>
+          <span class="telemetry-val accent">33,333,333 $33RD</span>
+        </div>
+        <div class="telemetry-cell">
+          <span class="telemetry-lbl">Liquidity Pool Status</span>
+          <span class="telemetry-val">100% LP INCINERATED</span>
+        </div>
+        <div class="telemetry-cell">
+          <span class="telemetry-lbl">Mint Authority</span>
+          <span class="telemetry-val">PERMANENTLY REVOKED (NONE)</span>
+        </div>
+        <div class="telemetry-cell">
+          <span class="telemetry-lbl">Net Deflationary Threshold</span>
+          <span class="telemetry-val green">&gt; 51,370 $33RD / DAY</span>
+        </div>
+      </div>
+    </header>
 
-        document.querySelectorAll('a, button, select, input').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-        });
+    <!-- SECTION 01: CANONICAL ALLOCATION & IMMUTABLE SUPPLY -->
+    <section class="ed-section" id="genesis-allocation">
+      <div class="ed-sec-head">
+        <div class="sec-badge-col">
+          <span class="sec-giant-num">01</span>
+          <span class="sec-kicker">// SUPPLY INVARIANTS</span>
+        </div>
+        <div>
+          <h2 class="sec-title">Canonical Genesis Allocation &amp; Invariants</h2>
+          <p class="sec-summary">
+            The entire lifetime supply of 33,333,333 $33RD was minted at genesis under Solana's SPL Token-2022 standard. Immediately following genesis minting, the mint authority was permanently revoked via a signed on-chain transaction with <code>new_authority: None</code>. No additional tokens can ever be minted.
+          </p>
+        </div>
+      </div>
 
-        // GLITCH SCRAMBLE
-        // VRTL WRLD Glitch Letters Scramble Engine (Calibrated Deliberate Rate)
-// VRTL WRLD Glitch Letters Scramble Engine (Calibrated Deliberate Rate)
-        // VRTL WRLD Glitch Letters Scramble Engine (Calibrated Deliberate Rate)
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
-        // 1. Top-edge micro-progress telemetry line & Navbar scroll awareness
-        (function() {
-            const progressBar = document.getElementById('scroll-progress-line');
-            const navWrapper = document.querySelector('.nav-wrapper');
-            function onScroll() {
-                const doc = document.documentElement;
-                const sy = window.scrollY || doc.scrollTop;
-                const max = doc.scrollHeight - window.innerHeight;
-                if (progressBar && max > 0) {
-                    progressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
-                }
-                if (navWrapper) {
-                    if (sy > 50) {
-                        navWrapper.classList.add('nav-scrolled');
-                    } else {
-                        navWrapper.classList.remove('nav-scrolled');
-                    }
-                }
-            }
-            window.addEventListener('scroll', onScroll, { passive: true });
-            if (window.__lenis) {
-                window.__lenis.on('scroll', onScroll);
-            } else if (typeof lenis !== 'undefined') {
-                lenis.on('scroll', onScroll);
-            }
-            onScroll();
+      <!-- 4-COLUMN COMPARISON GRID (OPEN EDITORIAL - ZERO CARDS) -->
+      <div class="ed-grid-4">
+        <div class="ed-grid-col ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ 45.0% // POI SUBSIDY ]</span>
+            <h3 class="cell-title">Compute Subsidy</h3>
+            <p class="cell-body">
+              Distributed exclusively to verified hardware node operators executing deterministic forward passes and zero-knowledge neural evaluations over 96 epochs.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Total Tokens:</span> <strong>15,000,000 $33RD</strong></li>
+            <li><span>Distribution:</span> <strong>Epoch Decay Schedule</strong></li>
+            <li><span>Halving Interval:</span> <strong>24 Epochs (~336 Days)</strong></li>
+            <li><span>Vault PDA:</span> <strong>CanaryEmissionVault...</strong></li>
+          </ul>
+        </div>
 
-            // 2. IntersectionObserver Reveal Engine (Zero Layout Shift)
-            const revealTargets = document.querySelectorAll('.reveal-on-scroll');
-            if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-revealed');
-                            obs.unobserve(entry.target);
-                        }
-                    });
-                }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
-                revealTargets.forEach(el => io.observe(el));
+        <div class="ed-grid-col ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ 15.0% // PERMANENT LP ]</span>
+            <h3 class="cell-title">Liquidity Pool</h3>
+            <p class="cell-body">
+              Paired with SOL for Raydium / Orca decentralized liquidity. 100% of LP tokens were transferred directly to the canonical Solana Incinerator address.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Total Tokens:</span> <strong>5,000,000 $33RD</strong></li>
+            <li><span>LP Burn Address:</span> <strong>1nc1nerator1111...1111</strong></li>
+            <li><span>Rug Risk:</span> <strong>Mathematically Zero</strong></li>
+            <li><span>Lock Window:</span> <strong>Permanent Eternity</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-col ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ 15.0% // PROTOCOL R&amp;D ]</span>
+            <h3 class="cell-title">Core Engineering</h3>
+            <p class="cell-body">
+              Dedicated to continuous research in hyperbolic geometry, recursive STARK folding, and Solana runtime optimizations. Locked under a 48-month linear stream.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Total Tokens:</span> <strong>5,000,000 $33RD</strong></li>
+            <li><span>Vesting Model:</span> <strong>48-Month Linear Stream</strong></li>
+            <li><span>Initial Cliff:</span> <strong>6 Months (0% Upfront)</strong></li>
+            <li><span>Custody PDA:</span> <strong>CanaryEngStreamVault...</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-col ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ 25.0% // ECOSYSTEM &amp; BACKERS ]</span>
+            <h3 class="cell-title">Ecosystem &amp; Grants</h3>
+            <p class="cell-body">
+              15% reserved for open-source AI model developer grants and TEE node tooling; 10% allocated to early strategic canary backers under 36-month vesting.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Total Tokens:</span> <strong>8,333,333 $33RD</strong></li>
+            <li><span>Ecosystem Allocation:</span> <strong>5,000,000 $33RD</strong></li>
+            <li><span>Institutional Canary:</span> <strong>3,333,333 $33RD</strong></li>
+            <li><span>Vesting Window:</span> <strong>36-Month Linear Vesting</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- OPEN MONOSPACE ALLOCATION SPECIFICATION TABLE -->
+      <div class="ed-table-wrap">
+        <table class="ed-table">
+          <thead>
+            <tr>
+              <th>Allocation Category</th>
+              <th>Token Amount ($33RD)</th>
+              <th>Percentage</th>
+              <th>On-Chain Vesting Contract</th>
+              <th>Release Mechanism</th>
+              <th>Verification State</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="accent">Hardware Compute Subsidy (PoI)</td>
+              <td class="highlight">15,000,000 $33RD</td>
+              <td>45.0%</td>
+              <td>Anchor Emission Vault PDA</td>
+              <td>Epoch Decay ($E(k) = E_0 \cdot \gamma^k$)</td>
+              <td class="green">PROGRAM LOCKED</td>
+            </tr>
+            <tr>
+              <td class="accent">Initial DEX Liquidity (LP)</td>
+              <td class="highlight">5,000,000 $33RD</td>
+              <td>15.0%</td>
+              <td>Solana Incinerator (1nc1nerator...)</td>
+              <td>100% LP Tokens Incinerated</td>
+              <td class="green">PERMANENTLY BURNED</td>
+            </tr>
+            <tr>
+              <td class="accent">Core Cryptographic Engineering</td>
+              <td class="highlight">5,000,000 $33RD</td>
+              <td>15.0%</td>
+              <td>Anchor Linear Stream PDA</td>
+              <td>48-Month Stream // 6-Month Cliff</td>
+              <td class="green">ON-CHAIN STREAM</td>
+            </tr>
+            <tr>
+              <td class="accent">Ecosystem &amp; Node Operator Grants</td>
+              <td class="highlight">5,000,000 $33RD</td>
+              <td>15.0%</td>
+              <td>Multisig Governance Vault PDA</td>
+              <td>Milestone Deliverable Audits</td>
+              <td class="green">MULTISIG CONTROLLED</td>
+            </tr>
+            <tr>
+              <td class="accent">Strategic Canary Institutional</td>
+              <td class="highlight">3,333,333 $33RD</td>
+              <td>10.0%</td>
+              <td>Anchor Institutional Vesting PDA</td>
+              <td>36-Month Linear Vesting // 0% TGE</td>
+              <td class="green">ESCROW LOCKED</td>
+            </tr>
+            <tr style="border-top:2px solid var(--border-light);">
+              <td class="accent">CANONICAL TOTAL HARD CAP</td>
+              <td class="highlight" style="color:var(--t); font-size:14px;">33,333,333 $33RD</td>
+              <td style="color:var(--t); font-size:14px;">100.0%</td>
+              <td>Mint Authority: Revoked (None)</td>
+              <td>Zero Additional Minting Capacity</td>
+              <td class="green">IMMUTABLE CAP</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 02: DEFLATIONARY BURN MATHEMATICS -->
+    <section class="ed-section" id="burn-mathematics">
+      <div class="ed-sec-head">
+        <div class="sec-badge-col">
+          <span class="sec-giant-num">02</span>
+          <span class="sec-kicker">// MONETARY DYNAMICS</span>
+        </div>
+        <div>
+          <h2 class="sec-title">Deflationary Burn Mathematics &amp; Net Velocity</h2>
+          <p class="sec-summary">
+            The Singularity Protocol implements a continuous algorithmic burning mechanism. Every compute request, dispute resolution challenge, and slashing penalty permanently removes $33RD tokens from circulation via the Solana Incinerator.
+          </p>
+        </div>
+      </div>
+
+      <div class="ed-prose-cols">
+        <div class="prose-block">
+          <h3>Differential Rate of Supply Evolution</h3>
+          <p>
+            The instantaneous rate of change of the circulating token supply $S(t)$ is defined by the differential equation between gross scheduled validator emissions $E(t)$ and continuous protocol burns $B(t)$:
+          </p>
+          <div class="math-display-box">
+            $$\frac{dS(t)}{dt} = E(t) - B(t)$$
+          </div>
+          <p>
+            Gross token burn $B(t)$ is decomposed into three deterministic components:
+          </p>
+          <div class="math-display-box">
+            $$B(t) = B_{\min} + \beta \cdot V(t) + \sum_{j=1}^M S_{\text{slashed}, j}(t)$$
+          </div>
+          <p>
+            Where $B_{\min} = 1,440\text{ }33RD/\text{day}$ is the base protocol state maintenance burn floor, $\beta = 0.10$ is the 10% permanent burn captured on all network compute billing fees, $V(t)$ is the 24-hour network compute volume in $33RD$, and $S_{\text{slashed}}$ is the 30% portion of slashed validator bonds routed to the incinerator.
+          </p>
+        </div>
+
+        <div class="prose-block">
+          <h3>The Critical Deflationary Volume Floor</h3>
+          <p>
+            The network achieves **net deflationary velocity** ($\frac{dS}{dt} < 0$) when total continuous burns exceed gross emissions. The critical daily compute volume threshold $V_{\text{crit}}$ required for structural supply reduction is derived as:
+          </p>
+          <div class="math-display-box">
+            $$V_{\text{crit}}(t) = \frac{E(t) - B_{\min}}{\beta} = \frac{E(t) - 1,440}{0.10}$$
+          </div>
+          <p>
+            During Epoch 1 ($E_1 \approx 6,577\text{ }33RD/\text{day}$), the threshold resolves to:
+          </p>
+          <div class="math-display-box">
+            $$V_{\text{crit}} = \frac{6,577 - 1,440}{0.10} \approx 51,370\text{ }33RD/\text{day}$$
+          </div>
+          <p>
+            Whenever 24-hour decentralized compute demand exceeds $51,370\text{ }33RD$, the circulating token supply contracts monotonically, permanently driving scarcity as network adoption scales.
+          </p>
+        </div>
+      </div>
+
+      <!-- SUPPLY SIMULATION ACROSS EPOCHS -->
+      <h3 style="font-family:var(--fh); font-size:22px; text-transform:uppercase; margin:40px 0 16px;">Supply Trajectory &amp; Burn Projection Table</h3>
+      <div class="ed-table-wrap">
+        <table class="ed-table">
+          <thead>
+            <tr>
+              <th>Epoch Index</th>
+              <th>Time Elapsed</th>
+              <th>Daily Emission $E(t)$</th>
+              <th>Low Volume (15k $33RD/d)</th>
+              <th>Medium Volume (60k $33RD/d)</th>
+              <th>High Volume (250k $33RD/d)</th>
+              <th>Net Velocity Regime</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="accent">EPOCH 01</td>
+              <td>Day 0 - 14</td>
+              <td>6,577 $33RD/day</td>
+              <td>+3,637 $33RD/day</td>
+              <td class="green">-863 $33RD/day</td>
+              <td class="green">-19,863 $33RD/day</td>
+              <td class="highlight">Deflationary at Volume &gt; 51.3k</td>
+            </tr>
+            <tr>
+              <td class="accent">EPOCH 12</td>
+              <td>Day 154 - 168</td>
+              <td>4,332 $33RD/day</td>
+              <td>+1,392 $33RD/day</td>
+              <td class="green">-3,108 $33RD/day</td>
+              <td class="green">-22,108 $33RD/day</td>
+              <td class="highlight">Deflationary at Volume &gt; 28.9k</td>
+            </tr>
+            <tr>
+              <td class="accent">EPOCH 24</td>
+              <td>Day 322 - 336</td>
+              <td>2,854 $33RD/day</td>
+              <td>-86 $33RD/day</td>
+              <td class="green">-4,586 $33RD/day</td>
+              <td class="green">-23,586 $33RD/day</td>
+              <td class="highlight">Deflationary at Volume &gt; 14.1k</td>
+            </tr>
+            <tr>
+              <td class="accent">EPOCH 48</td>
+              <td>Day 658 - 672</td>
+              <td>1,239 $33RD/day</td>
+              <td class="green">-1,701 $33RD/day</td>
+              <td class="green">-6,201 $33RD/day</td>
+              <td class="green">-25,201 $33RD/day</td>
+              <td class="highlight">Strictly Deflationary (All Loads)</td>
+            </tr>
+            <tr>
+              <td class="accent">EPOCH 96</td>
+              <td>Day 1,330 - 1,344</td>
+              <td>233 $33RD/day</td>
+              <td class="green">-2,707 $33RD/day</td>
+              <td class="green">-7,207 $33RD/day</td>
+              <td class="green">-26,207 $33RD/day</td>
+              <td class="highlight">Terminal Asymptotic Scarcity</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 03: POI EMISSION DECAY SCHEDULE -->
+    <section class="ed-section" id="emission-schedule">
+      <div class="ed-sec-head">
+        <div class="sec-badge-col">
+          <span class="sec-giant-num">03</span>
+          <span class="sec-kicker">// EMISSION DECAY</span>
+        </div>
+        <div>
+          <h2 class="sec-title">Proof of Inference (PoI) Emission Schedule</h2>
+          <p class="sec-summary">
+            Hardware compute subsidies are emitted per 14-day epoch according to an immutable exponential decay schedule. Rewards are mathematically apportioned to validators based on delivered compute units, TEE security grade, and quadratic stake dampening.
+          </p>
+        </div>
+      </div>
+
+      <div class="ed-prose-cols">
+        <div class="prose-block">
+          <h3>Exponential Epoch Decay Function</h3>
+          <p>
+            Let $k \in \{0, 1, \dots, 95\}$ denote the epoch index. The aggregate token subsidy allocated to epoch $k$ is given by:
+          </p>
+          <div class="math-display-box">
+            $$E(k) = E_0 \cdot \gamma^k$$
+          </div>
+          <p>
+            Where base emission $E_0 = 92,078\text{ }33RD/\text{epoch}$, decay coefficient $\gamma = 0.965$ (a 3.5% reduction per 14-day epoch), and total emission budget $\sum_{k=0}^{\infty} E(k) = 15,000,000\text{ }33RD$.
+          </p>
+        </div>
+
+        <div class="prose-block">
+          <h3>Validator Reward Distribution Algorithm</h3>
+          <p>
+            Individual validator rewards $R_i$ within epoch $k$ are computed deterministically by the Solana Anchor program:
+          </p>
+          <div class="math-display-box">
+            $$R_i(k) = E(k) \times \frac{CU_i \cdot G_i \cdot L_i \cdot \sqrt{\text{Stake}_i}}{\sum_{j=1}^M CU_j \cdot G_j \cdot L_j \cdot \sqrt{\text{Stake}_j}}$$
+          </div>
+          <p>
+            Where:
+          </p>
+          <ul class="cell-spec-list" style="border:none; padding:0;">
+            <li><span>$CU_i$:</span> <strong>Verified Compute Units delivered</strong></li>
+            <li><span>$G_i$:</span> <strong>TEE Security Grade ($1.0$ SGX, $1.2$ TDX/SNP, $1.5$ Hopper CC)</strong></li>
+            <li><span>$L_i$:</span> <strong>Liveness Coefficient ($L_i \in [0.0, 1.0]$)</strong></li>
+            <li><span>$\sqrt{\text{Stake}_i}$:</span> <strong>Square-root stake weighting (prevents cartelization)</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 04: PROTOCOL UTILITY SINKS -->
+    <section class="ed-section" id="utility-sinks">
+      <div class="ed-sec-head">
+        <div class="sec-badge-col">
+          <span class="sec-giant-num">04</span>
+          <span class="sec-kicker">// VALUE ACCRUAL</span>
+        </div>
+        <div>
+          <h2 class="sec-title">Protocol Utility Sinks &amp; Collateral Locking</h2>
+          <p class="sec-summary">
+            The $33RD token is not a speculative governance wrapper. It is the mandatory economic fuel and collateral instrument required to interact with every layer of the Singularity compute fabric.
+          </p>
+        </div>
+      </div>
+
+      <!-- 4-COLUMN UTILITY SINKS GRID (ZERO CARDS) -->
+      <div class="ed-grid-4">
+        <div class="ed-grid-col ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ SINK 01 // BONDING ]</span>
+            <h3 class="cell-title">Validator Collateral</h3>
+            <p class="cell-body">
+              Every node operator must lock between 1,000 and 100,000 $33RD in an Anchor staking vault PDA to be eligible for Byzantine committee selection and job allocation.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Circulation Impact:</span> <strong>Removes 3M-8M $33RD</strong></li>
+            <li><span>Lock Window:</span> <strong>7-Day Unbonding Cooldown</strong></li>
+            <li><span>Slashing Risk:</span> <strong>5% to 100% Forfeiture</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-col ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ SINK 02 // GAS &amp; FEES ]</span>
+            <h3 class="cell-title">Inference Execution Gas</h3>
+            <p class="cell-body">
+              Enterprise users pay for model inference queries in $33RD. 75% routes directly to node operators, 15% to protocol research PDA, and 10% is burned permanently.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Operator Share:</span> <strong>75% Direct Yield</strong></li>
+            <li><span>Protocol Treasury:</span> <strong>15% R&amp;D Vault</strong></li>
+            <li><span>Permanent Burn:</span> <strong>10% Incinerator Send</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-col ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ SINK 03 // DISPUTE BONDS ]</span>
+            <h3 class="cell-title">Dispute Challenge Bonds</h3>
+            <p class="cell-body">
+              Challengers initiating interactive bisection disputes against suspect inference logits must post a 5,000 $33RD challenge bond to prevent frivolous denial-of-service attacks.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Challenge Bond:</span> <strong>5,000 $33RD</strong></li>
+            <li><span>Success Reward:</span> <strong>70% of Slashed Stake</strong></li>
+            <li><span>Frivolous Penalty:</span> <strong>100% Bond Burned</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-col ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ SINK 04 // GOVERNANCE ]</span>
+            <h3 class="cell-title">Quadratic Voting Weight</h3>
+            <p class="cell-body">
+              Runtime upgrades, TEE hardware classification changes, and grant allocations require stake-locked governance voting weighted quadratically by lock duration.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Voting Formula:</span> <strong>$\sqrt{\text{Stake} \times \Delta t_{\text{lock}}}$</strong></li>
+            <li><span>Max Lockup:</span> <strong>24 Months</strong></li>
+            <li><span>Sybil Defense:</span> <strong>Quadratic Dampening</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 05: ON-CHAIN CONTRACT ARCHITECTURE -->
+    <section class="ed-section" id="onchain-contracts">
+      <div class="ed-sec-head">
+        <div class="sec-badge-col">
+          <span class="sec-giant-num">05</span>
+          <span class="sec-kicker">// ON-CHAIN ARCHITECTURE</span>
+        </div>
+        <div>
+          <h2 class="sec-title">Solana Anchor Programs &amp; Verification Registry</h2>
+          <p class="sec-summary">
+            All token distribution, staking vaults, and burn routing execute on Solana Mainnet-Beta via audited Anchor framework smart contracts. Verification instructions are provided below.
+          </p>
+        </div>
+      </div>
+
+      <!-- PROGRAM TABLE -->
+      <div class="ed-table-wrap">
+        <table class="ed-table">
+          <thead>
+            <tr>
+              <th>Entity Name</th>
+              <th>Solana Program / Account Address</th>
+              <th>Program Authority</th>
+              <th>Immutable Logic Enforced</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="accent">$33RD Token Mint</td>
+              <td class="highlight">33rdxxxx...SPL2022TokenMint</td>
+              <td>None (Revoked Permanently)</td>
+              <td>Total Supply Capped at 33,333,333 Tokens</td>
+            </tr>
+            <tr>
+              <td class="accent">Canonical Burn Target</td>
+              <td class="highlight">1nc1nerator11111111111111111111111111111111</td>
+              <td>None (System Incinerator)</td>
+              <td>100% LP Tokens Permanently Destroyed</td>
+            </tr>
+            <tr>
+              <td class="accent">PoI Emission Program</td>
+              <td class="highlight">CanaryEmission111111111111111111111111111111</td>
+              <td>Anchor Emission PDA</td>
+              <td>$E(k) = 92,078 \times 0.965^k$ Distribution</td>
+            </tr>
+            <tr>
+              <td class="accent">Validator Staking Vault</td>
+              <td class="highlight">CanaryStakeVault1111111111111111111111111111</td>
+              <td>Anchor Staking PDA</td>
+              <td>7-Day Unbonding Cooldown &amp; Slashing Escrow</td>
+            </tr>
+            <tr>
+              <td class="accent">Protocol Insurance Vault</td>
+              <td class="highlight">CanaryInsurance11111111111111111111111111111</td>
+              <td>Anchor Governance PDA</td>
+              <td>70% Slashed Bond Accumulation for User SLA</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ON-CHAIN VERIFICATION CLI -->
+      <div class="ed-code-block">
+        <div class="ed-code-header">
+          <span>ON-CHAIN VERIFICATION VIA SOLANA CLI</span>
+          <span>BASH // SOLANA MAINNET-BETA</span>
+        </div>
+        <div class="ed-code-content">
+<span class="cmd-comment"># 1. Verify token total supply is strictly 33,333,333 $33RD</span>
+<span class="cmd-prompt">$</span>spl-token --url https://api.mainnet-beta.solana.com supply 33rdxxxx...SPL2022TokenMint
+<span class="cmd-comment"># Output: 33333333</span>
+
+<span class="cmd-comment"># 2. Verify mint authority has been permanently revoked</span>
+<span class="cmd-prompt">$</span>spl-token --url https://api.mainnet-beta.solana.com display 33rdxxxx...SPL2022TokenMint | grep "Mint authority"
+<span class="cmd-comment"># Output: Mint authority: (not set) [PERMANENTLY REVOKED]</span>
+
+<span class="cmd-comment"># 3. Verify LP tokens balance at canonical incinerator address</span>
+<span class="cmd-prompt">$</span>spl-token --url https://api.mainnet-beta.solana.com accounts --owner 1nc1nerator11111111111111111111111111111111
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 06: INTERACTIVE MONETARY POLICY SIMULATOR -->
+    <section class="ed-section" id="burn-simulator">
+      <div class="ed-sec-head">
+        <div class="sec-badge-col">
+          <span class="sec-giant-num">06</span>
+          <span class="sec-kicker">// SIMULATION ENGINE</span>
+        </div>
+        <div>
+          <h2 class="sec-title">Interactive Burn Velocity &amp; Monetary Simulator</h2>
+          <p class="sec-summary">
+            Test supply expansion and contraction dynamics by modulating 24-hour network compute volume, validator staking collateral ratio, and epoch decay parameters.
+          </p>
+        </div>
+      </div>
+
+      <div class="calc-matrix-grid">
+        <div class="calc-controls">
+          <div class="calc-field">
+            <label for="sim-epoch">Select Protocol Epoch</label>
+            <select id="sim-epoch" onchange="updateTokenSim()">
+              <option value="1" selected>Epoch 1 (Day 0 - 14): 6,577 $33RD / day emission</option>
+              <option value="12">Epoch 12 (Day 154 - 168): 4,332 $33RD / day emission</option>
+              <option value="24">Epoch 24 (Day 322 - 336): 2,854 $33RD / day emission</option>
+              <option value="48">Epoch 48 (Day 658 - 672): 1,239 $33RD / day emission</option>
+              <option value="96">Epoch 96 (Day 1,330 - 1,344): 233 $33RD / day emission</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label for="sim-volume">24h Network Compute Volume ($33RD)</label>
+            <input type="number" id="sim-volume" value="75000" step="5000" min="0" oninput="updateTokenSim()">
+          </div>
+          <div class="calc-field">
+            <label for="sim-slashing">Daily Slashed Collateral ($33RD)</label>
+            <input type="number" id="sim-slashing" value="500" step="100" min="0" oninput="updateTokenSim()">
+          </div>
+        </div>
+
+        <div class="calc-outputs">
+          <div class="out-metric-row">
+            <span class="out-metric-lbl">Daily Protocol Burn Rate</span>
+            <span class="out-metric-val accent" id="out-burn-day">9,090 $33RD</span>
+          </div>
+          <div class="out-metric-row">
+            <span class="out-metric-lbl">Scheduled Daily Emission</span>
+            <span class="out-metric-val" id="out-emission-day">6,577 $33RD</span>
+          </div>
+          <div class="out-metric-row">
+            <span class="out-metric-lbl">Net Daily Supply Change</span>
+            <span class="out-metric-val green" id="out-net-supply">-2,513 $33RD</span>
+          </div>
+          <div class="out-metric-row">
+            <span class="out-metric-lbl">Annualized Supply Impact</span>
+            <span class="out-metric-val green" id="out-annual-impact">-2.75% Deflationary</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const EPOCH_EMISSIONS = {
+      "1": 6577,
+      "12": 4332,
+      "24": 2854,
+      "48": 1239,
+      "96": 233
+    };
+
+    function updateTokenSim() {
+      const epochKey = document.getElementById('sim-epoch').value;
+      const volume = parseFloat(document.getElementById('sim-volume').value) || 0;
+      const slashed = parseFloat(document.getElementById('sim-slashing').value) || 0;
+
+      const dailyEmission = EPOCH_EMISSIONS[epochKey] || 6577;
+      const baseBurnFloor = 1440;
+      const volumeBurn = volume * 0.10; // 10% fee burn
+      const slashBurn = slashed * 0.30; // 30% incinerated
+
+      const totalDailyBurn = baseBurnFloor + volumeBurn + slashBurn;
+      const netDailyChange = dailyEmission - totalDailyBurn;
+
+      const annualChange = netDailyChange * 365;
+      const totalCirculating = 33333333;
+      const annualPct = ((annualChange / totalCirculating) * 100).toFixed(2);
+
+      document.getElementById('out-burn-day').innerText = Math.round(totalDailyBurn).toLocaleString() + ' $33RD';
+      document.getElementById('out-emission-day').innerText = Math.round(dailyEmission).toLocaleString() + ' $33RD';
+      
+      const netEl = document.getElementById('out-net-supply');
+      const annualEl = document.getElementById('out-annual-impact');
+
+      if (netDailyChange <= 0) {
+        netEl.innerText = Math.round(netDailyChange).toLocaleString() + ' $33RD';
+        netEl.className = 'out-metric-val green';
+        annualEl.innerText = Math.abs(annualPct) + '% Deflationary';
+        annualEl.className = 'out-metric-val green';
+      } else {
+        netEl.innerText = '+' + Math.round(netDailyChange).toLocaleString() + ' $33RD';
+        netEl.className = 'out-metric-val accent';
+        annualEl.innerText = '+' + annualPct + '% Expansionary';
+        annualEl.className = 'out-metric-val accent';
+      }
+    }
+    updateTokenSim();
+  </script>
+
+  <footer class="foot">
+    <div class="foot__marquee">
+      0/1 33RD TREE LABS // THE SINGULARITY PROTOCOL // SOLANA INCINERATOR VERIFIED // ZERO-KNOWLEDGE PROOF ANCHOR // 0/1 33RD TREE LABS // THE SINGULARITY PROTOCOL // SOLANA INCINERATOR VERIFIED //
+    </div>
+    <div class="foot__grid">
+      <div>&copy; 2026 33RD TREE LABS. THE SINGULARITY PROTOCOL. ALL RIGHTS RESERVED.</div>
+      <div>OFFICIAL DOMAIN: 33RDTREELABS.TECH &bull; SOLANA INCINERATOR LP LOCKED</div>
+      <a href="#top" class="foot__top" id="back-to-top">START OVER &uarr;</a>
+    </div>
+  </footer>
+
+  <!-- FAST SNAPPY LENIS SCRIPT & TELEMETRY PROGRESS -->
+  <script>
+    const lenis = new Lenis({
+      lerp: 0.14,
+      wheelMultiplier: 1.25,
+      smoothWheel: true,
+      smoothTouch: false
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Scroll progress & telemetry rail updates
+    lenis.on('scroll', (e) => {
+      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollTotal > 0 ? (e.scroll / scrollTotal) * 100 : 0;
+      
+      const bar = document.getElementById('scroll-progress-line');
+      if (bar) bar.style.width = progress + '%';
+
+      const pct = document.getElementById('telemetry-scroll-pct');
+      if (pct) pct.innerText = Math.round(progress).toString().padStart(2, '0') + '%';
+
+      const thumb = document.getElementById('sbar-thumb');
+      if (thumb) {
+        const thumbMax = window.innerHeight - 80;
+        thumb.style.transform = `translateY(${(progress / 100) * thumbMax}px)`;
+      }
+    });
+
+    document.getElementById('back-to-top')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      lenis.scrollTo(0, { duration: 0.8 });
+    });
+
+    // GLITCH SCRAMBLE EFFECT
+    const GLYPHS = "01010101_//<>[]!#$*+=-";
+    class GlitchScramble {
+      constructor(el) {
+        this.el = el;
+        this.original = el.innerText;
+        this.isGlitching = false;
+        this.animId = null;
+      }
+      scramble(speed = 4.0) {
+        if (this.isGlitching) return;
+        this.isGlitching = true;
+        const target = this.original;
+        const len = target.length;
+        const start = performance.now();
+        const duration = Math.min(600, Math.max(250, len * 20));
+
+        const tick = (now) => {
+          const elapsed = now - start;
+          const progress = Math.min(1, elapsed / duration);
+          const revealedCount = Math.floor(progress * len);
+          let result = '';
+          for (let i = 0; i < len; i++) {
+            const ch = target[i];
+            if (ch === ' ' || ch === '\n' || ch === '\t') {
+              result += ch;
+            } else if (i < revealedCount) {
+              result += ch;
             } else {
-                revealTargets.forEach(el => el.classList.add('is-revealed'));
+              result += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
             }
-        })();
-
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
-        // 1. Top-edge micro-progress telemetry line & Navbar scroll awareness
-        (function() {
-            const progressBar = document.getElementById('scroll-progress-line');
-            const navWrapper = document.querySelector('.nav-wrapper');
-            function onScroll() {
-                const doc = document.documentElement;
-                const sy = window.scrollY || doc.scrollTop;
-                const max = doc.scrollHeight - window.innerHeight;
-                if (progressBar && max > 0) {
-                    progressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
-                }
-                if (navWrapper) {
-                    if (sy > 50) {
-                        navWrapper.classList.add('nav-scrolled');
-                    } else {
-                        navWrapper.classList.remove('nav-scrolled');
-                    }
-                }
-            }
-            window.addEventListener('scroll', onScroll, { passive: true });
-            if (window.__lenis) {
-                window.__lenis.on('scroll', onScroll);
-            } else if (typeof lenis !== 'undefined') {
-                lenis.on('scroll', onScroll);
-            }
-            onScroll();
-
-            // 2. IntersectionObserver Reveal Engine (Zero Layout Shift)
-            const revealTargets = document.querySelectorAll('.reveal-on-scroll');
-            if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-revealed');
-                            obs.unobserve(entry.target);
-                        }
-                    });
-                }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
-                revealTargets.forEach(el => io.observe(el));
-            } else {
-                revealTargets.forEach(el => el.classList.add('is-revealed'));
-            }
-        })();
-
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
-        // 1. Top-edge micro-progress telemetry line & Navbar scroll awareness
-        (function() {
-            const progressBar = document.getElementById('scroll-progress-line');
-            const navWrapper = document.querySelector('.nav-wrapper');
-            function onScroll() {
-                const doc = document.documentElement;
-                const sy = window.scrollY || doc.scrollTop;
-                const max = doc.scrollHeight - window.innerHeight;
-                if (progressBar && max > 0) {
-                    progressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
-                }
-                if (navWrapper) {
-                    if (sy > 50) {
-                        navWrapper.classList.add('nav-scrolled');
-                    } else {
-                        navWrapper.classList.remove('nav-scrolled');
-                    }
-                }
-            }
-            window.addEventListener('scroll', onScroll, { passive: true });
-            if (window.__lenis) {
-                window.__lenis.on('scroll', onScroll);
-            } else if (typeof lenis !== 'undefined') {
-                lenis.on('scroll', onScroll);
-            }
-            onScroll();
-
-            // 2. IntersectionObserver Reveal Engine (Zero Layout Shift)
-            const revealTargets = document.querySelectorAll('.reveal-on-scroll');
-            if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-revealed');
-                            obs.unobserve(entry.target);
-                        }
-                    });
-                }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
-                revealTargets.forEach(el => io.observe(el));
-            } else {
-                revealTargets.forEach(el => el.classList.add('is-revealed'));
-            }
-        })();
-
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
-        // 1. Top-edge micro-progress telemetry line & Navbar scroll awareness
-        (function() {
-            const progressBar = document.getElementById('scroll-progress-line');
-            const navWrapper = document.querySelector('.nav-wrapper');
-            function onScroll() {
-                const doc = document.documentElement;
-                const sy = window.scrollY || doc.scrollTop;
-                const max = doc.scrollHeight - window.innerHeight;
-                if (progressBar && max > 0) {
-                    progressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
-                }
-                if (navWrapper) {
-                    if (sy > 50) {
-                        navWrapper.classList.add('nav-scrolled');
-                    } else {
-                        navWrapper.classList.remove('nav-scrolled');
-                    }
-                }
-            }
-            window.addEventListener('scroll', onScroll, { passive: true });
-            if (window.__lenis) {
-                window.__lenis.on('scroll', onScroll);
-            } else if (typeof lenis !== 'undefined') {
-                lenis.on('scroll', onScroll);
-            }
-            onScroll();
-
-            // 2. IntersectionObserver Reveal Engine (Zero Layout Shift)
-            const revealTargets = document.querySelectorAll('.reveal-on-scroll');
-            if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-revealed');
-                            obs.unobserve(entry.target);
-                        }
-                    });
-                }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
-                revealTargets.forEach(el => io.observe(el));
-            } else {
-                revealTargets.forEach(el => el.classList.add('is-revealed'));
-            }
-        })();
-
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
-        // 1. Top-edge micro-progress telemetry line & Navbar scroll awareness
-        (function() {
-            const progressBar = document.getElementById('scroll-progress-line');
-            const navWrapper = document.querySelector('.nav-wrapper');
-            function onScroll() {
-                const doc = document.documentElement;
-                const sy = window.scrollY || doc.scrollTop;
-                const max = doc.scrollHeight - window.innerHeight;
-                if (progressBar && max > 0) {
-                    progressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
-                }
-                if (navWrapper) {
-                    if (sy > 50) {
-                        navWrapper.classList.add('nav-scrolled');
-                    } else {
-                        navWrapper.classList.remove('nav-scrolled');
-                    }
-                }
-            }
-            window.addEventListener('scroll', onScroll, { passive: true });
-            if (window.__lenis) {
-                window.__lenis.on('scroll', onScroll);
-            } else if (typeof lenis !== 'undefined') {
-                lenis.on('scroll', onScroll);
-            }
-            onScroll();
-
-            // 2. IntersectionObserver Reveal Engine (Zero Layout Shift)
-            const revealTargets = document.querySelectorAll('.reveal-on-scroll');
-            if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-revealed');
-                            obs.unobserve(entry.target);
-                        }
-                    });
-                }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
-                revealTargets.forEach(el => io.observe(el));
-            } else {
-                revealTargets.forEach(el => el.classList.add('is-revealed'));
-            }
-        })();
-
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
-        // 1. Top-edge micro-progress telemetry line & Navbar scroll awareness
-        (function() {
-            const progressBar = document.getElementById('scroll-progress-line');
-            const navWrapper = document.querySelector('.nav-wrapper');
-            function onScroll() {
-                const doc = document.documentElement;
-                const sy = window.scrollY || doc.scrollTop;
-                const max = doc.scrollHeight - window.innerHeight;
-                if (progressBar && max > 0) {
-                    progressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
-                }
-                if (navWrapper) {
-                    if (sy > 50) {
-                        navWrapper.classList.add('nav-scrolled');
-                    } else {
-                        navWrapper.classList.remove('nav-scrolled');
-                    }
-                }
-            }
-            window.addEventListener('scroll', onScroll, { passive: true });
-            if (window.__lenis) {
-                window.__lenis.on('scroll', onScroll);
-            } else if (typeof lenis !== 'undefined') {
-                lenis.on('scroll', onScroll);
-            }
-            onScroll();
-
-            // 2. IntersectionObserver Reveal Engine (Zero Layout Shift)
-            const revealTargets = document.querySelectorAll('.reveal-on-scroll');
-            if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-revealed');
-                            obs.unobserve(entry.target);
-                        }
-                    });
-                }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
-                revealTargets.forEach(el => io.observe(el));
-            } else {
-                revealTargets.forEach(el => el.classList.add('is-revealed'));
-            }
-        })();
-
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
-        // 1. Top-edge micro-progress telemetry line & Navbar scroll awareness
-        (function() {
-            const progressBar = document.getElementById('scroll-progress-line');
-            const navWrapper = document.querySelector('.nav-wrapper');
-            function onScroll() {
-                const doc = document.documentElement;
-                const sy = window.scrollY || doc.scrollTop;
-                const max = doc.scrollHeight - window.innerHeight;
-                if (progressBar && max > 0) {
-                    progressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
-                }
-                if (navWrapper) {
-                    if (sy > 50) {
-                        navWrapper.classList.add('nav-scrolled');
-                    } else {
-                        navWrapper.classList.remove('nav-scrolled');
-                    }
-                }
-            }
-            window.addEventListener('scroll', onScroll, { passive: true });
-            if (window.__lenis) {
-                window.__lenis.on('scroll', onScroll);
-            } else if (typeof lenis !== 'undefined') {
-                lenis.on('scroll', onScroll);
-            }
-            onScroll();
-
-            // 2. IntersectionObserver Reveal Engine (Zero Layout Shift)
-            const revealTargets = document.querySelectorAll('.reveal-on-scroll');
-            if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-revealed');
-                            obs.unobserve(entry.target);
-                        }
-                    });
-                }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
-                revealTargets.forEach(el => io.observe(el));
-            } else {
-                revealTargets.forEach(el => el.classList.add('is-revealed'));
-            }
-        })();
-
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
-        class GlitchScramble {
-            constructor(el) {
-                this.el = el;
-                this.chars = '01X_/*+-[]#';
-                this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
-                el.setAttribute('data-glitch-text', this.originalText);
-                this.isGlitching = false;
-                this.animId = null;
-                this.lastTickTime = 0;
-                this.tickInterval = 250; // Deliberate 250ms mechanical relay decode cadence
-            }
-            scramble(duration = 3.5) {
-                if (this.isGlitching) return;
-                this.isGlitching = true;
-                this.el.classList.add('glitch-active');
-                const target = this.originalText;
-                const len = target.length;
-                const startTime = performance.now();
-                const durationMs = duration * 1000;
-                let activeGlyphs = new Array(len);
-                for (let i = 0; i < len; i++) {
-                    const ch = target[i];
-                    activeGlyphs[i] = (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9))
-                        ? ch
-                        : this.chars[Math.floor(Math.random() * this.chars.length)];
-                }
-
-                const tick = (now) => {
-                    const elapsed = now - startTime;
-                    const progress = Math.min(1, elapsed / durationMs);
-                    const revealedCount = Math.floor(progress * len);
-
-                    if (now - this.lastTickTime >= this.tickInterval) {
-                        this.lastTickTime = now;
-                        for (let i = revealedCount; i < len; i++) {
-                            const ch = target[i];
-                            if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
-                                activeGlyphs[i] = ch;
-                            } else if (Math.random() < 0.35) {
-                                activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
-                            }
-                        }
-                    }
-
-                    let result = '';
-                    for (let i = 0; i < len; i++) {
-                        const ch = target[i];
-                        if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
-                            result += ch;
-                        } else if (i < revealedCount) {
-                            result += ch;
-                        } else {
-                            result += activeGlyphs[i] || ch;
-                        }
-                    }
-                    this.el.innerText = result;
-
-                    if (progress < 1) {
-                        this.animId = requestAnimationFrame(tick);
-                    } else {
-                        this.el.innerText = target;
-                        this.el.classList.remove('glitch-active');
-                        this.isGlitching = false;
-                    }
-                };
-                this.animId = requestAnimationFrame(tick);
-            }
-        }
-        document.querySelectorAll('[data-glitch], .nav-link').forEach(el => {
-            const inst = new GlitchScramble(el);
-            el.addEventListener('mouseenter', () => inst.scramble(3.5));
-        });
-    </script>
+          }
+          this.el.innerText = result;
+          if (progress < 1) {
+            this.animId = requestAnimationFrame(tick);
+          } else {
+            this.el.innerText = target;
+            this.isGlitching = false;
+          }
+        };
+        this.animId = requestAnimationFrame(tick);
+      }
+    }
+    document.querySelectorAll('[data-glitch]').forEach(el => {
+      const g = new GlitchScramble(el);
+      el.addEventListener('mouseenter', () => g.scramble(3.5));
+    });
+  </script>
 </body>
 </html>
