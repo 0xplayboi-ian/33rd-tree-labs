@@ -24,7 +24,7 @@ import os
 #    - Obel Mono fonts & official logo mark
 
 html_template = """<!doctype html>
-<html lang="en" class="lenis" style="--t: #FF2424; --f: #070707;">
+<html lang="en" class="lenis" style="--t: #FF292C; --f: #070707;">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,7 +76,7 @@ html_template = """<!doctype html>
     }
 
     :root {
-      --t: #FF2424; /* Crimson Accent */
+      --t: #FF292C; /* Crimson Accent */
       --t-glow: rgba(255, 36, 36, 0.45);
       --f: #070707; /* Pure Obsidian */
       --chalk: #F2F2F5;
@@ -1318,10 +1318,10 @@ html_template = """<!doctype html>
       margin: 0 auto;
     }
     .finale .kicker {
-      color: #FF2424;
+      color: #FF292C;
     }
     .finale .kicker::before {
-      background: #FF2424;
+      background: #FF292C;
       box-shadow: 0 0 8px rgba(255, 36, 36, 0.6);
     }
     .finale__headline {
@@ -1380,7 +1380,7 @@ html_template = """<!doctype html>
       text-align: right;
     }
     .spec-val.crimson {
-      color: #FF2424;
+      color: #FF292C;
     }
     .spec-val code {
       font-size: 12px;
@@ -1418,7 +1418,7 @@ html_template = """<!doctype html>
       gap: 8px;
     }
     .btn-finale:hover {
-      background: #FF2424;
+      background: #FF292C;
       box-shadow: 0 0 20px rgba(255, 36, 36, 0.45);
       color: #FFFFFF;
     }
@@ -1443,8 +1443,8 @@ html_template = """<!doctype html>
       transition: all 0.2s ease;
     }
     .start-over:hover {
-      background: #FF2424;
-      border-color: #FF2424;
+      background: #FF292C;
+      border-color: #FF292C;
       color: #FFFFFF;
     }
 
@@ -1515,7 +1515,7 @@ html_template = """<!doctype html>
       background: rgba(11, 11, 14, 0.85);
       backdrop-filter: blur(16px) saturate(180%);
       -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid #1C1C24;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 41, 44, 0.15);
       pointer-events: auto;
       white-space: nowrap;
@@ -1526,7 +1526,7 @@ html_template = """<!doctype html>
       gap: 10px;
       text-decoration: none;
       color: #FFFFFF;
-      border-right: 1px solid rgba(255, 255, 255, 0.12);
+      border-right: 1px solid #1C1C24;
       padding-right: 12px;
       margin-right: 12px;
       flex-shrink: 0;
@@ -2341,10 +2341,10 @@ html_template = """<!doctype html>
 
     /* B. GENERATIVE TENSOR & HYPERBOLIC FIELD MODES */
     const MODES = {
-      tensor:     { key: "tensor",     t: "⊗", f: "∇", tc: "#FF2424", fc: "#383846", scale: 0.015, label: "TENSOR [⊗ / ∇]" },
-      hyperbolic: { key: "hyperbolic", t: "λ", f: "Δ", tc: "#FF2424", fc: "#383846", scale: 0.014, label: "HYPERBOLIC [λ / Δ]" },
+      tensor:     { key: "tensor",     t: "⊗", f: "∇", tc: "#FF292C", fc: "#383846", scale: 0.015, label: "TENSOR [⊗ / ∇]" },
+      hyperbolic: { key: "hyperbolic", t: "λ", f: "Δ", tc: "#FF292C", fc: "#383846", scale: 0.014, label: "HYPERBOLIC [λ / Δ]" },
       lattice:    { key: "lattice",    t: "┼", f: "·", tc: "#F2F2F5", fc: "#2B2B38", scale: 0.018, label: "LATTICE [┼ / ·]" },
-      reduction:  { key: "reduction",  t: "Σ", f: "T", tc: "#FF2424", fc: "#383846", scale: 0.013, label: "REDUCTION [Σ / T]" }
+      reduction:  { key: "reduction",  t: "Σ", f: "T", tc: "#FF292C", fc: "#383846", scale: 0.013, label: "REDUCTION [Σ / T]" }
     };
     let currentMode = "tensor";
 
@@ -2414,7 +2414,7 @@ html_template = """<!doctype html>
 
         if (excited) {
           // Cursor hover excitement: brilliant crimson pulse with stark white tensor symbol
-          ctx.fillStyle = "#FF2424";
+          ctx.fillStyle = "#FF292C";
           ctx.fillRect(0, 0, s, s);
           ctx.strokeStyle = "#FFFFFF";
           ctx.lineWidth = Math.max(1, s * 0.05);
@@ -2431,7 +2431,7 @@ html_template = """<!doctype html>
           ctx.strokeStyle = "rgba(255, 36, 36, 0.28)";
           ctx.lineWidth = 1;
           ctx.strokeRect(0.5, 0.5, s - 1, s - 1);
-          ctx.fillStyle = m.tc || "#FF2424";
+          ctx.fillStyle = m.tc || "#FF292C";
           ctx.font = `700 ${Math.max(9, Math.round(s * 0.52))}px "JetBrains Mono", "Obel Mono", monospace`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
@@ -2696,7 +2696,7 @@ html_template = """<!doctype html>
           ruleCtx.lineTo(cx + Math.cos(rad) * (w * 0.4), cy + Math.sin(rad) * (h * 0.4));
           ruleCtx.stroke();
         }
-        ruleCtx.fillStyle = '#FF2424';
+        ruleCtx.fillStyle = '#FF292C';
         ruleCtx.beginPath();
         ruleCtx.arc(cx, cy, 6, 0, Math.PI * 2);
         ruleCtx.fill();
@@ -2711,7 +2711,7 @@ html_template = """<!doctype html>
         }
         for (let i = 0; i < 16; i++) {
           const ang = (i / 16) * Math.PI * 2;
-          ruleCtx.fillStyle = i % 2 === 0 ? '#FFFFFF' : '#FF2424';
+          ruleCtx.fillStyle = i % 2 === 0 ? '#FFFFFF' : '#FF292C';
           ruleCtx.beginPath();
           ruleCtx.arc(cx + Math.cos(ang) * 84, cy + Math.sin(ang) * 84, 4, 0, Math.PI * 2);
           ruleCtx.fill();
@@ -2727,7 +2727,7 @@ html_template = """<!doctype html>
           else ruleCtx.lineTo(x, y);
         }
         ruleCtx.stroke();
-        ruleCtx.fillStyle = '#FF2424';
+        ruleCtx.fillStyle = '#FF292C';
         ruleCtx.fillText("KZG_OPENING_PROOF // VERIFIED", 16, 24);
       } else {
         // Step 4: Settle & Burn Flare
@@ -2735,7 +2735,7 @@ html_template = """<!doctype html>
         ruleCtx.beginPath();
         ruleCtx.arc(cx, cy, 70 + Math.sin(frac * 8) * 15, 0, Math.PI * 2);
         ruleCtx.fill();
-        ruleCtx.strokeStyle = '#FF2424';
+        ruleCtx.strokeStyle = '#FF292C';
         ruleCtx.lineWidth = 2;
         ruleCtx.stroke();
         ruleCtx.fillStyle = '#FFFFFF';
@@ -3001,10 +3001,10 @@ html_template = """<!doctype html>
         this.isGlitching = false;
         this.animId = null;
         this.lastTickTime = 0;
-        this.tickInterval = 160; // 160ms throttle: calm, deliberate, readable (~6fps)
+        this.tickInterval = 250; // 160ms throttle: calm, deliberate, readable (~6fps)
       }
 
-      scramble(duration = 2.4) {
+      scramble(duration = 3.5) {
         if (this.isGlitching) return;
         this.isGlitching = true;
         this.el.classList.add('glitch-active');
@@ -3067,7 +3067,7 @@ html_template = """<!doctype html>
 
     document.querySelectorAll('[data-glitch], .nav-link').forEach(el => {
       const inst = new GlitchScramble(el);
-      el.addEventListener('mouseenter', () => inst.scramble(2.0));
+      el.addEventListener('mouseenter', () => inst.scramble(3.5));
     });
 
   </script>

@@ -153,7 +153,7 @@ def get_shared_css():
             background: rgba(11, 11, 14, 0.85);
             backdrop-filter: blur(16px) saturate(180%);
             -webkit-backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid #1C1C24;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 41, 44, 0.15);
             pointer-events: auto;
             white-space: nowrap;
@@ -165,7 +165,7 @@ def get_shared_css():
             gap: 10px;
             text-decoration: none;
             color: #FFFFFF;
-            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            border-right: 1px solid #1C1C24;
             padding-right: 12px;
             margin-right: 12px;
             flex-shrink: 0;
@@ -245,6 +245,18 @@ def get_shared_css():
             .nav-link {
                 font-size: 9.5px;
                 padding: 4px 6px;
+            }
+        }
+
+        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
+        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum" 1;
+        }
+
+        @media print {
+            .nav-wrapper, #cursor-dot, #cursor-ring {
+                display: none !important;
             }
         }
 
@@ -2425,7 +2437,7 @@ def update_existing_subpage(file_name, active_key):
             background: rgba(11, 11, 14, 0.85);
             backdrop-filter: blur(16px) saturate(180%);
             -webkit-backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid #1C1C24;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 41, 44, 0.15);
             pointer-events: auto;
             white-space: nowrap;
@@ -2437,7 +2449,7 @@ def update_existing_subpage(file_name, active_key):
             gap: 10px;
             text-decoration: none;
             color: #FFFFFF;
-            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            border-right: 1px solid #1C1C24;
             padding-right: 12px;
             margin-right: 12px;
             flex-shrink: 0;
@@ -2517,6 +2529,18 @@ def update_existing_subpage(file_name, active_key):
             .nav-link {
                 font-size: 9.5px;
                 padding: 4px 6px;
+            }
+        }
+
+        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
+        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum" 1;
+        }
+
+        @media print {
+            .nav-wrapper, #cursor-dot, #cursor-ring {
+                display: none !important;
             }
         }
 """
