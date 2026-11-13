@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="lenis" style="--t: #FF2424; --f: #070707;">
+<html lang="en" class="lenis" style="--t: #FF292C; --f: #070707;">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
     }
 
     :root {
-      --t: #FF2424; /* Crimson Accent */
+      --t: #FF292C; /* Crimson Accent */
       --t-glow: rgba(255, 36, 36, 0.45);
       --f: #070707; /* Pure Obsidian */
       --chalk: #F2F2F5;
@@ -1297,10 +1297,10 @@
       margin: 0 auto;
     }
     .finale .kicker {
-      color: #FF2424;
+      color: #FF292C;
     }
     .finale .kicker::before {
-      background: #FF2424;
+      background: #FF292C;
       box-shadow: 0 0 8px rgba(255, 36, 36, 0.6);
     }
     .finale__headline {
@@ -1359,7 +1359,7 @@
       text-align: right;
     }
     .spec-val.crimson {
-      color: #FF2424;
+      color: #FF292C;
     }
     .spec-val code {
       font-size: 12px;
@@ -1397,7 +1397,7 @@
       gap: 8px;
     }
     .btn-finale:hover {
-      background: #FF2424;
+      background: #FF292C;
       box-shadow: 0 0 20px rgba(255, 36, 36, 0.45);
       color: #FFFFFF;
     }
@@ -1422,8 +1422,8 @@
       transition: all 0.2s ease;
     }
     .start-over:hover {
-      background: #FF2424;
-      border-color: #FF2424;
+      background: #FF292C;
+      border-color: #FF292C;
       color: #FFFFFF;
     }
 
@@ -1558,7 +1558,7 @@
     .nav-link.active {
       color: #FFFFFF;
       background: rgba(255, 41, 44, 0.14);
-      border-color: #FF2424;
+      border-color: #FF292C;
       box-shadow: 0 0 10px rgba(255, 41, 44, 0.35);
     }
     .nav-link.active::before {
@@ -1566,8 +1566,8 @@
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background: #FF2424;
-      box-shadow: 0 0 6px #FF2424;
+      background: #FF292C;
+      box-shadow: 0 0 6px #FF292C;
       display: inline-block;
     }
     @media (max-width: 900px) {
@@ -1603,8 +1603,8 @@
             <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
             <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
             <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF2424" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
-            <circle cx="12" cy="12" r="1.8" fill="#FF2424"/>
+            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
           </svg>
         </div>
         <span class="nav-title" data-glitch>33RD TREE LABS</span>
@@ -2323,10 +2323,10 @@
 
     /* B. GENERATIVE TENSOR & HYPERBOLIC FIELD MODES */
     const MODES = {
-      tensor:     { key: "tensor",     t: "⊗", f: "∇", tc: "#FF2424", fc: "#383846", scale: 0.015, label: "TENSOR [⊗ / ∇]" },
-      hyperbolic: { key: "hyperbolic", t: "λ", f: "Δ", tc: "#FF2424", fc: "#383846", scale: 0.014, label: "HYPERBOLIC [λ / Δ]" },
+      tensor:     { key: "tensor",     t: "⊗", f: "∇", tc: "#FF292C", fc: "#383846", scale: 0.015, label: "TENSOR [⊗ / ∇]" },
+      hyperbolic: { key: "hyperbolic", t: "λ", f: "Δ", tc: "#FF292C", fc: "#383846", scale: 0.014, label: "HYPERBOLIC [λ / Δ]" },
       lattice:    { key: "lattice",    t: "┼", f: "·", tc: "#F2F2F5", fc: "#2B2B38", scale: 0.018, label: "LATTICE [┼ / ·]" },
-      reduction:  { key: "reduction",  t: "Σ", f: "T", tc: "#FF2424", fc: "#383846", scale: 0.013, label: "REDUCTION [Σ / T]" }
+      reduction:  { key: "reduction",  t: "Σ", f: "T", tc: "#FF292C", fc: "#383846", scale: 0.013, label: "REDUCTION [Σ / T]" }
     };
     let currentMode = "tensor";
 
@@ -2396,7 +2396,7 @@
 
         if (excited) {
           // Cursor hover excitement: brilliant crimson pulse with stark white tensor symbol
-          ctx.fillStyle = "#FF2424";
+          ctx.fillStyle = "#FF292C";
           ctx.fillRect(0, 0, s, s);
           ctx.strokeStyle = "#FFFFFF";
           ctx.lineWidth = Math.max(1, s * 0.05);
@@ -2413,7 +2413,7 @@
           ctx.strokeStyle = "rgba(255, 36, 36, 0.28)";
           ctx.lineWidth = 1;
           ctx.strokeRect(0.5, 0.5, s - 1, s - 1);
-          ctx.fillStyle = m.tc || "#FF2424";
+          ctx.fillStyle = m.tc || "#FF292C";
           ctx.font = `700 ${Math.max(9, Math.round(s * 0.52))}px "JetBrains Mono", "Obel Mono", monospace`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
@@ -2678,7 +2678,7 @@
           ruleCtx.lineTo(cx + Math.cos(rad) * (w * 0.4), cy + Math.sin(rad) * (h * 0.4));
           ruleCtx.stroke();
         }
-        ruleCtx.fillStyle = '#FF2424';
+        ruleCtx.fillStyle = '#FF292C';
         ruleCtx.beginPath();
         ruleCtx.arc(cx, cy, 6, 0, Math.PI * 2);
         ruleCtx.fill();
@@ -2693,7 +2693,7 @@
         }
         for (let i = 0; i < 16; i++) {
           const ang = (i / 16) * Math.PI * 2;
-          ruleCtx.fillStyle = i % 2 === 0 ? '#FFFFFF' : '#FF2424';
+          ruleCtx.fillStyle = i % 2 === 0 ? '#FFFFFF' : '#FF292C';
           ruleCtx.beginPath();
           ruleCtx.arc(cx + Math.cos(ang) * 84, cy + Math.sin(ang) * 84, 4, 0, Math.PI * 2);
           ruleCtx.fill();
@@ -2709,7 +2709,7 @@
           else ruleCtx.lineTo(x, y);
         }
         ruleCtx.stroke();
-        ruleCtx.fillStyle = '#FF2424';
+        ruleCtx.fillStyle = '#FF292C';
         ruleCtx.fillText("KZG_OPENING_PROOF // VERIFIED", 16, 24);
       } else {
         // Step 4: Settle & Burn Flare
@@ -2717,7 +2717,7 @@
         ruleCtx.beginPath();
         ruleCtx.arc(cx, cy, 70 + Math.sin(frac * 8) * 15, 0, Math.PI * 2);
         ruleCtx.fill();
-        ruleCtx.strokeStyle = '#FF2424';
+        ruleCtx.strokeStyle = '#FF292C';
         ruleCtx.lineWidth = 2;
         ruleCtx.stroke();
         ruleCtx.fillStyle = '#FFFFFF';
@@ -2973,17 +2973,17 @@
       });
     });
 
-    // VRTL WRLD Glitch Letters & Matrix Scramble Engine (Calibrated Deliberate Rate)
+    // VRTL WRLD Glitch Letters & Tensor Scramble Engine (Calibrated Deliberate Rate)
     class GlitchScramble {
       constructor(el) {
         this.el = el;
-        this.chars = '01X_/*+-[]#';
+        this.chars = '⊗∇λΔΣT┼·×─│';
         this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
         el.setAttribute('data-glitch-text', this.originalText);
         this.isGlitching = false;
         this.animId = null;
         this.lastTickTime = 0;
-        this.tickInterval = 250; // 160ms throttle: calm, deliberate, readable (~6fps)
+        this.tickInterval = 250;
       }
 
       scramble(duration = 3.5) {
@@ -2997,8 +2997,7 @@
         let activeGlyphs = new Array(len);
         for (let i = 0; i < len; i++) {
           const ch = target[i];
-          activeGlyphs[i] = (ch === ' ' || ch === '
-' || ch === '	')
+          activeGlyphs[i] = /\s/.test(ch)
             ? ch
             : this.chars[Math.floor(Math.random() * this.chars.length)];
         }
@@ -3012,8 +3011,7 @@
             this.lastTickTime = now;
             for (let i = revealedCount; i < len; i++) {
               const ch = target[i];
-              if (ch === ' ' || ch === '
-' || ch === '	') {
+              if (/\s/.test(ch)) {
                 activeGlyphs[i] = ch;
               } else if (Math.random() < 0.4) {
                 activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
@@ -3024,8 +3022,7 @@
           let result = '';
           for (let i = 0; i < len; i++) {
             const ch = target[i];
-            if (ch === ' ' || ch === '
-' || ch === '	') {
+            if (/\s/.test(ch)) {
               result += ch;
             } else if (i < revealedCount) {
               result += ch;
@@ -3047,11 +3044,10 @@
       }
     }
 
-    document.querySelectorAll('[data-glitch], .nav-link').forEach(el => {
+    document.querySelectorAll('[data-glitch]').forEach(el => {
       const inst = new GlitchScramble(el);
       el.addEventListener('mouseenter', () => inst.scramble(3.5));
     });
-
   </script>
 </body>
 </html>

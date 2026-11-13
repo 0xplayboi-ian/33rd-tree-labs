@@ -2998,17 +2998,17 @@ html_template = """<!doctype html>
       });
     });
 
-    // VRTL WRLD Glitch Letters & Matrix Scramble Engine (Calibrated Deliberate Rate)
+    // VRTL WRLD Glitch Letters & Tensor Scramble Engine (Calibrated Deliberate Rate)
     class GlitchScramble {
       constructor(el) {
         this.el = el;
-        this.chars = '01X_/*+-[]#';
+        this.chars = '⊗∇λΔΣT┼·×─│';
         this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
         el.setAttribute('data-glitch-text', this.originalText);
         this.isGlitching = false;
         this.animId = null;
         this.lastTickTime = 0;
-        this.tickInterval = 250; // 160ms throttle: calm, deliberate, readable (~6fps)
+        this.tickInterval = 250;
       }
 
       scramble(duration = 3.5) {
@@ -3022,8 +3022,7 @@ html_template = """<!doctype html>
         let activeGlyphs = new Array(len);
         for (let i = 0; i < len; i++) {
           const ch = target[i];
-          activeGlyphs[i] = (ch === ' ' || ch === '
-' || ch === '	')
+          activeGlyphs[i] = /\\s/.test(ch)
             ? ch
             : this.chars[Math.floor(Math.random() * this.chars.length)];
         }
@@ -3037,8 +3036,7 @@ html_template = """<!doctype html>
             this.lastTickTime = now;
             for (let i = revealedCount; i < len; i++) {
               const ch = target[i];
-              if (ch === ' ' || ch === '
-' || ch === '	') {
+              if (/\\s/.test(ch)) {
                 activeGlyphs[i] = ch;
               } else if (Math.random() < 0.4) {
                 activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
@@ -3049,8 +3047,7 @@ html_template = """<!doctype html>
           let result = '';
           for (let i = 0; i < len; i++) {
             const ch = target[i];
-            if (ch === ' ' || ch === '
-' || ch === '	') {
+            if (/\\s/.test(ch)) {
               result += ch;
             } else if (i < revealedCount) {
               result += ch;
@@ -3072,11 +3069,10 @@ html_template = """<!doctype html>
       }
     }
 
-    document.querySelectorAll('[data-glitch], .nav-link').forEach(el => {
+    document.querySelectorAll('[data-glitch]').forEach(el => {
       const inst = new GlitchScramble(el);
       el.addEventListener('mouseenter', () => inst.scramble(3.5));
     });
-
   </script>
 </body>
 </html>
