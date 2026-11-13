@@ -33,6 +33,29 @@
             --green-glow: rgba(0, 230, 118, 0.35);
         }
 
+        /* TYPOGRAPHY: OBEL MONO & MONO MASKED */
+        @font-face {
+            font-family: 'Obel Mono';
+            src: url('assets/fonts/ObelMono.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Obel Mono';
+            src: url('assets/fonts/ObelMono-Italic.ttf') format('truetype');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Obel Mono Masked';
+            src: url('assets/fonts/ObelMonoMasked.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -668,7 +691,6 @@
                 <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
                 <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
                 <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
-                <a href="whitepaper.html" class="nav-link" data-glitch>[ WHITEPAPER ]</a>
             </div>
         </nav>
     </div>
@@ -812,7 +834,7 @@
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
-        const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+        const lenis = new Lenis({ lerp: 0.14, wheelMultiplier: 1.25, smoothWheel: true });
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => lenis.raf(time * 1000));
         gsap.ticker.lagSmoothing(0);

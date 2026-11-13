@@ -32,6 +32,29 @@ def get_shared_css():
             --green-glow: rgba(0, 230, 118, 0.35);
         }
 
+        /* TYPOGRAPHY: OBEL MONO & MONO MASKED */
+        @font-face {
+            font-family: 'Obel Mono';
+            src: url('assets/fonts/ObelMono.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Obel Mono';
+            src: url('assets/fonts/ObelMono-Italic.ttf') format('truetype');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Obel Mono Masked';
+            src: url('assets/fonts/ObelMonoMasked.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -544,7 +567,7 @@ def get_script_footer(extra_js=""):
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
-        const lenis = new Lenis({{ duration: 1.1, smoothWheel: true }});
+        const lenis = new Lenis({{ lerp: 0.14, wheelMultiplier: 1.25, smoothWheel: true }});
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => lenis.raf(time * 1000));
         gsap.ticker.lagSmoothing(0);
@@ -1406,82 +1429,118 @@ def build_index_html():
 
 
 # ====================================================================
+# ====================================================================
 # 2. BUILD PROTOCOL.HTML (Architecture Matrix, 4 Pillars, KZG & Proofs)
 # ====================================================================
 def build_protocol_html():
     css = get_shared_css() + """
-        .arch-pillars-grid {
+        /* 4 PILLARS OPEN EDITORIAL SPECIFICATION (ZERO CARDS) */
+        .pillars-editorial-list {
+            margin-top: 48px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pillar-row {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 28px;
-            margin-top: 36px;
-        }
-        @media (max-width: 860px) {
-            .arch-pillars-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .pillar-card {
-                padding: 18px !important;
-            }
-        }
-        .pillar-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 32px;
-            clip-path: polygon(0 14px, 14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            grid-template-columns: 240px 1fr;
+            gap: 48px;
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+            background: transparent;
+            position: relative;
             transition: border-color 0.25s ease;
         }
-        .pillar-card:hover {
-            border-color: rgba(255, 41, 44, 0.45);
+
+        .pillar-row:hover {
+            border-top-color: rgba(255, 41, 44, 0.45);
         }
+
+        .pillar-col-left {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
         .pillar-num {
+            font-family: 'Obel Mono', 'JetBrains Mono', monospace;
+            font-size: clamp(42px, 5vw, 64px);
+            font-weight: 700;
+            color: var(--laser-red);
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .pillar-meta {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
-            color: var(--laser-red);
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .pillar-heading {
-            font-family: 'Syne', sans-serif;
-            font-size: 22px;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: var(--white);
-            margin-bottom: 14px;
-        }
-        .pillar-text {
-            font-size: 14px;
-            line-height: 1.65;
+            font-weight: 600;
+            letter-spacing: 0.1em;
             color: var(--slate);
-            margin-bottom: 24px;
+            text-transform: uppercase;
         }
+
+        .pillar-col-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pillar-heading {
+            font-family: 'Obel Mono', 'JetBrains Mono', monospace;
+            font-size: clamp(24px, 2.6vw, 32px);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            color: var(--white);
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+
+        .pillar-text {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--chalk-dim);
+            margin-bottom: 24px;
+            max-width: 920px;
+        }
+
         .pillar-tags {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
+            padding-top: 6px;
         }
+
         .tag-pill {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            background: #15151C;
+            font-size: 11px;
+            background: transparent;
             border: 1px solid var(--border);
-            padding: 4px 10px;
+            padding: 6px 14px;
             color: var(--chalk);
+            letter-spacing: 0.04em;
+            transition: border-color 0.2s ease, color 0.2s ease;
         }
-        .tag-pill strong { color: var(--laser-red); }
 
+        .tag-pill strong {
+            color: var(--laser-red);
+            font-weight: 600;
+        }
+
+        .tag-pill:hover {
+            border-color: rgba(255, 41, 44, 0.5);
+            color: var(--white);
+        }
+
+        /* OPEN EDITORIAL SPECIFICATION TABLE (NO BOX / NO CARDS) */
         .spec-table-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 28px;
-            margin-top: 48px;
-            clip-path: polygon(0 12px, 12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+            background: transparent;
+            border: none;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 56px 0 24px 0;
+            margin-top: 64px;
+            clip-path: none;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -1489,11 +1548,11 @@ def build_protocol_html():
             width: 100%;
             border-collapse: collapse;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            margin-top: 16px;
+            font-size: 11.5px;
+            margin-top: 20px;
         }
         .spec-table th, .spec-table td {
-            padding: 10px 14px;
+            padding: 14px 18px;
             text-align: left;
             border-bottom: 1px solid var(--border);
         }
@@ -1501,17 +1560,37 @@ def build_protocol_html():
             color: var(--slate);
             text-transform: uppercase;
             font-weight: 700;
-            background: #0B0B0E;
+            background: transparent;
+            letter-spacing: 0.06em;
+            font-size: 10.5px;
         }
         .spec-table td {
             color: var(--chalk);
+            line-height: 1.5;
         }
         .spec-table tr:hover td {
-            background: rgba(255, 41, 44, 0.04);
+            background: rgba(255, 41, 44, 0.03);
+            color: var(--white);
         }
 
-        @media (max-width: 900px) {
-            .arch-pillars-grid { grid-template-columns: 1fr; }
+        @media (max-width: 860px) {
+            .pillar-row {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 32px 0;
+            }
+            .pillar-col-left {
+                flex-direction: row;
+                align-items: baseline;
+                gap: 16px;
+            }
+            .pillar-num {
+                font-size: 36px;
+            }
+            .spec-table th, .spec-table td {
+                padding: 10px 12px;
+                font-size: 10.5px;
+            }
         }
     """
 
@@ -1541,74 +1620,87 @@ def build_protocol_html():
             A fault-tolerant DePIN computing fabric designed to guarantee deterministic verification across untrusted distributed hardware without performance degradation.
         </p>
 
-        <div class="arch-pillars-grid">
+        <!-- 4 PILLARS OPEN EDITORIAL MATRIX (ZERO CARDS) -->
+        <div class="pillars-editorial-list">
             <!-- Pillar 01 -->
-            <div class="pillar-card reveal-on-scroll">
-                <div>
-                    <div class="pillar-num">[ PILLAR 01 // COORDINATION ]</div>
+            <article class="pillar-row reveal-on-scroll">
+                <div class="pillar-col-left">
+                    <span class="pillar-num">01</span>
+                    <span class="pillar-meta">[ COORDINATION ]</span>
+                </div>
+                <div class="pillar-col-right">
                     <h2 class="pillar-heading" data-glitch>TENSOR ARBOR TOPOLOGY</h2>
                     <p class="pillar-text">
                         Hierarchical tree manifold partitioning distributed model parameters across heterogeneous GPU nodes. Dynamically matches pipeline stages and tensor parallelism to physical interconnect latencies, preventing inter-node bottlenecks across global clusters.
                     </p>
+                    <div class="pillar-tags">
+                        <span class="tag-pill">ROUTING: <strong>NON-EUCLIDEAN DAG</strong></span>
+                        <span class="tag-pill">BANDWIDTH: <strong>900 GB/s NVLINK</strong></span>
+                        <span class="tag-pill">TOPOLOGY: <strong>MAX 8 HOPS</strong></span>
+                    </div>
                 </div>
-                <div class="pillar-tags">
-                    <span class="tag-pill">ROUTING: <strong>NON-EUCLIDEAN DAG</strong></span>
-                    <span class="tag-pill">BANDWIDTH: <strong>900 GB/s NVLINK</strong></span>
-                    <span class="tag-pill">TOPOLOGY: <strong>MAX 8 HOPS</strong></span>
-                </div>
-            </div>
+            </article>
 
             <!-- Pillar 02 -->
-            <div class="pillar-card reveal-on-scroll">
-                <div>
-                    <div class="pillar-num">[ PILLAR 02 // VERIFICATION ]</div>
+            <article class="pillar-row reveal-on-scroll">
+                <div class="pillar-col-left">
+                    <span class="pillar-num">02</span>
+                    <span class="pillar-meta">[ VERIFICATION ]</span>
+                </div>
+                <div class="pillar-col-right">
                     <h2 class="pillar-heading" data-glitch>PROOF OF INFERENCE (POI)</h2>
                     <p class="pillar-text">
                         Zero-knowledge neural evaluations pairing randomized Chebyshev Activation Polynomial (CAP-FFN) challenges with BN254 KZG polynomial commitment schemes. Enables sub-2ms cryptographic verification directly inside Solana smart contracts without GPU re-computation.
                     </p>
+                    <div class="pillar-tags">
+                        <span class="tag-pill">SCHEME: <strong>BN254 KZG</strong></span>
+                        <span class="tag-pill">SOLANA ANCHOR: <strong>&lt; 184,500 CU</strong></span>
+                        <span class="tag-pill">PROOF TIME: <strong>1.418ms</strong></span>
+                    </div>
                 </div>
-                <div class="pillar-tags">
-                    <span class="tag-pill">SCHEME: <strong>BN254 KZG</strong></span>
-                    <span class="tag-pill">SOLANA ANCHOR: <strong>&lt; 184,500 CU</strong></span>
-                    <span class="tag-pill">PROOF TIME: <strong>1.418ms</strong></span>
-                </div>
-            </div>
+            </article>
 
             <!-- Pillar 03 -->
-            <div class="pillar-card reveal-on-scroll">
-                <div>
-                    <div class="pillar-num">[ PILLAR 03 // CONSENSUS ]</div>
+            <article class="pillar-row reveal-on-scroll">
+                <div class="pillar-col-left">
+                    <span class="pillar-num">03</span>
+                    <span class="pillar-meta">[ CONSENSUS ]</span>
+                </div>
+                <div class="pillar-col-right">
                     <h2 class="pillar-heading" data-glitch>BYZANTINE QUORUM MATRIX</h2>
                     <p class="pillar-text">
                         Asynchronous BFT consensus withstanding up to f &lt; K/3 malicious, compromised, or colluding nodes. Immediate automated slashing of bonded $33RD collateral upon mathematical detection of gradient poisoning, bit-rot, or block equivocation.
                     </p>
+                    <div class="pillar-tags">
+                        <span class="tag-pill">TOLERANCE: <strong>f &lt; 21 / 64</strong></span>
+                        <span class="tag-pill">COMMITTEE: <strong>K=64 VALIDATORS</strong></span>
+                        <span class="tag-pill">FINALITY: <strong>400ms SLOTS</strong></span>
+                    </div>
                 </div>
-                <div class="pillar-tags">
-                    <span class="tag-pill">TOLERANCE: <strong>f &lt; 21 / 64</strong></span>
-                    <span class="tag-pill">COMMITTEE: <strong>K=64 VALIDATORS</strong></span>
-                    <span class="tag-pill">FINALITY: <strong>400ms SLOTS</strong></span>
-                </div>
-            </div>
+            </article>
 
             <!-- Pillar 04 -->
-            <div class="pillar-card reveal-on-scroll">
-                <div>
-                    <div class="pillar-num">[ PILLAR 04 // HARDWARE ENCLAVES ]</div>
+            <article class="pillar-row reveal-on-scroll">
+                <div class="pillar-col-left">
+                    <span class="pillar-num">04</span>
+                    <span class="pillar-meta">[ HARDWARE ENCLAVES ]</span>
+                </div>
+                <div class="pillar-col-right">
                     <h2 class="pillar-heading" data-glitch>HETEROGENEOUS MULTI-TEE</h2>
                     <p class="pillar-text">
                         Eliminates single-vendor silicon vulnerability by requiring dual independent enclave attestations (Intel SGX/TDX, AMD SEV-SNP, or NVIDIA Confidential Computing). Verifies memory integrity and firmware state before admitting compute providers into the tensor arbor.
                     </p>
+                    <div class="pillar-tags">
+                        <span class="tag-pill">ENCLAVES: <strong>SGX + SEV-SNP + CC</strong></span>
+                        <span class="tag-pill">ATTESTATION: <strong>DYNAMIC QUORUM</strong></span>
+                        <span class="tag-pill">QUANTIZATION: <strong>FP8 SMOOTHQUANT</strong></span>
+                    </div>
                 </div>
-                <div class="pillar-tags">
-                    <span class="tag-pill">ENCLAVES: <strong>SGX + SEV-SNP + CC</strong></span>
-                    <span class="tag-pill">ATTESTATION: <strong>DYNAMIC QUORUM</strong></span>
-                    <span class="tag-pill">QUANTIZATION: <strong>FP8 SMOOTHQUANT</strong></span>
-                </div>
-            </div>
+            </article>
         </div>
 
-        <!-- PROTOCOL PARAMETERS SPECIFICATION TABLE -->
-        <div class="spec-table-box">
+        <!-- PROTOCOL PARAMETERS SPECIFICATION TABLE (OPEN EDITORIAL MATRIX) -->
+        <div class="spec-table-box reveal-on-scroll">
             <div class="meta-tag" data-glitch>[ CRYPTOGRAPHIC &amp; NETWORK PARAMETERS ]</div>
             <table class="spec-table">
                 <thead>
@@ -1681,7 +1773,7 @@ def build_protocol_html():
     print("protocol.html compiled successfully.")
 
 
-# ====================================================================
+
 # 3. BUILD SIMULATOR.HTML (Byzantine Lattice & Solana Terminal Console)
 # ====================================================================
 def build_simulator_html():
