@@ -1302,7 +1302,7 @@ def generate_yield_page():
                 <span>ANCHOR v0.30 &bull; SOLANA MAINNET</span>
             </div>
             <pre class="code-listing-content"><code><span class="keyword">use</span> anchor_lang::prelude::*;
-<span class="keyword">use</span> anchor_spl::token_interface::{<span class="keyword">self</span>, Mint, TokenAccount, TokenInterface, Burn};
+<span class="keyword">use</span> anchor_spl::token_interface::{{<span class="keyword">self</span>, Mint, TokenAccount, TokenInterface, Burn}};
 
 <span class="comment">/// Canonical Solana Incinerator address for permanent token destruction</span>
 <span class="keyword">pub const</span> <span class="type">SOLANA_INCINERATOR</span>: Pubkey = pubkey!(<span class="string">"1nc1nerator11111111111111111111111111111111"</span>);

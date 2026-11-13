@@ -2536,9 +2536,36 @@
           </div>
         </div>
 
+        <!-- NEWSLETTER SUBSCRIPTION DISPATCH -->
+        <div class="newsletter-card">
+          <div class="newsletter-head">
+            <span class="kicker" style="margin-bottom: 4px;">PROTOCOL TELEMETRY // DISPATCH</span>
+            <h3>SUBSCRIBE TO THE ARBOR DISPATCH</h3>
+            <p>Receive verified consensus telemetry, validator slashing audits, and epoch burn reports directly to your terminal or inbox.</p>
+          </div>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('.newsletter-success').style.display='block'; this.querySelector('.newsletter-input-group').style.display='none';">
+            <div class="newsletter-input-group">
+              <input type="email" placeholder="ENTER VALIDATOR OR OPERATOR EMAIL..." required class="newsletter-input">
+              <button type="submit" class="newsletter-submit">[ SUBSCRIBE ]</button>
+            </div>
+            <div class="newsletter-success" style="display: none; color: #FF2424; font-family: var(--fm); font-size: 12px; margin-top: 10px; font-weight: 700;">
+              [ SUBSCRIPTION CONFIRMED // TELEMETRY LINKED ]
+            </div>
+          </form>
+        </div>
+
+        <!-- SOCIAL LINKS GRID -->
+        <div class="social-links-grid">
+          <a href="https://x.com/33rdTreeLabs" target="_blank" rel="noopener noreferrer" class="social-link">[ X // TWITTER ]</a>
+          <a href="https://github.com/0xplayboi-ian/33rd-tree-labs" target="_blank" rel="noopener noreferrer" class="social-link">[ GITHUB REPO ]</a>
+          <a href="https://t.me/33rdTreeLabs" target="_blank" rel="noopener noreferrer" class="social-link">[ TELEGRAM COMMS ]</a>
+          <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="social-link highlight">[ DOWNLOAD WHITEPAPER PDF ]</a>
+          <a href="https://33rdtreelabs.tech/" class="social-link">[ CANONICAL DOMAIN ]</a>
+        </div>
+
         <div class="finale__actions">
           <div class="finale__links">
-            <a href="whitepaper.html" class="btn-finale">[ READ FULL WHITEPAPER ]</a>
+            <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="btn-finale">[ DOWNLOAD WHITEPAPER PDF ]</a>
             <a href="protocol.html" class="btn-finale outline">[ PROTOCOL SPECS ]</a>
             <a href="nodes.html" class="btn-finale outline">[ JOIN NODE NETWORK ]</a>
           </div>
