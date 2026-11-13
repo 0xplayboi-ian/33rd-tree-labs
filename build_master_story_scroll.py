@@ -99,6 +99,10 @@ html_template = """<!doctype html>
       font-family: var(--fd);
       overflow-x: clip;
     }
+    table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val, [data-glitch], .mechanical-glitch {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+    }
     html::-webkit-scrollbar { display: none; }
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
@@ -2133,7 +2137,10 @@ html_template = """<!doctype html>
       </div>
       <div class="film-overlay-text">
         <span class="dot"></span>
-        <span>EXPONENTIAL PLUNGE TENSOR ARBOR WIREFRAME // MARK #06 SINGULARITY SPECIFICATION</span>
+        <span style="display: inline-flex; flex-direction: column; gap: 4px; text-align: center;">
+          <span style="font-family: var(--fm); font-size: 10px; color: var(--t); letter-spacing: 0.16em; font-weight: 700;">CHAPTER 06 // HARDWARE &amp; SCHEMATIC EXHIBITION</span>
+          <span>EXPONENTIAL PLUNGE TENSOR ARBOR WIREFRAME // MARK #06 SINGULARITY SPECIFICATION</span>
+        </span>
       </div>
     </section>
 
@@ -2148,7 +2155,7 @@ html_template = """<!doctype html>
         </div>
 
         <div class="play__controls">
-          <div class="kicker">CHAPTER 07 // PROTOCOL SIMULATION</div>
+          <div class="kicker">CHAPTER 07 // LIVE PROTOCOL SIMULATOR &amp; CONSENSUS SANDBOX</div>
           <h3>CONSENSUS PLAYGROUND</h3>
           
           <div class="play__row">
@@ -2203,7 +2210,7 @@ html_template = """<!doctype html>
          =================================================================== -->
     <section class="finale" id="finale">
       <div class="finale__inner">
-        <div class="kicker">CHAPTER 08 // PROTOCOL SPECIFICATIONS</div>
+        <div class="kicker">CHAPTER 08 // PROTOCOL SPECIFICATIONS &amp; ASYMPTOTIC FINALE</div>
         <h2 class="finale__headline">
           VERIFIABLE <span class="badge-crimson">DEPIN COMPUTE</span> ON SOLANA
         </h2>

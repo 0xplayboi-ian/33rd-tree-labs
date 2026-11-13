@@ -97,9 +97,27 @@ ol.references-list li { margin-bottom: 0.3rem; break-inside: avoid; }
 code { font-family: "Courier New", Courier, monospace; font-size: 8.5pt; }
 ul { margin-top: 0; margin-bottom: 0.5rem; padding-left: 1.4rem; }
 ul li { margin-bottom: 0.25rem; }
+
+@media screen {
+    #scroll-progress-line {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 2.5px;
+        background: #FF292C;
+        box-shadow: 0 0 8px #FF292C, 0 0 16px rgba(255, 41, 44, 0.6);
+        z-index: 100000;
+        pointer-events: none;
+        transition: width 0.04s linear;
+        will-change: width;
+    }
+}
+
 </style>
 </head>
 <body>
+<div id="scroll-progress-line" class="scroll-progress-bar" aria-hidden="true"></div>
 
 <div class="paper-header">
     <div class="paper-title">33rd Tree Labs: The Singularity Protocol</div>
@@ -974,6 +992,19 @@ The CAP-FFN benchmark circuit comprises $2.15 \times 10^7$ Plonkish constraints 
     <li>A. Kothapalli, S. Setty, and R. Tziallivas, &ldquo;Nova: Recursive Zero-Knowledge Arguments from Folding Schemes,&rdquo; in <em>CRYPTO</em>, 2022.</li>
     <li>A. Maymounkov and D. Mazi&egrave;res, &ldquo;Kademlia: A Peer-to-Peer Information System Based on the XOR Metric,&rdquo; in <em>IPTPS</em>, 2002.</li>
 </ol>
+
+
+<script>
+window.addEventListener('scroll', function() {
+    const doc = document.documentElement;
+    const sy = window.scrollY || doc.scrollTop;
+    const max = doc.scrollHeight - window.innerHeight;
+    const bar = document.getElementById('scroll-progress-line');
+    if (bar && max > 0) {
+        bar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
+    }
+}, { passive: true });
+</script>
 
 </body>
 </html>

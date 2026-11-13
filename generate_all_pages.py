@@ -2417,6 +2417,53 @@ def update_existing_subpage(file_name, active_key):
 
     # Ensure unified navbar CSS is in <style>
     unified_nav_css = """
+        /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
+        #scroll-progress-line, .scroll-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #FF292C;
+            box-shadow: 0 0 8px #FF292C, 0 0 16px rgba(255, 41, 44, 0.6);
+            z-index: 100000;
+            pointer-events: none;
+            transition: width 0.04s linear;
+            will-change: width;
+        }
+
+        /* FLOATING PILL NAVBAR SCROLL BEHAVIOR */
+        .nav-wrapper.nav-scrolled .nav-pill {
+            background: rgba(11, 11, 14, 0.96);
+            border-color: rgba(255, 41, 44, 0.35);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 41, 44, 0.15);
+        }
+
+        /* INTERSECTION OBSERVER REVEAL ANIMATIONS (GPU-ACCELERATED, JANK-FREE) */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.25s ease,
+                        box-shadow 0.25s ease;
+            will-change: opacity, transform;
+        }
+        .reveal-on-scroll.is-revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.08s; }
+        .reveal-delay-2 { transition-delay: 0.16s; }
+        .reveal-delay-3 { transition-delay: 0.24s; }
+        .reveal-delay-4 { transition-delay: 0.32s; }
+
+        /* MECHANICAL GLITCH TARGETS (ENFORCE TABULAR-NUMS TO PREVENT JANK) */
+        [data-glitch], .mechanical-glitch {
+            font-variant-numeric: tabular-nums;
+            display: inline-block;
+        }
+
         /* UNIFIED FLOATING PILL NAVBAR SPECIFICATION */
         .nav-wrapper {
             position: fixed;
@@ -2551,7 +2598,51 @@ def update_existing_subpage(file_name, active_key):
         content = content.replace('<style>', f'<style>\n{unified_nav_css}\n')
 
     # Calibrated VRTL WRLD Mechanical Glitch Decode Engine (250ms tick, 3.5s duration, progressive lock-in)
-    calibrated_glitch_js = """        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
+    calibrated_glitch_js = """        // 1. Top-edge micro-progress telemetry line & Navbar scroll awareness
+        (function() {
+            const progressBar = document.getElementById('scroll-progress-line');
+            const navWrapper = document.querySelector('.nav-wrapper');
+            function onScroll() {
+                const doc = document.documentElement;
+                const sy = window.scrollY || doc.scrollTop;
+                const max = doc.scrollHeight - window.innerHeight;
+                if (progressBar && max > 0) {
+                    progressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
+                }
+                if (navWrapper) {
+                    if (sy > 50) {
+                        navWrapper.classList.add('nav-scrolled');
+                    } else {
+                        navWrapper.classList.remove('nav-scrolled');
+                    }
+                }
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            if (window.__lenis) {
+                window.__lenis.on('scroll', onScroll);
+            } else if (typeof lenis !== 'undefined') {
+                lenis.on('scroll', onScroll);
+            }
+            onScroll();
+
+            // 2. IntersectionObserver Reveal Engine (Zero Layout Shift)
+            const revealTargets = document.querySelectorAll('.reveal-on-scroll');
+            if ('IntersectionObserver' in window) {
+                const io = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-revealed');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
+                revealTargets.forEach(el => io.observe(el));
+            } else {
+                revealTargets.forEach(el => el.classList.add('is-revealed'));
+            }
+        })();
+
+        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
         class GlitchScramble {
             constructor(el) {
                 this.el = el;

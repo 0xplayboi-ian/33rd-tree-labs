@@ -74,6 +74,10 @@
       font-family: var(--fd);
       overflow-x: clip;
     }
+    table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val, [data-glitch], .mechanical-glitch {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+    }
     html::-webkit-scrollbar { display: none; }
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
@@ -1554,7 +1558,7 @@
     .nav-link.active {
       color: #FFFFFF;
       background: rgba(255, 41, 44, 0.14);
-      border-color: #FF292C;
+      border-color: #FF2424;
       box-shadow: 0 0 10px rgba(255, 41, 44, 0.35);
     }
     .nav-link.active::before {
@@ -1562,8 +1566,8 @@
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background: #FF292C;
-      box-shadow: 0 0 6px #FF292C;
+      background: #FF2424;
+      box-shadow: 0 0 6px #FF2424;
       display: inline-block;
     }
     @media (max-width: 900px) {
@@ -1599,8 +1603,8 @@
             <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
             <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
             <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
-            <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
+            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF2424" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#FF2424"/>
           </svg>
         </div>
         <span class="nav-title" data-glitch>33RD TREE LABS</span>
@@ -2108,7 +2112,10 @@
       </div>
       <div class="film-overlay-text">
         <span class="dot"></span>
-        <span>EXPONENTIAL PLUNGE TENSOR ARBOR WIREFRAME // MARK #06 SINGULARITY SPECIFICATION</span>
+        <span style="display: inline-flex; flex-direction: column; gap: 4px; text-align: center;">
+          <span style="font-family: var(--fm); font-size: 10px; color: var(--t); letter-spacing: 0.16em; font-weight: 700;">CHAPTER 06 // HARDWARE &amp; SCHEMATIC EXHIBITION</span>
+          <span>EXPONENTIAL PLUNGE TENSOR ARBOR WIREFRAME // MARK #06 SINGULARITY SPECIFICATION</span>
+        </span>
       </div>
     </section>
 
@@ -2123,7 +2130,7 @@
         </div>
 
         <div class="play__controls">
-          <div class="kicker">CHAPTER 07 // PROTOCOL SIMULATION</div>
+          <div class="kicker">CHAPTER 07 // LIVE PROTOCOL SIMULATOR &amp; CONSENSUS SANDBOX</div>
           <h3>CONSENSUS PLAYGROUND</h3>
           
           <div class="play__row">
@@ -2178,7 +2185,7 @@
          =================================================================== -->
     <section class="finale" id="finale">
       <div class="finale__inner">
-        <div class="kicker">CHAPTER 08 // PROTOCOL SPECIFICATIONS</div>
+        <div class="kicker">CHAPTER 08 // PROTOCOL SPECIFICATIONS &amp; ASYMPTOTIC FINALE</div>
         <h2 class="finale__headline">
           VERIFIABLE <span class="badge-crimson">DEPIN COMPUTE</span> ON SOLANA
         </h2>
@@ -2976,10 +2983,10 @@
         this.isGlitching = false;
         this.animId = null;
         this.lastTickTime = 0;
-        this.tickInterval = 160; // 160ms throttle: calm, deliberate, readable (~6fps)
+        this.tickInterval = 250; // 160ms throttle: calm, deliberate, readable (~6fps)
       }
 
-      scramble(duration = 2.4) {
+      scramble(duration = 3.5) {
         if (this.isGlitching) return;
         this.isGlitching = true;
         this.el.classList.add('glitch-active');
@@ -3042,7 +3049,7 @@
 
     document.querySelectorAll('[data-glitch], .nav-link').forEach(el => {
       const inst = new GlitchScramble(el);
-      el.addEventListener('mouseenter', () => inst.scramble(2.0));
+      el.addEventListener('mouseenter', () => inst.scramble(3.5));
     });
 
   </script>
