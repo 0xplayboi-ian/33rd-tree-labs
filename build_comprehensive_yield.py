@@ -499,7 +499,7 @@ def generate_yield_page():
         }
     """
 
-    calc_js = """
+    calc_js = r"""
         // QUANTITATIVE YIELD & HARDWARE SIMULATOR ENGINE
         function calculateValidatorYield() {
             const hwSelect = document.getElementById('sim-hw');
@@ -1019,7 +1019,7 @@ def generate_yield_page():
         <span class="accent">[ 75.0% HARDWARE POOL ]</span>                             <span class="accent">[ 25.0% PROTOCOL ACCRUAL ]</span>
         Distributed to active $K=64$                                       |
         committee nodes weighted by                               +--------+--------+
-        $W_i \cdot U_i$ PoI exactness                             |                 |
+        $W_i \\cdot U_i$ PoI exactness                             |                 |
                                                                   v                 v
                                                       <span class="accent">[ 15.0% TREASURY ]</span>    <span class="accent">[ 10.0% INCINERATOR ]</span>
                                                       Squads Multisig       Canonical Solana Burn

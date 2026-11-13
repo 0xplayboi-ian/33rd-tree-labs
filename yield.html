@@ -2043,7 +2043,7 @@ export PATH="$HOME/.33rd/bin:$PATH"
             document.getElementById('res-epoch').textContent = operatorEpochReward.toFixed(4) + ' $33RD';
             document.getElementById('res-daily').textContent = operatorDailyReward.toFixed(2) + ' $33RD';
             document.getElementById('res-monthly').textContent = operatorMonthlyReward.toFixed(1) + ' $33RD';
-            document.getElementById('res-annual').textContent = operatorAnnualReward.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' $33RD';
+            document.getElementById('res-annual').textContent = operatorAnnualReward.toFixed(0).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",") + ' $33RD';
             document.getElementById('res-cluster-weight').textContent = clusterWeight.toFixed(1) + 'x (' + hwWeight.toFixed(1) + 'x * ' + nodeCount + ')';
             document.getElementById('res-network-share').textContent = (operatorShare * 100).toFixed(3) + '%';
             document.getElementById('res-burn-daily').textContent = dailyIncineratorBurn.toFixed(1) + ' $33RD';
@@ -2059,11 +2059,11 @@ export PATH="$HOME/.33rd/bin:$PATH"
             const logEl = document.getElementById('res-diagnostic-log');
             if (logEl) {
                 logEl.textContent = 
-                    "[SIMULATOR DIAGNOSTIC]\n" +
-                    ">> Target Cluster: " + nodeCount + "x " + hwSpecName + "\n" +
-                    ">> Cluster Effective Power: " + operatorPower.toFixed(2) + " / Total Network: " + totalNetworkPower.toFixed(2) + "\n" +
-                    ">> Bond Coverage: " + rawStake.toLocaleString() + " $33RD (" + (rawStake / nodeCount).toFixed(0) + " / node, min: 25,000)\n" +
-                    ">> Daily Pool: Base=" + dailyBaseEmission.toFixed(1) + " + FeePool(75%)=" + dailyFeeNodePool.toFixed(1) + " = " + totalDailyRewardPool.toFixed(1) + " $33RD\n" +
+                    "[SIMULATOR DIAGNOSTIC]\\n" +
+                    ">> Target Cluster: " + nodeCount + "x " + hwSpecName + "\\n" +
+                    ">> Cluster Effective Power: " + operatorPower.toFixed(2) + " / Total Network: " + totalNetworkPower.toFixed(2) + "\\n" +
+                    ">> Bond Coverage: " + rawStake.toLocaleString() + " $33RD (" + (rawStake / nodeCount).toFixed(0) + " / node, min: 25,000)\\n" +
+                    ">> Daily Pool: Base=" + dailyBaseEmission.toFixed(1) + " + FeePool(75%)=" + dailyFeeNodePool.toFixed(1) + " = " + totalDailyRewardPool.toFixed(1) + " $33RD\\n" +
                     ">> Incinerator Burn: " + dailyIncineratorBurn.toFixed(1) + " $33RD/day (Floor breakeven: 51,370 $33RD fee vol)";
             }
         }
