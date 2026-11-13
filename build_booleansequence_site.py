@@ -1,0 +1,1380 @@
+import os, sys
+
+site_html = """<!doctype html>
+<html lang="en" class="lenis" style="--t: #FF2424; --f: #070707;">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>33RD TREE LABS // The Singularity Protocol &bull; 33rdtreelabs.tech</title>
+  <meta name="description" content="A Byzantine-Resilient Verifiable DePIN Compute Fabric on Solana. Hierarchical Tensor Arbor coordination, zero-knowledge neural evaluations, and cryptographic consensus at scale.">
+  <meta name="theme-color" content="#070707">
+
+  <!-- OpenGraph & Twitter Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://33rdtreelabs.tech/">
+  <meta property="og:title" content="33RD TREE LABS // The Singularity Protocol">
+  <meta property="og:description" content="Byzantine-Resilient Verifiable DePIN Compute Fabric on Solana. Pairing cryptographic consensus with zero-knowledge neural evaluations.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="33RD TREE LABS // 33rdtreelabs.tech">
+  <meta name="twitter:description" content="Decentralized verifiable GPU compute orchestration anchored on Solana.">
+
+  <!-- Fonts & CDN Engines -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --t: #FF2424; /* Laser Crimson */
+      --f: #070707; /* Pure Obsidian */
+      --chalk: #F2F2F5;
+      --dim: #8E8E98;
+      --border: #1C1C24;
+      --card-bg: rgba(11, 11, 14, 0.88);
+      --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --fm: 'JetBrains Mono', monospace;
+      --fh: 'Syne', sans-serif;
+      --pad: clamp(16px, 2.5vw, 40px);
+    }
+
+    *, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; scrollbar-width: none; background: var(--f); color: var(--chalk); font-family: var(--fd); overflow-x: clip; }
+    html::-webkit-scrollbar { display: none; }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-stopped { overflow: hidden; }
+
+    body {
+      margin: 0;
+      background: var(--f);
+      color: var(--chalk);
+      font-family: var(--fd);
+      font-size: 16px;
+      line-height: 1.45;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* RIGHT HAIRLINE SCROLLBAR */
+    .sbar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      width: 8px;
+      background: rgba(7, 7, 7, 0.65);
+      border-left: 1px solid rgba(255, 36, 36, 0.25);
+      touch-action: none;
+      cursor: pointer;
+    }
+    .sbar i {
+      display: block;
+      width: 100%;
+      background: var(--t);
+      box-shadow: 0 0 10px rgba(255, 36, 36, 0.85);
+      will-change: transform;
+    }
+    .sbar:hover i, .sbar.is-drag i {
+      background: #FF5555;
+      box-shadow: 0 0 16px rgba(255, 36, 36, 1);
+    }
+    @media (hover: none) { .sbar { display: none; } }
+
+    /* FIXED HUD / NAVBAR */
+    .hud {
+      position: fixed;
+      inset: clamp(12px, 2vw, 24px) clamp(12px, 2.5vw, 36px) auto;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      pointer-events: none;
+    }
+    .hud > * { pointer-events: auto; }
+
+    .hud__brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(11, 11, 14, 0.9);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 9999px;
+      text-decoration: none;
+      color: var(--chalk);
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      transition: border-color 0.2s ease;
+    }
+    .hud__brand:hover { border-color: var(--t); }
+    .hud__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--t);
+      box-shadow: 0 0 8px var(--t);
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+
+    .hud__modes {
+      display: flex;
+      gap: 6px;
+      background: rgba(11, 11, 14, 0.9);
+      border: 1px solid var(--border);
+      padding: 4px;
+      border-radius: 9999px;
+      backdrop-filter: blur(16px);
+    }
+    .hud__mode-btn {
+      background: transparent;
+      border: 0;
+      color: var(--dim);
+      font-family: var(--fm);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .hud__mode-btn:hover { color: var(--chalk); }
+    .hud__mode-btn.active {
+      background: var(--t);
+      color: #FFFFFF;
+      box-shadow: 0 0 12px rgba(255, 36, 36, 0.5);
+    }
+
+    .hud__cta {
+      background: var(--t);
+      color: #FFFFFF;
+      font-family: var(--fm);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 9999px;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      box-shadow: 0 0 16px rgba(255, 36, 36, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hud__cta:hover { transform: scale(1.04); box-shadow: 0 0 24px rgba(255, 36, 36, 0.7); }
+
+    /* 1. HERO PINNED SECTION WITH KINETIC SPLIT TEXT */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(90px, 12vh, 120px) var(--pad) clamp(30px, 4vh, 48px);
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .hero__field-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.82;
+      pointer-events: none;
+    }
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .hero__kicker {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--t);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .hero__split {
+      display: flex;
+      flex-direction: column;
+      line-height: 0.88;
+      margin-bottom: 24px;
+      pointer-events: none;
+    }
+    .hero__line {
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: clamp(48px, 11vw, 160px);
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      will-change: transform;
+      color: var(--chalk);
+    }
+    .hero__line.red-accent {
+      color: var(--t);
+      text-shadow: 0 0 40px rgba(255, 36, 36, 0.5);
+    }
+    .hero__aside {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 32px;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .hero__desc {
+      font-size: clamp(14px, 1.2vw, 17px);
+      line-height: 1.55;
+      max-width: 580px;
+      color: var(--chalk);
+    }
+    .hero__foot-badges {
+      display: flex;
+      gap: 12px;
+      font-family: var(--fm);
+      font-size: 10.5px;
+      color: var(--dim);
+    }
+    .hero__badge-tag {
+      background: rgba(11, 11, 14, 0.8);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 4px;
+    }
+
+    /* 2. PINNED TELEMETRY / ALTITUDE SECTION */
+    .above {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--f);
+      z-index: 3;
+    }
+    .above__pin {
+      width: 100%;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 var(--pad);
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: clamp(32px, 5vw, 70px);
+      align-items: center;
+    }
+    .above__metric-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: clamp(24px, 3.5vw, 48px);
+      border-radius: 8px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 36, 36, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .above__metric-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--t);
+    }
+    .above__counter {
+      font-family: var(--fh);
+      font-size: clamp(54px, 9vw, 110px);
+      font-weight: 800;
+      line-height: 0.9;
+      color: var(--t);
+      margin-bottom: 8px;
+      letter-spacing: -0.04em;
+    }
+    .above__label {
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .above__copy h2 {
+      font-family: var(--fh);
+      font-size: clamp(32px, 4.2vw, 56px);
+      font-weight: 800;
+      line-height: 1.02;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .above__copy p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--dim);
+      margin-bottom: 24px;
+    }
+
+    /* 3. PINNED 4-STEP CANARY PROTOCOL RULE SECTION */
+    .rule {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #09090D;
+      z-index: 4;
+    }
+    .rule__pin {
+      width: 100%;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 var(--pad);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 5vw, 60px);
+      align-items: center;
+    }
+    .rule__steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .step {
+      background: rgba(16, 16, 20, 0.7);
+      border: 1px solid var(--border);
+      padding: 18px 24px;
+      border-radius: 6px;
+      transition: border-color 0.3s ease, background 0.3s ease;
+      position: relative;
+    }
+    .step.is-active {
+      border-color: var(--t);
+      background: rgba(255, 36, 36, 0.08);
+    }
+    .step.is-done {
+      border-color: rgba(255, 36, 36, 0.4);
+      opacity: 0.6;
+    }
+    .step__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .step__nr {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--t);
+    }
+    .step__verb {
+      font-family: var(--fm);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--chalk);
+    }
+    .step__desc {
+      font-size: 13.5px;
+      color: var(--dim);
+      line-height: 1.45;
+    }
+    .step__bar {
+      height: 2px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 1px;
+    }
+    .step__bar i {
+      display: block;
+      height: 100%;
+      width: 100%;
+      background: var(--t);
+      transform-origin: left center;
+      transform: scaleX(0);
+      will-change: transform;
+    }
+
+    .rule__interactive-preview {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    }
+    .rule__canvas-box {
+      width: 100%;
+      height: 280px;
+      background: #000000;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    #rule-canvas { width: 100%; height: 100%; }
+
+    /* 4. PINNED HORIZONTAL SCROLL TRACK (PAIRS / CARDS) */
+    .pairs-section {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      background: #030305;
+      z-index: 5;
+    }
+    .pairs-track-wrap {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: clamp(20px, 8vw, 120px);
+      padding-right: 120px;
+    }
+    .pairs-track {
+      display: flex;
+      gap: clamp(24px, 4vw, 56px);
+      align-items: center;
+      will-change: transform;
+    }
+    .pair-intro {
+      flex: 0 0 clamp(280px, 28vw, 400px);
+    }
+    .pair-intro h2 {
+      font-family: var(--fh);
+      font-size: clamp(36px, 4.5vw, 64px);
+      font-weight: 800;
+      line-height: 0.98;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .pair-intro p {
+      font-size: 15px;
+      color: var(--dim);
+      line-height: 1.6;
+    }
+    .pair-card {
+      flex: 0 0 clamp(320px, 34vw, 460px);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: clamp(24px, 3vw, 36px);
+      border-radius: 8px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      will-change: transform, rotate;
+      transition: border-color 0.3s ease;
+    }
+    .pair-card:hover { border-color: var(--t); }
+    .pair-card__tag {
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--t);
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .pair-card__title {
+      font-family: var(--fh);
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+    .pair-card__desc {
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.55;
+      margin-bottom: 24px;
+    }
+    .pair-card__stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+    .pair-card__stat-val {
+      font-family: var(--fm);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--chalk);
+    }
+    .pair-card__stat-lbl {
+      font-family: var(--fm);
+      font-size: 9.5px;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* 5. PINNED EXPANDING FILM / SCHEMATIC SECTION */
+    .film-section {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000000;
+      z-index: 6;
+      overflow: hidden;
+    }
+    .film-clip {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      clip-path: inset(30% 34% 30% 34%);
+      will-change: clip-path;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #050508;
+      border: 1px solid var(--border);
+    }
+    #film-canvas { width: 100%; height: 100%; }
+    .film-overlay-text {
+      position: absolute;
+      bottom: clamp(30px, 6vh, 60px);
+      left: clamp(20px, 4vw, 60px);
+      z-index: 2;
+      font-family: var(--fm);
+      font-size: 12px;
+      color: var(--chalk);
+      background: rgba(0, 0, 0, 0.85);
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 36, 36, 0.3);
+    }
+
+    /* 6. INTERACTIVE CONSENSUS PLAYGROUND */
+    .play {
+      padding: clamp(80px, 12vh, 140px) var(--pad);
+      background: var(--f);
+      z-index: 7;
+      position: relative;
+    }
+    .play__inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(32px, 5vw, 60px);
+      align-items: center;
+    }
+    .play__canvas-box {
+      width: 100%;
+      height: 380px;
+      background: #000000;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 36, 36, 0.2);
+    }
+    #playground-canvas { width: 100%; height: 100%; }
+
+    .play__controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: clamp(24px, 3vw, 36px);
+      border-radius: 8px;
+    }
+    .play__row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .play__row-head {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--dim);
+    }
+    .play__row-head span:last-child { color: var(--t); font-weight: 700; }
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      height: 4px;
+      border-radius: 2px;
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--t);
+      cursor: pointer;
+      box-shadow: 0 0 8px var(--t);
+    }
+
+    /* FOOTER */
+    .foot {
+      padding: clamp(60px, 10vh, 100px) var(--pad) 40px;
+      background: #040406;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 8;
+    }
+    .foot__grid {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--dim);
+    }
+    .foot__top {
+      color: var(--chalk);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+    }
+    .foot__top:hover { border-color: var(--t); color: var(--t); }
+
+    /* WORD READING ILLUMINATION */
+    [data-words] .word {
+      display: inline-block;
+      margin-right: 0.28em;
+      transition: opacity 0.12s ease;
+      will-change: opacity;
+    }
+  </style>
+</head>
+<body id="top">
+
+  <!-- RIGHT HAIRLINE SCROLLBAR -->
+  <div class="sbar" id="sbar" aria-hidden="true"><i></i></div>
+
+  <!-- HUD NAVIGATION -->
+  <header class="hud">
+    <a href="#top" class="hud__brand">
+      <span class="hud__dot"></span>
+      <span>33RD TREE LABS</span>
+    </a>
+    <div class="hud__modes">
+      <button type="button" class="hud__mode-btn active" data-mode="bin">0 / 1</button>
+      <button type="button" class="hud__mode-btn" data-mode="cmp">&gt; / &lt;</button>
+      <button type="button" class="hud__mode-btn" data-mode="plus">+ / -</button>
+    </div>
+    <a href="#playground" class="hud__cta">[ ENTER LABS ]</a>
+  </header>
+
+  <main>
+    <!-- 1. PINNED HERO SECTION WITH SPLIT KINETIC TYPOGRAPHY -->
+    <section class="hero" id="hero">
+      <canvas class="hero__field-canvas" id="hero-field-canvas"></canvas>
+      <div class="hero__content">
+        <div class="hero__kicker">( 01 ) // THE SINGULARITY PROTOCOL &bull; 33RDTREELABS.TECH</div>
+        <div class="hero__split">
+          <div class="hero__line">33RD TREE</div>
+          <div class="hero__line red-accent">SINGULARITY</div>
+        </div>
+        <div class="hero__aside">
+          <p class="hero__desc" data-words>
+            A Byzantine-Resilient Verifiable DePIN Compute Fabric anchored on Solana. Hierarchical Tensor Arbor coordination, zero-knowledge neural evaluations, and deterministic consensus across heterogeneous clusters.
+          </p>
+          <div class="hero__foot-badges">
+            <span class="hero__badge-tag">GROMOV &delta;-HYPERBOLIC</span>
+            <span class="hero__badge-tag">&Delta;&epsilon; = 0.00 INT8</span>
+            <span class="hero__badge-tag">K=64 QUORUM</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PINNED ALTITUDE / TELEMETRY SECTION -->
+    <section class="above" id="above">
+      <div class="above__pin">
+        <div class="above__metric-box">
+          <div class="above__counter" id="tele-counter">64</div>
+          <div class="above__label">[ ACTIVE BYZANTINE SAMPLING QUORUM // K=64 ]</div>
+          <p data-words style="color: var(--chalk); font-size: 15px; line-height: 1.6;">
+            Every compute proof requires synchronous verification across a 64-node Byzantine consensus committee. Fault tolerance threshold guarantees cryptographic finality under arbitrary adversarial dropouts.
+          </p>
+        </div>
+        <div class="above__copy">
+          <div style="font-family: var(--fm); font-size: 11px; color: var(--t); letter-spacing: 0.16em; margin-bottom: 12px;">( 02 ) // TOPOLOGY & ROUTING</div>
+          <h2>HYPERBOLIC<br>TENSOR ARBOR</h2>
+          <p data-words>
+            Traditional mesh networks degrade exponentially as cluster size grows. By mapping node coordinates into negative curvature hyperbolic geometry, routing diameter scales logarithmically (&le; 8 hops max across the entire planet).
+          </p>
+          <div style="display: flex; gap: 14px;">
+            <a href="whitepaper.html" class="hud__cta" style="box-shadow: none;">[ READ CANARY SPEC v4.0 ]</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PINNED 4-STEP PROTOCOL RULE SECTION -->
+    <section class="rule" id="rule">
+      <div class="rule__pin">
+        <div class="rule__steps">
+          <div style="font-family: var(--fm); font-size: 11px; color: var(--t); letter-spacing: 0.16em; margin-bottom: 8px;">( 03 ) // EXECUTION PIPELINE</div>
+          <h2 style="font-family: var(--fh); font-size: 38px; font-weight: 800; text-transform: uppercase; margin-bottom: 16px;">ONE PROTOCOL.<br>FOUR INSTRUCTIONS.</h2>
+          
+          <div class="step is-active" data-step="0">
+            <div class="step__header">
+              <span class="step__nr">STEP 01</span>
+              <span class="step__verb">DISPATCH</span>
+            </div>
+            <div class="step__desc">Inference tasks dispatched across Tensor Arbor coordinates with verifiable INT8 deterministic weights.</div>
+            <div class="step__bar"><i style="transform: scaleX(1);"></i></div>
+          </div>
+
+          <div class="step" data-step="1">
+            <div class="step__header">
+              <span class="step__nr">STEP 02</span>
+              <span class="step__verb">CONSENSUS</span>
+            </div>
+            <div class="step__desc">K=64 validator committee evaluates execution output hash with bit-exact zero delta verification.</div>
+            <div class="step__bar"><i></i></div>
+          </div>
+
+          <div class="step" data-step="2">
+            <div class="step__header">
+              <span class="step__nr">STEP 03</span>
+              <span class="step__verb">COMMITMENT</span>
+            </div>
+            <div class="step__desc">Plonky2 / KZG zero-knowledge proof generated and anchored to Solana blockchain state.</div>
+            <div class="step__bar"><i></i></div>
+          </div>
+
+          <div class="step" data-step="3">
+            <div class="step__header">
+              <span class="step__nr">STEP 04</span>
+              <span class="step__verb">SETTLE & BURN</span>
+            </div>
+            <div class="step__desc">75% hardware yield distributed, 15% R&D multisig, 10% perpetually burned to Solana Incinerator.</div>
+            <div class="step__bar"><i></i></div>
+          </div>
+        </div>
+
+        <div class="rule__interactive-preview">
+          <div class="rule__canvas-box">
+            <canvas id="rule-canvas"></canvas>
+          </div>
+          <div style="font-family: var(--fm); font-size: 11px; color: var(--dim); display: flex; justify-content: space-between;">
+            <span>ACTIVE STEP VERIFIER</span>
+            <span id="active-step-name" style="color: var(--t); font-weight: 700;">DISPATCH</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PINNED HORIZONTAL SCROLL CLUSTER SECTION -->
+    <section class="pairs-section" id="clusters">
+      <div class="pairs-track-wrap">
+        <div class="pairs-track" id="pairs-track">
+          <div class="pair-intro">
+            <div style="font-family: var(--fm); font-size: 11px; color: var(--t); letter-spacing: 0.16em; margin-bottom: 12px;">( 04 ) // HARDWARE CLUSTERS</div>
+            <h2>VERIFIED<br>COMPUTE<br>FABRIC</h2>
+            <p data-words>
+              Enterprise-grade accelerator hardware bonded via Anchor smart contracts on Solana. Explore cluster tiers and deterministic guarantees.
+            </p>
+          </div>
+
+          <!-- Card 1 -->
+          <div class="pair-card">
+            <div class="pair-card__tag">H100 SXM5 // 80GB HBM3</div>
+            <div class="pair-card__title">FRONTIER DEEP LEARNING</div>
+            <div class="pair-card__desc">Ultra-high bandwidth NVLink clusters for distributed MoE inference and multi-billion parameter checkpoint evaluations.</div>
+            <div class="pair-card__stat-grid">
+              <div>
+                <div class="pair-card__stat-val">3,350 GB/s</div>
+                <div class="pair-card__stat-lbl">Memory Bandwidth</div>
+              </div>
+              <div>
+                <div class="pair-card__stat-val">25,000 $33RD</div>
+                <div class="pair-card__stat-lbl">Min Node Bond</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="pair-card">
+            <div class="pair-card__tag">B200 BLACKWELL // CANARY</div>
+            <div class="pair-card__title">NEXT-GEN QUANTUM-RESILIENT</div>
+            <div class="pair-card__desc">Dedicated FP4 / FP8 neural pipeline accelerators executing live real-time KZG polynomial proof synthesis.</div>
+            <div class="pair-card__stat-grid">
+              <div>
+                <div class="pair-card__stat-val">8,000 GB/s</div>
+                <div class="pair-card__stat-lbl">Memory Bandwidth</div>
+              </div>
+              <div>
+                <div class="pair-card__stat-val">&lt; 1.84ms</div>
+                <div class="pair-card__stat-lbl">KZG Opening Time</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="pair-card">
+            <div class="pair-card__tag">RTX 4090 / 5090 // EDGE</div>
+            <div class="pair-card__title">DECENTRALIZED WORKERS</div>
+            <div class="pair-card__desc">High-density decentralized GPU nodes handling low-latency zero-knowledge neural verification tasks.</div>
+            <div class="pair-card__stat-grid">
+              <div>
+                <div class="pair-card__stat-val">24GB - 32GB</div>
+                <div class="pair-card__stat-lbl">VRAM Capacity</div>
+              </div>
+              <div>
+                <div class="pair-card__stat-val">75% Yield</div>
+                <div class="pair-card__stat-lbl">Hardware Reward Pool</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="pair-card">
+            <div class="pair-card__tag">TOKENOMICS // VERIFIED</div>
+            <div class="pair-card__title">IMMUTABLE METRICS</div>
+            <div class="pair-card__desc">Hard cap fixed at 33,333,333 $33RD with 100% of initial LP tokens sent directly to Solana Incinerator.</div>
+            <div class="pair-card__stat-grid">
+              <div>
+                <div class="pair-card__stat-val">33,333,333</div>
+                <div class="pair-card__stat-lbl">Fixed Hard Cap</div>
+              </div>
+              <div>
+                <div class="pair-card__stat-val">100% Burn</div>
+                <div class="pair-card__stat-lbl">LP to 1nc1nerator</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PINNED EXPANDING SCHEMATIC FILM SECTION -->
+    <section class="film-section" id="film">
+      <div class="film-clip" id="film-clip">
+        <canvas id="film-canvas"></canvas>
+      </div>
+      <div class="film-overlay-text">
+        <span>TENSOR ARBOR EXPONENTIAL PLUNGE MANIFOLD // GROMOV &delta;-HYPERBOLIC TOPOLOGY</span>
+      </div>
+    </section>
+
+    <!-- 6. INTERACTIVE CONSENSUS PLAYGROUND -->
+    <section class="play" id="playground">
+      <div class="play__inner">
+        <div class="play__canvas-box">
+          <canvas id="playground-canvas"></canvas>
+        </div>
+        <div class="play__controls">
+          <div style="font-family: var(--fm); font-size: 11px; color: var(--t); letter-spacing: 0.16em;">( 05 ) // INTERACTIVE PLAYGROUND</div>
+          <h3 style="font-family: var(--fh); font-size: 26px; font-weight: 800; text-transform: uppercase;">SIMULATE TENSOR MANIFOLD</h3>
+          
+          <div class="play__row">
+            <div class="play__row-head">
+              <span>BYZANTINE QUORUM (K)</span>
+              <span id="k-out">64</span>
+            </div>
+            <input type="range" id="k-slider" min="16" max="128" value="64" step="8">
+          </div>
+
+          <div class="play__row">
+            <div class="play__row-head">
+              <span>CELL RESOLUTION</span>
+              <span id="res-out">32</span>
+            </div>
+            <input type="range" id="res-slider" min="16" max="64" value="32" step="4">
+          </div>
+
+          <div class="play__row">
+            <div class="play__row-head">
+              <span>MANIFOLD VELOCITY</span>
+              <span id="speed-out">0.6</span>
+            </div>
+            <input type="range" id="speed-slider" min="0.1" max="2.0" value="0.6" step="0.1">
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 10px;">
+            <button type="button" id="btn-invert" class="hud__cta" style="border: 0; cursor: pointer; padding: 10px 20px;">[ INVERT COLORWAYS ]</button>
+            <a href="simulator.html" class="foot__top" style="font-size: 10.5px;">FULL BYZANTINE SUITE &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__grid">
+      <div>&copy; 2026 33RD TREE LABS. THE SINGULARITY PROTOCOL. ALL RIGHTS RESERVED.</div>
+      <div>OFFICIAL DOMAIN: 33RDTREELABS.TECH &bull; SOLANA INCINERATOR LP LOCKED</div>
+      <a href="#top" class="foot__top">START OVER &uarr;</a>
+    </div>
+  </footer>
+
+  <!-- ENGINE SCRIPTS -->
+  <script>
+    /* A. PERLIN SIMPLEX NOISE ENGINE */
+    const Noise = (() => {
+      const d = new Uint8Array(512);
+      function e(t) {
+        let i = t >>> 0;
+        const o = () => {
+          i |= 0; i = i + 1831565813 | 0;
+          let s = Math.imul(i ^ i >>> 15, 1 | i);
+          return s = s + Math.imul(s ^ s >>> 7, 61 | s) ^ s, ((s ^ s >>> 14) >>> 0) / 4294967296;
+        };
+        const r = Array.from({ length: 256 }, (s, l) => l);
+        for (let s = 255; s > 0; s--) {
+          const l = Math.floor(o() * (s + 1));
+          [r[s], r[l]] = [r[l], r[s]];
+        }
+        for (let s = 0; s < 512; s++) d[s] = r[s & 255];
+      }
+      const h = t => t * t * t * (t * (t * 6 - 15) + 10);
+      const c = (t, i, o) => i + t * (o - i);
+      function n(t, i, o, r) {
+        t &= 15;
+        const s = t < 8 ? i : o;
+        const l = t < 4 ? o : t === 12 || t === 14 ? i : r;
+        return (t & 1 ? -s : s) + (t & 2 ? -l : l);
+      }
+      function p(t, i, o) {
+        const r = Math.floor(t) & 255, s = Math.floor(i) & 255, l = Math.floor(o) & 255;
+        t -= Math.floor(t); i -= Math.floor(i); o -= Math.floor(o);
+        const u = h(t), M = h(i), R = h(o);
+        const g = d[r] + s, k = d[g] + l, v = d[g + 1] + l;
+        const a = d[r + 1] + s, b = d[a] + l, m = d[a + 1] + l;
+        return c(R, c(M, c(u, n(d[k], t, i, o), n(d[b], t - 1, i, o)), c(u, n(d[v], t, i - 1, o), n(d[m], t - 1, i - 1, o))), c(M, c(u, n(d[k + 1], t, i, o - 1), n(d[b + 1], t - 1, i, o - 1)), c(u, n(d[v + 1], t, i - 1, o - 1), n(d[m + 1], t - 1, i - 1, o - 1))));
+      }
+      function f(t, i, o) {
+        let r = 0, s = 0.5, l = 1;
+        for (let M = 0; M < 4; M++) {
+          r += s * p(t * l, i * l, o * l);
+          s *= 0.5; l *= 2;
+        }
+        const u = 0.5 + r * 0.82;
+        return u < 0 ? 0 : u > 1 ? 1 : u;
+      }
+      e(1);
+      return { noise: f, seed: e };
+    })();
+
+    /* B. GENERATIVE BINARY/TENSOR FIELD CANVAS */
+    const MODES = {
+      bin: { key: "bin", t: "1", f: "0", tc: "#FF2424", fc: "#070707", scale: 0.016 },
+      cmp: { key: "cmp", t: ">", f: "<", tc: "#00E676", fc: "#070707", scale: 0.012 },
+      plus: { key: "plus", t: "+", f: "-", tc: "#FFFFFF", fc: "#FF2424", scale: 0.008 }
+    };
+    let currentMode = "bin";
+
+    class Field {
+      constructor(canvas, opts = {}) {
+        this.c = canvas;
+        this.ctx = canvas.getContext("2d", { alpha: false });
+        this.cell = opts.cell || 28;
+        this.mode = opts.mode || "bin";
+        this.t = 0;
+        this.speed = opts.speed ?? 0.6;
+        this.tiles = new Map();
+        this.ripples = [];
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+      }
+      resize() {
+        const r = this.c.parentElement.getBoundingClientRect();
+        this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+        this.w = r.width || window.innerWidth;
+        this.h = r.height || window.innerHeight;
+        this.c.width = Math.round(this.w * this.dpr);
+        this.c.height = Math.round(this.h * this.dpr);
+        this.grid();
+      }
+      grid() {
+        this.cp = Math.max(4, Math.round(this.cell * this.dpr));
+        this.cw = this.ch = this.cp / this.dpr;
+        this.cols = Math.ceil(this.w / this.cw);
+        this.rows = Math.ceil(this.h / this.ch);
+        this.tiles.clear();
+      }
+      setCell(c) {
+        if (Math.round(c) !== this.cell) {
+          this.cell = Math.max(8, Math.round(c));
+          this.grid();
+        }
+      }
+      tile(m, val) {
+        const key = m.key + val + this.cp;
+        if (this.tiles.has(key)) return this.tiles.get(key);
+        const can = document.createElement("canvas");
+        can.width = this.cp; can.height = this.cp;
+        const ctx = can.getContext("2d");
+        ctx.fillStyle = val ? m.tc : m.fc;
+        ctx.fillRect(0, 0, this.cp, this.cp);
+        ctx.fillStyle = val ? m.fc : m.tc;
+        ctx.font = `700 ${this.cp * 0.62}px "JetBrains Mono", monospace`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(val ? m.t : m.f, this.cp / 2, this.cp / 2);
+        this.tiles.set(key, can);
+        return can;
+      }
+      frame(delta) {
+        this.t += delta * this.speed;
+        const m = MODES[this.mode];
+        const ctx = this.ctx;
+        for (let r = 0; r < this.rows; r++) {
+          const y = (r + 0.5) * this.ch;
+          for (let c = 0; c < this.cols; c++) {
+            const x = (c + 0.5) * this.cw;
+            const n = Noise.noise(x * m.scale, y * m.scale, this.t) > 0.5;
+            const t = this.tile(m, n ? 1 : 0);
+            ctx.drawImage(t, c * this.cp, r * this.cp);
+          }
+        }
+      }
+    }
+
+    const heroCanvas = document.getElementById('hero-field-canvas');
+    let heroField = null;
+    if (heroCanvas) {
+      heroField = new Field(heroCanvas, { cell: 32, mode: currentMode, speed: 0.5 });
+    }
+
+    let lastTime = performance.now();
+    function loop(now) {
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+      if (heroField) heroField.frame(dt);
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    /* C. EXACT BOOLEANSEQUENCE LENIS SMOOTH INERTIA SCROLL */
+    gsap.registerPlugin(ScrollTrigger);
+
+    const lenis = new Lenis({
+      lerp: 0.085, // Signature fluid inertia
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.4,
+      smoothWheel: true,
+      smoothTouch: false
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+    window.__lenis = lenis;
+
+    /* D. HAIRLINE SCROLLBAR TRACKER */
+    const sbar = document.getElementById('sbar');
+    const sbarThumb = sbar.querySelector('i');
+    const docEl = document.documentElement;
+    let isDrag = false;
+    let dragY = null;
+
+    function updateSbar() {
+      const max = docEl.scrollHeight - window.innerHeight;
+      if (max <= 1) { sbar.hidden = true; return; }
+      sbar.hidden = false;
+      const h = Math.max(36, window.innerHeight * window.innerHeight / docEl.scrollHeight);
+      sbarThumb.style.height = h + 'px';
+      const sy = window.scrollY || docEl.scrollTop;
+      sbarThumb.style.transform = `translateY(${sy / max * (window.innerHeight - h)}px)`;
+    }
+    window.addEventListener('scroll', updateSbar, { passive: true });
+    window.addEventListener('resize', updateSbar);
+    lenis.on('scroll', updateSbar);
+    updateSbar();
+
+    sbar.addEventListener('pointerdown', (e) => {
+      const rect = sbarThumb.getBoundingClientRect();
+      dragY = e.target === sbarThumb ? e.clientY - rect.top : rect.height / 2;
+      sbar.setPointerCapture(e.pointerId);
+      sbar.classList.add('is-drag');
+      scrubSbar(e.clientY);
+    });
+    sbar.addEventListener('pointermove', (e) => { if (dragY !== null) scrubSbar(e.clientY); });
+    function endDrag() { dragY = null; sbar.classList.remove('is-drag'); }
+    sbar.addEventListener('pointerup', endDrag);
+    sbar.addEventListener('pointercancel', endDrag);
+
+    function scrubSbar(clientY) {
+      const max = docEl.scrollHeight - window.innerHeight;
+      const h = sbarThumb.offsetHeight;
+      const frac = Math.min(1, Math.max(0, (clientY - dragY) / (window.innerHeight - h)));
+      lenis.scrollTo(frac * max, { immediate: true });
+    }
+
+    /* E. PINNED HERO SPLIT TYPOGRAPHY & FIELD ZOOM */
+    const heroTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: '+=75%',
+        pin: true,
+        scrub: 0.6,
+        onUpdate: (self) => {
+          if (heroField) {
+            heroField.setCell(32 * (1 + self.progress * 2.8));
+          }
+        }
+      }
+    });
+
+    heroTl
+      .to('.hero__line:first-child', { xPercent: -14, ease: 'none' }, 0)
+      .to('.hero__line.red-accent', { xPercent: 12, ease: 'none' }, 0)
+      .to('.hero__aside', { autoAlpha: 0, y: -40, ease: 'power1.in' }, 0);
+
+    /* F. PINNED ALTITUDE / TELEMETRY SECTION */
+    const teleCounter = document.getElementById('tele-counter');
+    ScrollTrigger.create({
+      trigger: '.above',
+      start: 'top top',
+      end: '+=140%',
+      pin: '.above__pin',
+      scrub: true,
+      onUpdate: (self) => {
+        if (teleCounter) {
+          const val = Math.round(64 - self.progress * 48);
+          teleCounter.textContent = val < 10 ? '0' + val : val;
+        }
+      }
+    });
+
+    /* G. PINNED 4-STEP PROTOCOL RULE EXECUTION */
+    const steps = document.querySelectorAll('.step');
+    const activeStepName = document.getElementById('active-step-name');
+    const stepNames = ['DISPATCH', 'CONSENSUS', 'COMMITMENT', 'SETTLE & BURN'];
+
+    ScrollTrigger.create({
+      trigger: '.rule',
+      start: 'top top',
+      end: '+=240%',
+      pin: '.rule__pin',
+      scrub: true,
+      onUpdate: (self) => {
+        const raw = self.progress * 3.99;
+        const idx = Math.min(3, Math.floor(raw));
+        steps.forEach((st, i) => {
+          st.classList.toggle('is-active', i === idx);
+          st.classList.toggle('is-done', raw > i + 1);
+          const bar = st.querySelector('.step__bar i');
+          if (bar) {
+            const frac = Math.min(1, Math.max(0, raw - i));
+            bar.style.transform = `scaleX(${frac})`;
+          }
+        });
+        if (activeStepName) activeStepName.textContent = stepNames[idx];
+      }
+    });
+
+    /* H. PINNED HORIZONTAL SCROLL CLUSTERS */
+    const pairsTrack = document.getElementById('pairs-track');
+    if (pairsTrack) {
+      const getScrollDist = () => pairsTrack.scrollWidth - window.innerWidth + 200;
+      
+      const horizTl = gsap.to(pairsTrack, {
+        x: () => -getScrollDist(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.pairs-section',
+          start: 'top top',
+          end: () => '+=' + getScrollDist(),
+          pin: true,
+          scrub: 0.8,
+          invalidateOnRefresh: true
+        }
+      });
+
+      // 3D card tilt & parallax tags during horizontal glide
+      document.querySelectorAll('.pair-card').forEach((card) => {
+        gsap.fromTo(card, 
+          { y: 35, rotate: 1.5 },
+          {
+            y: -35,
+            rotate: -1.5,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: card,
+              containerAnimation: horizTl,
+              start: 'left right',
+              end: 'right left',
+              scrub: true
+            }
+          }
+        );
+      });
+    }
+
+    /* I. PINNED EXPANDING SCHEMATIC FILM */
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: '.film-section',
+        start: 'top top',
+        end: '+=120%',
+        pin: true,
+        scrub: 0.6
+      }
+    }).fromTo('#film-clip', 
+      { clipPath: 'inset(30% 34% 30% 34%)' }, 
+      { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' }
+    );
+
+    // Schematic wireframe renderer on film canvas
+    const filmCanvas = document.getElementById('film-canvas');
+    if (filmCanvas) {
+      const fctx = filmCanvas.getContext('2d');
+      function drawFilmCanvas() {
+        filmCanvas.width = window.innerWidth;
+        filmCanvas.height = window.innerHeight;
+        fctx.fillStyle = '#050508';
+        fctx.fillRect(0, 0, filmCanvas.width, filmCanvas.height);
+        
+        const cx = filmCanvas.width / 2;
+        const cy = filmCanvas.height / 2;
+        fctx.strokeStyle = 'rgba(255, 36, 36, 0.45)';
+        fctx.lineWidth = 1.2;
+
+        for (let i = 0; i < 24; i++) {
+          const t = i / 24;
+          const r = 40 + t * t * 340;
+          fctx.beginPath();
+          fctx.ellipse(cx, cy, r, r * 0.42, 0, 0, Math.PI * 2);
+          fctx.stroke();
+        }
+
+        fctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        for (let i = 0; i < 16; i++) {
+          const angle = (i / 16) * Math.PI * 2;
+          fctx.beginPath();
+          fctx.moveTo(cx, cy);
+          fctx.quadraticCurveTo(cx + Math.cos(angle) * 180, cy + Math.sin(angle) * 100, cx + Math.cos(angle) * 420, cy + Math.sin(angle) * 220);
+          fctx.stroke();
+        }
+      }
+      drawFilmCanvas();
+      window.addEventListener('resize', drawFilmCanvas);
+    }
+
+    /* J. WORDS READING ILLUMINATION ([data-words]) */
+    document.querySelectorAll('[data-words]').forEach((el) => {
+      const words = el.textContent.trim().split(/\\s+/);
+      el.innerHTML = words.map(w => `<span class="word" style="opacity: 0.18;">${w}</span>`).join(' ');
+      gsap.fromTo(el.querySelectorAll('.word'), 
+        { opacity: 0.18 },
+        {
+          opacity: 1,
+          ease: 'none',
+          stagger: 0.08,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 80%',
+            end: 'bottom 50%',
+            scrub: true
+          }
+        }
+      );
+    });
+
+    /* K. INTERACTIVE PLAYGROUND CONTROLS */
+    const kSlider = document.getElementById('k-slider');
+    const kOut = document.getElementById('k-out');
+    if (kSlider) {
+      kSlider.addEventListener('input', (e) => {
+        kOut.textContent = e.target.value;
+      });
+    }
+
+    const resSlider = document.getElementById('res-slider');
+    const resOut = document.getElementById('res-out');
+    if (resSlider) {
+      resSlider.addEventListener('input', (e) => {
+        resOut.textContent = e.target.value;
+        if (heroField) heroField.setCell(e.target.value);
+      });
+    }
+
+    const speedSlider = document.getElementById('speed-slider');
+    const speedOut = document.getElementById('speed-out');
+    if (speedSlider) {
+      speedSlider.addEventListener('input', (e) => {
+        speedOut.textContent = e.target.value;
+        if (heroField) heroField.speed = parseFloat(e.target.value);
+      });
+    }
+
+    // Mode toggles
+    document.querySelectorAll('.hud__mode-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.hud__mode-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const m = this.getAttribute('data-mode');
+        currentMode = m;
+        if (heroField) heroField.mode = m;
+        document.documentElement.style.setProperty('--t', MODES[m].tc);
+      });
+    });
+
+    const btnInvert = document.getElementById('btn-invert');
+    if (btnInvert) {
+      btnInvert.addEventListener('click', () => {
+        const keys = Object.keys(MODES);
+        const nextKey = keys[(keys.indexOf(currentMode) + 1) % keys.length];
+        const targetBtn = document.querySelector(`.hud__mode-btn[data-mode="${nextKey}"]`);
+        if (targetBtn) targetBtn.click();
+      });
+    }
+
+    // Smooth Anchor links via Lenis
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const id = this.getAttribute('href');
+        if (id && id !== '#') {
+          const el = document.querySelector(id);
+          if (el) {
+            e.preventDefault();
+            lenis.scrollTo(id === '#top' ? 0 : el, { duration: 1.2 });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+"""
+
+output_path = "/Users/ianmora/Desktop/Projects/33rd-tree-labs-site/index.html"
+with open(output_path, "w", encoding="utf-8") as f:
+    f.write(site_html)
+
+print("BooleanSequence 1:1 architecture successfully written to", output_path)
