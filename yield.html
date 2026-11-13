@@ -236,16 +236,46 @@
         @media (max-width: 900px) {
             .nav-wrapper {
                 top: 10px;
-                max-width: 96vw;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+                left: 0;
+                right: 0;
+                transform: none;
+                width: 100%;
+                padding: 0 12px;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: center;
+                pointer-events: auto;
             }
             .nav-pill {
                 padding: 4px 8px;
+                width: auto;
+                max-width: calc(100vw - 24px);
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                justify-content: flex-start;
+            }
+            .nav-pill::-webkit-scrollbar {
+                display: none;
+            }
+            .nav-brand {
+                position: sticky;
+                left: 0;
+                background: rgba(11, 11, 14, 0.95);
+                z-index: 2;
+                padding-right: 8px;
+                margin-right: 8px;
+            }
+            .nav-title {
+                display: none;
             }
             .nav-link {
-                font-size: 9.5px;
-                padding: 4px 6px;
+                font-size: 10px;
+                padding: 4px 8px;
+                flex-shrink: 0;
+            }
+            .nav-cta {
+                display: none;
             }
         }
 
@@ -253,6 +283,64 @@
         table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
             font-variant-numeric: tabular-nums;
             font-feature-settings: "tnum" 1;
+        }
+
+        /* GLOBAL RESPONSIVE CONTAINMENT ON SUBPAGES */
+        .page-wrap {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 96px 24px 80px 24px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        @media (max-width: 900px) {
+            .page-wrap {
+                padding-top: 80px !important;
+                padding-bottom: 48px;
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+            .section-title {
+                font-size: clamp(22px, 6.8vw, 36px) !important;
+                word-break: break-word;
+            }
+            .section-desc {
+                font-size: 13.5px !important;
+            }
+            .meta-tag {
+                font-size: 9.5px !important;
+                word-break: break-all;
+            }
+            .hero-banner {
+                padding-top: 10px;
+            }
+            .paper-header {
+                padding-top: 80px !important;
+            }
+        }
+
+        /* MOBILE LATTICE, CALC-GRID & TABLE CONTAINMENT */
+        .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        @media (max-width: 900px) {
+            .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
+                max-width: 100% !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+            }
+            .calc-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .node-lattice {
+                gap: 4px !important;
+                min-width: 280px;
+            }
+            table {
+                min-width: 520px;
+            }
         }
 
         @media print {
@@ -404,6 +492,15 @@
             grid-template-columns: 1.1fr 0.9fr;
             gap: 28px;
             margin-top: 32px;
+        }
+        @media (max-width: 860px) {
+            .calc-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .calc-panel-left, .calc-panel-right {
+                padding: 16px !important;
+            }
         }
         .calc-panel-left, .calc-panel-right {
             background: #0E0E12;

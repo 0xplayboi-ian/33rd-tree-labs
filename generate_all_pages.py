@@ -235,16 +235,46 @@ def get_shared_css():
         @media (max-width: 900px) {
             .nav-wrapper {
                 top: 10px;
-                max-width: 96vw;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+                left: 0;
+                right: 0;
+                transform: none;
+                width: 100%;
+                padding: 0 12px;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: center;
+                pointer-events: auto;
             }
             .nav-pill {
                 padding: 4px 8px;
+                width: auto;
+                max-width: calc(100vw - 24px);
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                justify-content: flex-start;
+            }
+            .nav-pill::-webkit-scrollbar {
+                display: none;
+            }
+            .nav-brand {
+                position: sticky;
+                left: 0;
+                background: rgba(11, 11, 14, 0.95);
+                z-index: 2;
+                padding-right: 8px;
+                margin-right: 8px;
+            }
+            .nav-title {
+                display: none;
             }
             .nav-link {
-                font-size: 9.5px;
-                padding: 4px 6px;
+                font-size: 10px;
+                padding: 4px 8px;
+                flex-shrink: 0;
+            }
+            .nav-cta {
+                display: none;
             }
         }
 
@@ -252,6 +282,64 @@ def get_shared_css():
         table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
             font-variant-numeric: tabular-nums;
             font-feature-settings: "tnum" 1;
+        }
+
+        /* GLOBAL RESPONSIVE CONTAINMENT ON SUBPAGES */
+        .page-wrap {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 96px 24px 80px 24px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        @media (max-width: 900px) {
+            .page-wrap {
+                padding-top: 80px !important;
+                padding-bottom: 48px;
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+            .section-title {
+                font-size: clamp(22px, 6.8vw, 36px) !important;
+                word-break: break-word;
+            }
+            .section-desc {
+                font-size: 13.5px !important;
+            }
+            .meta-tag {
+                font-size: 9.5px !important;
+                word-break: break-all;
+            }
+            .hero-banner {
+                padding-top: 10px;
+            }
+            .paper-header {
+                padding-top: 80px !important;
+            }
+        }
+
+        /* MOBILE LATTICE, CALC-GRID & TABLE CONTAINMENT */
+        .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        @media (max-width: 900px) {
+            .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
+                max-width: 100% !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+            }
+            .calc-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .node-lattice {
+                gap: 4px !important;
+                min-width: 280px;
+            }
+            table {
+                min-width: 520px;
+            }
         }
 
         @media print {
@@ -408,7 +496,6 @@ def get_navbar(active_key):
         ("nodes", "nodes.html", "[ NODES ]"),
         ("tokenomics", "tokenomics.html", "[ TOKENOMICS ]"),
         ("research", "research.html", "[ RESEARCH ]"),
-        ("whitepaper", "whitepaper.html", "[ WHITEPAPER ]"),
     ]
     links = []
     for k, url, label in items:
@@ -1329,6 +1416,15 @@ def build_protocol_html():
             gap: 28px;
             margin-top: 36px;
         }
+        @media (max-width: 860px) {
+            .arch-pillars-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .pillar-card {
+                padding: 18px !important;
+            }
+        }
         .pillar-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -1595,6 +1691,19 @@ def build_simulator_html():
             grid-template-columns: 1fr 1fr;
             gap: 28px;
             margin-top: 32px;
+        }
+
+        @media (max-width: 860px) {
+            .sim-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .node-lattice {
+                gap: 4px !important;
+            }
+            .sim-box, .terminal-box {
+                padding: 16px !important;
+            }
         }
 
         .sim-box, .terminal-box {
@@ -2067,6 +2176,15 @@ def build_yield_html():
             gap: 28px;
             margin-top: 32px;
         }
+        @media (max-width: 860px) {
+            .calc-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .calc-panel-left, .calc-panel-right {
+                padding: 16px !important;
+            }
+        }
         .calc-panel-left, .calc-panel-right {
             background: #0E0E12;
             border: 1px solid var(--border);
@@ -2405,15 +2523,17 @@ def update_existing_subpage(file_name, active_key):
     # Replace old header / nav
     nav_markup = get_navbar(active_key)
     
-    # Replace old header / nav cleanly without duplicating cursor
-    # First remove any stray duplicated cursor divs right before nav
-    content = re.sub(r'(?:<!--\s*(?:RETRO-TECH CURSOR|FLOATING PILL NAVBAR)\s*-->\s*|<div id="cursor-(?:dot|ring)"></div>\s*)+<div class="nav-wrapper">', '<div class="nav-wrapper">', content)
-    if '<div class="nav-wrapper">' in content:
-        content = re.sub(r'<div class="nav-wrapper">[\s\S]*?</nav>\s*</div>', nav_markup.strip(), content)
-    elif '<header class="site-nav">' in content:
-        content = re.sub(r'<header class="site-nav">[\s\S]*?</header>', nav_markup.strip(), content)
-    elif '<body' in content and '<div class="nav-wrapper">' not in content:
-        content = re.sub(r'(<body[^>]*>)', r'\1\n' + nav_markup.strip(), content, count=1)
+    # Strip all existing progress bar, cursor, and nav-wrapper markup cleanly
+    content = re.sub(r'<!--\s*TOP-EDGE SCROLL TELEMETRY PROGRESS LINE\s*-->\s*', '', content)
+    content = re.sub(r'<div id="scroll-progress-line"[^>]*></div>\s*', '', content)
+    content = re.sub(r'<!--\s*RETRO-TECH CURSOR\s*-->\s*', '', content)
+    content = re.sub(r'<div id="cursor-dot"[^>]*></div>\s*', '', content)
+    content = re.sub(r'<div id="cursor-ring"[^>]*></div>\s*', '', content)
+    content = re.sub(r'(?:<!--\s*FLOATING PILL NAVBAR\s*-->\s*)?<div class="nav-wrapper">[\s\S]*?</nav>\s*</div>\s*', '', content)
+    content = re.sub(r'<header class="site-nav">[\s\S]*?</header>\s*', '', content)
+
+    # Insert fresh nav_markup right after <body>
+    content = re.sub(r'(<body[^>]*>)', r'\1\n' + nav_markup.strip() + '\n', content, count=1)
 
     # Ensure unified navbar CSS is in <style>
     unified_nav_css = """
@@ -2566,16 +2686,46 @@ def update_existing_subpage(file_name, active_key):
         @media (max-width: 900px) {
             .nav-wrapper {
                 top: 10px;
-                max-width: 96vw;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+                left: 0;
+                right: 0;
+                transform: none;
+                width: 100%;
+                padding: 0 12px;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: center;
+                pointer-events: auto;
             }
             .nav-pill {
                 padding: 4px 8px;
+                width: auto;
+                max-width: calc(100vw - 24px);
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                justify-content: flex-start;
+            }
+            .nav-pill::-webkit-scrollbar {
+                display: none;
+            }
+            .nav-brand {
+                position: sticky;
+                left: 0;
+                background: rgba(11, 11, 14, 0.95);
+                z-index: 2;
+                padding-right: 8px;
+                margin-right: 8px;
+            }
+            .nav-title {
+                display: none;
             }
             .nav-link {
-                font-size: 9.5px;
-                padding: 4px 6px;
+                font-size: 10px;
+                padding: 4px 8px;
+                flex-shrink: 0;
+            }
+            .nav-cta {
+                display: none;
             }
         }
 
@@ -2583,6 +2733,64 @@ def update_existing_subpage(file_name, active_key):
         table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
             font-variant-numeric: tabular-nums;
             font-feature-settings: "tnum" 1;
+        }
+
+        /* GLOBAL RESPONSIVE CONTAINMENT ON SUBPAGES */
+        .page-wrap {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 96px 24px 80px 24px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        @media (max-width: 900px) {
+            .page-wrap {
+                padding-top: 80px !important;
+                padding-bottom: 48px;
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+            .section-title {
+                font-size: clamp(22px, 6.8vw, 36px) !important;
+                word-break: break-word;
+            }
+            .section-desc {
+                font-size: 13.5px !important;
+            }
+            .meta-tag {
+                font-size: 9.5px !important;
+                word-break: break-all;
+            }
+            .hero-banner {
+                padding-top: 10px;
+            }
+            .paper-header {
+                padding-top: 80px !important;
+            }
+        }
+
+        /* MOBILE LATTICE, CALC-GRID & TABLE CONTAINMENT */
+        .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        @media (max-width: 900px) {
+            .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
+                max-width: 100% !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+            }
+            .calc-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .node-lattice {
+                gap: 4px !important;
+                min-width: 280px;
+            }
+            table {
+                min-width: 520px;
+            }
         }
 
         @media print {

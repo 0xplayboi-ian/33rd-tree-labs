@@ -10,7 +10,7 @@ import os
 # - Zero-flicker resize handling preserving 1:1 aspect ratios
 
 html_template = r"""<!doctype html>
-<html lang="en" class="lenis" style="--t: #FF2424; --f: #070707;">
+<html lang="en" class="lenis" style="--t: #FF292C; --f: #070707;">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,7 +38,7 @@ html_template = r"""<!doctype html>
 
   <style>
     :root {
-      --t: #FF2424; /* Primary Laser Crimson */
+      --t: #FF292C; /* Laser Red */
       --f: #070707; /* Pure Obsidian Background */
       --chalk: #F2F2F5;
       --dim: #8E8E98;
@@ -188,7 +188,7 @@ html_template = r"""<!doctype html>
         background: rgba(11, 11, 14, 0.85);
         backdrop-filter: blur(16px) saturate(180%);
         -webkit-backdrop-filter: blur(16px) saturate(180%);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid #1C1C24;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 41, 44, 0.15);
         pointer-events: auto;
         white-space: nowrap;
@@ -200,7 +200,7 @@ html_template = r"""<!doctype html>
         gap: 10px;
         text-decoration: none;
         color: #FFFFFF;
-        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        border-right: 1px solid #1C1C24;
         padding-right: 12px;
         margin-right: 12px;
         flex-shrink: 0;
@@ -270,16 +270,62 @@ html_template = r"""<!doctype html>
     @media (max-width: 900px) {
         .nav-wrapper {
             top: 10px;
-            max-width: 96vw;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+            left: 0;
+            right: 0;
+            transform: none;
+            width: 100%;
+            padding: 0 12px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            pointer-events: auto;
         }
         .nav-pill {
             padding: 4px 8px;
+            max-width: calc(100vw - 24px);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            justify-content: flex-start;
+        }
+        .nav-pill::-webkit-scrollbar {
+            display: none;
+        }
+        .nav-brand {
+            position: sticky;
+            left: 0;
+            background: rgba(11, 11, 14, 0.95);
+            z-index: 2;
+            padding-right: 8px;
+            margin-right: 8px;
+        }
+        .nav-title {
+            display: none;
         }
         .nav-link {
-            font-size: 9.5px;
-            padding: 4px 6px;
+            font-size: 10px;
+            padding: 4px 8px;
+            flex-shrink: 0;
+        }
+        .hud__modes {
+            display: none !important;
+        }
+        .hero {
+            padding-top: 85px !important;
+        }
+    }
+
+    /* MOBILE LATTICE, CALC-GRID & TABLE CONTAINMENT */
+    .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    @media (max-width: 900px) {
+        .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
         }
     }
 
@@ -338,7 +384,7 @@ html_template = r"""<!doctype html>
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: clamp(90px, 12vh, 120px) var(--pad) clamp(30px, 4vh, 48px);
+      padding: clamp(105px, 14vh, 135px) var(--pad) clamp(30px, 4vh, 48px);
       overflow: hidden;
       box-sizing: border-box;
     }
@@ -368,6 +414,7 @@ html_template = r"""<!doctype html>
       font-weight: 700;
       letter-spacing: 0.16em;
       color: var(--t);
+      margin-top: 14px;
       margin-bottom: 16px;
       text-transform: uppercase;
     }
@@ -415,6 +462,13 @@ html_template = r"""<!doctype html>
       font-family: var(--fm);
       font-size: 10.5px;
       color: var(--dim);
+      margin-right: 140px;
+    }
+    @media (max-width: 900px) {
+      .hero__foot-badges {
+        margin-right: 0;
+        flex-wrap: wrap;
+      }
     }
     .hero__badge-tag {
       background: rgba(11, 11, 14, 0.8);
@@ -1336,7 +1390,7 @@ html_template = r"""<!doctype html>
     const MODES = {
       bin: { key: "bin", t: "1", f: "0", tc: "#FFFFFF", fc: "#070707", scale: 0.016 },
       cmp: { key: "cmp", t: ">", f: "<", tc: "#0000FF", fc: "#FFFFFF", scale: 0.0022 },
-      plus: { key: "plus", t: "+", f: "-", tc: "#FF2424", fc: "#000000", scale: 0.0065 }
+      plus: { key: "plus", t: "+", f: "-", tc: "#FF292C", fc: "#000000", scale: 0.0065 }
     };
     let currentMode = "bin";
     let isPaused = false;

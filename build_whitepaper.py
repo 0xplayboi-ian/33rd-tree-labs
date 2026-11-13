@@ -58,7 +58,7 @@ html, body {
     body {
         max-width: 980px;
         margin: 0 auto;
-        padding: 40px 24px;
+        padding: 96px 24px 40px 24px;
         background: #fdfdfd;
         box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
     }
@@ -72,13 +72,21 @@ html, body {
         -webkit-overflow-scrolling: touch;
     }
 }
+@media (max-width: 768px) {
+    body {
+        padding: 80px 16px 24px 16px !important;
+    }
+}
 @media print {
     body {
         max-width: 100%;
         margin: 0;
-        padding: 0;
+        padding: 0 !important;
         background: #fff;
         box-shadow: none;
+    }
+    .nav-wrapper, #cursor-dot, #cursor-ring, #scroll-progress-line {
+        display: none !important;
     }
 }
 .paper-header { text-align: center; margin-bottom: 1.2rem; }

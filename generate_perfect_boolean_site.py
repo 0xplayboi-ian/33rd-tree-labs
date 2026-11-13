@@ -261,16 +261,62 @@ html_code = """<!doctype html>
     @media (max-width: 900px) {
         .nav-wrapper {
             top: 10px;
-            max-width: 96vw;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+            left: 0;
+            right: 0;
+            transform: none;
+            width: 100%;
+            padding: 0 12px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            pointer-events: auto;
         }
         .nav-pill {
             padding: 4px 8px;
+            max-width: calc(100vw - 24px);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            justify-content: flex-start;
+        }
+        .nav-pill::-webkit-scrollbar {
+            display: none;
+        }
+        .nav-brand {
+            position: sticky;
+            left: 0;
+            background: rgba(11, 11, 14, 0.95);
+            z-index: 2;
+            padding-right: 8px;
+            margin-right: 8px;
+        }
+        .nav-title {
+            display: none;
         }
         .nav-link {
-            font-size: 9.5px;
-            padding: 4px 6px;
+            font-size: 10px;
+            padding: 4px 8px;
+            flex-shrink: 0;
+        }
+        .hud__modes {
+            display: none !important;
+        }
+        .hero {
+            padding-top: 85px !important;
+        }
+    }
+
+    /* MOBILE LATTICE, CALC-GRID & TABLE CONTAINMENT */
+    .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    @media (max-width: 900px) {
+        .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
         }
     }
 
