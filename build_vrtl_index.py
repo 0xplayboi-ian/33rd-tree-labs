@@ -2429,10 +2429,10 @@ html_code = """<!DOCTYPE html>
                 this.isGlitching = false;
                 this.animId = null;
                 this.lastTickTime = 0;
-                this.tickInterval = 160; // 160ms throttle: calm, deliberate, readable (~6fps)
+                this.tickInterval = 250; // Deliberate 250ms mechanical relay decode cadence
             }
 
-            scramble(duration = 2.4) {
+            scramble(duration = 3.5) {
                 if (this.isScrambling || this.isGlitching) return;
                 this.isScrambling = true;
                 this.isGlitching = true;
@@ -2454,13 +2454,13 @@ html_code = """<!DOCTYPE html>
                     const progress = Math.min(1, elapsed / durationMs);
                     const revealedLength = Math.floor(progress * length);
 
-                    if (now - this.lastTickTime > this.tickInterval) {
+                    if (now - this.lastTickTime >= this.tickInterval) {
                         this.lastTickTime = now;
                         for (let i = revealedLength; i < length; i++) {
                             const ch = target[i];
                             if (ch === ' ' || ch === '\\n' || ch === '\\t') {
                                 activeGlyphs[i] = ch;
-                            } else if (Math.random() < 0.4) {
+                            } else if (Math.random() < 0.35) {
                                 activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
                             }
                         }
@@ -2499,10 +2499,10 @@ html_code = """<!DOCTYPE html>
             ScrollTrigger.create({
                 trigger: el,
                 start: 'top 88%',
-                onEnter: () => scrambler.scramble(2.4),
-                onEnterBack: () => scrambler.scramble(2.0)
+                onEnter: () => scrambler.scramble(3.5),
+                onEnterBack: () => scrambler.scramble(3.5)
             });
-            el.addEventListener('mouseenter', () => scrambler.scramble(2.0));
+            el.addEventListener('mouseenter', () => scrambler.scramble(3.5));
         });
 
         /* 3. SCATTERED RECTANGULAR WIPE TILES SCROLLTRIGGER ANIMATION */
