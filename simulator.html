@@ -22,31 +22,40 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
 
-    <style>
+    <link rel="stylesheet" href="assets/tokens.css">
+  <style>
         :root {
-            /* VRTL WRLD DESIGN SYSTEM PALETTE */
-            --bg: #070707;
-            --f: #070707;
-            --border: #1C1C24;
-            --border-hover: #343442;
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-accent: rgba(255, 36, 36, 0.35);
-            --laser-red: #FF2424;
-            --t: #FF2424;
-            --laser-glow: rgba(255, 36, 36, 0.45);
-            --laser-subtle: rgba(255, 36, 36, 0.08);
-            --chalk: #F2F2F5;
-            --chalk-dim: #C8C8D2;
-            --slate: #8E8E98;
-            --dark-slate: #343440;
-            --white: #FFFFFF;
-            --green: #00E676;
-            --green-glow: rgba(0, 230, 118, 0.35);
-            --amber: #FFAA00;
-            --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-            --fm: 'JetBrains Mono', ui-monospace, monospace;
-            --fh: 'Syne', sans-serif;
-        }
+      --bg: #070707;
+      --f: #070707;
+      --t: #FF2424;
+      --t-glow: rgba(255, 36, 36, 0.45);
+      --chalk: #F2F2F5;
+      --dim: #8E8E98;
+      --border: rgba(255, 255, 255, 0.12);
+      --border-light: rgba(255, 255, 255, 0.18);
+      --border-hover: rgba(255, 255, 255, 0.25);
+      --border-accent: rgba(255, 36, 36, 0.35);
+      --bg-elevated: #0B0B0E;
+      --bg-card: transparent;
+      --bg-card-hover: transparent;
+      --card-bg: transparent;
+      --laser-red: var(--t);
+      --laser-glow: var(--t-glow);
+      --laser-subtle: rgba(255, 36, 36, 0.08);
+      --chalk-dim: #D4D4DC;
+      --slate: var(--dim);
+      --dark-slate: #4A4A56;
+      --white: #FFFFFF;
+      --green: #00E676;
+      --green-glow: rgba(0, 230, 118, 0.35);
+      --amber: #FFAA00;
+      --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --fm: 'Obel Mono', 'JetBrains Mono', ui-monospace, monospace;
+      --fh: 'Obel Mono Masked', 'Syne', -apple-system, sans-serif;
+      --pad: clamp(16px, 3.5vw, 60px);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+    }
 
         /* TYPOGRAPHY: OBEL MONO & MONO MASKED */
         @font-face {
@@ -173,7 +182,7 @@
             background: rgba(11, 11, 14, 0.88);
             backdrop-filter: blur(16px) saturate(180%);
             -webkit-backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid #1C1C24;
+            border: 1px solid var(--border);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 36, 36, 0.15);
             pointer-events: auto;
             white-space: nowrap;
@@ -185,7 +194,7 @@
             gap: 10px;
             text-decoration: none;
             color: #FFFFFF;
-            border-right: 1px solid #1C1C24;
+            border-right: 1px solid var(--border);
             padding-right: 12px;
             margin-right: 10px;
             flex-shrink: 0;
@@ -430,7 +439,7 @@
             -webkit-appearance: none;
             flex: 1;
             height: 4px;
-            background: #1C1C24;
+            background: var(--border);
             border-radius: 0;
             outline: none;
             cursor: pointer;
@@ -832,7 +841,43 @@
         @media (max-width: 768px) {
             .footer-inner { flex-direction: column; align-items: flex-start; }
         }
-    </style>
+    
+    /* TABULAR NUMERICS FOR ALL METRICS & TELEMETRY */
+    table, td, th, code, pre, .mono, [data-mono], .telemetry-val, .telemetry-value, .telemetry-cell,
+    .metric-val, .metric-value, .stat-val, .stat-value, .token-val, .sbar__coord,
+    .pillar-num, .spec-val, .spec-table, .spec-table-box, .sim-field-val, .sim-metric-data,
+    .sim-metric-row, .sim-metric-title, .out-metric-val, .cmd-val, .sec-giant-num,
+    .terminal-text, [data-glitch], .mechanical-glitch, .manifesto-metric__val,
+    .pair-card__stat-val, .above__counter, .calc-res-value, .calc-res-sub,
+    .sim-status-banner, .sim-status-head, [data-metric], .tier-metric-val, .kpi-val,
+    .telemetry-row, .kpi-number, .timeline-num, .tag-pill {
+      font-variant-numeric: tabular-nums !important;
+      font-feature-settings: "tnum" 1 !important;
+    }
+
+    /* BRUTALIST ZERO-CARDS & CLEAN FULL-WIDTH HAIRLINE DIVIDERS */
+    .card, .bg-card, [data-card] {
+      background: transparent !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+    }
+
+    /* RESPONSIVE TYPOGRAPHY (1440px+ down to 375px mobile) */
+    @media (max-width: 640px) {
+      body { font-size: 14.5px; }
+      .page-wrap { padding: 100px 16px 60px !important; }
+      .telemetry-strip { grid-template-columns: 1fr !important; }
+      .telemetry-cell { border-right: none !important; border-bottom: 1px solid var(--border) !important; padding: 18px 16px !important; }
+      .telemetry-cell:last-child { border-bottom: none !important; }
+      .ed-headline { font-size: clamp(30px, 8.5vw, 42px) !important; line-height: 1.05 !important; }
+      .ed-lead { font-size: 15px !important; }
+    }
+    @media (max-width: 375px) {
+      body { font-size: 14px; }
+      .page-wrap { padding: 90px 12px 50px !important; }
+      .ed-headline { font-size: 28px !important; }
+    }
+  </style>
 </head>
 <body>
 

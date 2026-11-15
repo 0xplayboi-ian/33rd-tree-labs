@@ -2969,7 +2969,7 @@ html_template = """<!doctype html>
       trigger: '.rule',
       start: 'top top',
       end: '+=240%',
-      pin: true,
+      pin: '.rule__pin',
       pinSpacing: true,
       scrub: true,
       onUpdate: (self) => {

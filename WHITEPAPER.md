@@ -272,8 +272,8 @@ $$P_{\text{success}} = (1 - p_{\text{churn}})^h = (1 - 0.40)^{\log_2(33,000)} \a
 
 As a result, median lookup latency inflates from $18\text{ ms}$ to $> 140\text{ ms}$, with route discovery failing in $34.2\%$ of queries.
 
-#### 5.2 Negative Curvature $\mathbb{H}^2$ (Gromov $\delta$-Hyperbolic Metric Embedding)
-The Singularity Protocol overcomes the topological limitations of flat DHTs by embedding the overlay graph directly into a continuous Riemannian 2-manifold with negative Gaussian curvature $\mathbb{H}^2$, parameterized as the **Exponential Plunge Hyperboloid**:
+#### 5.2 Hyperbolic Poincaré Tensor Arbor: Negative Curvature $\mathbb{H}^2$ & Gromov Geodesics
+The Singularity Protocol overcomes the topological limitations of flat DHTs by organizing the distributed compute fabric as the **Hyperbolic Poincaré Tensor Arbor**. Model parameter shards, pipeline activations, and validation committees are mapped conformally onto the Poincaré disk $\mathbb{D}^2$ and embedded into a continuous Riemannian 2-manifold with negative Gaussian curvature $\mathbb{H}^2$, parameterized as the **Exponential Plunge Hyperboloid**:
 
 $$r(y) = r_{\text{throat}} + (R_{\text{canopy}} - r_{\text{throat}}) \cdot \frac{e^{\frac{k \cdot |y|}{H}} - 1}{e^k - 1}, \quad y \in \left[-\frac{H}{2}, \frac{H}{2}\right], \quad \theta \in [0, 2\pi) \tag{15}$$
 
@@ -376,7 +376,7 @@ To eliminate this latency penalty entirely, the Singularity Protocol implements 
 | TIER 1: INSTANT SPECULATIVE FINALITY (<= 450 ms)                            |
 | * Proposer generates output Y = f(X) and streams tokens (TTFT <= 120ms)     |
 | * Proposer signs cryptographic output commitment: Sigma_prop                |
-| * Backed by on-chain Insurance Slashing Bond (50,000 $33RD / ~$150k USD)    |
+| * Backed by on-chain Insurance Slashing Bond (25,000 $33RD / ~$75k USD)    |
 | * ZERO CLIENT LATENCY PENALTY: User UI renders immediately with insurance   |
 +-----------------------------------------------------------------------------+
                |
@@ -415,13 +415,13 @@ This bond acts as an automated collateral insurance policy underwriting every sp
 * **Protocol Reserve Allocation:** $40\%$ is transferred to the decentralized Insurance Defense Treasury.
 * **Instant Banishment:** The proposer's public key is revoked from the hyperbolic routing manifold.
 
-Because the economic penalty ($50{,}000\text{ } \$33\text{RD}$) exceeds the micro-fee of an inference query ($0.0001\text{ } \$33\text{RD}$) by **$500{,}000{,}000\times$**, rational proposers are economically constrained against output manipulation. Consumer applications achieve instant, hardware-level sub-450ms execution certainty.
+Because the economic penalty ($25{,}000\text{ } \$33\text{RD}$) exceeds the micro-fee of an inference query ($0.0001\text{ } \$33\text{RD}$) by **$250{,}000{,}000\times$**, rational proposers are economically constrained against output manipulation. Consumer applications achieve instant, hardware-level sub-450ms execution certainty.
 
 #### 6.3 Tier-2: BFT Slot Consensus Finality ($12.0\text{ s}$)
 At the 12.0-second block boundary, speculative transactions are irreversibly finalized into the distributed ledger:
 
 1. **Slot Batch Merkleization:** The round proposer compiles all speculative commitments $\{\Sigma_{\text{prop}}^{(1)}, \dots, \Sigma_{\text{prop}}^{(m)}\}$ into an off-chain Merkle tree root $R_{\text{slot}}$.
-2. **BLS12-381 Aggregate Quorum:** The active $K = 64$ Proof-of-Intelligence committee validates Freivalds randomized matrix projections ($AB\vec{r} = C\vec{r}$) and verifies the consistency of $R_{\text{slot}}$. Each committee member generates a BLS12-381 $\mathbb{G}_1$ signature. Once a $2/3 + 1$ supermajority threshold is reached ($\ge 43$ valid signatures), the individual signatures are compressed into a single 32-byte aggregate signature $\sigma_{\text{agg}} \in \mathbb{G}_1$:
+2. **K=64 Hyperbolic Byzantine Quorum (BLS12-381 Aggregate):** The active **$K = 64$ Hyperbolic Byzantine Quorum** (elected from the highest-ranked stake-bonded validators positioned across the hyperbolic geodesic core) validates Freivalds randomized matrix projections ($AB\vec{r} = C\vec{r}$) and verifies the consistency of $R_{\text{slot}}$. Each committee member generates a BLS12-381 $\mathbb{G}_1$ signature. Once a $2/3 + 1$ supermajority threshold is reached ($\ge 43$ valid signatures), the individual signatures are compressed into a single 32-byte aggregate signature $\sigma_{\text{agg}} \in \mathbb{G}_1$:
 
 $$\sigma_{\text{agg}} = \sum_{i \in \mathcal{Q}} \sigma_i \in \mathbb{G}_1 \tag{26}$$
 
@@ -442,7 +442,7 @@ $$e\Big(\pi_A, \pi_B\Big) \stackrel{?}{=} e\Big(\pi_C, G_2\Big) \cdot e\Big(VK_{
 
 | Finality Layer | Confirmation Latency | Security Mechanism | Settlement Venue | Primary Use Case |
 | :--- | :--- | :--- | :--- | :--- |
-| **Tier 1: Instant Speculative Finality** | **$\le 450\text{ ms}$** (TTFT $\le 120\text{ ms}$) | Signed Commitment $\Sigma_{\text{prop}}$ + $50,000\text{ } \$33\text{RD}$ Slashing Bond | Off-chain QUIC overlay + Anchor Escrow | Interactive consumer AI, LLM chat, real-time agent loops |
+| **Tier 1: Instant Speculative Finality** | **$\le 450\text{ ms}$** (TTFT $\le 120\text{ ms}$) | Signed Commitment $\Sigma_{\text{prop}}$ + $25,000\text{ } \$33\text{RD}$ Slashing Bond | Off-chain QUIC overlay + Anchor Escrow | Interactive consumer AI, LLM chat, real-time agent loops |
 | **Tier 2: BFT Slot Finality** | **$12.0\text{ Seconds}$** | 2/3+ BLS12-381 G1 Aggregated Quorum Signature | Solana L1 Ledger (`singularity-core`) | Token fee settlement, balance updates, ledger immutability |
 | **Tier 3: Protocol Dispute Settlement** | **64 Blocks (12.8 min) / 48h Bisection** | Interactive Matrix Bisection + BN254 zk-SNARK Verification | Solana Sealevel dispute runtime | Fraud adjudication, validator slashing, cartel defense |
 

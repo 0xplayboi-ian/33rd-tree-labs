@@ -2018,7 +2018,7 @@
       <div class="rule__pin">
         <div class="rule__steps">
           <div class="kicker">CHAPTER 03 // EXECUTION PIPELINE</div>
-          <h2 class="rule__headline">
+          <h2 style="font-family: var(--fh); font-size: clamp(24px, 2.8vw, 42px); font-weight: 900; line-height: 1.05; text-transform: uppercase; margin-bottom: clamp(10px, 1.4vh, 16px); letter-spacing: -0.02em;">
             ONE PROTOCOL.<br>FOUR INSTRUCTIONS.
           </h2>
           
@@ -2834,10 +2834,9 @@
     ScrollTrigger.create({
       trigger: '.above',
       start: 'top top',
-      end: '+=140%',
+      end: '+=150%',
       pin: true,
       pinSpacing: true,
-      anticipatePin: 1,
       scrub: true,
       onUpdate: (self) => {
         if (altitudeCounter) {
@@ -2940,15 +2939,13 @@
     }
 
     drawRuleVisual(0, 0);
-    window.addEventListener('resize', () => drawRuleVisual(currentStepIndex, 0));
 
     ScrollTrigger.create({
       trigger: '.rule',
       start: 'top top',
-      end: '+=200%',
-      pin: true,
+      end: '+=240%',
+      pin: '.rule__pin',
       pinSpacing: true,
-      anticipatePin: 1,
       scrub: true,
       onUpdate: (self) => {
         const raw = self.progress * 3.999;
@@ -2957,22 +2954,19 @@
         const currentFrac = raw - idx;
 
         steps.forEach((st, i) => {
-          // Sequential scrub highlight: 0.25 to 1.0 opacity
-          let targetOpacity = 0.25;
-          if (raw >= i && raw < i + 1) {
-            targetOpacity = 1.0;
-          } else if (raw >= i - 0.4 && raw < i) {
-            const factor = (raw - (i - 0.4)) / 0.4;
-            targetOpacity = 0.25 + 0.75 * factor;
-          } else if (raw >= i + 1 && raw < i + 1.4) {
-            const factor = (raw - (i + 1)) / 0.4;
-            targetOpacity = 1.0 - 0.75 * factor;
+          const isActive = (i === idx);
+          const isDone = (raw > i + 1);
+          st.classList.toggle('is-active', isActive);
+          st.classList.toggle('is-done', isDone);
+
+          // Sequential scrub stepper: 0.25 opacity for inactive -> 1.0 stark white with crimson active
+          if (isActive) {
+            st.style.opacity = '1.0';
+          } else if (isDone) {
+            st.style.opacity = '0.65';
           } else {
-            targetOpacity = 0.25;
+            st.style.opacity = '0.25';
           }
-          st.style.opacity = targetOpacity.toFixed(3);
-          st.classList.toggle('is-active', i === idx);
-          st.classList.toggle('is-done', raw >= i + 1);
 
           const bar = st.querySelector('.step__bar i');
           if (bar) {

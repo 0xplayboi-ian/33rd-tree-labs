@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="lenis" style="--t: #FF2424; --f: #070707;">
+<html lang="en" class="lenis" style="--t: #FF2424; --bg: #070707; --f: #070707; --border: rgba(255, 255, 255, 0.12);">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,6 +27,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
 
+  <link rel="stylesheet" href="assets/tokens.css">
   <style>
     /* BRAND TYPOGRAPHY: OBEL MONO + JETBRAINS MONO + SYNE */
     @font-face {
@@ -54,26 +55,33 @@
 
     :root {
       --bg: #070707;
-      --f: #070707; /* Pure Obsidian Background */
-      --t: #FF2424; /* Primary Laser Crimson */
+      --f: #070707;
+      --t: #FF2424;
       --t-glow: rgba(255, 36, 36, 0.45);
-      --t-subtle: rgba(255, 36, 36, 0.08);
       --chalk: #F2F2F5;
-      --chalk-dim: #C8C8D2;
       --dim: #8E8E98;
-      --slate: #5A5A66;
-      --border: rgba(255, 255, 255, 0.12); /* Subtle hairline border */
-      --border-light: rgba(255, 255, 255, 0.12);
+      --border: rgba(255, 255, 255, 0.12);
+      --border-light: rgba(255, 255, 255, 0.18);
+      --border-hover: rgba(255, 255, 255, 0.25);
       --border-accent: rgba(255, 36, 36, 0.35);
+      --bg-elevated: #0B0B0E;
       --bg-card: transparent;
       --bg-card-hover: transparent;
       --card-bg: transparent;
       --laser-red: var(--t);
       --laser-glow: var(--t-glow);
+      --laser-subtle: rgba(255, 36, 36, 0.08);
+      --chalk-dim: #D4D4DC;
+      --slate: var(--dim);
+      --dark-slate: #4A4A56;
+      --white: #FFFFFF;
+      --green: #00E676;
+      --green-glow: rgba(0, 230, 118, 0.35);
+      --amber: #FFAA00;
       --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
       --fm: 'Obel Mono', 'JetBrains Mono', ui-monospace, monospace;
       --fh: 'Obel Mono Masked', 'Syne', -apple-system, sans-serif;
-      --green: #00E676;
+      --pad: clamp(16px, 3.5vw, 60px);
       font-variant-numeric: tabular-nums;
       font-feature-settings: "tnum" 1;
     }
@@ -736,6 +744,42 @@
       text-decoration: underline;
     }
     
+  
+    /* TABULAR NUMERICS FOR ALL METRICS & TELEMETRY */
+    table, td, th, code, pre, .mono, [data-mono], .telemetry-val, .telemetry-value, .telemetry-cell,
+    .metric-val, .metric-value, .stat-val, .stat-value, .token-val, .sbar__coord,
+    .pillar-num, .spec-val, .spec-table, .spec-table-box, .sim-field-val, .sim-metric-data,
+    .sim-metric-row, .sim-metric-title, .out-metric-val, .cmd-val, .sec-giant-num,
+    .terminal-text, [data-glitch], .mechanical-glitch, .manifesto-metric__val,
+    .pair-card__stat-val, .above__counter, .calc-res-value, .calc-res-sub,
+    .sim-status-banner, .sim-status-head, [data-metric], .tier-metric-val, .kpi-val,
+    .telemetry-row, .kpi-number, .timeline-num, .tag-pill {
+      font-variant-numeric: tabular-nums !important;
+      font-feature-settings: "tnum" 1 !important;
+    }
+
+    /* BRUTALIST ZERO-CARDS & CLEAN FULL-WIDTH HAIRLINE DIVIDERS */
+    .card, .bg-card, [data-card] {
+      background: transparent !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+    }
+
+    /* RESPONSIVE TYPOGRAPHY (1440px+ down to 375px mobile) */
+    @media (max-width: 640px) {
+      body { font-size: 14.5px; }
+      .page-wrap { padding: 100px 16px 60px !important; }
+      .telemetry-strip { grid-template-columns: 1fr !important; }
+      .telemetry-cell { border-right: none !important; border-bottom: 1px solid var(--border) !important; padding: 18px 16px !important; }
+      .telemetry-cell:last-child { border-bottom: none !important; }
+      .ed-headline { font-size: clamp(30px, 8.5vw, 42px) !important; line-height: 1.05 !important; }
+      .ed-lead { font-size: 15px !important; }
+    }
+    @media (max-width: 375px) {
+      body { font-size: 14px; }
+      .page-wrap { padding: 90px 12px 50px !important; }
+      .ed-headline { font-size: 28px !important; }
+    }
   </style>
 </head>
 <body>
