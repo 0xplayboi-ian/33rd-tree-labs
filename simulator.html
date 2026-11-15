@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>33RD TREE LABS // Byzantine Simulator &bull; 33rdtreelabs.tech</title>
-    <meta name="description" content="Interactive Adversarial Consensus & Byzantine Fault Tolerance Simulator. Inject malicious nodes and execute live Solana CLI commands.">
+    <meta name="description" content="Poincaré Hyperbolic Tensor Arbor Simulator. Interactive Byzantine Consensus, Gromov Geodesic Routing, and Zero-Knowledge Neural Reduction on Solana.">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,17 +13,13 @@
 
     <style>
         :root {
-            /* VRTL WRLD DESIGN SYSTEM PALETTE */
             --bg: #070707;
             --bg-elevated: #0B0B0E;
-            --bg-card: #101014;
-            --bg-card-hover: #15151B;
-            --border: #1C1C24;
-            --border-hover: #343442;
-            --border-accent: rgba(255, 41, 44, 0.35);
-            --laser-red: #FF292C;
-            --laser-glow: rgba(255, 41, 44, 0.45);
-            --laser-subtle: rgba(255, 41, 44, 0.08);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.22);
+            --border-accent: rgba(255, 41, 44, 0.4);
+            --laser-red: #FF2424;
+            --laser-glow: rgba(255, 36, 36, 0.45);
             --chalk: #F2F2F5;
             --chalk-dim: #D4D4DC;
             --slate: #8E8E98;
@@ -33,24 +29,10 @@
             --green-glow: rgba(0, 230, 118, 0.35);
         }
 
-        /* TYPOGRAPHY: OBEL MONO & MONO MASKED */
+        /* TYPOGRAPHY */
         @font-face {
             font-family: 'Obel Mono';
             src: url('assets/fonts/ObelMono.ttf') format('truetype');
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'Obel Mono';
-            src: url('assets/fonts/ObelMono-Italic.ttf') format('truetype');
-            font-weight: 400;
-            font-style: italic;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'Obel Mono Masked';
-            src: url('assets/fonts/ObelMonoMasked.ttf') format('truetype');
             font-weight: 400;
             font-style: normal;
             font-display: swap;
@@ -95,104 +77,66 @@
         #cursor-ring {
             width: 32px;
             height: 32px;
-            border: 1px solid rgba(255, 41, 44, 0.4);
+            border: 1px solid rgba(255, 36, 36, 0.4);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 99998;
             transform: translate(-50%, -50%);
-            transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease;
+            transition: width 0.2s, height 0.2s, border-color 0.2s;
         }
         body.cursor-hover #cursor-ring {
             width: 48px;
             height: 48px;
             border-color: var(--laser-red);
-            background: rgba(255, 41, 44, 0.08);
+            background: rgba(255, 36, 36, 0.05);
         }
 
-        /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
-        #scroll-progress-line, .scroll-progress-bar {
+        /* TOP-EDGE PROGRESS LINE */
+        .scroll-progress-bar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 0%;
             height: 2px;
             background: var(--laser-red);
-            box-shadow: 0 0 8px var(--laser-red), 0 0 16px rgba(255, 41, 44, 0.6);
-            z-index: 100000;
-            pointer-events: none;
-            transition: width 0.04s linear;
-            will-change: width;
+            width: 0%;
+            z-index: 9999;
+            box-shadow: 0 0 8px var(--laser-red);
         }
 
-        /* FLOATING PILL NAVBAR SCROLL BEHAVIOR */
-        .nav-wrapper.nav-scrolled .nav-pill {
-            background: rgba(11, 11, 14, 0.96);
-            border-color: rgba(255, 41, 44, 0.35);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 41, 44, 0.15);
-        }
-
-        /* INTERSECTION OBSERVER REVEAL ANIMATIONS (GPU-ACCELERATED, JANK-FREE) */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.25s ease,
-                        box-shadow 0.25s ease;
-            will-change: opacity, transform;
-        }
-        .reveal-on-scroll.is-revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.08s; }
-        .reveal-delay-2 { transition-delay: 0.16s; }
-        .reveal-delay-3 { transition-delay: 0.24s; }
-        .reveal-delay-4 { transition-delay: 0.32s; }
-
-        /* MECHANICAL GLITCH TARGETS (ENFORCE TABULAR-NUMS TO PREVENT JANK) */
-        [data-glitch], .mechanical-glitch {
-            font-variant-numeric: tabular-nums;
-            display: inline-block;
-        }
-
-        /* UNIFIED FLOATING PILL NAVBAR SPECIFICATION */
+        /* FLOATING PILL NAVBAR */
         .nav-wrapper {
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            width: fit-content;
-            max-width: 98vw;
+            top: 24px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 900;
             pointer-events: none;
         }
-
         .nav-pill {
+            pointer-events: auto;
             display: flex;
             align-items: center;
-            padding: 6px 14px 6px 10px;
+            gap: 20px;
+            background: rgba(7, 7, 7, 0.88);
+            border: 1px solid var(--border);
+            padding: 8px 24px;
             border-radius: 9999px;
-            background: rgba(11, 11, 14, 0.85);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid #1C1C24;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 41, 44, 0.15);
-            pointer-events: auto;
-            white-space: nowrap;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.85);
+            transition: border-color 0.3s;
         }
-
+        .nav-pill:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
         .nav-brand {
             display: flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            color: #FFFFFF;
-            border-right: 1px solid #1C1C24;
-            padding-right: 12px;
-            margin-right: 12px;
-            flex-shrink: 0;
+            color: var(--white);
         }
         .nav-logo-box {
             width: 24px;
@@ -200,419 +144,187 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
         }
         .nav-title {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.12em;
-            color: #FFFFFF;
-            white-space: nowrap;
+            letter-spacing: 0.15em;
+            color: var(--white);
         }
-
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 4px;
-            list-style: none;
+            gap: 16px;
         }
         .nav-link {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.60);
+            font-size: 10px;
+            color: var(--slate);
             text-decoration: none;
-            padding: 6px 10px;
-            border-radius: 9999px;
-            border: 1px solid transparent;
-            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            letter-spacing: 0.08em;
+            transition: color 0.2s;
         }
-        .nav-link:hover {
-            color: #FFFFFF;
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.18);
-        }
-        .nav-link.active {
-            color: #FFFFFF;
-            background: rgba(255, 41, 44, 0.14);
-            border-color: #FF292C;
-            box-shadow: 0 0 10px rgba(255, 41, 44, 0.35);
-        }
-        .nav-link.active::before {
-            content: '';
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: #FF292C;
-            box-shadow: 0 0 6px #FF292C;
-            display: inline-block;
+        .nav-link:hover, .nav-link.active {
+            color: var(--laser-red);
         }
 
-        @media (max-width: 900px) {
-            .nav-wrapper {
-                top: 10px;
-                left: 0;
-                right: 0;
-                transform: none;
-                width: 100%;
-                padding: 0 12px;
-                box-sizing: border-box;
-                display: flex;
-                justify-content: center;
-                pointer-events: auto;
-            }
-            .nav-pill {
-                padding: 4px 8px;
-                width: auto;
-                max-width: calc(100vw - 24px);
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                justify-content: flex-start;
-            }
-            .nav-pill::-webkit-scrollbar {
-                display: none;
-            }
-            .nav-brand {
-                position: sticky;
-                left: 0;
-                background: rgba(11, 11, 14, 0.95);
-                z-index: 2;
-                padding-right: 8px;
-                margin-right: 8px;
-            }
-            .nav-title {
-                display: none;
-            }
-            .nav-link {
-                font-size: 10px;
-                padding: 4px 8px;
-                flex-shrink: 0;
-            }
-            .nav-cta {
-                display: none;
-            }
-        }
-
-        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
-        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum" 1;
-        }
-
-        /* GLOBAL RESPONSIVE CONTAINMENT ON SUBPAGES */
+        /* PAGE CONTAINER (ZERO CARDS, OPEN OBSIDIAN VOID) */
         .page-wrap {
-            max-width: 1360px;
+            padding-top: 104px;
+            padding-bottom: 80px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 96px 24px 80px 24px;
-            box-sizing: border-box;
-            width: 100%;
-        }
-        @media (max-width: 900px) {
-            .page-wrap {
-                padding-top: 80px !important;
-                padding-bottom: 48px;
-                padding-left: 14px;
-                padding-right: 14px;
-            }
-            .section-title {
-                font-size: clamp(22px, 6.8vw, 36px) !important;
-                word-break: break-word;
-            }
-            .section-desc {
-                font-size: 13.5px !important;
-            }
-            .meta-tag {
-                font-size: 9.5px !important;
-                word-break: break-all;
-            }
-            .hero-banner {
-                padding-top: 10px;
-            }
-            .paper-header {
-                padding-top: 80px !important;
-            }
+            padding-left: 28px;
+            padding-right: 28px;
         }
 
-        /* MOBILE LATTICE, CALC-GRID & TABLE CONTAINMENT */
-        .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-            max-width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+        .header-section {
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 28px;
         }
-        @media (max-width: 900px) {
-            .node-lattice, .calc-grid, .spec-table-box, .brutal-table-box, .hw-table-box, .table-container, .table-responsive {
-                max-width: 100% !important;
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch;
-            }
-            .calc-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .node-lattice {
-                gap: 4px !important;
-                min-width: 280px;
-            }
-            table {
-                min-width: 520px;
-            }
-        }
-
-        @media print {
-            .nav-wrapper, #cursor-dot, #cursor-ring {
-                display: none !important;
-            }
-        }
-
-        /* VRTL WRLD CALM GLITCH DECODER */
-        .glitch-active {
-            opacity: 0.94;
-            letter-spacing: 0.02em;
-        }
-
-        /* BUTTONS */
-        .btn-brutal-red {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--laser-red);
-            color: var(--white);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            text-decoration: none;
-            padding: 13px 24px;
-            clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
-            box-shadow: 0 6px 24px rgba(255, 41, 44, 0.35);
-            transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-            border: none;
-        }
-        .btn-brutal-red:hover {
-            background: #FF474A;
-            box-shadow: 0 8px 30px rgba(255, 41, 44, 0.55);
-            transform: translateY(-2px);
-        }
-
-        .btn-brutal-outline {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: transparent;
-            color: var(--chalk);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            text-decoration: none;
-            padding: 13px 24px;
-            border: 1px solid var(--border-hover);
-            clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
-            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
-        }
-        .btn-brutal-outline:hover {
-            border-color: var(--laser-red);
-            color: var(--white);
-            background: rgba(255, 41, 44, 0.05);
-        }
-
-        /* SECTION HEADERS & META TAGS */
         .meta-tag {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.15em;
             color: var(--laser-red);
             text-transform: uppercase;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: inline-block;
         }
         .section-title {
             font-family: 'Syne', sans-serif;
-            font-size: clamp(28px, 4vw, 46px);
+            font-size: clamp(30px, 4.2vw, 52px);
             font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -0.01em;
+            line-height: 1.04;
+            letter-spacing: -0.015em;
             text-transform: uppercase;
             color: var(--white);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
         .section-desc {
-            font-size: 15px;
-            line-height: 1.65;
+            font-size: 14.5px;
+            line-height: 1.6;
             color: var(--slate);
-            max-width: 720px;
+            max-width: 860px;
             font-weight: 400;
-            margin-bottom: 36px;
         }
 
-        /* PAGE CONTAINER */
-        .page-wrap {
-            padding-top: 96px;
-            padding-bottom: 80px;
-            max-width: 1360px;
-            margin: 0 auto;
-            padding-left: 24px;
-            padding-right: 24px;
-        }
-
-        /* GLOBAL FOOTER */
-        .global-footer {
-            background: #050507;
-            border-top: 1px solid var(--border);
-            padding: 48px 32px 36px;
-            margin-top: 80px;
-        }
-        .footer-inner {
-            max-width: 1360px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
+        /* LIVE TELEMETRY HUD STRIP (ZERO CARDS, OPEN VOID) */
+        .hud-strip {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
             gap: 20px;
-        }
-        .footer-brand {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            color: var(--slate);
-        }
-        .footer-brand strong {
-            color: var(--white);
-        }
-        .footer-links {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-        .footer-link {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10.5px;
-            color: var(--slate);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .footer-link:hover {
-            color: var(--laser-red);
-        }
-
-        @media (max-width: 1100px) {
-            .nav-links { display: none; }
-        }
-    
-        .sim-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 28px;
-            margin-top: 32px;
-        }
-
-        @media (max-width: 860px) {
-            .sim-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .node-lattice {
-                gap: 4px !important;
-            }
-            .sim-box, .terminal-box {
-                padding: 16px !important;
-            }
-        }
-
-        .sim-box, .terminal-box {
-            background: #0E0E12;
-            border: 1px solid var(--border);
-            padding: 24px;
-            clip-path: polygon(0 14px, 14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
-        }
-
-        .sim-box-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--slate);
+            padding: 16px 0;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 12px;
-            margin-bottom: 20px;
-        }
-
-        /* 8x8 NODE MATRIX */
-        .node-lattice {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            gap: 8px;
             margin-bottom: 24px;
+            font-family: 'JetBrains Mono', monospace;
         }
-        .lattice-node {
-            aspect-ratio: 1;
-            background: #171720;
-            border: 1px solid #2B2B38;
-            border-radius: 4px;
-            transition: all 0.25s ease;
-            position: relative;
-        }
-        .lattice-node.honest {
-            background: rgba(0, 230, 118, 0.12);
-            border-color: rgba(0, 230, 118, 0.35);
-        }
-        .lattice-node.honest::after {
-            content: '';
-            position: absolute;
-            inset: 3px;
-            background: var(--green);
-            border-radius: 2px;
-            opacity: 0.8;
-        }
-        .lattice-node.byzantine {
-            background: rgba(255, 41, 44, 0.2);
-            border-color: var(--laser-red);
-            box-shadow: 0 0 10px rgba(255, 41, 44, 0.4);
-            animation: pulse-byz 1.4s infinite;
-        }
-        .lattice-node.byzantine::after {
-            content: '';
-            position: absolute;
-            inset: 3px;
-            background: var(--laser-red);
-            border-radius: 2px;
-        }
-        @keyframes pulse-byz {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-        }
-
-        .sim-controls {
+        .hud-cell {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 4px;
+            border-right: 1px solid var(--border);
+            padding-right: 14px;
         }
-        .sim-slider-row {
+        .hud-cell:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+        .hud-cell-label {
+            font-size: 9px;
+            letter-spacing: 0.12em;
+            color: var(--slate);
+            text-transform: uppercase;
+        }
+        .hud-cell-val {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 0.04em;
+        }
+        .hud-cell-sub {
+            font-size: 9.5px;
+            color: var(--slate);
+        }
+        .hud-cell-val.crimson { color: var(--laser-red); }
+        .hud-cell-val.green { color: var(--green); }
+
+        /* FULL-SCALE POINCARÉ CANVAS STAGE */
+        .stage-container {
+            position: relative;
+            width: 100%;
+            height: clamp(520px, 68vh, 720px);
+            background: #070707;
+            overflow: hidden;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border);
+        }
+        #poincare-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: crosshair;
+        }
+
+        /* FLOATING FLASH BANNER */
+        #sim-flash-banner {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(7, 7, 7, 0.92);
+            border: 1px solid var(--laser-red);
+            color: #FFFFFF;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            padding: 6px 20px;
+            border-radius: 4px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            z-index: 20;
+            box-shadow: 0 0 24px rgba(255, 36, 36, 0.4);
+        }
+
+        /* CONTROLS BAR (HAIRLINE DIVIDERS, NO CARDS) */
+        .controls-bar {
+            display: grid;
+            grid-template-columns: 1.4fr 1.6fr 1.2fr;
+            gap: 32px;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .ctrl-slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .ctrl-slider-head {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            letter-spacing: 0.1em;
             color: var(--slate);
-            margin-bottom: 6px;
+        }
+        .ctrl-slider-head strong {
+            color: var(--white);
         }
         .sim-range {
             width: 100%;
             -webkit-appearance: none;
-            background: #1C1C26;
-            height: 6px;
-            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            height: 4px;
+            border-radius: 2px;
             outline: none;
         }
         .sim-range::-webkit-slider-thumb {
@@ -622,104 +334,153 @@
             border-radius: 50%;
             background: var(--laser-red);
             cursor: pointer;
-            box-shadow: 0 0 10px var(--laser-red);
-        }
-        .sim-attack-select {
-            background: #161620;
-            border: 1px solid var(--border);
-            color: var(--chalk);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            padding: 8px 12px;
-            outline: none;
+            box-shadow: 0 0 12px var(--laser-red);
+            border: 2px solid #FFFFFF;
         }
 
-        .sim-status-banner {
-            background: #121218;
-            border: 1px solid var(--border);
-            padding: 14px;
+        .ctrl-btn-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .btn-obsidian-red {
+            flex: 1;
+            padding: 12px 18px;
+            background: var(--laser-red);
+            color: #000000;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
-            line-height: 1.5;
-        }
-        .sim-status-head {
             font-weight: 700;
-            margin-bottom: 4px;
+            letter-spacing: 0.1em;
+            border: 1px solid var(--laser-red);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
         }
-        .sim-status-head.success { color: var(--green); }
-        .sim-status-head.danger { color: var(--laser-red); }
+        .btn-obsidian-red:hover {
+            background: #FFFFFF;
+            border-color: #FFFFFF;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+        .btn-obsidian-outline {
+            flex: 1;
+            padding: 12px 18px;
+            background: transparent;
+            color: var(--white);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .btn-obsidian-outline:hover {
+            border-color: var(--white);
+            background: rgba(255, 255, 255, 0.06);
+        }
 
-        /* TERMINAL */
-        .terminal-topbar {
+        .tier-legend-inline {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 9.5px;
+            border-left: 1px solid var(--border);
+            padding-left: 20px;
+        }
+        .tier-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--slate);
+        }
+        .tier-pip {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .tier-pip.t1 { background: var(--laser-red); box-shadow: 0 0 8px var(--laser-red); }
+        .tier-pip.t2 { background: #FFFFFF; box-shadow: 0 0 6px #FFFFFF; }
+        .tier-pip.t3 { background: var(--slate); }
+
+        /* LIVE TELEMETRY EVENT STREAM */
+        .stream-section {
+            padding: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .stream-head {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            color: var(--slate);
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 12px;
-            margin-bottom: 14px;
+        }
+        .stream-log {
+            height: 110px;
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 5px;
+            font-size: 10.5px;
+            line-height: 1.5;
+            color: var(--chalk-dim);
+        }
+        .stream-line {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .stream-line.highlight { color: var(--laser-red); font-weight: 700; }
+        .stream-line.success { color: var(--green); }
+        .stream-line.dim { color: var(--slate); }
+        .stream-line.warn { color: #FFAA00; }
+
+        /* FOOTER */
+        .global-footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0;
+            margin-top: 40px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 10.5px;
             color: var(--slate);
         }
-        .terminal-dots {
+        .footer-inner {
             display: flex;
-            gap: 6px;
-        }
-        .terminal-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #333;
-        }
-        .terminal-dot.red { background: var(--laser-red); }
-        .terminal-output {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            line-height: 1.55;
-            height: 380px;
-            overflow-y: auto;
-            color: var(--chalk-dim);
-            padding-right: 8px;
-        }
-        .terminal-output .cmd { color: var(--chalk); font-weight: 700; }
-        .terminal-output .highlight { color: var(--laser-red); }
-        .terminal-output .success { color: var(--green); }
-        .terminal-output .dim { color: var(--slate); }
-        .terminal-output .warn { color: #FFAA00; }
-
-        .terminal-input-row {
-            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            border-top: 1px solid var(--border);
-            padding-top: 12px;
-            margin-top: 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        .terminal-prompt {
-            color: var(--laser-red);
-            font-weight: 700;
+        .footer-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
         }
-        .terminal-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--chalk);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
+        .footer-link {
+            color: var(--slate);
+            text-decoration: none;
+            transition: color 0.2s;
         }
+        .footer-link:hover { color: var(--laser-red); }
 
-        @media (max-width: 960px) {
-            .sim-grid { grid-template-columns: 1fr; }
+        @media (max-width: 1024px) {
+            .hud-strip { grid-template-columns: repeat(2, 1fr); }
+            .controls-bar { grid-template-columns: 1fr; gap: 20px; }
+            .tier-legend-inline { border-left: none; padding-left: 0; flex-direction: row; flex-wrap: wrap; }
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
-    
-    <!-- TOP-EDGE SCROLL TELEMETRY PROGRESS LINE -->
+    <!-- SCROLL TELEMETRY PROGRESS -->
     <div id="scroll-progress-line" class="scroll-progress-bar" aria-hidden="true"></div>
 
     <!-- RETRO-TECH CURSOR -->
@@ -736,109 +497,124 @@
                         <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
                         <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
                         <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-                        <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
-                        <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
+                        <line x1="12" y1="2" x2="12" y2="22" stroke="#FF2424" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+                        <circle cx="12" cy="12" r="1.8" fill="#FF2424"/>
                     </svg>
                 </div>
-                <span class="nav-title" data-glitch>33RD TREE LABS</span>
+                <span class="nav-title" data-glitch data-glitch-text="33RD TREE LABS">33RD TREE LABS</span>
             </a>
 
             <div class="nav-links">
-                <a href="index.html" class="nav-link" data-glitch>[ OVERVIEW ]</a>
-                <a href="protocol.html" class="nav-link" data-glitch>[ PROTOCOL ]</a>
-                <a href="simulator.html" class="nav-link active" data-glitch>[ SIMULATOR ]</a>
-                <a href="yield.html" class="nav-link" data-glitch>[ YIELD ]</a>
-                <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
-                <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
-                <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
+                <a href="index.html" class="nav-link" data-glitch data-glitch-text="[ OVERVIEW ]">[ OVERVIEW ]</a>
+                <a href="protocol.html" class="nav-link" data-glitch data-glitch-text="[ PROTOCOL ]">[ PROTOCOL ]</a>
+                <a href="simulator.html" class="nav-link active" data-glitch data-glitch-text="[ SIMULATOR ]">[ SIMULATOR ]</a>
+                <a href="yield.html" class="nav-link" data-glitch data-glitch-text="[ YIELD ]">[ YIELD ]</a>
+                <a href="nodes.html" class="nav-link" data-glitch data-glitch-text="[ NODES ]">[ NODES ]</a>
+                <a href="tokenomics.html" class="nav-link" data-glitch data-glitch-text="[ TOKENOMICS ]">[ TOKENOMICS ]</a>
+                <a href="research.html" class="nav-link" data-glitch data-glitch-text="[ RESEARCH ]">[ RESEARCH ]</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="nav-link" data-glitch data-glitch-text="[ WHITEPAPER PDF &darr; ]">[ WHITEPAPER PDF &darr; ]</a>
             </div>
         </nav>
     </div>
 
+    <!-- MAIN VOID VIEWPORT -->
+    <main class="page-wrap">
+        <header class="header-section">
+            <div class="meta-tag" data-glitch data-glitch-text="( 02 ) // ADVERSARIAL CONSENSUS &bull; POINCARÉ HYPERBOLIC MANIFOLD">( 02 ) // ADVERSARIAL CONSENSUS &bull; POINCARÉ HYPERBOLIC MANIFOLD</div>
+            <h1 class="section-title" data-glitch data-glitch-text="BYZANTINE COMMITTEE CONSENSUS ENGINE">BYZANTINE COMMITTEE CONSENSUS ENGINE</h1>
+            <p class="section-desc">
+                Poincaré disk model of Gromov &delta;-hyperbolic tensor reduction (&kappa; = -1.414). Observe sub-second consensus across K=64 GPU validators, inject Byzantine floating-point drift, and verify zero-loss geodesic tree bypass routing on Solana.
+            </p>
+        </header>
 
-    <div class="page-wrap">
-        <div class="meta-tag" data-glitch>( 02 ) // ADVERSARIAL CONSENSUS &bull; LIVE SIMULATOR &bull; TERMINAL</div>
-        <h1 class="section-title" data-glitch>BYZANTINE COMMITTEE &amp; CLI ENGINE</h1>
-        <p class="section-desc">
-            Test the mathematical guarantees of the Singularity Protocol. Inject malicious adversaries, evaluate Byzantine resilience ($f &le; 21/64$), and query on-chain Solana state via the live command console.
-        </p>
+        <!-- LIVE TELEMETRY HUD STRIP -->
+        <section class="hud-strip">
+            <div class="hud-cell">
+                <span class="hud-cell-label">SUPERMAJORITY CONVERGENCE</span>
+                <span class="hud-cell-val" id="hud-quorum">64 / 64 VALIDATORS</span>
+                <span class="hud-cell-sub" id="hud-quorum-sub">&gt; 2/3 Supermajority Verified</span>
+            </div>
+            <div class="hud-cell">
+                <span class="hud-cell-label">BYZANTINE TOLERANCE (3f + 1)</span>
+                <span class="hud-cell-val" id="hud-byz">f = 0 / 21 MAX</span>
+                <span class="hud-cell-sub" id="hud-byz-sub">BFT Safety Margin Intact</span>
+            </div>
+            <div class="hud-cell">
+                <span class="hud-cell-label">ROUTING DIAMETER</span>
+                <span class="hud-cell-val">&le; 8 HOPS (GEODESIC)</span>
+                <span class="hud-cell-sub">Gromov Metric Convergence</span>
+            </div>
+            <div class="hud-cell">
+                <span class="hud-cell-label">CONSENSUS INVARIANT</span>
+                <span class="hud-cell-val green" id="hud-invariant">&Delta;&epsilon; = 0.00 INT8</span>
+                <span class="hud-cell-sub">Deterministic cuBLAS/FMA</span>
+            </div>
+            <div class="hud-cell">
+                <span class="hud-cell-label">SOLANA ANCHOR COMMIT</span>
+                <span class="hud-cell-val crimson">382ms FINALITY</span>
+                <span class="hud-cell-sub">10% Fee Burn to 1nc1nerator</span>
+            </div>
+        </section>
 
-        <div class="sim-grid">
-            <!-- Visual Byzantine Committee Lattice -->
-            <div class="sim-box">
-                <div class="sim-box-title">
-                    <span data-glitch>VALIDATOR COMMITTEE LATTICE (K=64)</span>
-                    <span id="byz-ratio-tag" style="color:var(--chalk);">f = 4 / 64 (6.2%)</span>
+        <!-- POINCARÉ HYPERBOLIC STAGE -->
+        <section class="stage-container">
+            <canvas id="poincare-canvas"></canvas>
+            <div id="sim-flash-banner">STATE COMMITTED // ANCHOR VERIFIED</div>
+        </section>
+
+        <!-- CONTROLS BAR -->
+        <section class="controls-bar">
+            <div class="ctrl-slider-group">
+                <div class="ctrl-slider-head">
+                    <span>QUORUM COMMITTEE SIZE (K)</span>
+                    <strong id="k-slider-val">K = 64 (Threshold: f &le; 21)</strong>
                 </div>
-
-                <!-- 8x8 Interactive Node Lattice -->
-                <div class="node-lattice" id="node-matrix"></div>
-
-                <div class="sim-controls">
-                    <div>
-                        <div class="sim-slider-row">
-                            <span>BYZANTINE ADVERSARY COUNT (f)</span>
-                            <span id="byz-count-text" style="color:var(--laser-red); font-weight:700;">f = 4 (Safe)</span>
-                        </div>
-                        <input type="range" id="byz-slider" class="sim-range" min="0" max="30" value="4" oninput="updateByzantineSim()">
-                    </div>
-
-                    <div style="display:flex; flex-direction:column; gap:6px;">
-                        <span class="sim-slider-row"><span>ATTACK VECTOR SIMULATION</span></span>
-                        <select id="attack-vector-select" class="sim-attack-select" onchange="updateByzantineSim()">
-                            <option value="gradient-poison">Malicious Gradient Poisoning (CAP-FFN Failure)</option>
-                            <option value="equivocation">Equivocation &bull; Dual Block Commitment</option>
-                            <option value="weight-tamper">Model Weight Tampering &bull; Silent Bit-Rot</option>
-                            <option value="sybil-stall">Coordinated Sybil Denial of Service (Stall)</option>
-                        </select>
-                    </div>
-
-                    <button class="btn-brutal-red" onclick="runConsensusRound()" style="width:100%; justify-content:center; padding:12px; cursor:pointer;" data-glitch>
-                        EXECUTE CONSENSUS ROUND &rarr;
-                    </button>
-
-                    <div class="sim-status-banner" id="sim-status-box">
-                        <div class="sim-status-head success" id="sim-status-title">
-                            <span>[VALID] CONSENSUS REACHED: QUORUM VALIDATED</span>
-                        </div>
-                        <div id="sim-status-desc" style="color:var(--slate);">
-                            Honest nodes: 60/64 (93.8%). Quorum threshold 66.7% met. Byzantine nodes isolated and marked for collateral slashing.
-                        </div>
-                    </div>
-                </div>
+                <input type="range" id="k-slider" class="sim-range" min="16" max="64" value="64" step="1">
             </div>
 
-            <!-- Interactive Solana CLI Terminal -->
-            <div class="terminal-box">
-                <div class="terminal-topbar">
-                    <div class="terminal-dots">
-                        <div class="terminal-dot red"></div>
-                        <div class="terminal-dot"></div>
-                        <div class="terminal-dot"></div>
-                    </div>
-                    <span>canary-cli &bull; 33rdtreelabs.tech</span>
-                    <span style="color:var(--green);">&bull; CONNECTED</span>
-                </div>
-
-                <div class="terminal-output" id="terminal-output">
-                    <div class="terminal-line highlight">33RD TREE LABS // SOLANA ANCHOR DIAGNOSTIC CLI [v4.0]</div>
-                    <div class="terminal-line dim">Connected to Solana Mainnet-Beta via Jito RPC Anchor.</div>
-                    <div class="terminal-line dim">Type <strong style="color:var(--chalk);">"help"</strong> for list of cryptographic commands.</div>
-                    <div class="terminal-line">&nbsp;</div>
-                </div>
-
-                <form class="terminal-input-row" onsubmit="handleTerminalSubmit(event)">
-                    <span class="terminal-prompt">&gt;</span>
-                    <input type="text" id="terminal-input" class="terminal-input" placeholder="Type command (e.g. status, bench, verify)..." autocomplete="off" spellcheck="false">
-                </form>
+            <div class="ctrl-btn-group">
+                <button type="button" id="btn-inject-fault" class="btn-obsidian-red" data-glitch data-glitch-text="[ INJECT BYZANTINE FAULT ]">
+                    [ INJECT BYZANTINE FAULT ]
+                </button>
+                <button type="button" id="btn-reset-quorum" class="btn-obsidian-outline" data-glitch data-glitch-text="[ RESET / SYNC QUORUM ]">
+                    [ RESET / SYNC QUORUM ]
+                </button>
             </div>
-        </div>
-    </div>
+
+            <div class="tier-legend-inline">
+                <div class="tier-item">
+                    <span class="tier-pip t1"></span>
+                    <span><strong>Tier 1:</strong> H100 Coordinators (8)</span>
+                </div>
+                <div class="tier-item">
+                    <span class="tier-pip t2"></span>
+                    <span><strong>Tier 2:</strong> B200 NVL Hubs (16)</span>
+                </div>
+                <div class="tier-item">
+                    <span class="tier-pip t3"></span>
+                    <span><strong>Tier 3:</strong> RTX 4090 Quorum (40)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIVE EVENT TELEMETRY STREAM -->
+        <section class="stream-section">
+            <div class="stream-head">
+                <span>SOLANA ANCHOR CONSENSUS EVENT STREAM // JITO RPC ANCHOR</span>
+                <span>STATUS: OPERATIONAL &bull; LATENCY: 14.2ms</span>
+            </div>
+            <div class="stream-log" id="stream-log">
+                <div class="stream-line highlight">[SOLANA-ANCHOR] State root committed in slot 318492040 &bull; 2/3 BLS signatures verified</div>
+                <div class="stream-line dim">[KZG-PROOF] BN254 pairing evaluation: e(pi, [x - z]_2) == e(C - v*[1]_1, [1]_2) verified (&lt; 184,200 CU)</div>
+                <div class="stream-line success">[QUORUM-SYNC] Deterministic INT8 consensus invariant verified (&Delta;&epsilon; = 0.00) across all K=64 validators</div>
+            </div>
+        </section>
+    </main>
 
     <!-- FOOTER -->
     <footer class="global-footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
+        <div class="footer-inner page-wrap" style="padding-top:0; padding-bottom:0;">
+            <div>
                 <strong>33RD TREE LABS</strong> &bull; THE SINGULARITY PROTOCOL &bull; <code>33rdtreelabs.tech</code>
             </div>
             <div class="footer-links">
@@ -849,25 +625,35 @@
                 <a href="nodes.html" class="footer-link">[ NODES ]</a>
                 <a href="tokenomics.html" class="footer-link">[ TOKENOMICS ]</a>
                 <a href="research.html" class="footer-link">[ RESEARCH ]</a>
-                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="footer-link">[ WHITEPAPER PDF ]</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="footer-link">[ WHITEPAPER PDF &darr; ]</a>
             </div>
         </div>
     </footer>
 
-    
-    <!-- Lenis & GSAP -->
+    <!-- EXTERNAL CDN ENGINES -->
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="assets/poincare_simulator.js"></script>
 
+    <!-- MAIN ENGINE SCRIPT -->
     <script>
-        gsap.registerPlugin(ScrollTrigger);
-        const lenis = new Lenis({ lerp: 0.14, wheelMultiplier: 1.25, smoothWheel: true });
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => lenis.raf(time * 1000));
-        gsap.ticker.lagSmoothing(0);
+        // 1. SNAPPY LENIS SMOOTH SCROLL (LERP: 0.14 SPECIFICATION)
+        if (typeof Lenis !== 'undefined') {
+            const lenis = new Lenis({
+                duration: 0.9,
+                smoothWheel: true,
+                lerp: 0.14
+            });
+            if (typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+                lenis.on('scroll', ScrollTrigger.update);
+                gsap.ticker.add((time) => lenis.raf(time * 1000));
+                gsap.ticker.lagSmoothing(0);
+            }
+        }
 
-        // Custom Cursor
+        // 2. RETRO-TECH CURSOR
         const cursorDot = document.getElementById('cursor-dot');
         const cursorRing = document.getElementById('cursor-ring');
         if (cursorDot && cursorRing) {
@@ -877,297 +663,193 @@
                 cursorRing.style.left = e.clientX + 'px';
                 cursorRing.style.top = e.clientY + 'px';
             });
-            document.querySelectorAll('a, button, input, select, [data-glitch]').forEach(el => {
+            document.querySelectorAll('a, button, input, [data-glitch]').forEach(el => {
                 el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
                 el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
             });
         }
 
-        // VRTL WRLD Glitch Letters & Matrix Scramble Engine
-        // Top-edge micro-progress telemetry line & Navbar scroll awareness
+        // 3. TOP SCROLL PROGRESS TELEMETRY
         const progressBar = document.getElementById('scroll-progress-line');
-        const navWrapper = document.querySelector('.nav-wrapper');
-        function onScrollTelemetry() {
+        function onScrollProgress() {
             const doc = document.documentElement;
             const sy = window.scrollY || doc.scrollTop;
             const max = doc.scrollHeight - window.innerHeight;
             if (progressBar && max > 0) {
                 progressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
             }
-            if (navWrapper) {
-                if (sy > 50) {
-                    navWrapper.classList.add('nav-scrolled');
-                } else {
-                    navWrapper.classList.remove('nav-scrolled');
-                }
-            }
         }
-        window.addEventListener('scroll', onScrollTelemetry, { passive: true });
-        lenis.on('scroll', onScrollTelemetry);
-        onScrollTelemetry();
+        window.addEventListener('scroll', onScrollProgress, { passive: true });
+        onScrollProgress();
 
-        // IntersectionObserver Reveal Engine (Zero Layout Shift)
-        const revealTargets = document.querySelectorAll('.reveal-on-scroll');
-        if ('IntersectionObserver' in window) {
-            const io = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-revealed');
-                        obs.unobserve(entry.target);
-                    }
-                });
-            }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
-            revealTargets.forEach(el => io.observe(el));
-        } else {
-            revealTargets.forEach(el => el.classList.add('is-revealed'));
-        }
-
-        /* VRTL WRLD MECHANICAL GLITCH DECODE ENGINE (250MS / 3.5S SPECIFICATION) */
+        // 4. CLEAN MECHANICAL GLITCH DECODE ENGINE (NO STUCK CHARACTERS)
         class GlitchScramble {
             constructor(el) {
                 this.el = el;
                 this.chars = '01X_/*+-[]#';
-                this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
+                this.originalText = el.getAttribute('data-glitch-text') || el.textContent.trim();
                 el.setAttribute('data-glitch-text', this.originalText);
                 this.isGlitching = false;
                 this.animId = null;
-                this.lastTickTime = 0;
-                this.tickInterval = 250; // Deliberate 250ms mechanical relay decode cadence
             }
 
-            scramble(duration = 3.5) {
-                if (this.isGlitching) return;
+            scramble(duration = 1.0) {
+                if (this.isGlitching && this.animId) {
+                    cancelAnimationFrame(this.animId);
+                }
                 this.isGlitching = true;
-                this.el.classList.add('glitch-active');
                 const target = this.originalText;
                 const len = target.length;
                 const startTime = performance.now();
                 const durationMs = duration * 1000;
-                let activeGlyphs = new Array(len);
-                for (let i = 0; i < len; i++) {
-                    const ch = target[i];
-                    activeGlyphs[i] = (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9))
-                        ? ch
-                        : this.chars[Math.floor(Math.random() * this.chars.length)];
-                }
 
                 const tick = (now) => {
                     const elapsed = now - startTime;
                     const progress = Math.min(1, elapsed / durationMs);
                     const revealedCount = Math.floor(progress * len);
 
-                    // Throttle symbol updates so glyphs stay deliberate and readable
-                    if (now - this.lastTickTime >= this.tickInterval) {
-                        this.lastTickTime = now;
-                        for (let i = revealedCount; i < len; i++) {
-                            const ch = target[i];
-                            if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
-                                activeGlyphs[i] = ch;
-                            } else if (Math.random() < 0.35) {
-                                activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
-                            }
-                        }
-                    }
-
                     let result = '';
                     for (let i = 0; i < len; i++) {
                         const ch = target[i];
-                        if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
+                        if (ch === ' ' || ch === '\n' || ch === '\t') {
                             result += ch;
                         } else if (i < revealedCount) {
                             result += ch;
                         } else {
-                            result += activeGlyphs[i] || ch;
+                            result += this.chars[Math.floor(Math.random() * this.chars.length)];
                         }
                     }
-                    this.el.innerText = result;
+                    this.el.textContent = result;
 
                     if (progress < 1) {
                         this.animId = requestAnimationFrame(tick);
                     } else {
-                        this.el.innerText = target;
-                        this.el.classList.remove('glitch-active');
+                        // ALWAYS RESTORE EXACT ORIGINAL STRING CLEANLY
+                        this.el.textContent = target;
                         this.isGlitching = false;
+                        this.animId = null;
                     }
                 };
                 this.animId = requestAnimationFrame(tick);
             }
         }
 
-        document.querySelectorAll('[data-glitch], .nav-link').forEach(el => {
+        // Initialize glitch decodes
+        document.querySelectorAll('[data-glitch]').forEach(el => {
             const inst = new GlitchScramble(el);
-            el.addEventListener('mouseenter', () => inst.scramble(3.5));
+            el.addEventListener('mouseenter', () => inst.scramble(0.8));
         });
 
+        // Trigger on initial page load
         window.addEventListener('DOMContentLoaded', () => {
             let delay = 100;
-            document.querySelectorAll('.display-word, .meta-tag, .glitch-load').forEach(el => {
+            document.querySelectorAll('.meta-tag, .section-title').forEach(el => {
                 const inst = new GlitchScramble(el);
-                setTimeout(() => inst.scramble(3.5), delay);
-                delay += 250;
+                setTimeout(() => inst.scramble(1.1), delay);
+                delay += 200;
             });
         });
 
-        document.querySelectorAll('.section-title').forEach(el => {
-            const inst = new GlitchScramble(el);
-            ScrollTrigger.create({
-                trigger: el,
-                start: 'top 88%',
-                once: true,
-                onEnter: () => inst.scramble(3.5)
+        // 5. EVENT STREAM LOGGER
+        const streamLog = document.getElementById('stream-log');
+        function appendStream(msg, type = '') {
+            if (!streamLog) return;
+            const line = document.createElement('div');
+            line.className = 'stream-line ' + type;
+            line.innerHTML = msg;
+            streamLog.prepend(line);
+            if (streamLog.children.length > 20) {
+                streamLog.removeChild(streamLog.lastChild);
+            }
+        }
+
+        // 6. POINCARÉ HYPERBOLIC TENSOR ARBOR SIMULATOR INTEGRATION
+        const pCanvas = document.getElementById('poincare-canvas');
+        const flashBanner = document.getElementById('sim-flash-banner');
+        const kSlider = document.getElementById('k-slider');
+        const kSliderVal = document.getElementById('k-slider-val');
+        const hudQuorum = document.getElementById('hud-quorum');
+        const hudQuorumSub = document.getElementById('hud-quorum-sub');
+        const hudByz = document.getElementById('hud-byz');
+        const hudByzSub = document.getElementById('hud-byz-sub');
+        const hudInvariant = document.getElementById('hud-invariant');
+
+        let sim = null;
+        if (pCanvas && typeof PoincareHyperbolicSimulator !== 'undefined') {
+            sim = new PoincareHyperbolicSimulator(pCanvas, {
+                k: 64,
+                speed: 1.0,
+                interactive: true,
+                flashBannerElement: flashBanner,
+                onQuorumChange: (m) => updateSimulatorHUD(m),
+                onByzantineEvent: (node, m) => {
+                    updateSimulatorHUD(m);
+                    appendStream(`[ALERT] Byzantine drift detected on ${node.name} (&Delta;&epsilon; = +${node.drift} FP16) &bull; KZG hash mismatch`, 'warn');
+                    appendStream(`[SLASH] Confiscated 100% bonded stake &bull; Collateral burnt to 1nc1nerator...1111`, 'highlight');
+                    appendStream(`[GEODESIC-BYPASS] Alternate hyperbolic geodesic active &bull; Hop diameter preserved (&le; 8 hops)`, 'success');
+                },
+                onLog: (msg) => {
+                    const type = msg.includes('[BYZANTINE]') ? 'warn' : msg.includes('[SLASH') ? 'highlight' : msg.includes('[QUORUM') ? 'success' : 'dim';
+                    appendStream(msg, type);
+                }
             });
-            el.addEventListener('mouseenter', () => inst.scramble(3.5));
-        });
-
-        
-        // BYZANTINE LATTICE ENGINE
-        const matrixEl = document.getElementById('node-matrix');
-        const byzSlider = document.getElementById('byz-slider');
-        const byzCountText = document.getElementById('byz-count-text');
-        const byzRatioTag = document.getElementById('byz-ratio-tag');
-        const statusBox = document.getElementById('sim-status-box');
-        const statusTitle = document.getElementById('sim-status-title');
-        const statusDesc = document.getElementById('sim-status-desc');
-
-        const TOTAL_NODES = 64;
-        let nodeElements = [];
-
-        function initMatrix() {
-            if (!matrixEl) return;
-            matrixEl.innerHTML = '';
-            nodeElements = [];
-            for (let i = 0; i < TOTAL_NODES; i++) {
-                const node = document.createElement('div');
-                node.className = 'lattice-node honest';
-                node.setAttribute('title', `Validator #${i}`);
-                matrixEl.appendChild(node);
-                nodeElements.push(node);
-            }
-            updateByzantineSim();
         }
 
-        function updateByzantineSim() {
-            if (!byzSlider) return;
-            const f = parseInt(byzSlider.value);
-            const percentage = ((f / TOTAL_NODES) * 100).toFixed(1);
+        function updateSimulatorHUD(m) {
+            if (!m) return;
+            if (kSliderVal) {
+                kSliderVal.textContent = `K = ${m.k} (Threshold: f ≤ ${m.maxFaults})`;
+            }
+            if (hudQuorum) {
+                hudQuorum.textContent = `${m.honestCount} / ${m.totalActive} VALIDATORS (${(m.honestRatio * 100).toFixed(1)}%)`;
+                hudQuorum.className = m.isQuorum ? 'hud-cell-val' : 'hud-cell-val crimson';
+            }
+            if (hudQuorumSub) {
+                hudQuorumSub.textContent = m.isQuorum ? '> 2/3 Supermajority Verified' : 'QUORUM COMPROMISED // CIRCUIT BREAKER';
+            }
+            if (hudByz) {
+                hudByz.textContent = `f = ${m.faultCount} / ${m.maxFaults} MAX`;
+                hudByz.className = m.faultCount <= m.maxFaults ? 'hud-cell-val' : 'hud-cell-val crimson';
+            }
+            if (hudByzSub) {
+                hudByzSub.textContent = m.faultCount <= m.maxFaults ? 'BFT Safety Margin Intact' : 'CRITICAL SAFETY THRESHOLD EXCEEDED';
+            }
+            if (hudInvariant) {
+                hudInvariant.textContent = m.faultCount === 0 ? 'Δε = 0.00 INT8' : `Δε = +0.47 FP16 (BYPASS ENGAGED)`;
+                hudInvariant.className = m.faultCount === 0 ? 'hud-cell-val green' : 'hud-cell-val crimson';
+            }
+        }
 
-            byzRatioTag.textContent = `f = ${f} / ${TOTAL_NODES} (${percentage}%)`;
-            byzCountText.textContent = f <= 21 ? `f = ${f} (Safe Quorum)` : `f = ${f} (CRITICAL FAULT)`;
-            byzCountText.style.color = f <= 21 ? 'var(--chalk)' : 'var(--laser-red)';
+        if (kSlider) {
+            kSlider.addEventListener('input', (e) => {
+                const val = parseInt(e.target.value, 10);
+                if (sim) sim.setK(val);
+            });
+        }
 
-            for (let i = 0; i < TOTAL_NODES; i++) {
-                if (i < f) {
-                    nodeElements[i].className = 'lattice-node byzantine';
-                } else {
-                    nodeElements[i].className = 'lattice-node honest';
+        const btnInject = document.getElementById('btn-inject-fault');
+        if (btnInject) {
+            btnInject.addEventListener('click', () => {
+                if (sim) {
+                    const node = sim.injectByzantineFault();
+                    if (node) {
+                        appendStream(`&gt; Injected simulated floating-point drift into ${node.name}...`, 'warn');
+                    }
                 }
-            }
-
-            if (f <= 21) {
-                const honestCount = TOTAL_NODES - f;
-                statusTitle.className = 'sim-status-head success';
-                statusTitle.textContent = '[VALID] CONSENSUS REACHED: QUORUM VALIDATED';
-                statusDesc.textContent = `Honest nodes: ${honestCount}/64 (${((honestCount/64)*100).toFixed(1)}%). BFT threshold f < 21 satisfied. Malicious inputs mathematically isolated.`;
-            } else {
-                statusTitle.className = 'sim-status-head danger';
-                statusTitle.textContent = '[CRITICAL] BYZANTINE FAULT: SAFETY BREACH';
-                statusDesc.textContent = `Adversary count f = ${f} exceeds 21 (1/3 of committee). Solana anchor initiates circuit breaker. No state finalized to preserve zero-knowledge integrity.`;
-            }
+            });
         }
 
-        function runConsensusRound() {
-            appendTermLine('> Executing simulated consensus challenge round...', 'dim');
-            setTimeout(() => {
-                const f = parseInt(byzSlider.value);
-                if (f <= 21) {
-                    appendTermLine(`[CONSENSUS] Round validated in 1.418ms &bull; 2/3 BLS signatures matched &bull; OK`, 'success');
-                } else {
-                    appendTermLine(`[ALERT] BFT Quorum failure: f = ${f} > 21 &bull; Collateral slashed`, 'highlight');
+        const btnReset = document.getElementById('btn-reset-quorum');
+        if (btnReset) {
+            btnReset.addEventListener('click', () => {
+                if (sim) {
+                    sim.resetQuorum();
+                    appendStream(`&gt; Resynchronizing all validators to deterministic INT8 invariants...`, 'dim');
+                    appendStream(`[QUORUM-SYNC] All active validators synchronized to &Delta;&epsilon; = 0.00 INT8`, 'success');
+                    appendStream(`[SOLANA-ANCHOR] Zero-knowledge proof verified in slot 318492041`, 'success');
                 }
-            }, 250);
+            });
         }
-
-        // SOLANA ANCHOR CLI TERMINAL
-        const termOutput = document.getElementById('terminal-output');
-        const termInput = document.getElementById('terminal-input');
-
-        function appendTermLine(text, type = '') {
-            if (!termOutput) return;
-            const div = document.createElement('div');
-            div.className = 'terminal-line ' + type;
-            div.innerHTML = text;
-            termOutput.appendChild(div);
-            termOutput.scrollTop = termOutput.scrollHeight;
-        }
-
-        function executeTermCommand(rawCmd) {
-            const cmd = rawCmd.trim();
-            if (!cmd) return;
-            appendTermLine('&gt; ' + cmd, 'cmd');
-            const c = cmd.toLowerCase();
-
-            if (c === 'help') {
-                appendTermLine('CANARY SPEC v4.0 &bull; DIAGNOSTIC COMMANDS:', 'highlight');
-                appendTermLine('  status     - Query Solana anchor slot and committee state');
-                appendTermLine('  nodes      - Inspect active Tier-1 GPU cluster telemetry');
-                appendTermLine('  bench      - Execute simulated CAP-FFN LLaMA-3 PoI verification');
-                appendTermLine('  verify     - Perform BN254 KZG polynomial opening check');
-                appendTermLine('  byzantine  - Run Byzantine consensus fault assessment');
-                appendTermLine('  tokenomics - Display hard cap, emission rates, & buyback crank');
-                appendTermLine('  clear      - Clear terminal logs');
-            } else if (c === 'status') {
-                appendTermLine('[ANCHOR] Program ID: 33rdCore11111111111111111111111111111111111', 'highlight');
-                appendTermLine('[CONSENSUS] Active Committee: K=64 / 64 nodes &bull; Slot Cadence: 400ms');
-                appendTermLine('[STATE] Epoch 300 &bull; D_t = 1.042 &bull; Quorum: 2/3 BLS BN254 Verified', 'success');
-                appendTermLine('[METRICS] Network Latency: 14.2ms &bull; 0 Slashing Events Recorded');
-            } else if (c === 'nodes') {
-                appendTermLine('ACTIVE VALIDATOR CLUSTERS (Candidate Genesis Validators (K=64 Quorum Committee)):', 'highlight');
-                appendTermLine('  0x7F2A...9C1D [Tier-1 Dual H100 SXM5] &bull; Stake: 150,000 $33RD &bull; Status: OPTIMAL');
-                appendTermLine('  0x3E11...B450 [Tier-1 Quad H100 SXM5] &bull; Stake: 250,000 $33RD &bull; Status: OPTIMAL');
-                appendTermLine('  0x992B...C01F [Tier-1 B200 NVL72]    &bull; Stake: 500,000 $33RD &bull; Status: OPTIMAL');
-                appendTermLine('  0x1A4C...33D8 [Tier-2 RTX 4090 Edge]  &bull; Stake: 35,000 $33RD  &bull; Status: ACTIVE');
-            } else if (c === 'bench') {
-                appendTermLine('[BENCH] Executing CAP-FFN LLaMA-3-8B PoI kernel challenge...', 'dim');
-                setTimeout(() => {
-                    appendTermLine('[BENCH] Randomized polynomial eval: Degree d=16 &bull; Chebyshev match', 'dim');
-                    appendTermLine('[BENCH] Forward pass: 14.2ms &bull; Proof generated: 1.84ms &bull; OK', 'success');
-                }, 280);
-            } else if (c === 'verify') {
-                appendTermLine('[KZG] Evaluating BN254 pairing: e(pi, [x - z]_2) == e(C - v*[1]_1, [1]_2)...', 'dim');
-                setTimeout(() => {
-                    appendTermLine('[KZG] Commitment opening verified on Solana &bull; Cost: 184,200 Compute Units', 'success');
-                }, 320);
-            } else if (c === 'byzantine') {
-                const f = parseInt(byzSlider.value);
-                appendTermLine(`[BYZANTINE] Committee audit: K=64 nodes &bull; Current f=${f}`, 'highlight');
-                if (f <= 21) {
-                    appendTermLine('[BYZANTINE] Quorum threshold 2/3: SATISFIED. Honest network guarantees intact.', 'success');
-                } else {
-                    appendTermLine('[BYZANTINE] WARNING: f > 21. Quorum breached. Automated slashing initiated.', 'warn');
-                }
-            } else if (c === 'tokenomics') {
-                appendTermLine('TOKENOMICS & EMISSION PARAMETERS:', 'highlight');
-                appendTermLine('  Hard Supply Cap : 33,000,000 $33RD');
-                appendTermLine('  Current Epoch   : Epoch 0 (Years 1-4) &bull; 0.7135 $33RD / block');
-                appendTermLine('  Buyback-Burn    : 10% commercial revenue routed to market burn');
-                appendTermLine('  Burned To Date  : 412,840 $33RD (Deflationary)');
-            } else if (c === 'clear') {
-                termOutput.innerHTML = '';
-            } else {
-                appendTermLine(`Command not found: "${cmd}". Type "help" for options.`, 'warn');
-            }
-        }
-
-        function handleTerminalSubmit(e) {
-            e.preventDefault();
-            const val = termInput.value;
-            termInput.value = '';
-            executeTermCommand(val);
-        }
-
-        initMatrix();
-    
     </script>
 </body>
 </html>
-
