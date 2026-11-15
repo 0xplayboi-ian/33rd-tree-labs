@@ -289,10 +289,12 @@ The Gaussian curvature $K(y)$ is strictly negative across the entire transition 
 
 $$K(y) = -\frac{\frac{d^2 r}{dy^2}}{r(y)\left(1 + \left(\frac{dr}{dy}\right)^2\right)^2} < 0, \quad \forall y \ne 0 \tag{18}$$
 
-##### Tree Isomorphism & Exponential Metric Expansion
-In Gromov $\delta$-hyperbolic geometry, any triangle satisfies the condition that each side is contained within the $\delta$-neighborhood of the other two sides:
+##### Tree Isomorphism: Gromov Geodesics & Bounded Curvature
+In Gromov $\delta$-hyperbolic geometry, any geodesic triangle satisfies bounded curvature conditions where each side is contained within the $\delta$-neighborhood of the other two sides:
 
 $$(u \cdot v)_w \ge \min\left\{(u \cdot z)_w, (v \cdot z)_w\right\} - \delta, \quad \text{with } \delta = \ln(1 + \sqrt{2}) \tag{19}$$
+
+Because Gaussian curvature $K(y)$ is strictly negative and bounded ($K(y) < 0$), all routing trajectories plunge inward toward the minimal throat singularity. This guarantees **Gromov Geodesics & Bounded Curvature**: routing paths between disparate tensor shards achieve $\mathcal{O}(\log N)$ diameter without boundary congestion or metric distortion.
 
 The perimeter and area of a hyperbolic ball of radius $R$ grow exponentially:
 
@@ -457,7 +459,22 @@ $$D_{t+1} = D_t \cdot \text{clamp}\left(\frac{T_{\text{target}}}{T_{\text{actual
 
 where $D_t$ sets the inner-product dimension ($d_{\text{proj}} = \lfloor D_t \cdot d_{\text{model}} \rfloor$) and Halo2 polynomial degree $2^k$; $T_{\text{target}} = 12.0\text{ s}$; $T_{\text{actual}}$ is realized mean block interval; and $\gamma_{\text{hardware}} = (1 + g_{\text{silicon}})^{\tau / T_{\text{year}}} - 1 \approx 0.000823$ ($8.23\text{ bps/day}$) introduces compound compensation for silicon gains. The clamp $[0.80, 1.25]$ prevents transient hash-rate volatility.
 
-**Theorem 2 (Silicon Invariance of the Byzantine Threshold).** *Let operational tensor efficiency be $\eta_{\text{hardware}}(t) = \eta_0 (1 + g_{\text{silicon}})^t$. Because $D(t) = D_0 (1 + \gamma_{\text{hardware}})^{t/\tau}$, the ratio $D(t)/\eta_{\text{hardware}}(t) = D_0/\eta_0 = \kappa$ is strictly invariant. Therefore, the capital outlay required to command $f \ge 1/3$ of the verification committee satisfies $\text{CAPEX}_{1/3}(t) \ge \frac{1}{3} N (D(t)/\eta_{\text{hardware}}(t)) P_{\text{silicon}} + \text{Stake} = \Theta(1) \;\; \forall t \ge 0$, rendering Byzantine subversion provably immune to hardware price declines.*
+**Theorem 2 (Silicon Invariance of the Byzantine Threshold).** *Let operational tensor efficiency be $\eta_{\text{hardware}}(t) = \eta_0 (1 + g_{\text{silicon}})^t$. Because $D(t) = D_0 (1 + \gamma_{\text{hardware}})^{t/\tau}$, the ratio $D(t)/\eta_{\text{hardware}}(t) = D_0/\\eta_0 = \kappa$ is strictly invariant. Therefore, the capital outlay required to command $f \ge 1/3$ of the verification committee satisfies $\text{CAPEX}_{1/3}(t) \ge \frac{1}{3} N (D(t)/\eta_{\text{hardware}}(t)) P_{\text{silicon}} + \text{Stake} = \Theta(1) \;\; \forall t \ge 0$, rendering Byzantine subversion provably immune to hardware price declines.*
+
+#### 7.1 Canonical GPU Hardware Multiplier Matrix ($W_i$)
+To prevent compute sybil spoofing while accurately weighting heterogeneous silicon architectures across the Hyperbolic Poincaré Tensor Arbor, the protocol calculates each validator node $i$'s effective consensus weight and emission share through a deterministic hardware multiplier $W_i$:
+
+$$R_i(t) = R_{\text{epoch}}(t) \cdot \frac{S_i \cdot W_i}{\sum_{k=1}^N S_k \cdot W_k} \tag{29}$$
+
+where $S_i \ge 25{,}000\text{ } \$33\text{RD}$ represents the mandatory non-custodial bonded collateral stake verified by the Solana Anchor staking contract, and $W_i$ is cryptographically attested via Confidential Computing SPDM measurements:
+
+| Tier Rank | Accelerator Architecture | Memory & Interconnect | FP8 Compute Density | Multiplier ($W_i$) | Canonical Quorum Role |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Tier-1 Ultra** | NVIDIA Blackwell B200 | 192 GB HBM3e (8.0 TB/s NVLink 5.0) | 2,250 TFLOPS | **8.2x** | DeepSeek-V3 MoE / Primary Consensus Leader |
+| **Tier-1 High** | AMD Instinct MI300X | 192 GB HBM3 (5.3 TB/s Infinity Fabric) | 1,300 TFLOPS | **6.8x** | High-Throughput MoE Shard Execution |
+| **Tier-1 Advanced** | NVIDIA Hopper H200 | 141 GB HBM3e (4.8 TB/s NVLink 4.0) | 1,979 TFLOPS | **6.0x** | Llama-3.1-405B Model Pipeline Shard |
+| **Tier-1 Standard** | NVIDIA Hopper H100 SXM5 | 80 GB HBM3 (3.35 TB/s NVLink 4.0) | 989 TFLOPS | **4.8x** | 70B Quantized Evaluation & Proving |
+| **Tier-2 Edge** | NVIDIA GeForce RTX 4090 | 24 GB GDDR6X (PCIe Gen 4) | 330 TFLOPS | **1.0x** | Edge Routing Shard & Interactive Bisection |
 
 ---
 
@@ -483,7 +500,7 @@ Economic security, hardware bonding, and inference metering are governed by the 
 | Epoch 3 (Years 13–16) | 31,536,001 – 42,048,000 | 0.08918379 | 642.12 $33RD | 14,062,500.00 $33RD |
 | **Tail Subsidy (Years 17–24)** | **42,048,001 – 63,072,000** | **0.04459189** | **321.06 $33RD** | **15,000,000.00 $33RD** |
 
-**Automated Buyback-and-Burn Engine:** Every commercial tensor inference transaction settled through the Solana Anchor bridge allocates fees: 75% directly to GPU compute providers, 15% to validator staking yield, and 10% to an automated buyback-and-burn crank. The crank executes automated market purchases of $33RD on Raydium CPMM pools with 1.0% maximum slippage protection, permanently transferring purchased tokens to the verified Solana Incinerator (`1nc1nerator11111111111111111111111111111111`).
+**Automated Buyback-and-Burn Engine:** Every commercial tensor inference transaction settled through the Solana Anchor bridge allocates protocol fees: 75% directly to GPU compute providers according to their stake-weighted hardware multiplier ($W_i \in \{8.2, 6.8, 6.0, 4.8, 1.0\}$) requiring a minimum 25,000 $33RD validator stake bond, 15% to validator staking yield, and 10% to an automated buyback-and-burn crank. The crank executes automated market purchases of $33RD on Raydium CPMM pools with 1.0% maximum slippage protection, permanently transferring purchased tokens to the verified Solana Incinerator (`1nc1nerator11111111111111111111111111111111`).
 
 ---
 

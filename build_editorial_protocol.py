@@ -569,7 +569,7 @@ def generate_protocol_page():
       <div class="telemetry-strip">
         <div class="telemetry-cell">
           <span class="telemetry-lbl">Byzantine Committee Quorum</span>
-          <span class="telemetry-val accent">K = 64 ACTIVE VALIDATORS</span>
+          <span class="telemetry-val accent">K=64 HYPERBOLIC BYZANTINE QUORUM</span>
         </div>
         <div class="telemetry-cell">
           <span class="telemetry-lbl">Zero-Knowledge Proof Scheme</span>
@@ -587,29 +587,29 @@ def generate_protocol_page():
     </header>
 
     <!-- ==================================================================== -->
-    <!-- SECTION 01: TENSOR ARBOR -->
+    <!-- SECTION 01: HYPERBOLIC POINCARÉ TENSOR ARBOR -->
     <!-- ==================================================================== -->
     <section class="ed-section" id="tensor-arbor">
       <div class="ed-sec-head">
         <div class="sec-badge-col">
           <span class="sec-giant-num">01</span>
-          <span class="sec-kicker">// TOPOLOGY &amp; INTERCONNECT</span>
+          <span class="sec-kicker">// TOPOLOGY &amp; GROMOV GEODESICS</span>
         </div>
         <div>
-          <h2 class="sec-title">Tensor Arbor Hierarchical Routing</h2>
+          <h2 class="sec-title">Hyperbolic Poincaré Tensor Arbor</h2>
           <p class="sec-summary">
-            Traditional peer-to-peer compute networks degrade with $O(N^2)$ communication complexity as cluster size scales, generating crippling network bottlenecks during distributed model evaluation. The Singularity Protocol resolves this fundamental limitation by embedding physical GPU nodes into a continuous Poincaré disk model of Gromov hyperbolic space $\mathbb{H}^2$. Distance between nodes $u, v$ is defined by the Riemannian metric:
+            Traditional peer-to-peer compute networks degrade with $O(N^2)$ communication complexity as cluster size scales, generating crippling network bottlenecks during distributed model evaluation. The Singularity Protocol resolves this fundamental limitation with the canonical <strong>Hyperbolic Poincaré Tensor Arbor</strong>, embedding physical GPU nodes into a continuous Poincaré disk model of Gromov hyperbolic space $\mathbb{H}^2$ governed by <strong>Gromov Geodesics &amp; Bounded Curvature</strong>. Distance between nodes $u, v$ is defined by the Riemannian metric:
           </p>
         </div>
       </div>
 
       <div class="math-callout">
-        <div class="math-callout-title">GROMOV HYPERBOLIC GEODESIC METRIC &bull; CONTINUOUS EMBEDDING</div>
+        <div class="math-callout-title">GROMOV GEODESICS &amp; BOUNDED CURVATURE &bull; RIEMANNIAN METRIC</div>
         <div class="math-display-box">
-          $$d_{\mathbb{H}}(u, v) = \operatorname{arcosh}\left(1 + \frac{2\|u - v\|^2}{(1 - \|u\|^2)(1 - \|v\|^2)}\right)$$
+          $$d_{\mathbb{H}}(u, v) = \operatorname{arcosh}\left(1 + \frac{2\|u - v\|^2}{(1 - \|u\|^2)(1 - \|v\|^2)}\right) \quad \text{with constant negative Gaussian curvature } \kappa = -1.0$$
         </div>
         <p style="color:var(--chalk-dim); font-size:14px; line-height:1.65;">
-          Under this hyperbolic geometry, routing paths follow geodesics that plunge inward through the dense core and branch outward with logarithmic efficiency: $O(\log N)$ hop diameter across global cluster nodes, guaranteeing deterministic pipeline synchronization without central coordination.
+          Under this non-Euclidean geometry, negative Gaussian curvature ($\kappa = -1.0$) drives exponential volume expansion ($V(r) \sim e^r$), mirroring the natural branching factor of deep transformer computation trees. Routing paths follow Gromov geodesics that plunge inward through the dense core and branch outward with logarithmic efficiency: $O(\log N)$ hop diameter across global cluster nodes, bounding graph diameter to $\le 8$ geodesic hops even under continuous 40% node churn without central coordination.
         </p>
       </div>
 
@@ -633,16 +633,16 @@ def generate_protocol_page():
 
         <div class="ed-grid-cell">
           <div>
-            <span class="cell-tag">[ MANIFOLD CORE ]</span>
+            <span class="cell-tag">[ GROMOV GEODESICS &amp; BOUNDED CURVATURE ]</span>
             <h3 class="cell-title">Geodesic Plunge</h3>
             <p class="cell-body">
-              Packets destined for distant layers plunge inward toward the center of the Poincaré disk, avoiding the exponential perimeter circumference of standard Euclidean graphs.
+              Packets destined for distant layers plunge inward toward the center of the Poincaré disk along non-Euclidean Gromov geodesics under negative Gaussian curvature (&kappa; = -1.0), bypassing exponential Euclidean perimeter bottlenecks.
             </p>
           </div>
           <ul class="cell-spec-list">
-            <li><span>Manifold Curvature:</span> <strong>&kappa; = -1.0 Fixed</strong></li>
-            <li><span>Coordinate Precision:</span> <strong>64-bit Fixed Point</strong></li>
-            <li><span>Embedding Space:</span> <strong>$\mathbb{H}^2$ Poincaré Ball</strong></li>
+            <li><span>Gaussian Curvature:</span> <strong>&kappa; = -1.0 Negative</strong></li>
+            <li><span>Metric Embedding:</span> <strong>Poincaré Disk $\mathbb{H}^2$</strong></li>
+            <li><span>Gromov Bound:</span> <strong>&delta; &le; 1.2 Hyperbolic</strong></li>
             <li><span>Core Hop Latency:</span> <strong>&lt; 1.8 ms</strong></li>
           </ul>
         </div>

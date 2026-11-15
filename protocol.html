@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="lenis" style="--t: #FF2424; --bg: #070707; --f: #070707; --border: rgba(255, 255, 255, 0.12);">
+<html lang="en" class="lenis" style="--t: #FF2424; --f: #070707;">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,39 +26,23 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
-  <link rel="stylesheet" href="assets/tokens.css">
   <style>
     :root {
-      --bg: #070707;
-      --f: #070707;
-      --t: #FF2424;
+      --t: #FF2424; /* Primary Laser Crimson */
       --t-glow: rgba(255, 36, 36, 0.45);
+      --t-subtle: rgba(255, 36, 36, 0.08);
+      --f: #070707; /* Pure Obsidian Background */
       --chalk: #F2F2F5;
+      --chalk-dim: #C8C8D2;
       --dim: #8E8E98;
+      --slate: #6E6E78;
       --border: rgba(255, 255, 255, 0.12);
       --border-light: rgba(255, 255, 255, 0.18);
-      --border-hover: rgba(255, 255, 255, 0.25);
       --border-accent: rgba(255, 36, 36, 0.35);
-      --bg-elevated: #0B0B0E;
-      --bg-card: transparent;
-      --bg-card-hover: transparent;
-      --card-bg: transparent;
-      --laser-red: var(--t);
-      --laser-glow: var(--t-glow);
-      --laser-subtle: rgba(255, 36, 36, 0.08);
-      --chalk-dim: #D4D4DC;
-      --slate: var(--dim);
-      --dark-slate: #4A4A56;
-      --white: #FFFFFF;
-      --green: #00E676;
-      --green-glow: rgba(0, 230, 118, 0.35);
-      --amber: #FFAA00;
       --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-      --fm: 'Obel Mono', 'JetBrains Mono', ui-monospace, monospace;
-      --fh: 'Obel Mono Masked', 'Syne', -apple-system, sans-serif;
-      --pad: clamp(16px, 3.5vw, 60px);
-      font-variant-numeric: tabular-nums;
-      font-feature-settings: "tnum" 1;
+      --fm: 'JetBrains Mono', ui-monospace, monospace;
+      --fh: 'Syne', sans-serif;
+      --green: #00E676;
     }
 
     *, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -518,42 +502,6 @@
     .foot__top:hover {
       text-decoration: underline;
     }
-  
-    /* TABULAR NUMERICS FOR ALL METRICS & TELEMETRY */
-    table, td, th, code, pre, .mono, [data-mono], .telemetry-val, .telemetry-value, .telemetry-cell,
-    .metric-val, .metric-value, .stat-val, .stat-value, .token-val, .sbar__coord,
-    .pillar-num, .spec-val, .spec-table, .spec-table-box, .sim-field-val, .sim-metric-data,
-    .sim-metric-row, .sim-metric-title, .out-metric-val, .cmd-val, .sec-giant-num,
-    .terminal-text, [data-glitch], .mechanical-glitch, .manifesto-metric__val,
-    .pair-card__stat-val, .above__counter, .calc-res-value, .calc-res-sub,
-    .sim-status-banner, .sim-status-head, [data-metric], .tier-metric-val, .kpi-val,
-    .telemetry-row, .kpi-number, .timeline-num, .tag-pill {
-      font-variant-numeric: tabular-nums !important;
-      font-feature-settings: "tnum" 1 !important;
-    }
-
-    /* BRUTALIST ZERO-CARDS & CLEAN FULL-WIDTH HAIRLINE DIVIDERS */
-    .card, .bg-card, [data-card] {
-      background: transparent !important;
-      box-shadow: none !important;
-      border-radius: 0 !important;
-    }
-
-    /* RESPONSIVE TYPOGRAPHY (1440px+ down to 375px mobile) */
-    @media (max-width: 640px) {
-      body { font-size: 14.5px; }
-      .page-wrap { padding: 100px 16px 60px !important; }
-      .telemetry-strip { grid-template-columns: 1fr !important; }
-      .telemetry-cell { border-right: none !important; border-bottom: 1px solid var(--border) !important; padding: 18px 16px !important; }
-      .telemetry-cell:last-child { border-bottom: none !important; }
-      .ed-headline { font-size: clamp(30px, 8.5vw, 42px) !important; line-height: 1.05 !important; }
-      .ed-lead { font-size: 15px !important; }
-    }
-    @media (max-width: 375px) {
-      body { font-size: 14px; }
-      .page-wrap { padding: 90px 12px 50px !important; }
-      .ed-headline { font-size: 28px !important; }
-    }
   </style>
 </head>
 <body>
@@ -571,8 +519,8 @@
             <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
             <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
             <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF2424" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
-            <circle cx="12" cy="12" r="1.8" fill="#FF2424"/>
+            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
           </svg>
         </div>
         <span class="nav-title" data-glitch>33RD TREE LABS</span>
@@ -604,7 +552,7 @@
       <div class="telemetry-strip">
         <div class="telemetry-cell">
           <span class="telemetry-lbl">Byzantine Committee Quorum</span>
-          <span class="telemetry-val accent">K = 64 ACTIVE VALIDATORS</span>
+          <span class="telemetry-val accent">K=64 HYPERBOLIC BYZANTINE QUORUM</span>
         </div>
         <div class="telemetry-cell">
           <span class="telemetry-lbl">Zero-Knowledge Proof Scheme</span>
@@ -622,29 +570,29 @@
     </header>
 
     <!-- ==================================================================== -->
-    <!-- SECTION 01: TENSOR ARBOR -->
+    <!-- SECTION 01: HYPERBOLIC POINCARÉ TENSOR ARBOR -->
     <!-- ==================================================================== -->
     <section class="ed-section" id="tensor-arbor">
       <div class="ed-sec-head">
         <div class="sec-badge-col">
           <span class="sec-giant-num">01</span>
-          <span class="sec-kicker">// TOPOLOGY &amp; INTERCONNECT</span>
+          <span class="sec-kicker">// TOPOLOGY &amp; GROMOV GEODESICS</span>
         </div>
         <div>
-          <h2 class="sec-title">Tensor Arbor Hierarchical Routing</h2>
+          <h2 class="sec-title">Hyperbolic Poincaré Tensor Arbor</h2>
           <p class="sec-summary">
-            Traditional peer-to-peer compute networks degrade with $O(N^2)$ communication complexity as cluster size scales, generating crippling network bottlenecks during distributed model evaluation. The Singularity Protocol resolves this fundamental limitation by embedding physical GPU nodes into a continuous Poincaré disk model of Gromov hyperbolic space $\mathbb{H}^2$. Distance between nodes $u, v$ is defined by the Riemannian metric:
+            Traditional peer-to-peer compute networks degrade with $O(N^2)$ communication complexity as cluster size scales, generating crippling network bottlenecks during distributed model evaluation. The Singularity Protocol resolves this fundamental limitation with the canonical <strong>Hyperbolic Poincaré Tensor Arbor</strong>, embedding physical GPU nodes into a continuous Poincaré disk model of Gromov hyperbolic space $\mathbb{H}^2$ governed by <strong>Gromov Geodesics &amp; Bounded Curvature</strong>. Distance between nodes $u, v$ is defined by the Riemannian metric:
           </p>
         </div>
       </div>
 
       <div class="math-callout">
-        <div class="math-callout-title">GROMOV HYPERBOLIC GEODESIC METRIC &bull; CONTINUOUS EMBEDDING</div>
+        <div class="math-callout-title">GROMOV GEODESICS &amp; BOUNDED CURVATURE &bull; RIEMANNIAN METRIC</div>
         <div class="math-display-box">
-          $$d_{\mathbb{H}}(u, v) = \operatorname{arcosh}\left(1 + \frac{2\|u - v\|^2}{(1 - \|u\|^2)(1 - \|v\|^2)}\right)$$
+          $$d_{\mathbb{H}}(u, v) = \operatorname{arcosh}\left(1 + \frac{2\|u - v\|^2}{(1 - \|u\|^2)(1 - \|v\|^2)}\right) \quad \text{with constant negative Gaussian curvature } \kappa = -1.0$$
         </div>
         <p style="color:var(--chalk-dim); font-size:14px; line-height:1.65;">
-          Under this hyperbolic geometry, routing paths follow geodesics that plunge inward through the dense core and branch outward with logarithmic efficiency: $O(\log N)$ hop diameter across global cluster nodes, guaranteeing deterministic pipeline synchronization without central coordination.
+          Under this non-Euclidean geometry, negative Gaussian curvature ($\kappa = -1.0$) drives exponential volume expansion ($V(r) \sim e^r$), mirroring the natural branching factor of deep transformer computation trees. Routing paths follow Gromov geodesics that plunge inward through the dense core and branch outward with logarithmic efficiency: $O(\log N)$ hop diameter across global cluster nodes, bounding graph diameter to $\le 8$ geodesic hops even under continuous 40% node churn without central coordination.
         </p>
       </div>
 
@@ -668,16 +616,16 @@
 
         <div class="ed-grid-cell">
           <div>
-            <span class="cell-tag">[ MANIFOLD CORE ]</span>
+            <span class="cell-tag">[ GROMOV GEODESICS &amp; BOUNDED CURVATURE ]</span>
             <h3 class="cell-title">Geodesic Plunge</h3>
             <p class="cell-body">
-              Packets destined for distant layers plunge inward toward the center of the Poincaré disk, avoiding the exponential perimeter circumference of standard Euclidean graphs.
+              Packets destined for distant layers plunge inward toward the center of the Poincaré disk along non-Euclidean Gromov geodesics under negative Gaussian curvature (&kappa; = -1.0), bypassing exponential Euclidean perimeter bottlenecks.
             </p>
           </div>
           <ul class="cell-spec-list">
-            <li><span>Manifold Curvature:</span> <strong>&kappa; = -1.0 Fixed</strong></li>
-            <li><span>Coordinate Precision:</span> <strong>64-bit Fixed Point</strong></li>
-            <li><span>Embedding Space:</span> <strong>$\mathbb{H}^2$ Poincaré Ball</strong></li>
+            <li><span>Gaussian Curvature:</span> <strong>&kappa; = -1.0 Negative</strong></li>
+            <li><span>Metric Embedding:</span> <strong>Poincaré Disk $\mathbb{H}^2$</strong></li>
+            <li><span>Gromov Bound:</span> <strong>&delta; &le; 1.2 Hyperbolic</strong></li>
             <li><span>Core Hop Latency:</span> <strong>&lt; 1.8 ms</strong></li>
           </ul>
         </div>

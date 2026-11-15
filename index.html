@@ -693,15 +693,16 @@
        CHAPTER 02: PINNED ALTITUDE DESCENT (1208 M -> 0008 M)
        ===================================================================== */
     .above {
-      border-top: 1px solid var(--border);
       position: relative;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #040406;
       z-index: 4;
-      overflow: hidden;
+      border-top: 1px solid var(--border);
+      padding: clamp(36px, 5vh, 64px) 0;
+      box-sizing: border-box;
     }
     .above__canvas-bg {
       position: absolute;
@@ -710,6 +711,7 @@
       height: 100%;
       z-index: 1;
       opacity: 0.55;
+      pointer-events: none;
     }
     .above__pin {
       position: relative;
@@ -725,18 +727,13 @@
     }
     .above__metric-box {
       background: transparent;
-      border: 1px solid var(--border);
-      padding: clamp(28px, 4vw, 52px);
+      border: none;
+      border-left: 2px solid var(--t);
+      padding: clamp(16px, 2.5vw, 32px) 0 clamp(16px, 2.5vw, 32px) clamp(20px, 2.5vw, 32px);
       border-radius: 0;
       box-shadow: none;
+      backdrop-filter: none;
       position: relative;
-      overflow: hidden;
-    }
-    .above__metric-box::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 4px; height: 100%;
-      background: var(--t);
     }
     .above__counter-wrap {
       display: flex;
@@ -2317,7 +2314,7 @@
     </section>
 
     <!-- ===================================================================
-         CHAPTER 07: POINCARÉ HYPERBOLIC CONSENSUS PLAYGROUND
+         CHAPTER 07: POINCARÉ HYPERBOLIC CONSENSUS MANIFOLD
          =================================================================== -->
     <section class="play" id="playground">
       <div class="play__inner">
@@ -2326,44 +2323,73 @@
             <canvas id="playground-canvas"></canvas>
             <div id="play-flash-banner">STATE COMMITTED // ANCHOR VERIFIED</div>
             <div class="play__canvas-badge">
-              <span class="live-dot">&#9679;</span> POINCARÉ HYPERBOLIC MANIFOLD // &kappa; = -1.414
+              <span class="live-dot">&#9679;</span> POINCARÉ HYPERBOLIC MANIFOLD // &kappa; = -1.0
             </div>
           </div>
         </div>
 
         <div class="play__controls">
           <div class="kicker">CHAPTER 07 // LIVE PROTOCOL SIMULATOR &amp; CONSENSUS SANDBOX</div>
-          <h3 class="play__title">CONSENSUS PLAYGROUND</h3>
+          <h3 class="play__title">POINCARÉ HYPERBOLIC ARBOR</h3>
           
           <p class="play__desc">
-            Validators mapped into Poincaré hyperbolic coordinates plunging toward the central singularity coordinate. Byzantine committees achieve bit-exact INT8 convergence with sub-second Solana anchor settlement.
+            Poincaré disc projection of Gromov &delta;-hyperbolic tensor reduction (&kappa; = -1.0, Exponential Plunge Hyperboloid). Interactive K=64 committee quorum, Byzantine FP16 fault injection, and real-time geodesic bypass routing showing automatic route invalidation and zero-knowledge fallback under Byzantine churn.
           </p>
 
-          <!-- LIVE TELEMETRY STATS STRIP (NO CARDS) -->
-          <div class="play__telemetry-strip">
-            <div class="play__telemetry-cell">
-              <span class="telemetry-lbl">QUORUM CONVERGENCE</span>
-              <span class="telemetry-val" id="hud-quorum">64 / 64 Converged</span>
-              <span class="telemetry-sub" id="hud-quorum-sub">100% Agreement (&gt; 66.7% Req)</span>
-            </div>
-            <div class="play__telemetry-cell">
-              <span class="telemetry-lbl">INFERENCE PRECISION</span>
-              <span class="telemetry-val crimson" id="hud-invariant">&Delta;&epsilon; = 0.00 INT8</span>
-              <span class="telemetry-sub">Deterministic FMA Invariant</span>
-            </div>
-          </div>
+          <table class="play__telemetry-table">
+            <tbody>
+              <tr>
+                <td>Quorum Committee Status</td>
+                <td id="hud-quorum">64 / 64 (100.0%) [VALIDATED]</td>
+              </tr>
+              <tr>
+                <td>Geodesic Invariant</td>
+                <td id="hud-invariant">&Delta;&epsilon; = 0.00 INT8</td>
+              </tr>
+              <tr>
+                <td>ZK-Fallback Detours</td>
+                <td id="hud-bypass-status">0 DETOURS // &le; 8 HOPS</td>
+              </tr>
+              <tr>
+                <td>Slashed Collateral</td>
+                <td id="hud-slashed-stake">0 $33RD (TO 1nc1nerator...1111)</td>
+              </tr>
+            </tbody>
+          </table>
 
           <div class="play__row">
             <div class="play__row-head">
               <span>QUORUM COMMITTEE SIZE (K)</span>
-              <span id="k-out">K = 64 / 64 (100% QUORUM)</span>
+              <span id="k-out">K = 64 / 64 (Threshold: f &le; 21)</span>
             </div>
             <input type="range" id="k-slider" min="16" max="64" value="64" step="1">
           </div>
 
+          <div class="play__row">
+            <div class="play__row-head">
+              <span>BYZANTINE ADVERSARY COUNT (f)</span>
+              <span id="f-out">f = 0 (Safe Quorum)</span>
+            </div>
+            <input type="range" id="byz-slider" min="0" max="28" value="0" step="1">
+          </div>
+
+          <div class="play__row">
+            <div class="play__row-head">
+              <span>ATTACK VECTOR SIMULATION</span>
+              <span id="attack-vector-lbl" style="color:var(--dim);">FP16 GRADIENT POISON</span>
+            </div>
+            <select id="attack-vector-select" class="play__select">
+              <option value="gradient-poison">Malicious FP16 Gradient Poisoning (CAP-FFN NaN/Inf)</option>
+              <option value="silent-drift">Silent Tensor Drift (Creeping Exponent Past Envelope)</option>
+              <option value="equivocation">Equivocation (Dual-Block Header Fork Proposal)</option>
+              <option value="sybil-stall">Coordinated Sybil Denial-of-Service (Stall)</option>
+            </select>
+          </div>
+
           <div class="play__btn-row">
-            <button type="button" id="btn-play-fault" class="btn-action fault">[ INJECT BYZANTINE FAULT ]</button>
-            <button type="button" id="btn-play-reset" class="btn-action reset">[ RESET / SYNC QUORUM ]</button>
+            <button type="button" id="btn-play-fault" class="btn-action fault">[ INJECT FP16 FAULT ]</button>
+            <button type="button" id="btn-play-round" class="btn-action">[ RUN CHALLENGE ]</button>
+            <button type="button" id="btn-play-reset" class="btn-action reset">[ RESET / SYNC ]</button>
             <a href="simulator.html" class="btn-action primary">FULL SIMULATOR SUITE &rarr;</a>
           </div>
         </div>
@@ -3096,11 +3122,17 @@
     const playCanvas = document.getElementById('playground-canvas');
     const playFlashBanner = document.getElementById('play-flash-banner');
     const hudQuorum = document.getElementById('hud-quorum');
-    const hudQuorumSub = document.getElementById('hud-quorum-sub');
     const hudInvariant = document.getElementById('hud-invariant');
+    const hudBypassStatus = document.getElementById('hud-bypass-status');
+    const hudSlashedStake = document.getElementById('hud-slashed-stake');
     const kSlider = document.getElementById('k-slider');
     const kOut = document.getElementById('k-out');
+    const byzSlider = document.getElementById('byz-slider');
+    const fOut = document.getElementById('f-out');
+    const attackSelect = document.getElementById('attack-vector-select');
+    const attackVectorLbl = document.getElementById('attack-vector-lbl');
     const btnPlayFault = document.getElementById('btn-play-fault');
+    const btnPlayRound = document.getElementById('btn-play-round');
     const btnPlayReset = document.getElementById('btn-play-reset');
 
     let playSim = null;
@@ -3108,25 +3140,32 @@
     function updatePlaygroundHUD(m) {
       if (!m) return;
       if (kOut) {
-        const pct = Math.round((m.k / 64) * 100);
-        kOut.textContent = `K = ${m.k} / 64 (${pct}% QUORUM)`;
+        kOut.textContent = `K = ${m.k} / 64 (Threshold: f ≤ ${m.maxFaults})`;
+      }
+      if (fOut) {
+        fOut.textContent = m.faultCount <= m.maxFaults
+          ? `f = ${m.faultCount} (Safe Quorum)`
+          : `f = ${m.faultCount} (CRITICAL BREACH)`;
+        fOut.style.color = m.faultCount <= m.maxFaults ? 'var(--dim)' : '#FF2424';
+      }
+      if (byzSlider && parseInt(byzSlider.value, 10) !== m.faultCount) {
+        byzSlider.value = m.faultCount;
       }
       if (hudQuorum) {
-        hudQuorum.textContent = `${m.honestCount} / ${m.totalActive} Converged`;
-      }
-      if (hudQuorumSub) {
-        const pct = Math.round(m.honestRatio * 100);
-        hudQuorumSub.textContent = `${pct}% Agreement (${m.isQuorum ? '> 66.7% Req' : 'PARTITION DETECTED'})`;
-        hudQuorumSub.style.color = m.isQuorum ? 'var(--dim)' : '#FFAA00';
+        hudQuorum.textContent = `${m.honestCount} / ${m.totalActive} (${(m.honestRatio * 100).toFixed(1)}%) [${m.isQuorum ? 'VALIDATED' : 'BREACH'}]`;
+        hudQuorum.style.color = m.isQuorum ? '#00E676' : '#FF2424';
       }
       if (hudInvariant) {
-        if (m.faultCount === 0) {
-          hudInvariant.textContent = 'Δε = 0.00 INT8';
-          hudInvariant.style.color = '#FF2424';
-        } else {
-          hudInvariant.textContent = 'Δε = +0.47 FP16 (BYPASS)';
-          hudInvariant.style.color = '#FFAA00';
-        }
+        hudInvariant.textContent = m.consensusInvariant;
+        hudInvariant.style.color = m.faultCount === 0 ? '#FFFFFF' : '#FF2424';
+      }
+      if (hudBypassStatus) {
+        hudBypassStatus.textContent = `${m.activeBypasses} DETOURS // ≤ 8 HOPS`;
+        hudBypassStatus.style.color = m.activeBypasses > 0 ? '#FFAA00' : '#FFFFFF';
+      }
+      if (hudSlashedStake) {
+        hudSlashedStake.textContent = `${m.totalSlashedStake.toLocaleString()} $33RD (TO 1nc1nerator...1111)`;
+        hudSlashedStake.style.color = m.totalSlashedStake > 0 ? '#FF2424' : '#FFFFFF';
       }
     }
 
@@ -3135,10 +3174,16 @@
         k: 64,
         speed: 1.0,
         interactive: true,
+        showHud: false,
+        attackVector: 'gradient-poison',
         flashBannerElement: playFlashBanner,
         onQuorumChange: (m) => updatePlaygroundHUD(m),
-        onByzantineEvent: (node, m) => updatePlaygroundHUD(m)
+        onByzantineEvent: (node, m) => updatePlaygroundHUD(m),
+        onRouteBypass: () => {
+          if (playSim) updatePlaygroundHUD(playSim.getMetrics());
+        }
       });
+      updatePlaygroundHUD(playSim.getMetrics());
     }
 
     if (kSlider) {
@@ -3148,9 +3193,30 @@
       });
     }
 
+    if (byzSlider) {
+      byzSlider.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value, 10);
+        if (playSim) playSim.setFaultCount(val);
+      });
+    }
+
+    if (attackSelect) {
+      attackSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (attackVectorLbl) attackVectorLbl.textContent = val.toUpperCase().replace('-', ' ');
+        if (playSim) playSim.setAttackVector(val);
+      });
+    }
+
     if (btnPlayFault) {
       btnPlayFault.addEventListener('click', () => {
         if (playSim) playSim.injectByzantineFault();
+      });
+    }
+
+    if (btnPlayRound) {
+      btnPlayRound.addEventListener('click', () => {
+        if (playSim) playSim.executeConsensusChallenge();
       });
     }
 
