@@ -1,0 +1,53 @@
+{
+  "name": "33rd Tree Labs Design System Contract",
+  "version": "2.0.0",
+  "colors": {
+    "background_void": "#000000",
+    "background_obsidian": "#070707",
+    "background_elevated": "#0B0B0E",
+    "primary_crimson": "#FF2424",
+    "primary_crimson_glow": "rgba(255, 36, 36, 0.45)",
+    "primary_crimson_subtle": "rgba(255, 36, 36, 0.08)",
+    "text_stark": "#FFFFFF",
+    "text_chalk": "#F2F2F5",
+    "text_dim": "#8E8E98",
+    "text_muted": "#5A5A66",
+    "hairline_border": "rgba(255, 255, 255, 0.12)",
+    "hairline_accent": "rgba(255, 36, 36, 0.35)",
+    "accent_green": "#00E676"
+  },
+  "typography": {
+    "font_display": "'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif",
+    "font_mono": "'Obel Mono', 'JetBrains Mono', ui-monospace, monospace",
+    "font_headline": "'Obel Mono Masked', 'Syne', -apple-system, sans-serif"
+  },
+  "brutalist_rules": {
+    "no_cards": true,
+    "no_boxed_panels": true,
+    "dividers": "1px solid rgba(255, 255, 255, 0.12)",
+    "emojis": false,
+    "domain": "33rdtreelabs.tech"
+  },
+  "canonical_metrics": {
+    "hard_cap": "33,333,333 $33RD",
+    "quorum_committee": "K=64",
+    "min_validator_bond": "25,000 $33RD",
+    "fee_burn": "10% to 1nc1nerator...1111",
+    "hardware_reward_pool": "75%",
+    "rd_multisig": "15%"
+  },
+  "motion_contract": {
+    "lenis_subpages": {
+      "lerp": 0.14,
+      "wheelMultiplier": 1.15,
+      "touchMultiplier": 1.5,
+      "smoothWheel": true
+    },
+    "lenis_home_story": {
+      "lerp": 0.085,
+      "wheelMultiplier": 1.0,
+      "touchMultiplier": 1.4,
+      "smoothWheel": true
+    }
+  }
+}

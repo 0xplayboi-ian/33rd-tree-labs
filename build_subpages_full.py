@@ -23,8 +23,8 @@ def get_base_css():
       --chalk-dim: #C8C8D2;
       --dim: #8E8E98;
       --slate: #6E6E78;
-      --border: #1C1C24;
-      --border-light: #2A2A36;
+      --border: rgba(255, 255, 255, 0.12);
+      --border-light: rgba(255, 255, 255, 0.18);
       --border-accent: rgba(255, 36, 36, 0.35);
       --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
       --fm: 'JetBrains Mono', ui-monospace, monospace;
@@ -537,26 +537,43 @@ def get_base_css():
     .calc-matrix-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      border: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      border-left: none;
+      border-right: none;
       margin: 36px 0;
+      background: transparent;
     }
     @media (max-width: 900px) {
       .calc-matrix-grid { grid-template-columns: 1fr; }
     }
     .calc-controls {
-      padding: 36px;
+      padding: 36px 36px 36px 0;
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       gap: 24px;
+      background: transparent;
+    }
+    @media (max-width: 900px) {
+      .calc-controls {
+        padding: 24px 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
     }
     .calc-outputs {
-      padding: 36px;
+      padding: 36px 0 36px 36px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 24px;
-      background: rgba(255, 36, 36, 0.015);
+      background: transparent;
+    }
+    @media (max-width: 900px) {
+      .calc-outputs {
+        padding: 24px 0;
+      }
     }
     .calc-field label {
       display: block;
@@ -724,7 +741,7 @@ def get_page_head(title, description, active_page="nodes"):
         <a href="nodes.html" class="nav-link {'active' if active_page == 'nodes' else ''}" data-glitch>[ NODES ]</a>
         <a href="tokenomics.html" class="nav-link {'active' if active_page == 'tokenomics' else ''}" data-glitch>[ TOKENOMICS ]</a>
         <a href="research.html" class="nav-link {'active' if active_page == 'research' else ''}" data-glitch>[ RESEARCH ]</a>
-        <a href="whitepaper.html" class="nav-link {'active' if active_page == 'whitepaper' else ''}" data-glitch>[ WHITEPAPER ]</a>
+        <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>
       </div>
     </nav>
   </div>
@@ -747,7 +764,8 @@ def get_page_foot():
   <script>
     const lenis = new Lenis({
       lerp: 0.14,
-      wheelMultiplier: 1.25,
+      wheelMultiplier: 1.15,
+      touchMultiplier: 1.5,
       smoothWheel: true,
       smoothTouch: false
     });
