@@ -51,6 +51,7 @@ html_template = """<!doctype html>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
+  <link rel="stylesheet" href="assets/tokens.css">
   <style>
     /* BRAND TYPOGRAPHY: OBEL MONO + FALLBACKS */
     @font-face {
@@ -76,18 +77,25 @@ html_template = """<!doctype html>
     }
 
     :root {
-      --t: #FF2424; /* Crimson Accent */
-      --t-glow: rgba(255, 36, 36, 0.45);
+      --bg: #070707;
       --f: #070707; /* Pure Obsidian */
+      --t: #FF2424; /* Official Crimson Red */
+      --t-glow: rgba(255, 36, 36, 0.45);
       --chalk: #F2F2F5;
       --dim: #8E8E98;
-      --border: #1C1C24;
+      --border: rgba(255, 255, 255, 0.12);
       --border-accent: rgba(255, 36, 36, 0.35);
-      --card-bg: rgba(11, 11, 14, 0.92);
+      --card-bg: transparent;
+      --bg-card: transparent;
+      --bg-card-hover: transparent;
+      --laser-red: var(--t);
+      --laser-glow: var(--t-glow);
       --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
       --fm: 'Obel Mono', 'JetBrains Mono', ui-monospace, monospace;
       --fh: 'Obel Mono Masked', 'Syne', -apple-system, sans-serif;
       --pad: clamp(20px, 3.5vw, 60px);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
     }
 
     *, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -486,14 +494,14 @@ html_template = """<!doctype html>
     }
     /* ARCHITECTURAL MANIFESTO CARD (HIGH-CONTRAST DEDICATED GLASS PLATE) */
     .manifesto-card {
-      background: linear-gradient(145deg, rgba(16, 16, 24, 0.96) 0%, rgba(8, 8, 12, 0.98) 100%);
-      border: 1px solid rgba(255, 36, 36, 0.35);
-      border-left: 4px solid var(--t);
-      border-radius: 6px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--t);
+      border-radius: 0;
       padding: clamp(32px, 4vw, 56px);
       margin: 0 0 clamp(48px, 6vh, 72px);
       position: relative;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      box-shadow: none;
       overflow: hidden;
     }
     .manifesto-card::before {
@@ -614,6 +622,7 @@ html_template = """<!doctype html>
        CHAPTER 02: PINNED ALTITUDE DESCENT (1208 M -> 0008 M)
        ===================================================================== */
     .above {
+      border-top: 1px solid var(--border);
       position: relative;
       height: 100vh;
       display: flex;
@@ -644,14 +653,13 @@ html_template = """<!doctype html>
       align-items: center;
     }
     .above__metric-box {
-      background: var(--card-bg);
+      background: transparent;
       border: 1px solid var(--border);
       padding: clamp(28px, 4vw, 52px);
-      border-radius: 8px;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 36, 36, 0.12);
+      border-radius: 0;
+      box-shadow: none;
       position: relative;
       overflow: hidden;
-      backdrop-filter: blur(14px);
     }
     .above__metric-box::before {
       content: '';
@@ -1213,10 +1221,10 @@ html_template = """<!doctype html>
       height: 420px;
       background: #000000;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 0;
       overflow: hidden;
       position: relative;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 36, 36, 0.2);
+      box-shadow: none;
     }
     #playground-canvas { width: 100%; height: 100%; cursor: crosshair; }
     .play__canvas-badge {
@@ -1236,11 +1244,10 @@ html_template = """<!doctype html>
       display: flex;
       flex-direction: column;
       gap: 20px;
-      background: var(--card-bg);
+      background: transparent;
       border: 1px solid var(--border);
       padding: clamp(26px, 3.2vw, 40px);
-      border-radius: 8px;
-      backdrop-filter: blur(14px);
+      border-radius: 0;
     }
     .play__controls h3 {
       font-family: var(--fh);
@@ -1345,6 +1352,7 @@ html_template = """<!doctype html>
        CHAPTER 08: INVERTED COLORWAY FINALE & TECHNICAL SPECIFICATION TABLE
        ===================================================================== */
     .finale {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
       padding: clamp(90px, 14vh, 160px) var(--pad) clamp(60px, 10vh, 100px);
       background: #F4F4F6;
       color: #070707;
@@ -1374,12 +1382,12 @@ html_template = """<!doctype html>
       color: #070707;
     }
     .spec-table-wrap {
-      border: 2px solid #070707;
+      border: 1px solid #070707;
       background: #FFFFFF;
-      border-radius: 4px;
+      border-radius: 0;
       overflow: hidden;
       margin-bottom: 48px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+      box-shadow: none;
     }
     .spec-table-head {
       background: #070707;
@@ -1936,7 +1944,7 @@ html_template = """<!doctype html>
             <div>
               <div class="invariant-card__tag">INVARIANT 03 // VALUE ACCRUAL</div>
               <div class="invariant-card__title">10% INCINERATOR BURN FLOOR</div>
-              <div class="invariant-card__formula">1nc1nerator...1111 &bull; DEFLATIONARY</div>
+              <div class="invariant-card__formula">10% to 1nc1nerator...1111 &bull; DEFLATIONARY</div>
               <div class="invariant-card__desc" data-words>
                 10% of every inference micro-fee is atomically routed to the Solana Incinerator for permanent destruction. When daily volume exceeds 51,370 RD, burn exceeds emissions, locking in strict monetary deflation.
               </div>

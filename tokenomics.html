@@ -681,7 +681,7 @@
     
   </style>
 </head>
-<body>
+<body id="top">
 
   <!-- TOP-EDGE SCROLL PROGRESS BAR -->
   <div id="scroll-progress-line" aria-hidden="true"></div>
@@ -725,7 +725,7 @@
         <a href="nodes.html" class="nav-link " data-glitch>[ NODES ]</a>
         <a href="tokenomics.html" class="nav-link active" data-glitch>[ TOKENOMICS ]</a>
         <a href="research.html" class="nav-link " data-glitch>[ RESEARCH ]</a>
-        <a href="33rd_Tree_Labs_Whitepaper.pdf" class="nav-link" data-glitch download="33rd_Tree_Labs_Whitepaper.pdf">[ WHITEPAPER PDF &darr; ]</a>
+        <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" download="33rd_Tree_Labs_Whitepaper.pdf" class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>
       </div>
     </nav>
   </div>
@@ -739,19 +739,23 @@
         A mathematically capped, anti-inflationary utility and settlement asset on Solana. Strict asymptotic ceiling of 33,333,333 $33RD tokens, 100% LP incinerated to the canonical burner, zero mint authority, and continuous deflationary burn dynamics.
       </p>
 
-      <!-- TELEMETRY STRIP (NO CARD CONTAINERS) -->
+      <!-- TELEMETRY STRIP (NO CARD CONTAINERS - CLEAN 1PX HAIRLINES) -->
       <div class="telemetry-strip">
         <div class="telemetry-cell">
           <span class="telemetry-lbl">Immutable Hard Cap</span>
           <span class="telemetry-val accent">33,333,333 $33RD</span>
         </div>
         <div class="telemetry-cell">
-          <span class="telemetry-lbl">Liquidity Pool Status</span>
-          <span class="telemetry-val">100% LP INCINERATED</span>
+          <span class="telemetry-lbl">Fee Burn Mechanism</span>
+          <span class="telemetry-val accent">10% TO 1nc1nerator...1111</span>
         </div>
         <div class="telemetry-cell">
-          <span class="telemetry-lbl">Mint Authority</span>
-          <span class="telemetry-val">PERMANENTLY REVOKED (NONE)</span>
+          <span class="telemetry-lbl">Validator Stake Bond</span>
+          <span class="telemetry-val">25,000 $33RD</span>
+        </div>
+        <div class="telemetry-cell">
+          <span class="telemetry-lbl">Liquidity Pool Status</span>
+          <span class="telemetry-val">100% LP INCINERATED</span>
         </div>
         <div class="telemetry-cell">
           <span class="telemetry-lbl">Net Deflationary Threshold</span>
@@ -896,7 +900,7 @@
               <td>36-Month Linear Vesting // 0% TGE</td>
               <td class="green">ESCROW LOCKED</td>
             </tr>
-            <tr style="border-top:2px solid var(--border-light);">
+            <tr style="border-top:1px solid rgba(255, 255, 255, 0.12); font-weight:700;">
               <td class="accent">CANONICAL TOTAL HARD CAP</td>
               <td class="highlight" style="color:var(--t); font-size:14px;">33,333,333 $33RD</td>
               <td style="color:var(--t); font-size:14px;">100.0%</td>
@@ -1102,7 +1106,7 @@
             <span class="cell-tag">[ SINK 01 // BONDING ]</span>
             <h3 class="cell-title">Validator Collateral</h3>
             <p class="cell-body">
-              Every node operator must lock between 1,000 and 100,000 $33RD in an Anchor staking vault PDA to be eligible for Byzantine committee selection and job allocation.
+              Every node operator must lock collateral in an Anchor staking vault PDA (canonical Tier 3 Foundation Validator bond: 25,000 $33RD) to be eligible for Byzantine committee selection and job allocation.
             </p>
           </div>
           <ul class="cell-spec-list">
@@ -1117,13 +1121,13 @@
             <span class="cell-tag">[ SINK 02 // GAS &amp; FEES ]</span>
             <h3 class="cell-title">Inference Execution Gas</h3>
             <p class="cell-body">
-              Enterprise users pay for model inference queries in $33RD. 75% routes directly to node operators, 15% to protocol research PDA, and 10% is burned permanently.
+              Enterprise users pay for model inference queries in $33RD. 75% routes directly to node operators, 15% to protocol research PDA, and 10% is burned permanently to 1nc1nerator...1111.
             </p>
           </div>
           <ul class="cell-spec-list">
             <li><span>Operator Share:</span> <strong>75% Direct Yield</strong></li>
             <li><span>Protocol Treasury:</span> <strong>15% R&amp;D Vault</strong></li>
-            <li><span>Permanent Burn:</span> <strong>10% Incinerator Send</strong></li>
+            <li><span>Permanent Burn:</span> <strong>10% to 1nc1nerator...1111</strong></li>
           </ul>
         </div>
 
@@ -1362,7 +1366,8 @@
   <script>
     const lenis = new Lenis({
       lerp: 0.14,
-      wheelMultiplier: 1.25,
+      wheelMultiplier: 1.15,
+      touchMultiplier: 1.5,
       smoothWheel: true,
       smoothTouch: false
     });

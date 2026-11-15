@@ -29,33 +29,33 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
 
+    <link rel="stylesheet" href="assets/tokens.css">
     <style>
         :root {
-            /* 33RD TREE LABS DESIGN SYSTEM CONTRACT v2.0.0 */
-            --bg-void: #000000;
-            --bg-obsidian: #070707;
-            --bg-elevated: #0B0B0E;
+            /* 33RD TREE LABS UNIFIED DESIGN SYSTEM TOKENS */
             --bg: #070707;
-            --t: #FF2424; /* primary_crimson */
+            --f: #070707;
+            --t: #FF2424;
             --t-glow: rgba(255, 36, 36, 0.45);
-            --t-subtle: rgba(255, 36, 36, 0.08);
-            --laser-red: #FF2424;
-            --laser-glow: rgba(255, 36, 36, 0.45);
-            --laser-subtle: rgba(255, 36, 36, 0.08);
             --chalk: #F2F2F5;
-            --chalk-dim: #D4D4DC;
             --dim: #8E8E98;
-            --slate: #5A5A66;
-            --white: #FFFFFF;
-            --hairline: rgba(255, 255, 255, 0.12);
             --border: rgba(255, 255, 255, 0.12);
-            --border-hover: rgba(255, 36, 36, 0.35);
+            --border-hover: rgba(255, 255, 255, 0.25);
             --border-accent: rgba(255, 36, 36, 0.35);
+            --bg-elevated: #0B0B0E;
+            --bg-card: transparent;
+            --bg-card-hover: transparent;
+            --laser-red: var(--t);
+            --laser-glow: var(--t-glow);
+            --laser-subtle: rgba(255, 36, 36, 0.08);
+            --chalk-dim: #D4D4DC;
+            --slate: var(--dim);
+            --dark-slate: #4A4A56;
+            --white: #FFFFFF;
             --green: #00E676;
             --green-glow: rgba(0, 230, 118, 0.35);
-            --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-            --fm: 'Obel Mono', 'JetBrains Mono', ui-monospace, monospace;
-            --fh: 'Obel Mono Masked', 'Syne', -apple-system, sans-serif;
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum" 1;
         }
 
         /* TYPOGRAPHY: OBEL MONO & MONO MASKED */
@@ -918,7 +918,7 @@
         }
     </style>
 </head>
-<body>
+<body id="top">
 
     <!-- TOP-EDGE SCROLL TELEMETRY PROGRESS LINE -->
     <div id="scroll-progress-line" aria-hidden="true"></div>

@@ -834,7 +834,7 @@
         }
     </style>
 </head>
-<body>
+<body id="top">
 
     <!-- TOP-EDGE SCROLL TELEMETRY PROGRESS LINE -->
     <div id="scroll-progress-line" aria-hidden="true"></div>
@@ -1051,7 +1051,7 @@
                         The hyperbolic metric tensor ensures that distance exponentially expands near the disk boundary, naturally embedding high-dimensional distributed deep learning gradient graphs with minimal distortion.
                     </p>
                     <div class="math-formula-box">
-                        $$ds^2 = rac{4(dx^2 + dy^2)}{(1 - (x^2 + y^2))^2}$$
+                        $$ds^2 = \frac{4(dx^2 + dy^2)}{(1 - (x^2 + y^2))^2}$$
                         $$\kappa = -1.414, \quad \delta \le 1.414$$
                     </div>
                 </div>
@@ -1060,11 +1060,11 @@
                     <span class="math-col-num">[ 02 // BFT QUORUM ]</span>
                     <h3 class="math-col-title">Byzantine Bound</h3>
                     <p class="math-col-body">
-                        Deterministic 2/3 threshold signature quorum. Network guarantees safety and liveness against arbitrary adversarial collusions as long as faulty nodes do not exceed $f \le \lfloor(K-1)/3floor$.
+                        Deterministic 2/3 threshold signature quorum. Network guarantees safety and liveness against arbitrary adversarial collusions as long as faulty nodes do not exceed $f \le \lfloor(K-1)/3\rfloor$.
                     </p>
                     <div class="math-formula-box">
-                        $$3f + 1 \le K \implies f \le 21 	ext{ for } K=64$$
-                        $$	ext{Quorum} \ge \lceil 2K/3 ceil \implies \ge 43 	ext{ honest}$$
+                        $$3f + 1 \le K \implies f \le 21 \text{ for } K=64$$
+                        $$\text{Quorum} \ge \lceil 2K/3 \rceil \implies \ge 43 \text{ honest}$$
                     </div>
                 </div>
 
@@ -1072,11 +1072,11 @@
                     <span class="math-col-num">[ 03 // SLASHER CRANK ]</span>
                     <h3 class="math-col-title">Geodesic Detours</h3>
                     <p class="math-col-body">
-                        Upon detection of floating-point drift ($\Delta\epsilon > +0.42	ext{ FP16}$), the Singularity protocol initiates automated bisection dispute, reroutes traffic around rogue nodes, and confiscates 100% collateral stake.
+                        Upon detection of floating-point drift ($\Delta\epsilon > +0.42\text{ FP16}$), the Singularity protocol initiates automated bisection dispute, reroutes traffic around rogue nodes, and confiscates 100% collateral stake.
                     </p>
                     <div class="math-formula-box">
-                        $$\Delta\epsilon = |y_{	ext{node}} - y_{	ext{INT8}}| > 0.42$$
-                        $$	ext{Stake}_{	ext{slashed}} 	o 	ext{Solana 1nc1nerator...1111}$$
+                        $$\Delta\epsilon = |y_{\text{node}} - y_{\text{INT8}}| > 0.42$$
+                        $$\text{Stake}_{\text{slashed}} \to \text{Solana 1nc1nerator...1111}$$
                     </div>
                 </div>
             </div>
@@ -2250,7 +2250,7 @@
             } else if (node.state === 'byzantine') {
                 inspDrift.textContent = `Δε = +${node.drift} FP16 (CRITICAL DRIFT)`;
                 inspDrift.className = 'val-red';
-                inspRouting.textContent = 'ROUGE // BISECTION DISPUTE ACTIVE';
+                inspRouting.textContent = 'ROGUE // BISECTION DISPUTE ACTIVE';
                 inspRouting.className = 'val-amber';
                 inspBadge.textContent = '[BYZANTINE]';
                 inspBadge.className = 'val-red';
