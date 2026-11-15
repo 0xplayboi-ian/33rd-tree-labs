@@ -384,11 +384,12 @@ def build():
             <span class="cell-tag">[ SINK 01 // BONDING ]</span>
             <h3 class="cell-title">Validator Collateral</h3>
             <p class="cell-body">
-              Every node operator must lock between 1,000 and 100,000 $33RD in an Anchor staking vault PDA to be eligible for Byzantine committee selection and job allocation.
+              Every node operator must lock a minimum collateral bond of 25,000 $33RD in an Anchor staking vault PDA to be eligible for Byzantine committee selection and job allocation.
             </p>
           </div>
           <ul class="cell-spec-list">
-            <li><span>Circulation Impact:</span> <strong>Removes 3M-8M $33RD</strong></li>
+            <li><span>Minimum Collateral Bond:</span> <strong>25,000 $33RD</strong></li>
+            <li><span>Circulation Impact:</span> <strong>Removes 3M–8M $33RD</strong></li>
             <li><span>Lock Window:</span> <strong>7-Day Unbonding Cooldown</strong></li>
             <li><span>Slashing Risk:</span> <strong>5% to 100% Forfeiture</strong></li>
           </ul>
@@ -399,13 +400,13 @@ def build():
             <span class="cell-tag">[ SINK 02 // GAS &amp; FEES ]</span>
             <h3 class="cell-title">Inference Execution Gas</h3>
             <p class="cell-body">
-              Enterprise users pay for model inference queries in $33RD. 75% routes directly to node operators, 15% to protocol research PDA, and 10% is burned permanently.
+              Enterprise users pay for model inference queries in $33RD. 75% routes directly to hardware node operators as rewards, 15% to the protocol R&amp;D multisig vault PDA, and 10% is routed to the Solana Incinerator (<code>1nc1nerator11111111111111111111111111111111</code>) for perpetual destruction.
             </p>
           </div>
           <ul class="cell-spec-list">
-            <li><span>Operator Share:</span> <strong>75% Direct Yield</strong></li>
-            <li><span>Protocol Treasury:</span> <strong>15% R&amp;D Vault</strong></li>
-            <li><span>Permanent Burn:</span> <strong>10% Incinerator Send</strong></li>
+            <li><span>Hardware Node Rewards:</span> <strong>75% Direct Yield</strong></li>
+            <li><span>R&amp;D Multisig:</span> <strong>15% Protocol Vault</strong></li>
+            <li><span>Perpetual Fee Burn:</span> <strong>10% Solana Incinerator</strong></li>
           </ul>
         </div>
 

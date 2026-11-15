@@ -16,21 +16,29 @@ SITE_DIR = "/Users/ianmora/Desktop/Projects/33rd-tree-labs-site"
 def get_base_css():
     return """
     :root {
+      --bg: #070707;
+      --f: #070707; /* Pure Obsidian Background */
       --t: #FF2424; /* Primary Laser Crimson */
       --t-glow: rgba(255, 36, 36, 0.45);
       --t-subtle: rgba(255, 36, 36, 0.08);
-      --f: #070707; /* Pure Obsidian Background */
       --chalk: #F2F2F5;
       --chalk-dim: #C8C8D2;
       --dim: #8E8E98;
-      --slate: #6E6E78;
-      --border: #1C1C24;
-      --border-light: #2A2A36;
+      --slate: #5A5A66;
+      --border: rgba(255, 255, 255, 0.12); /* Subtle hairline border */
+      --border-light: rgba(255, 255, 255, 0.12);
       --border-accent: rgba(255, 36, 36, 0.35);
+      --bg-card: transparent;
+      --bg-card-hover: transparent;
+      --card-bg: transparent;
+      --laser-red: var(--t);
+      --laser-glow: var(--t-glow);
       --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-      --fm: 'JetBrains Mono', ui-monospace, monospace;
-      --fh: 'Syne', sans-serif;
+      --fm: 'Obel Mono', 'JetBrains Mono', ui-monospace, monospace;
+      --fh: 'Obel Mono Masked', 'Syne', -apple-system, sans-serif;
       --green: #00E676;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
     }
 
     *, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -288,7 +296,7 @@ def get_base_css():
 
     /* OPEN EDITORIAL SECTIONS (DIVIDED BY STARK HAIRLINES, ZERO CARDS) */
     .ed-section {
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
       padding: 80px 0;
       position: relative;
     }
@@ -343,22 +351,25 @@ def get_base_css():
     .ed-grid-4 {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      border-top: 1px solid var(--border);
-      border-left: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
       margin: 40px 0;
     }
     .ed-grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--border);
-      border-left: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
       margin: 40px 0;
     }
     .ed-grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      border-top: 1px solid var(--border);
-      border-left: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
       margin: 40px 0;
     }
     @media (max-width: 1024px) {
@@ -369,10 +380,12 @@ def get_base_css():
       .ed-grid-4, .ed-grid-2 { grid-template-columns: 1fr; }
     }
     .ed-grid-cell {
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       padding: 36px 30px;
       background: transparent;
+      box-shadow: none;
+      border-radius: 0;
       transition: background 0.25s ease;
       display: flex;
       flex-direction: column;
@@ -412,7 +425,7 @@ def get_base_css():
       gap: 10px;
       font-family: var(--fm);
       font-size: 11.5px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
       padding-top: 18px;
     }
     .cell-spec-list li {
@@ -428,8 +441,12 @@ def get_base_css():
     .ed-table-wrap {
       width: 100%;
       overflow-x: auto;
-      border: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
       margin: 32px 0 48px;
+      background: transparent;
     }
     .ed-table {
       width: 100%;
@@ -439,10 +456,13 @@ def get_base_css():
       text-align: left;
     }
     .ed-table th {
-      background: rgba(255, 36, 36, 0.05);
+      background: transparent;
       color: var(--t);
       padding: 16px 20px;
-      border: 1px solid var(--border);
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -450,7 +470,10 @@ def get_base_css():
     }
     .ed-table td {
       padding: 15px 20px;
-      border: 1px solid var(--border);
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--chalk-dim);
     }
     .ed-table tr:hover td {
@@ -471,8 +494,11 @@ def get_base_css():
 
     /* TERMINAL & CLI CODE RUNBOOK BLOCKS */
     .ed-code-block {
-      border: 1px solid var(--border);
-      background: #030306;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
+      background: transparent;
       margin: 28px 0;
       font-family: var(--fm);
     }
@@ -480,19 +506,20 @@ def get_base_css():
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 20px;
-      background: rgba(255, 255, 255, 0.03);
-      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+      background: transparent;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       font-size: 11px;
       color: var(--dim);
       letter-spacing: 0.08em;
     }
     .ed-code-content {
-      padding: 22px 24px;
+      padding: 20px 0;
       overflow-x: auto;
       font-size: 13px;
       line-height: 1.65;
       color: #E2E2E8;
+      background: transparent;
     }
     .cmd-prompt { color: var(--t); user-select: none; margin-right: 10px; }
     .cmd-flag { color: #79C0FF; }
@@ -501,9 +528,12 @@ def get_base_css():
 
     /* MATH & FORMULA CALLOUT */
     .math-callout {
-      border-left: 2px solid var(--t);
-      background: rgba(255, 36, 36, 0.02);
-      padding: 24px 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
+      background: transparent;
+      padding: 24px 0;
       margin: 28px 0;
       font-size: 15px;
       line-height: 1.7;
@@ -518,10 +548,13 @@ def get_base_css():
       margin-bottom: 10px;
     }
     .math-display-box {
-      background: #030305;
-      border: 1px solid var(--border);
-      padding: 24px 28px;
-      margin: 24px 0;
+      background: transparent;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
+      padding: 20px 0;
+      margin: 20px 0;
       overflow-x: auto;
       color: #FFFFFF;
       font-size: 16px;
@@ -744,7 +777,7 @@ def get_page_head(title, description, active_page="nodes"):
         <a href="nodes.html" class="nav-link {'active' if active_page == 'nodes' else ''}" data-glitch>[ NODES ]</a>
         <a href="tokenomics.html" class="nav-link {'active' if active_page == 'tokenomics' else ''}" data-glitch>[ TOKENOMICS ]</a>
         <a href="research.html" class="nav-link {'active' if active_page == 'research' else ''}" data-glitch>[ RESEARCH ]</a>
-        <a href="33rd_Tree_Labs_Whitepaper.pdf" class="nav-link" data-glitch download="33rd_Tree_Labs_Whitepaper.pdf">[ WHITEPAPER PDF &darr; ]</a>
+        <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" download class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>
       </div>
     </nav>
   </div>
@@ -767,9 +800,9 @@ def get_page_foot():
   <script>
     const lenis = new Lenis({
       lerp: 0.14,
-      wheelMultiplier: 1.25,
-      smoothWheel: true,
-      smoothTouch: false
+      wheelMultiplier: 1.15,
+      touchMultiplier: 1.5,
+      smoothWheel: true
     });
 
     function raf(time) {

@@ -2018,7 +2018,7 @@
       <div class="rule__pin">
         <div class="rule__steps">
           <div class="kicker">CHAPTER 03 // EXECUTION PIPELINE</div>
-          <h2 style="font-family: var(--fh); font-size: clamp(24px, 2.8vw, 42px); font-weight: 900; line-height: 1.05; text-transform: uppercase; margin-bottom: clamp(10px, 1.4vh, 16px); letter-spacing: -0.02em;">
+          <h2 class="rule__headline">
             ONE PROTOCOL.<br>FOUR INSTRUCTIONS.
           </h2>
           
@@ -2696,22 +2696,6 @@
       aboveField = new MatrixField(aboveCanvas, { cell: 38, mode: "hyperbolic", speed: 0.3 });
     }
 
-    // Initialize Poincaré Hyperbolic Simulator on Playground Canvas
-    const playCanvas = document.getElementById('playground-canvas');
-    let playSim = null;
-    if (playCanvas && typeof PoincareHyperbolicSimulator !== 'undefined') {
-      playSim = new PoincareHyperbolicSimulator(playCanvas, {
-        k: 64,
-        speed: 0.8,
-        interactive: true,
-        showHud: true,
-        onQuorumChange: (m) => {
-          const kOutEl = document.getElementById('k-out');
-          if (kOutEl) kOutEl.textContent = `K = ${m.k} (${m.isQuorum ? 'VALIDATED' : 'BREACH'})`;
-        }
-      });
-    }
-
     // Global Animation Render Loop
     let lastTime = performance.now();
     function renderLoop(now) {
@@ -2850,9 +2834,10 @@
     ScrollTrigger.create({
       trigger: '.above',
       start: 'top top',
-      end: '+=150%',
+      end: '+=140%',
       pin: true,
       pinSpacing: true,
+      anticipatePin: 1,
       scrub: true,
       onUpdate: (self) => {
         if (altitudeCounter) {
@@ -2955,13 +2940,15 @@
     }
 
     drawRuleVisual(0, 0);
+    window.addEventListener('resize', () => drawRuleVisual(currentStepIndex, 0));
 
     ScrollTrigger.create({
       trigger: '.rule',
       start: 'top top',
-      end: '+=240%',
+      end: '+=200%',
       pin: true,
       pinSpacing: true,
+      anticipatePin: 1,
       scrub: true,
       onUpdate: (self) => {
         const raw = self.progress * 3.999;
@@ -2970,19 +2957,22 @@
         const currentFrac = raw - idx;
 
         steps.forEach((st, i) => {
-          const isActive = (i === idx);
-          const isDone = (raw > i + 1);
-          st.classList.toggle('is-active', isActive);
-          st.classList.toggle('is-done', isDone);
-
-          // Sequential scrub stepper: 0.25 opacity for inactive -> 1.0 stark white with crimson active
-          if (isActive) {
-            st.style.opacity = '1.0';
-          } else if (isDone) {
-            st.style.opacity = '0.65';
+          // Sequential scrub highlight: 0.25 to 1.0 opacity
+          let targetOpacity = 0.25;
+          if (raw >= i && raw < i + 1) {
+            targetOpacity = 1.0;
+          } else if (raw >= i - 0.4 && raw < i) {
+            const factor = (raw - (i - 0.4)) / 0.4;
+            targetOpacity = 0.25 + 0.75 * factor;
+          } else if (raw >= i + 1 && raw < i + 1.4) {
+            const factor = (raw - (i + 1)) / 0.4;
+            targetOpacity = 1.0 - 0.75 * factor;
           } else {
-            st.style.opacity = '0.25';
+            targetOpacity = 0.25;
           }
+          st.style.opacity = targetOpacity.toFixed(3);
+          st.classList.toggle('is-active', i === idx);
+          st.classList.toggle('is-done', raw >= i + 1);
 
           const bar = st.querySelector('.step__bar i');
           if (bar) {

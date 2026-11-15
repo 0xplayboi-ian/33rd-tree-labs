@@ -1,0 +1,1236 @@
+#!/usr/bin/env python3
+"""
+33rd Tree Labs - Protocol Architecture Page Generator (protocol.html)
+Strictly adheres to:
+- Open editorial brutalist layout separated by subtle 1px hairlines (border-top: 1px solid rgba(255, 255, 255, 0.12))
+- ZERO boxed cards, zero card wrappers, zero background containers
+- All 4 core sections: 01 Tensor Arbor, 02 Proof of Inference, 03 Byzantine Fault Tolerance, 04 Economic Equilibrium
+- Floating pill navbar with [ WHITEPAPER PDF ↓ ] download link and NO Whitepaper menu link
+- Fast snappy Lenis smooth scroll: new Lenis({ lerp: 0.14, wheelMultiplier: 1.15, touchMultiplier: 1.5, smoothWheel: true })
+- Official domain: 33rdtreelabs.tech
+"""
+
+import os
+
+SITE_DIR = "/Users/ianmora/Desktop/Projects/33rd-tree-labs-site"
+
+def generate_protocol_page():
+    return r"""<!doctype html>
+<html lang="en" class="lenis" style="--t: #FF2424; --f: #070707;">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>33RD TREE LABS // Protocol Architecture Matrix &bull; 33rdtreelabs.tech</title>
+  <meta name="description" content="Core Protocol Architecture for 33rd Tree Labs Singularity Protocol: Tensor Arbor Topology, Proof of Inference (PoI), Byzantine Fault Tolerance, and Economic Equilibrium on Solana.">
+  <meta name="theme-color" content="#070707">
+
+  <!-- OpenGraph & Twitter Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://33rdtreelabs.tech/protocol.html">
+  <meta property="og:title" content="33RD TREE LABS // Protocol Architecture Matrix &bull; 33rdtreelabs.tech">
+  <meta property="og:description" content="Core Protocol Architecture for 33rd Tree Labs Singularity Protocol: Tensor Arbor Topology, Proof of Inference (PoI), Byzantine Fault Tolerance, and Economic Equilibrium on Solana.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="33RD TREE LABS // Protocol Architecture Matrix &bull; 33rdtreelabs.tech">
+  <meta name="twitter:description" content="Core Protocol Architecture for 33rd Tree Labs Singularity Protocol: Tensor Arbor Topology, Proof of Inference (PoI), Byzantine Fault Tolerance, and Economic Equilibrium on Solana.">
+
+  <!-- Fonts & KaTeX Engine -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <style>
+    :root {
+      --t: #FF2424; /* Primary Laser Crimson */
+      --t-glow: rgba(255, 36, 36, 0.45);
+      --t-subtle: rgba(255, 36, 36, 0.08);
+      --f: #070707; /* Pure Obsidian Background */
+      --chalk: #F2F2F5;
+      --chalk-dim: #C8C8D2;
+      --dim: #8E8E98;
+      --slate: #6E6E78;
+      --border: rgba(255, 255, 255, 0.12);
+      --border-light: rgba(255, 255, 255, 0.18);
+      --border-accent: rgba(255, 36, 36, 0.35);
+      --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --fm: 'JetBrains Mono', ui-monospace, monospace;
+      --fh: 'Syne', sans-serif;
+      --green: #00E676;
+    }
+
+    *, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      -webkit-text-size-adjust: 100%;
+      scrollbar-width: none;
+      background: var(--f);
+      color: var(--chalk);
+      font-family: var(--fd);
+      overflow-x: clip;
+    }
+    html::-webkit-scrollbar { display: none; }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-stopped { overflow: hidden; }
+
+    body {
+      margin: 0;
+      background: var(--f);
+      color: var(--chalk);
+      font-family: var(--fd);
+      font-size: 15.5px;
+      line-height: 1.55;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TOP-EDGE SCROLL PROGRESS BAR */
+    #scroll-progress-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--t);
+      box-shadow: 0 0 10px var(--t), 0 0 20px var(--t-glow);
+      z-index: 100000;
+      pointer-events: none;
+      transition: width 0.03s linear;
+      will-change: width;
+    }
+
+    /* UNIFIED FLOATING PILL NAVBAR */
+    .nav-wrapper {
+      position: fixed;
+      top: 24px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      z-index: 999;
+      pointer-events: none;
+    }
+    .nav-pill {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 10px 24px;
+      background: rgba(11, 11, 14, 0.94);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 36, 36, 0.12);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--chalk);
+    }
+    .nav-logo-box {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-title {
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: 13.5px;
+      letter-spacing: 0.12em;
+      color: #FFFFFF;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 16px;
+    }
+    .nav-link {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--t);
+      text-shadow: 0 0 12px rgba(255, 36, 36, 0.6);
+    }
+    @media (max-width: 1080px) {
+      .nav-links { display: none; }
+    }
+
+    /* MAIN CONTAINER & OPEN BRUTALIST EDITORIAL LAYOUT */
+    .page-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 140px clamp(20px, 4vw, 60px) 100px;
+    }
+
+    /* EDITORIAL HERO / HEADER */
+    .ed-hero {
+      margin-bottom: 70px;
+      position: relative;
+    }
+    .ed-kicker {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--t);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .ed-headline {
+      font-family: var(--fh);
+      font-weight: 900;
+      font-size: clamp(38px, 6vw, 84px);
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      line-height: 0.95;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+    .ed-headline .accent {
+      color: var(--t);
+      text-shadow: 0 0 40px rgba(255, 36, 36, 0.45);
+    }
+    .ed-lead {
+      font-size: clamp(16px, 1.3vw, 19px);
+      line-height: 1.6;
+      max-width: 960px;
+      color: var(--chalk-dim);
+      margin-bottom: 40px;
+    }
+
+    /* TELEMETRY STRIP (NO CARD WRAPPER - CLEAN HAIRLINE BORDERS) */
+    .telemetry-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+    .telemetry-cell {
+      padding: 24px 28px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .telemetry-cell:last-child {
+      border-right: none;
+    }
+    .telemetry-lbl {
+      font-family: var(--fm);
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--dim);
+    }
+    .telemetry-val {
+      font-family: var(--fm);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--chalk);
+      letter-spacing: -0.02em;
+    }
+    .telemetry-val.accent { color: var(--t); }
+    .telemetry-val.green { color: var(--green); }
+
+    /* OPEN EDITORIAL SECTIONS (DIVIDED BY SUBTLE 1PX HAIRLINES, ZERO CARDS) */
+    .ed-section {
+      border-top: 1px solid var(--border);
+      padding: 80px 0;
+      position: relative;
+      background: transparent;
+    }
+    .ed-sec-head {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 860px) {
+      .ed-sec-head { grid-template-columns: 1fr; gap: 16px; }
+    }
+    .sec-badge-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .sec-giant-num {
+      font-family: var(--fh);
+      font-size: clamp(48px, 6vw, 72px);
+      font-weight: 900;
+      line-height: 0.85;
+      color: rgba(255, 36, 36, 0.25);
+      user-select: none;
+    }
+    .sec-kicker {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--t);
+      text-transform: uppercase;
+    }
+    .sec-title {
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: clamp(28px, 3.2vw, 44px);
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      color: var(--chalk);
+      margin-bottom: 16px;
+    }
+    .sec-summary {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--chalk-dim);
+      max-width: 880px;
+    }
+
+    /* MULTI-COLUMN COMPARISON GRIDS (ZERO CARD CONTAINERS, HAIRLINE CELLS) */
+    .ed-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      margin: 40px 0;
+    }
+    @media (max-width: 1024px) {
+      .ed-grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .ed-grid-4 { grid-template-columns: 1fr; }
+    }
+    .ed-grid-cell {
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 36px 30px;
+      background: transparent;
+      transition: background 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .ed-grid-cell:hover {
+      background: rgba(255, 36, 36, 0.025);
+    }
+    .cell-tag {
+      font-family: var(--fm);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--t);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .cell-title {
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .cell-body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--dim);
+      margin-bottom: 24px;
+    }
+    .cell-spec-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-family: var(--fm);
+      font-size: 11.5px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 18px;
+    }
+    .cell-spec-list li {
+      display: flex;
+      justify-content: space-between;
+      color: var(--chalk-dim);
+    }
+    .cell-spec-list li strong {
+      color: #FFFFFF;
+    }
+
+    /* MATH CALLOUT & DISPLAY BOX */
+    .math-callout {
+      border-left: 2px solid var(--t);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+      padding: 24px 28px;
+      margin: 28px 0;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .math-callout-title {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--t);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .math-display-box {
+      background: #030305;
+      border: 1px solid var(--border);
+      padding: 24px 28px;
+      margin: 24px 0;
+      overflow-x: auto;
+      color: #FFFFFF;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    /* PROSE TWO-COLUMN EDITORIAL */
+    .ed-prose-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin: 32px 0;
+    }
+    @media (max-width: 860px) {
+      .ed-prose-cols { grid-template-columns: 1fr; gap: 24px; }
+    }
+    .prose-block h3 {
+      font-family: var(--fh);
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .prose-block p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--chalk-dim);
+      margin-bottom: 16px;
+    }
+
+    /* OPEN DATA TABLE (NO BOX / NO CARDS) */
+    .ed-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      background: transparent;
+      margin: 32px 0 48px;
+    }
+    .ed-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--fm);
+      font-size: 12.5px;
+      text-align: left;
+    }
+    .ed-table th {
+      background: rgba(255, 36, 36, 0.05);
+      color: var(--t);
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .ed-table td {
+      padding: 15px 20px;
+      border: 1px solid var(--border);
+      color: var(--chalk-dim);
+    }
+    .ed-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+      color: #FFFFFF;
+    }
+    .ed-table .highlight { color: #FFFFFF; font-weight: 600; }
+    .ed-table .accent { color: var(--t); font-weight: 700; }
+
+    /* FOOTER */
+    .foot {
+      border-top: 1px solid var(--border);
+      background: var(--f);
+      padding: 60px 0 40px;
+      margin-top: 100px;
+    }
+    .foot__marquee {
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+      font-family: var(--fm);
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+    }
+    .foot__grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 60px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-family: var(--fm);
+      font-size: 11.5px;
+      color: var(--slate);
+    }
+    .foot__links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .foot__link {
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    .foot__link:hover {
+      color: var(--t);
+    }
+    .foot__top {
+      color: var(--t);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    .foot__top:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP-EDGE SCROLL PROGRESS BAR -->
+  <div id="scroll-progress-line" aria-hidden="true"></div>
+
+  <!-- UNIFIED FLOATING PILL NAVBAR WITH WHITEPAPER PDF -->
+  <div class="nav-wrapper">
+    <nav class="nav-pill">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-logo-box">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="12" cy="4" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+            <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+            <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+            <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
+          </svg>
+        </div>
+        <span class="nav-title" data-glitch>33RD TREE LABS</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html" class="nav-link" data-glitch>[ OVERVIEW ]</a>
+        <a href="protocol.html" class="nav-link active" data-glitch>[ PROTOCOL ]</a>
+        <a href="simulator.html" class="nav-link" data-glitch>[ SIMULATOR ]</a>
+        <a href="yield.html" class="nav-link" data-glitch>[ YIELD ]</a>
+        <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
+        <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
+        <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
+        <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="page-wrap">
+    <!-- EDITORIAL HERO / HEADER -->
+    <header class="ed-hero">
+      <div class="ed-kicker">( 001 ) // CORE ARCHITECTURE SPECIFICATION &bull; 33RDTREELABS.TECH</div>
+      <h1 class="ed-headline">THE SINGULARITY PROTOCOL<br><span class="accent">ARCHITECTURE MATRIX</span></h1>
+      <p class="ed-lead">
+        A Byzantine-Fault-Tolerant distributed compute fabric anchored on Solana. Hardware-enforced Confidential Computing via Multi-TEE remote attestation, deterministic INT8/FP8 tensor execution, non-Euclidean Poincaré routing, and game-theoretic economic equilibrium.
+      </p>
+
+      <!-- TELEMETRY STRIP (NO CARD WRAPPER - OPEN HAIRLINES) -->
+      <div class="telemetry-strip">
+        <div class="telemetry-cell">
+          <span class="telemetry-lbl">Byzantine Committee Quorum</span>
+          <span class="telemetry-val accent">K = 64 ACTIVE VALIDATORS</span>
+        </div>
+        <div class="telemetry-cell">
+          <span class="telemetry-lbl">Zero-Knowledge Proof Scheme</span>
+          <span class="telemetry-val">BN254 KZG + CAP-FFN (&lt; 184.5k CU)</span>
+        </div>
+        <div class="telemetry-cell">
+          <span class="telemetry-lbl">Topology &amp; Manifold</span>
+          <span class="telemetry-val">POINCARÉ DISK METRIC (&Delta; &le; 8 HOPS)</span>
+        </div>
+        <div class="telemetry-cell">
+          <span class="telemetry-lbl">Macroeconomic Invariant</span>
+          <span class="telemetry-val green">33,333,333 $33RD STRICT CAP</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 01: TENSOR ARBOR -->
+    <!-- ==================================================================== -->
+    <section class="ed-section" id="tensor-arbor">
+      <div class="ed-sec-head">
+        <div class="sec-badge-col">
+          <span class="sec-giant-num">01</span>
+          <span class="sec-kicker">// TOPOLOGY &amp; INTERCONNECT</span>
+        </div>
+        <div>
+          <h2 class="sec-title">Tensor Arbor Hierarchical Routing</h2>
+          <p class="sec-summary">
+            Traditional peer-to-peer compute networks degrade with $O(N^2)$ communication complexity as cluster size scales, generating crippling network bottlenecks during distributed model evaluation. The Singularity Protocol resolves this fundamental limitation by embedding physical GPU nodes into a continuous Poincaré disk model of Gromov hyperbolic space $\mathbb{H}^2$. Distance between nodes $u, v$ is defined by the Riemannian metric:
+          </p>
+        </div>
+      </div>
+
+      <div class="math-callout">
+        <div class="math-callout-title">GROMOV HYPERBOLIC GEODESIC METRIC &bull; CONTINUOUS EMBEDDING</div>
+        <div class="math-display-box">
+          $$d_{\mathbb{H}}(u, v) = \operatorname{arcosh}\left(1 + \frac{2\|u - v\|^2}{(1 - \|u\|^2)(1 - \|v\|^2)}\right)$$
+        </div>
+        <p style="color:var(--chalk-dim); font-size:14px; line-height:1.65;">
+          Under this hyperbolic geometry, routing paths follow geodesics that plunge inward through the dense core and branch outward with logarithmic efficiency: $O(\log N)$ hop diameter across global cluster nodes, guaranteeing deterministic pipeline synchronization without central coordination.
+        </p>
+      </div>
+
+      <!-- 4-COLUMN COMPARISON GRID (OPEN EDITORIAL - ZERO BOXED CARDS) -->
+      <div class="ed-grid-4">
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ HIERARCHICAL TOPOLOGY ]</span>
+            <h3 class="cell-title">Pipeline Parallelism</h3>
+            <p class="cell-body">
+              Dynamic mapping of transformer layers to physical interconnect latencies, preventing inter-node bottlenecks across globally distributed GPU clusters.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Routing Structure:</span> <strong>Non-Euclidean DAG</strong></li>
+            <li><span>Local Interconnect:</span> <strong>900 GB/s NVLink</strong></li>
+            <li><span>WAN Layer Hop:</span> <strong>&le; 12 ms P99</strong></li>
+            <li><span>Max Tree Diameter:</span> <strong>8 Geodesic Hops</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ MANIFOLD CORE ]</span>
+            <h3 class="cell-title">Geodesic Plunge</h3>
+            <p class="cell-body">
+              Packets destined for distant layers plunge inward toward the center of the Poincaré disk, avoiding the exponential perimeter circumference of standard Euclidean graphs.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Manifold Curvature:</span> <strong>&kappa; = -1.0 Fixed</strong></li>
+            <li><span>Coordinate Precision:</span> <strong>64-bit Fixed Point</strong></li>
+            <li><span>Embedding Space:</span> <strong>$\mathbb{H}^2$ Poincaré Ball</strong></li>
+            <li><span>Core Hop Latency:</span> <strong>&lt; 1.8 ms</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ HETEROGENEOUS MESH ]</span>
+            <h3 class="cell-title">Silicon Affinity</h3>
+            <p class="cell-body">
+              Intelligently co-locates tensor parallel groups within high-bandwidth NVLink domains (B200/H100 clusters) while distributing sequential pipeline stages across WAN links.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Tensor Parallel:</span> <strong>Intra-Node NVLink</strong></li>
+            <li><span>Pipeline Parallel:</span> <strong>Inter-Node WAN</strong></li>
+            <li><span>Layer Buffer:</span> <strong>Pinned CUDA Memory</strong></li>
+            <li><span>Dynamic Balancing:</span> <strong>Per-Slot Re-indexing</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ GOSSIP HORIZON ]</span>
+            <h3 class="cell-title">Bounded Propagation</h3>
+            <p class="cell-body">
+              Enforces dynamic mesh degree $D = 8$ with gossip fanout $D_{\text{lazy}} = 6$, guaranteeing that proposal transactions and activation hashes propagate globally within 120ms.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Target Degree:</span> <strong>$D = 8$ Peers</strong></li>
+            <li><span>Gossip Fanout:</span> <strong>$D_{\text{lazy}} = 6$</strong></li>
+            <li><span>Global Convergence:</span> <strong>&le; 120 ms</strong></li>
+            <li><span>State Sync:</span> <strong>Sub-Slot Vector Clocks</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ed-prose-cols">
+        <div class="prose-block">
+          <h3>Asymptotic Tree Traversal</h3>
+          <p>
+            In standard flat mesh networks, broadcasting state updates across $N = 1,024$ nodes incurs $1,048,576$ edge traversals. The Tensor Arbor compresses this communication radius to $\log_2(1024) = 10$ layer hops.
+          </p>
+          <p>
+            Each validator node maintains an array of hyperbolic coordinate embeddings recalculated per epoch. Nodes with high mutual information and low latency converge toward adjacent geodesics, naturally clustering high-throughput inference pipelines without central routing tables.
+          </p>
+        </div>
+        <div class="prose-block">
+          <h3>Memory-Aware Pipeline Sharding</h3>
+          <p>
+            Large language models spanning 70B to 405B parameters cannot reside within single accelerator memory banks. The Tensor Arbor partitions model layers along natural attention head boundaries.
+          </p>
+          <p>
+            Activations pass through cryptographic authentication filters before streaming over high-speed sockets, allowing heterogeneous clusters (such as mixed Hopper H100 and RTX 4090 networks) to cooperatively execute forward passes with zero numerical degradation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 02: PROOF OF INFERENCE -->
+    <!-- ==================================================================== -->
+    <section class="ed-section" id="proof-of-inference">
+      <div class="ed-sec-head">
+        <div class="sec-badge-col">
+          <span class="sec-giant-num">02</span>
+          <span class="sec-kicker">// ZERO-KNOWLEDGE CRYPTOGRAPHY</span>
+        </div>
+        <div>
+          <h2 class="sec-title">Proof of Inference (PoI) &amp; CAP-FFN</h2>
+          <p class="sec-summary">
+            Standard zero-knowledge proofs (such as full Groth16/STARK execution traces) impose $10,000\times$ prover overhead, making them impractical for real-time LLM inference. The Singularity Protocol pioneers Proof of Inference (PoI) by replacing non-linear activation functions with degree $d = 16$ Chebyshev Activation Polynomials (CAP-FFN) paired with constant-time BN254 KZG commitments:
+          </p>
+        </div>
+      </div>
+
+      <div class="math-callout">
+        <div class="math-callout-title">SOLANA ON-CHAIN KZG OPENING VERIFICATION &bull; O(1) PAIRING CHECK</div>
+        <div class="math-display-box">
+          $$e\left(\pi, [x - z]_2\right) \stackrel{?}{=} e\left([P(x) - v]_1, [1]_2\right) \quad \text{where} \quad \pi = \left[\frac{P(x) - v}{x - z}\right]_1 \in \mathbb{G}_1$$
+        </div>
+        <p style="color:var(--chalk-dim); font-size:14px; line-height:1.65;">
+          Solana Anchor validators verify the opening proof on-chain in constant time $O(1)$ via the <code>sol_alt_bn128_pairing</code> syscall, consuming under 184,500 compute units ($&lt; 2.0\text{ ms}$ execution) directly within native Solana smart contracts.
+        </p>
+      </div>
+
+      <!-- 4-COLUMN COMPARISON GRID (OPEN EDITORIAL - ZERO BOXED CARDS) -->
+      <div class="ed-grid-4">
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ ARITHMETIC KERNEL ]</span>
+            <h3 class="cell-title">Chebyshev Activation</h3>
+            <p class="cell-body">
+              Randomized polynomial challenge kernels replace non-linear GELU and SiLU operations with high-fidelity Chebyshev approximations of degree $d = 16$.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Polynomial Degree:</span> <strong>$d = 16$ Chebyshev</strong></li>
+            <li><span>Numerical Drift:</span> <strong>$\Delta_{\text{accuracy}} = 0.00\%$</strong></li>
+            <li><span>Target Functions:</span> <strong>GELU / SiLU / SwiGLU</strong></li>
+            <li><span>Execution Engine:</span> <strong>TensorRT Custom Op</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ CRYPTOGRAPHIC COMMITMENT ]</span>
+            <h3 class="cell-title">BN254 Pairing</h3>
+            <p class="cell-body">
+              Evaluates cryptographic opening proofs using the alt_bn128 elliptic curve pairing engine, achieving constant-time $O(1)$ verification independent of model depth.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Curve Construction:</span> <strong>BN254 (alt_bn128)</strong></li>
+            <li><span>Proof Size:</span> <strong>64 Bytes ($\mathbb{G}_1$)</strong></li>
+            <li><span>Verification Cost:</span> <strong>&lt; 184,500 CU</strong></li>
+            <li><span>Solana Syscall:</span> <strong>sol_alt_bn128_pairing</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ LATENCY OPTIMIZATION ]</span>
+            <h3 class="cell-title">Sub-2ms Prover</h3>
+            <p class="cell-body">
+              Highly optimized CUDA kernels generate opening proofs concurrently with the final transformer decoding layer, adding negligible overhead to interactive token streaming.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Prover Latency:</span> <strong>1.418 ms (H100 SXM5)</strong></li>
+            <li><span>Prover Latency:</span> <strong>3.82 ms (RTX 4090)</strong></li>
+            <li><span>Pipeline Overhead:</span> <strong>Zero TTFT Delay</strong></li>
+            <li><span>Memory Footprint:</span> <strong>&lt; 64 MB VRAM</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ DETERMINISTIC PARITY ]</span>
+            <h3 class="cell-title">Bit-Exact Kernels</h3>
+            <p class="cell-body">
+              Standardized INT8 and FP8 quantization implementations guarantee identical mathematical outputs across diverse GPU microarchitectures and CUDA drivers.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Quantization Form:</span> <strong>FP8 SmoothQuant / INT8</strong></li>
+            <li><span>Hardware Drift:</span> <strong>Bit-Exact IEEE-754</strong></li>
+            <li><span>Format Support:</span> <strong>AWQ / GPTQ Compatible</strong></li>
+            <li><span>Cross-GPU Parity:</span> <strong>Verified 100%</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ed-prose-cols">
+        <div class="prose-block">
+          <h3>Eliminating Optimistic Challenge Delays</h3>
+          <p>
+            Optimistic fraud-proof architectures (such as Truebit or Arbitrum-style bisection) impose multi-day dispute delays before reaching cryptographic certainty. In interactive AI systems, users cannot wait hours for inference validation.
+          </p>
+          <p>
+            By compressing non-linear neural activations into polynomial commitments verifiable in a single Solana transaction, Proof of Inference unlocks immediate finality without sacrificing mathematical rigor.
+          </p>
+        </div>
+        <div class="prose-block">
+          <h3>Cross-Hardware Bit-Exact Verification</h3>
+          <p>
+            Floating-point non-determinism across NVIDIA Hopper, Ada Lovelace, and AMD RDNA architectures has historically prevented decentralized neural consensus.
+          </p>
+          <p>
+            33rd Tree Labs solves this with custom fixed-point INT8 GEMM challenge kernels. Nodes execute bit-exact matrix multiplications, guaranteeing that honest operators always produce mathematically identical commitment digests regardless of underlying silicon.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 03: BYZANTINE FAULT TOLERANCE -->
+    <!-- ==================================================================== -->
+    <section class="ed-section" id="byzantine-fault-tolerance">
+      <div class="ed-sec-head">
+        <div class="sec-badge-col">
+          <span class="sec-giant-num">03</span>
+          <span class="sec-kicker">// CONSENSUS &amp; ENCLAVES</span>
+        </div>
+        <div>
+          <h2 class="sec-title">Byzantine Fault Tolerance &amp; Multi-TEE</h2>
+          <p class="sec-summary">
+            The Singularity Protocol consensus layer operates an asynchronous Byzantine Fault Tolerant state machine across a rotating committee of $K = 64$ stake-bonded validator nodes. The network guarantees safety and liveness provided malicious or compromised nodes remain strictly below the Byzantine threshold $f < \lfloor(K-1)/3\rfloor = 21$. Hardware Confidential Computing eliminates single-vendor trust by enforcing independent remote attestation across AMD SEV-SNP, Intel TDX, and NVIDIA Hopper CC enclaves.
+          </p>
+        </div>
+      </div>
+
+      <div class="math-callout">
+        <div class="math-callout-title">BYZANTINE QUORUM &amp; THRESHOLD SECURITY BOUND</div>
+        <div class="math-display-box">
+          $$f < \left\lfloor\frac{K - 1}{3}\right\rfloor = 21 \quad \implies \quad \text{Quorum Threshold } \mathcal{Q} \ge 2f + 1 = 43 \text{ Honest Signatures}$$
+        </div>
+        <p style="color:var(--chalk-dim); font-size:14px; line-height:1.65;">
+          With a minimum stake bond of 25,000 $33RD per validator, an attacker attempting to corrupt consensus must control at least 22 nodes, requiring an upfront capital lockup of $> 550,000\text{ }33RD$ subject to 100% on-chain slashing.
+        </p>
+      </div>
+
+      <!-- 4-COLUMN COMPARISON GRID (OPEN EDITORIAL - ZERO BOXED CARDS) -->
+      <div class="ed-grid-4">
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ ASYNCHRONOUS BFT ]</span>
+            <h3 class="cell-title">Committee Quorum</h3>
+            <p class="cell-body">
+              Each inference block proposal requires a $2/3 + 1$ honest supermajority ($> 43$ valid BLS signatures) before anchoring to the Solana state ledger.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Committee Size:</span> <strong>$K = 64$ Active Nodes</strong></li>
+            <li><span>Honest Majority:</span> <strong>&ge; 43 Signatures</strong></li>
+            <li><span>Slot Cadence:</span> <strong>12.0s Block Window</strong></li>
+            <li><span>Solana Commit:</span> <strong>400ms Fast Slots</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ CONFIDENTIAL SILICON ]</span>
+            <h3 class="cell-title">Multi-TEE Attestation</h3>
+            <p class="cell-body">
+              Dual independent hardware enclave measurements verify kernel integrity, launch digest, and microcode before admitting physical nodes to the proposal queue.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>CPU Enclaves:</span> <strong>AMD SEV-SNP / TDX</strong></li>
+            <li><span>GPU Enclaves:</span> <strong>NVIDIA Hopper CC</strong></li>
+            <li><span>Protocol Handshake:</span> <strong>SPDM 1.2 Encrypted</strong></li>
+            <li><span>Certificate Root:</span> <strong>AMD KDS / Intel PCS</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ ECONOMIC DISCIPLINE ]</span>
+            <h3 class="cell-title">Automated Slashing</h3>
+            <p class="cell-body">
+              Any node producing contradictory commitments (equivocation), corrupted activation hashes, or invalid KZG openings has its 25,000 $33RD bond instantly slashed on-chain.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Collateral Bond:</span> <strong>25,000 $33RD</strong></li>
+            <li><span>Equivocation Penalty:</span> <strong>100% Slashed</strong></li>
+            <li><span>Slashed Destination:</span> <strong>50% Burn / 50% Bounty</strong></li>
+            <li><span>Revocation:</span> <strong>Permanent Pubkey Ban</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ DISPUTE RESOLUTION ]</span>
+            <h3 class="cell-title">Interactive Bisection</h3>
+            <p class="cell-body">
+              If an activation hash is disputed, the on-chain settlement contract runs a logarithmic binary search over the computation graph, isolating corrupt CUDA instructions within 64 slots.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Bisection Window:</span> <strong>64 Solana Slots (~25.6s)</strong></li>
+            <li><span>Search Complexity:</span> <strong>$O(\log_2 M)$ Layers</strong></li>
+            <li><span>Resolution Target:</span> <strong>Single Assembly Op</strong></li>
+            <li><span>Challenger Bounty:</span> <strong>Up to 5,000 $33RD</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ed-prose-cols">
+        <div class="prose-block">
+          <h3>Eliminating Single-Vendor Trust</h3>
+          <p>
+            Relying solely on Intel SGX or AMD SEV creates existential protocol fragility in the event of silicon errata or zero-day side-channel exploits.
+          </p>
+          <p>
+            The Singularity Protocol enforces heterogeneous multi-party attestation. Node groups must represent at least two distinct silicon vendors (e.g., AMD SEV-SNP paired with NVIDIA Hopper CC), ensuring compromise of any single vendor microcode does not threaten consensus finality.
+          </p>
+        </div>
+        <div class="prose-block">
+          <h3>Anchor State Verification</h3>
+          <p>
+            Block production commitments are submitted as compact 280-byte transactions directly into the Solana Anchor program.
+          </p>
+          <p>
+            BLS aggregate multi-signatures verify validator consensus in $O(1)$ constant on-chain time. Slashed collateral is handled immediately via Cross-Program Invocations (CPI), routing penalties between permanent incinerator destruction and challenger rewards.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SECTION 04: ECONOMIC EQUILIBRIUM -->
+    <!-- ==================================================================== -->
+    <section class="ed-section" id="economic-equilibrium">
+      <div class="ed-sec-head">
+        <div class="sec-badge-col">
+          <span class="sec-giant-num">04</span>
+          <span class="sec-kicker">// MACROECONOMIC EQUILIBRIUM</span>
+        </div>
+        <div>
+          <h2 class="sec-title">Economic Equilibrium &amp; Deflation Invariants</h2>
+          <p class="sec-summary">
+            Sustainable decentralized compute requires aligning capital expenditure, validator profitability, and token scarcity. The Singularity Protocol establishes macroeconomic equilibrium through an immutable monetary foundation: strict 33,333,333 $33RD hard cap, 100% LP incinerated at launch, 75% hardware node reward pool, and continuous 10% fee burns directly to the Solana canonical incinerator address:
+          </p>
+        </div>
+      </div>
+
+      <div class="math-callout">
+        <div class="math-callout-title">NET MONETARY DEFLATION THEOREM &bull; SOLANA INCINERATOR SINK</div>
+        <div class="math-display-box">
+          $$\frac{dS}{dt} = \mathcal{E}_{\text{daily}}(t) - \mathcal{B}_{\text{daily}}(t) < 0 \iff 0.10 \times \mathcal{V}_{\text{fee}} > 5,136.986 \iff \mathcal{V}_{\text{fee}} > 51,369.86\text{ }33RD/\text{day}$$
+        </div>
+        <p style="color:var(--chalk-dim); font-size:14px; line-height:1.65;">
+          Where $\mathcal{E}_{\text{daily}}$ is the gross daily compute emission ($5,136.98\text{ }33RD/\text{day}$ in Era 1), and $\mathcal{B}_{\text{daily}}$ is the 10% fee capture burned to <code>1nc1nerator11111111111111111111111111111111</code>. When daily network inference billing crosses 51,370 $33RD, total incinerator destruction permanently outpaces gross emissions.
+        </p>
+      </div>
+
+      <!-- 4-COLUMN COMPARISON GRID (OPEN EDITORIAL - ZERO BOXED CARDS) -->
+      <div class="ed-grid-4">
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ COMPUTE POOL ]</span>
+            <h3 class="cell-title">75% Hardware Pool</h3>
+            <p class="cell-body">
+              75% of all network inference revenue and scheduled epoch emissions route directly to active hardware node operators, proportional to hardware multipliers and validated uptime.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Node Allocation:</span> <strong>75.0% of Fees</strong></li>
+            <li><span>Treasury Allocation:</span> <strong>15.0% Multisig</strong></li>
+            <li><span>Incinerator Burn:</span> <strong>10.0% Permanent</strong></li>
+            <li><span>Payout Slot:</span> <strong>Atomic Per-Epoch CPI</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ CAPITAL GATE ]</span>
+            <h3 class="cell-title">25,000 $33RD Bond</h3>
+            <p class="cell-body">
+              Mandatory non-custodial capital bond held in Solana Anchor staking escrow, creating an insurmountable economic barrier ($> 550,000\text{ }33RD$) against Byzantine committee capture.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Minimum Bond:</span> <strong>25,000 $33RD / Node</strong></li>
+            <li><span>Lockup Window:</span> <strong>7-Day Cooldown</strong></li>
+            <li><span>Anchor PDA:</span> <strong>Staking Escrow Vault</strong></li>
+            <li><span>Sybil Threshold:</span> <strong>$f \ge 22$ Committee</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ INCINERATOR SINK ]</span>
+            <h3 class="cell-title">10% Perpetual Burn</h3>
+            <p class="cell-body">
+              Every compute contract execution atomically burns 10% of invoiced tokens via Solana SPL Token-2022 instructions to the incinerator, permanently removing them from circulation.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Burn Target:</span> <strong>1nc1nerator...1111</strong></li>
+            <li><span>SPL Program:</span> <strong>Token-2022 Native</strong></li>
+            <li><span>Supply Authority:</span> <strong>Permanently Revoked</strong></li>
+            <li><span>Deflation Velocity:</span> <strong>Volume Scaled</strong></li>
+          </ul>
+        </div>
+
+        <div class="ed-grid-cell">
+          <div>
+            <span class="cell-tag">[ MONETARY INVARIANT ]</span>
+            <h3 class="cell-title">Decay Halving Eras</h3>
+            <p class="cell-body">
+              Scheduled validator emissions halve geometrically every 4 years (24 epochs / ~336 days per halving phase), cutting the required fee volume for net deflation by 50% each era.
+            </p>
+          </div>
+          <ul class="cell-spec-list">
+            <li><span>Era 1 Emission:</span> <strong>5,136.98 $33RD / day</strong></li>
+            <li><span>Deflation Threshold:</span> <strong>&gt; 51,370 $33RD / day</strong></li>
+            <li><span>Era 2 Threshold:</span> <strong>&gt; 25,685 $33RD / day</strong></li>
+            <li><span>Final State:</span> <strong>Ultra-Sound Floor</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ed-prose-cols">
+        <div class="prose-block">
+          <h3>The Deflationary Tipping Point</h3>
+          <p>
+            Unlike inflationary proof-of-stake ecosystems that dilute long-term participants, the $33RD monetary policy implements an asymptotic ceiling of 33,333,333 tokens.
+          </p>
+          <p>
+            As enterprise adoption scales and daily model queries increase, fee destruction accelerates while scheduled emissions decay. Token velocity transitions from disinflationary bootstrapping into permanent structural deflation.
+          </p>
+        </div>
+        <div class="prose-block">
+          <h3>Game-Theoretic Capital Security</h3>
+          <p>
+            Holding 25,000 $33RD in bonded escrow per node ties validator solvency directly to network integrity. Slashing penalties ensure that attempting to poison tensor weights or double-sign blocks guarantees catastrophic financial loss.
+          </p>
+          <p>
+            The 75% fee accrual provides enterprise operators with stable, hardware-backed yield, creating an antifragile equilibrium between physical infrastructure supply and enterprise compute demand.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- CRYPTOGRAPHIC & NETWORK SPECIFICATION TABLE -->
+    <!-- ==================================================================== -->
+    <section class="ed-section" id="spec-matrix">
+      <div class="ed-sec-head">
+        <div class="sec-badge-col">
+          <span class="sec-giant-num">05</span>
+          <span class="sec-kicker">// FORMAL BOUNDS</span>
+        </div>
+        <div>
+          <h2 class="sec-title">Cryptographic &amp; Network Parameters</h2>
+          <p class="sec-summary">
+            Formal architectural constraints and verification bounds enforced across all nodes in the Singularity Protocol.
+          </p>
+        </div>
+      </div>
+
+      <div class="ed-table-wrap">
+        <table class="ed-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Specification</th>
+              <th>Formal Bound</th>
+              <th>Verification Target</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="highlight">Curve &amp; Pairing</td>
+              <td>BN254 (alt_bn128)</td>
+              <td>r = 21888242871839275222246405745257275088548364400416034343698204186575808495617</td>
+              <td>Solana <code>sol_alt_bn128_pairing</code> syscall</td>
+            </tr>
+            <tr>
+              <td class="highlight">Polynomial Degree</td>
+              <td>d = 16 Chebyshev Activation</td>
+              <td>O(1) constant-time opening proof</td>
+              <td>Sub-2.0ms evaluation inside eBPF VM (&lt; 184,500 CU)</td>
+            </tr>
+            <tr>
+              <td class="highlight">Consensus Quorum</td>
+              <td>K = 64 Active Validators</td>
+              <td>2/3 + 1 Honest Majority (f &le; 21)</td>
+              <td>BLS aggregate multi-signature verification</td>
+            </tr>
+            <tr>
+              <td class="highlight">Block Commit Payload</td>
+              <td>280 Bytes Canonical Commit</td>
+              <td>Network MTU 1,232 Bytes</td>
+              <td>536-byte transaction payload on Solana</td>
+            </tr>
+            <tr>
+              <td class="highlight">Cross-Hardware Parity</td>
+              <td>INT8 / FP8 Deterministic Trees</td>
+              <td>&Delta;accuracy = 0.00% drift</td>
+              <td>Bit-exact verification across H100 vs RTX 4090</td>
+            </tr>
+            <tr>
+              <td class="highlight">Fee Distribution Split</td>
+              <td>75% Hardware / 15% Treasury / 10% Burn</td>
+              <td>100.0% Atomic Fee Routing</td>
+              <td>Anchor Settlement Program CPI execution</td>
+            </tr>
+            <tr>
+              <td class="highlight">Burn Target Address</td>
+              <td>Canonical Solana Incinerator</td>
+              <td>Permanent SPL Token-2022 Burn</td>
+              <td><code>1nc1nerator11111111111111111111111111111111</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="foot">
+    <div class="foot__marquee">
+      0/1 33RD TREE LABS // THE SINGULARITY PROTOCOL // SOLANA INCINERATOR VERIFIED // ZERO-KNOWLEDGE PROOF ANCHOR // 0/1 33RD TREE LABS // THE SINGULARITY PROTOCOL // SOLANA INCINERATOR VERIFIED //
+    </div>
+    <div class="foot__grid">
+      <div>&copy; 2026 33RD TREE LABS. THE SINGULARITY PROTOCOL. ALL RIGHTS RESERVED.</div>
+      <div class="foot__links">
+        <a href="index.html" class="foot__link">[ OVERVIEW ]</a>
+        <a href="protocol.html" class="foot__link">[ PROTOCOL ]</a>
+        <a href="simulator.html" class="foot__link">[ SIMULATOR ]</a>
+        <a href="yield.html" class="foot__link">[ YIELD ]</a>
+        <a href="nodes.html" class="foot__link">[ NODES ]</a>
+        <a href="tokenomics.html" class="foot__link">[ TOKENOMICS ]</a>
+        <a href="research.html" class="foot__link">[ RESEARCH ]</a>
+        <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="foot__link">[ WHITEPAPER PDF ↓ ]</a>
+      </div>
+      <div>CANONICAL DOMAIN: <code>33rdtreelabs.tech</code></div>
+      <a href="#top" class="foot__top" id="back-to-top">START OVER &uarr;</a>
+    </div>
+  </footer>
+
+  <!-- FAST SNAPPY LENIS SCRIPT & TELEMETRY PROGRESS -->
+  <script>
+    const lenis = new Lenis({
+      lerp: 0.14,
+      wheelMultiplier: 1.15,
+      touchMultiplier: 1.5,
+      smoothWheel: true
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Scroll progress telemetry line
+    lenis.on('scroll', (e) => {
+      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollTotal > 0 ? (e.scroll / scrollTotal) * 100 : 0;
+      const bar = document.getElementById('scroll-progress-line');
+      if (bar) bar.style.width = progress + '%';
+    });
+
+    document.getElementById('back-to-top')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      lenis.scrollTo(0, { duration: 0.8 });
+    });
+
+    // GLITCH SCRAMBLE EFFECT
+    const GLYPHS = "01010101_//<>[]!#$*+=-";
+    class GlitchScramble {
+      constructor(el) {
+        this.el = el;
+        this.original = el.innerText;
+        this.isGlitching = false;
+        this.animId = null;
+      }
+      scramble(speed = 4.0) {
+        if (this.isGlitching) return;
+        this.isGlitching = true;
+        const target = this.original;
+        const len = target.length;
+        const start = performance.now();
+        const duration = Math.min(600, Math.max(250, len * 20));
+
+        const tick = (now) => {
+          const elapsed = now - start;
+          const progress = Math.min(1, elapsed / duration);
+          const revealedCount = Math.floor(progress * len);
+          let result = '';
+          for (let i = 0; i < len; i++) {
+            const ch = target[i];
+            if (ch === ' ' || ch === '\n' || ch === '\t') {
+              result += ch;
+            } else if (i < revealedCount) {
+              result += ch;
+            } else {
+              result += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            }
+          }
+          this.el.innerText = result;
+          if (progress < 1) {
+            this.animId = requestAnimationFrame(tick);
+          } else {
+            this.el.innerText = target;
+            this.isGlitching = false;
+          }
+        };
+        this.animId = requestAnimationFrame(tick);
+      }
+    }
+    document.querySelectorAll('[data-glitch]').forEach(el => {
+      const g = new GlitchScramble(el);
+      el.addEventListener('mouseenter', () => g.scramble(3.5));
+    });
+  </script>
+</body>
+</html>
+"""
+
+if __name__ == "__main__":
+    out_path = os.path.join(SITE_DIR, "protocol.html")
+    content = generate_protocol_page()
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"Generated protocol.html ({len(content)} bytes, {len(content.splitlines())} lines)")

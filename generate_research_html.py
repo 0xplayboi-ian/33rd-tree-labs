@@ -11,6 +11,38 @@ def build():
         active_page="research"
     )
 
+    # Inject the brand font definitions into head
+    brand_fonts_style = """
+    /* BRAND TYPOGRAPHY: OBEL MONO + JETBRAINS MONO + SYNE */
+    @font-face {
+      font-family: 'Obel Mono';
+      src: url('assets/fonts/ObelMono.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Obel Mono';
+      src: url('assets/fonts/ObelMono-Italic.ttf') format('truetype');
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Obel Mono Masked';
+      src: url('assets/fonts/ObelMonoMasked.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+"""
+    head = head.replace("<style>", "<style>" + brand_fonts_style)
+    head = head.replace("--border: #1C1C24;", "--border: rgba(255, 255, 255, 0.12);")
+    head = head.replace("--border-light: #2A2A36;", "--border-light: rgba(255, 255, 255, 0.12);")
+    head = head.replace("--fm: 'JetBrains Mono', ui-monospace, monospace;", "--fm: 'Obel Mono', 'JetBrains Mono', ui-monospace, monospace;")
+    head = head.replace("--fh: 'Syne', sans-serif;", "--fh: 'Obel Mono Masked', 'Syne', -apple-system, sans-serif;")
+    head = head.replace("html {", "table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val, [data-glitch], .mechanical-glitch { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1; }\n    html {")
+
     body = r"""
   <main class="page-wrap">
     <!-- EDITORIAL HERO / HEADER -->

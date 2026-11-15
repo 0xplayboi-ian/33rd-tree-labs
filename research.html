@@ -782,7 +782,7 @@
         <a href="nodes.html" class="nav-link " data-glitch>[ NODES ]</a>
         <a href="tokenomics.html" class="nav-link " data-glitch>[ TOKENOMICS ]</a>
         <a href="research.html" class="nav-link active" data-glitch>[ RESEARCH ]</a>
-        <a href="33rd_Tree_Labs_Whitepaper.pdf" class="nav-link" data-glitch download="33rd_Tree_Labs_Whitepaper.pdf">[ WHITEPAPER PDF &darr; ]</a>
+        <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" download="33rd_Tree_Labs_Whitepaper.pdf" class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>
       </div>
     </nav>
   </div>
@@ -805,19 +805,19 @@
             <span class="b-val accent">K(y) &lt; 0 (GROMOV &delta;-HYPERBOLIC)</span>
           </div>
           <div class="b-col">
-            <span class="b-idx">02 // INFERENCE</span>
-            <span class="b-label">DETERMINISM BOUND</span>
-            <span class="b-val">&Delta;&epsilon; = 0.00 (INT8 FIXED-POINT)</span>
+            <span class="b-idx">02 // STAKE BOND</span>
+            <span class="b-label">VALIDATOR STAKE BOND</span>
+            <span class="b-val accent">25,000 $33RD (S_min)</span>
           </div>
           <div class="b-col">
-            <span class="b-idx">03 // PROOF FIELD</span>
-            <span class="b-label">RECURSIVE FIELD</span>
-            <span class="b-val">GOLDILOCKS F_p (p = 2^64 - 2^32 + 1)</span>
+            <span class="b-idx">03 // FEE BURN</span>
+            <span class="b-label">PROTOCOL FEE BURN</span>
+            <span class="b-val">10% TO 1nc1nerator...1111</span>
           </div>
           <div class="b-col">
-            <span class="b-idx">04 // SETTLEMENT</span>
-            <span class="b-label">SOLANA VERIFICATION</span>
-            <span class="b-val green">~185,000 COMPUTE UNITS</span>
+            <span class="b-idx">04 // HARD CAP</span>
+            <span class="b-label">IMMUTABLE TOKEN HARD CAP</span>
+            <span class="b-val green">33,333,333 $33RD</span>
           </div>
         </div>
       </div>
@@ -1265,7 +1265,8 @@
       lerp: 0.14,
       wheelMultiplier: 1.15,
       touchMultiplier: 1.5,
-      smoothWheel: true
+      smoothWheel: true,
+      smoothTouch: false
     });
 
     function raf(time) {

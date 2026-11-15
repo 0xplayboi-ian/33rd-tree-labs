@@ -30,21 +30,29 @@
   <style>
 
     :root {
+      --bg: #070707;
+      --f: #070707; /* Pure Obsidian Background */
       --t: #FF2424; /* Primary Laser Crimson */
       --t-glow: rgba(255, 36, 36, 0.45);
       --t-subtle: rgba(255, 36, 36, 0.08);
-      --f: #070707; /* Pure Obsidian Background */
       --chalk: #F2F2F5;
       --chalk-dim: #C8C8D2;
       --dim: #8E8E98;
-      --slate: #6E6E78;
-      --border: #1C1C24;
-      --border-light: #2A2A36;
+      --slate: #5A5A66;
+      --border: rgba(255, 255, 255, 0.12); /* Subtle hairline border */
+      --border-light: rgba(255, 255, 255, 0.12);
       --border-accent: rgba(255, 36, 36, 0.35);
+      --bg-card: transparent;
+      --bg-card-hover: transparent;
+      --card-bg: transparent;
+      --laser-red: var(--t);
+      --laser-glow: var(--t-glow);
       --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-      --fm: 'JetBrains Mono', ui-monospace, monospace;
-      --fh: 'Syne', sans-serif;
+      --fm: 'Obel Mono', 'JetBrains Mono', ui-monospace, monospace;
+      --fh: 'Obel Mono Masked', 'Syne', -apple-system, sans-serif;
       --green: #00E676;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
     }
 
     *, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -302,7 +310,7 @@
 
     /* OPEN EDITORIAL SECTIONS (DIVIDED BY STARK HAIRLINES, ZERO CARDS) */
     .ed-section {
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
       padding: 80px 0;
       position: relative;
     }
@@ -357,22 +365,25 @@
     .ed-grid-4 {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      border-top: 1px solid var(--border);
-      border-left: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
       margin: 40px 0;
     }
     .ed-grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--border);
-      border-left: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
       margin: 40px 0;
     }
     .ed-grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      border-top: 1px solid var(--border);
-      border-left: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
       margin: 40px 0;
     }
     @media (max-width: 1024px) {
@@ -383,10 +394,12 @@
       .ed-grid-4, .ed-grid-2 { grid-template-columns: 1fr; }
     }
     .ed-grid-cell {
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       padding: 36px 30px;
       background: transparent;
+      box-shadow: none;
+      border-radius: 0;
       transition: background 0.25s ease;
       display: flex;
       flex-direction: column;
@@ -426,7 +439,7 @@
       gap: 10px;
       font-family: var(--fm);
       font-size: 11.5px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
       padding-top: 18px;
     }
     .cell-spec-list li {
@@ -442,8 +455,12 @@
     .ed-table-wrap {
       width: 100%;
       overflow-x: auto;
-      border: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
       margin: 32px 0 48px;
+      background: transparent;
     }
     .ed-table {
       width: 100%;
@@ -453,10 +470,13 @@
       text-align: left;
     }
     .ed-table th {
-      background: rgba(255, 36, 36, 0.05);
+      background: transparent;
       color: var(--t);
       padding: 16px 20px;
-      border: 1px solid var(--border);
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -464,7 +484,10 @@
     }
     .ed-table td {
       padding: 15px 20px;
-      border: 1px solid var(--border);
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--chalk-dim);
     }
     .ed-table tr:hover td {
@@ -485,8 +508,11 @@
 
     /* TERMINAL & CLI CODE RUNBOOK BLOCKS */
     .ed-code-block {
-      border: 1px solid var(--border);
-      background: #030306;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
+      background: transparent;
       margin: 28px 0;
       font-family: var(--fm);
     }
@@ -494,19 +520,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 20px;
-      background: rgba(255, 255, 255, 0.03);
-      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+      background: transparent;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       font-size: 11px;
       color: var(--dim);
       letter-spacing: 0.08em;
     }
     .ed-code-content {
-      padding: 22px 24px;
+      padding: 20px 0;
       overflow-x: auto;
       font-size: 13px;
       line-height: 1.65;
       color: #E2E2E8;
+      background: transparent;
     }
     .cmd-prompt { color: var(--t); user-select: none; margin-right: 10px; }
     .cmd-flag { color: #79C0FF; }
@@ -515,9 +542,12 @@
 
     /* MATH & FORMULA CALLOUT */
     .math-callout {
-      border-left: 2px solid var(--t);
-      background: rgba(255, 36, 36, 0.02);
-      padding: 24px 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
+      background: transparent;
+      padding: 24px 0;
       margin: 28px 0;
       font-size: 15px;
       line-height: 1.7;
@@ -532,10 +562,13 @@
       margin-bottom: 10px;
     }
     .math-display-box {
-      background: #030305;
-      border: 1px solid var(--border);
-      padding: 24px 28px;
-      margin: 24px 0;
+      background: transparent;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: none;
+      border-right: none;
+      padding: 20px 0;
+      margin: 20px 0;
       overflow-x: auto;
       color: #FFFFFF;
       font-size: 16px;
@@ -681,7 +714,7 @@
     
   </style>
 </head>
-<body id="top">
+<body>
 
   <!-- TOP-EDGE SCROLL PROGRESS BAR -->
   <div id="scroll-progress-line" aria-hidden="true"></div>
@@ -725,7 +758,7 @@
         <a href="nodes.html" class="nav-link " data-glitch>[ NODES ]</a>
         <a href="tokenomics.html" class="nav-link active" data-glitch>[ TOKENOMICS ]</a>
         <a href="research.html" class="nav-link " data-glitch>[ RESEARCH ]</a>
-        <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" download="33rd_Tree_Labs_Whitepaper.pdf" class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>
+        <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" download class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>
       </div>
     </nav>
   </div>
@@ -739,23 +772,19 @@
         A mathematically capped, anti-inflationary utility and settlement asset on Solana. Strict asymptotic ceiling of 33,333,333 $33RD tokens, 100% LP incinerated to the canonical burner, zero mint authority, and continuous deflationary burn dynamics.
       </p>
 
-      <!-- TELEMETRY STRIP (NO CARD CONTAINERS - CLEAN 1PX HAIRLINES) -->
+      <!-- TELEMETRY STRIP (NO CARD CONTAINERS) -->
       <div class="telemetry-strip">
         <div class="telemetry-cell">
           <span class="telemetry-lbl">Immutable Hard Cap</span>
           <span class="telemetry-val accent">33,333,333 $33RD</span>
         </div>
         <div class="telemetry-cell">
-          <span class="telemetry-lbl">Fee Burn Mechanism</span>
-          <span class="telemetry-val accent">10% TO 1nc1nerator...1111</span>
-        </div>
-        <div class="telemetry-cell">
-          <span class="telemetry-lbl">Validator Stake Bond</span>
-          <span class="telemetry-val">25,000 $33RD</span>
-        </div>
-        <div class="telemetry-cell">
           <span class="telemetry-lbl">Liquidity Pool Status</span>
           <span class="telemetry-val">100% LP INCINERATED</span>
+        </div>
+        <div class="telemetry-cell">
+          <span class="telemetry-lbl">Mint Authority</span>
+          <span class="telemetry-val">PERMANENTLY REVOKED (NONE)</span>
         </div>
         <div class="telemetry-cell">
           <span class="telemetry-lbl">Net Deflationary Threshold</span>
@@ -900,7 +929,7 @@
               <td>36-Month Linear Vesting // 0% TGE</td>
               <td class="green">ESCROW LOCKED</td>
             </tr>
-            <tr style="border-top:1px solid rgba(255, 255, 255, 0.12); font-weight:700;">
+            <tr style="border-top:2px solid var(--border-light);">
               <td class="accent">CANONICAL TOTAL HARD CAP</td>
               <td class="highlight" style="color:var(--t); font-size:14px;">33,333,333 $33RD</td>
               <td style="color:var(--t); font-size:14px;">100.0%</td>
@@ -1106,11 +1135,12 @@
             <span class="cell-tag">[ SINK 01 // BONDING ]</span>
             <h3 class="cell-title">Validator Collateral</h3>
             <p class="cell-body">
-              Every node operator must lock collateral in an Anchor staking vault PDA (canonical Tier 3 Foundation Validator bond: 25,000 $33RD) to be eligible for Byzantine committee selection and job allocation.
+              Every node operator must lock a minimum collateral bond of 25,000 $33RD in an Anchor staking vault PDA to be eligible for Byzantine committee selection and job allocation.
             </p>
           </div>
           <ul class="cell-spec-list">
-            <li><span>Circulation Impact:</span> <strong>Removes 3M-8M $33RD</strong></li>
+            <li><span>Minimum Collateral Bond:</span> <strong>25,000 $33RD</strong></li>
+            <li><span>Circulation Impact:</span> <strong>Removes 3M–8M $33RD</strong></li>
             <li><span>Lock Window:</span> <strong>7-Day Unbonding Cooldown</strong></li>
             <li><span>Slashing Risk:</span> <strong>5% to 100% Forfeiture</strong></li>
           </ul>
@@ -1121,13 +1151,13 @@
             <span class="cell-tag">[ SINK 02 // GAS &amp; FEES ]</span>
             <h3 class="cell-title">Inference Execution Gas</h3>
             <p class="cell-body">
-              Enterprise users pay for model inference queries in $33RD. 75% routes directly to node operators, 15% to protocol research PDA, and 10% is burned permanently to 1nc1nerator...1111.
+              Enterprise users pay for model inference queries in $33RD. 75% routes directly to hardware node operators as rewards, 15% to the protocol R&amp;D multisig vault PDA, and 10% is routed to the Solana Incinerator (<code>1nc1nerator11111111111111111111111111111111</code>) for perpetual destruction.
             </p>
           </div>
           <ul class="cell-spec-list">
-            <li><span>Operator Share:</span> <strong>75% Direct Yield</strong></li>
-            <li><span>Protocol Treasury:</span> <strong>15% R&amp;D Vault</strong></li>
-            <li><span>Permanent Burn:</span> <strong>10% to 1nc1nerator...1111</strong></li>
+            <li><span>Hardware Node Rewards:</span> <strong>75% Direct Yield</strong></li>
+            <li><span>R&amp;D Multisig:</span> <strong>15% Protocol Vault</strong></li>
+            <li><span>Perpetual Fee Burn:</span> <strong>10% Solana Incinerator</strong></li>
           </ul>
         </div>
 
@@ -1368,8 +1398,7 @@
       lerp: 0.14,
       wheelMultiplier: 1.15,
       touchMultiplier: 1.5,
-      smoothWheel: true,
-      smoothTouch: false
+      smoothWheel: true
     });
 
     function raf(time) {

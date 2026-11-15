@@ -2721,22 +2721,6 @@ html_template = """<!doctype html>
       aboveField = new MatrixField(aboveCanvas, { cell: 38, mode: "hyperbolic", speed: 0.3 });
     }
 
-    // Initialize Poincaré Hyperbolic Simulator on Playground Canvas
-    const playCanvas = document.getElementById('playground-canvas');
-    let playSim = null;
-    if (playCanvas && typeof PoincareHyperbolicSimulator !== 'undefined') {
-      playSim = new PoincareHyperbolicSimulator(playCanvas, {
-        k: 64,
-        speed: 0.8,
-        interactive: true,
-        showHud: true,
-        onQuorumChange: (m) => {
-          const kOutEl = document.getElementById('k-out');
-          if (kOutEl) kOutEl.textContent = `K = ${m.k} (${m.isQuorum ? 'VALIDATED' : 'BREACH'})`;
-        }
-      });
-    }
-
     // Global Animation Render Loop
     let lastTime = performance.now();
     function renderLoop(now) {

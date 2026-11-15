@@ -525,7 +525,7 @@ def get_navbar(active_key):
         act = " active" if k == active_key else ""
         links.append(f'<a href="{url}" class="nav-link{act}" data-glitch>{label}</a>')
     
-    links.append('<a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>')
+    links.append('<a href="33rd_Tree_Labs_Whitepaper.pdf" download class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>')
     
     links_html = "\n                ".join(links)
     return f"""

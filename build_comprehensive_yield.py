@@ -68,7 +68,7 @@ def generate_yield_page():
         .editorial-divider {
             width: 100%;
             height: 1px;
-            background: linear-gradient(90deg, var(--laser-red) 0%, rgba(255, 41, 44, 0.2) 20%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
+            background: linear-gradient(90deg, var(--laser-red) 0%, rgba(255, 36, 36, 0.2) 20%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
             margin: 64px 0 44px 0;
         }
         .editorial-divider.subtle {
@@ -217,7 +217,7 @@ def generate_yield_page():
             height: 18px;
             background: var(--laser-red);
             cursor: pointer;
-            box-shadow: 0 0 12px rgba(255, 41, 44, 0.8);
+            box-shadow: 0 0 12px rgba(255, 36, 36, 0.8);
             border: 2px solid #FFFFFF;
         }
         .sim-slider-meta {
@@ -263,7 +263,7 @@ def generate_yield_page():
             font-size: 28px;
             color: var(--laser-red);
             font-weight: 800;
-            text-shadow: 0 0 20px rgba(255, 41, 44, 0.4);
+            text-shadow: 0 0 20px rgba(255, 36, 36, 0.4);
         }
         .sim-metric-data.green {
             color: var(--green);
@@ -359,7 +359,7 @@ def generate_yield_page():
             border-bottom: none;
         }
         .open-table tr:hover td {
-            background: rgba(255, 41, 44, 0.03);
+            background: rgba(255, 36, 36, 0.03);
             color: #FFFFFF;
         }
         .open-table td.highlight {
@@ -721,8 +721,9 @@ def generate_yield_page():
                             <span class="sim-field-val">WEIGHT MULTIPLIER</span>
                         </label>
                         <select id="sim-hw" class="sim-select" onchange="calculateValidatorYield()">
-                            <option value="b200">NVIDIA Blackwell B200 (192GB HBM3e, 8 TB/s NVLink) &bull; 8.2x Multiplier</option>
+                            <option value="b200">NVIDIA Blackwell B200 (192GB HBM3e, 8 TB/s NVLink) &bull; 6.2x Multiplier</option>
                             <option value="h100" selected>NVIDIA Hopper H100 SXM5 (80GB HBM3, 900 GB/s) &bull; 4.8x Multiplier</option>
+                            <option value="l40s">NVIDIA L40S (48GB GDDR6, PCIe Gen 4) &bull; 2.1x Multiplier</option>
                             <option value="rtx4090">NVIDIA RTX 4090 (24GB GDDR6X, PCIe Gen 4) &bull; 1.0x Edge Quorum</option>
                         </select>
                     </div>
@@ -910,7 +911,7 @@ def generate_yield_page():
                         <td>192 GB HBM3e</td>
                         <td>8.0 TB/s NVLink 5.0</td>
                         <td>2,250 TFLOPS</td>
-                        <td class="highlight">8.2x</td>
+                        <td class="highlight">6.2x</td>
                         <td>Primary Model Sharding &bull; Deep LLM Weights</td>
                     </tr>
                     <tr>
@@ -923,7 +924,16 @@ def generate_yield_page():
                         <td>Core BFT Proposal Committee &bull; KZG Prover</td>
                     </tr>
                     <tr>
-                        <td>Tier-2 Edge</td>
+                        <td class="highlight">Tier-2 Mid</td>
+                        <td>NVIDIA L40S</td>
+                        <td>48 GB GDDR6</td>
+                        <td>862 GB/s PCIe Gen 4</td>
+                        <td>733 TFLOPS</td>
+                        <td class="highlight">2.1x</td>
+                        <td>Intermediate Pipeline Staging &bull; Transformer Layers</td>
+                    </tr>
+                    <tr>
+                        <td>Tier-3 Edge</td>
                         <td>NVIDIA RTX 4090</td>
                         <td>24 GB GDDR6X</td>
                         <td>64 GB/s PCIe 4.0 x16</td>
@@ -1448,7 +1458,7 @@ export PATH="$HOME/.33rd/bin:$PATH"
                 <a href="nodes.html" class="footer-link">[ NODES ]</a>
                 <a href="tokenomics.html" class="footer-link">[ TOKENOMICS ]</a>
                 <a href="research.html" class="footer-link">[ RESEARCH ]</a>
-                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="footer-link">[ WHITEPAPER PDF ]</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="footer-link">[ WHITEPAPER PDF ↓ ]</a>
             </div>
         </div>
     </footer>
@@ -1464,8 +1474,8 @@ export PATH="$HOME/.33rd/bin:$PATH"
         // Fast, snappy Lenis smooth scroll with lerp: 0.14
         const lenis = new Lenis({{
             lerp: 0.14,
-            wheelMultiplier: 1.0,
-            touchMultiplier: 1.4,
+            wheelMultiplier: 1.15,
+            touchMultiplier: 1.5,
             smoothWheel: true,
             smoothTouch: false
         }});

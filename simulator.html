@@ -834,7 +834,7 @@
         }
     </style>
 </head>
-<body id="top">
+<body>
 
     <!-- TOP-EDGE SCROLL TELEMETRY PROGRESS LINE -->
     <div id="scroll-progress-line" aria-hidden="true"></div>
@@ -875,7 +875,7 @@
 
     <!-- MAIN PAGE CONTAINER -->
     <main class="page-wrap">
-        <div class="meta-tag" data-glitch data-glitch-text="( 02 ) // ADVERSARIAL CONSENSUS &bull; POINCARÉ HYPERBOLIC SIMULATOR &bull; CANARY v4.0">( 02 ) // ADVERSARIAL CONSENSUS &bull; POINCAR&Eacute; HYPERBOLIC SIMULATOR &bull; CANARY v4.0</div>
+        <div class="meta-tag" data-glitch data-glitch-text="( 02 ) // ADVERSARIAL CONSENSUS • POINCARÉ HYPERBOLIC SIMULATOR • CANARY v4.0">( 02 ) // ADVERSARIAL CONSENSUS &bull; POINCAR&Eacute; HYPERBOLIC SIMULATOR &bull; CANARY v4.0</div>
         
         <!-- HEADLINE WITH BULLETPROOF MECHANICAL GLITCH DECODER -->
         <h1 class="section-title" data-glitch data-glitch-text="BYZANTINE COMMITTEE CONSENSUS ENGINE">BYZANTINE COMMITTEE CONSENSUS ENGINE</h1>
@@ -1456,14 +1456,14 @@
 
             initPackets() {
                 this.packets = [];
-                const symbols = ['⊗', '∇', 'λ', 'Δ', '⊙', '⊛'];
+                const symbols = ['\u2297', '\u2207', '\u03bb', '\u0394', '\u2299', '\u229b'];
                 const count = 18;
                 for (let i = 0; i < count; i++) {
                     this.packets.push(this.spawnPacket(symbols[i % symbols.length]));
                 }
             }
 
-            spawnPacket(symbol = '⊗') {
+            spawnPacket(symbol = '\u2297') {
                 const activeNodes = this.nodes.filter(n => n.id > 0 && n.active && n.state !== 'slashed');
                 if (activeNodes.length === 0) {
                     return { path: [0], step: 0, progress: 0, speed: 0.015, symbol: symbol, trail: [] };
@@ -1802,7 +1802,7 @@
                 }
 
                 // Update tensor packets
-                const symbols = ['⊗', '∇', 'λ', 'Δ', '⊙', '⊛'];
+                const symbols = ['\u2297', '\u2207', '\u03bb', '\u0394', '\u2299', '\u229b'];
                 for (let i = 0; i < this.packets.length; i++) {
                     const p = this.packets[i];
                     p.progress += p.speed * dt * 60;
@@ -2118,7 +2118,7 @@
                         ctx.font = 'bold 8.5px "JetBrains Mono", monospace';
                         ctx.fillStyle = '#FF2424';
                         ctx.textAlign = 'center';
-                        ctx.fillText(`Δε = +${n.drift} FP16`, pt.x, pt.y - radius - 6);
+                        ctx.fillText(`\u0394\u03b5 = +${n.drift} FP16`, pt.x, pt.y - radius - 6);
                         ctx.restore();
                     } else if (n.state === 'slashed') {
                         // SLASHED TOMBSTONE
@@ -2141,7 +2141,7 @@
                         ctx.font = '8px "JetBrains Mono", monospace';
                         ctx.fillStyle = '#FF2424';
                         ctx.textAlign = 'center';
-                        ctx.fillText(`[SLASHED Δε=+${n.drift}]`, pt.x, pt.y + radius + 10);
+                        ctx.fillText(`[SLASHED \u0394\u03b5=+${n.drift}]`, pt.x, pt.y + radius + 10);
                         ctx.restore();
                     } else {
                         // HONEST VALIDATOR
@@ -2298,7 +2298,7 @@
             const faultPct = ((m.faultCount / m.totalActive) * 100).toFixed(1);
             hudFaults.textContent = `f = ${m.faultCount} / ${m.totalActive} (${faultPct}%)`;
             hudFaults.style.color = m.faultCount <= m.maxFaults ? 'var(--white)' : 'var(--laser-red)';
-            hudToleranceSub.textContent = `MAX TOLERANCE: f ≤ ${m.maxFaults} (3f + 1 ≤ K)`;
+            hudToleranceSub.textContent = `MAX TOLERANCE: f \u2264 ${m.maxFaults} (3f + 1 \u2264 K)`;
         }
 
         if (pCanvas) {
@@ -2398,7 +2398,7 @@
                     appendTermLine('[BENCH] Forward pass: 14.2ms &bull; Proof generated: 1.84ms &bull; OK', 'log-success');
                 }, 260);
             } else if (c === 'verify') {
-                appendTermLine('[KZG] Evaluating BN254 pairing: e(π, [x - z]_2) == e(C - v*[1]_1, [1]_2)...', 'log-dim');
+                appendTermLine('[KZG] Evaluating BN254 pairing: e(\u03c0, [x - z]_2) == e(C - v*[1]_1, [1]_2)...', 'log-dim');
                 setTimeout(() => {
                     appendTermLine('[KZG] Commitment opening verified on Solana &bull; Cost: 184,200 Compute Units', 'log-success');
                 }, 300);
@@ -2407,7 +2407,7 @@
                     const m = sim.getMetrics();
                     appendTermLine(`[BYZANTINE] Committee state: K=${m.k} &bull; Faults f=${m.faultCount} (Max allowed: ${m.maxFaults})`, 'log-highlight');
                     if (m.isQuorum) {
-                        appendTermLine('[BYZANTINE] Quorum threshold ≥ 2/3: SATISFIED. Honest consensus intact.', 'log-success');
+                        appendTermLine('[BYZANTINE] Quorum threshold \u2265 2/3: SATISFIED. Honest consensus intact.', 'log-success');
                     } else {
                         appendTermLine('[BYZANTINE] CRITICAL: f > threshold. Quorum breached. Automated circuit breaker.', 'log-warn');
                     }
