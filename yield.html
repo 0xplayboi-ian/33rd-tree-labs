@@ -1682,10 +1682,34 @@
         }
 
         const glitchElements = document.querySelectorAll('[data-glitch]');
-        glitchElements.forEach(el => {
-            const mg = new MechanicalGlitch(el);
-            el.addEventListener('mouseenter', () => mg.start());
-        });
+        if ('IntersectionObserver' in window) {
+            const glitchObserver = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const mg = entry.target.__glitch || new MechanicalGlitch(entry.target);
+                        entry.target.__glitch = mg;
+                        if (!mg.hasPlayed) {
+                            mg.start();
+                        }
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            glitchElements.forEach(el => {
+                const mg = new MechanicalGlitch(el);
+                el.__glitch = mg;
+                glitchObserver.observe(el);
+                el.addEventListener('mouseenter', () => {
+                    if (!mg.isRunning) mg.start();
+                });
+            });
+        } else {
+            glitchElements.forEach(el => {
+                const mg = new MechanicalGlitch(el);
+                el.addEventListener('mouseenter', () => mg.start());
+            });
+        }
 
         // Render KaTeX Math once loaded
         window.addEventListener('DOMContentLoaded', () => {
