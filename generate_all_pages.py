@@ -525,6 +525,8 @@ def get_navbar(active_key):
         act = " active" if k == active_key else ""
         links.append(f'<a href="{url}" class="nav-link{act}" data-glitch>{label}</a>')
     
+    links.append('<a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>')
+    
     links_html = "\n                ".join(links)
     return f"""
     <!-- TOP-EDGE SCROLL TELEMETRY PROGRESS LINE -->
@@ -567,7 +569,7 @@ def get_script_footer(extra_js=""):
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
-        const lenis = new Lenis({{ lerp: 0.14, wheelMultiplier: 1.25, smoothWheel: true }});
+        const lenis = new Lenis({{ lerp: 0.14, wheelMultiplier: 1.15, touchMultiplier: 1.5, smoothWheel: true }});
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => lenis.raf(time * 1000));
         gsap.ticker.lagSmoothing(0);
@@ -1430,166 +1432,184 @@ def build_index_html():
 
 # ====================================================================
 # ====================================================================
+# ====================================================================
 # 2. BUILD PROTOCOL.HTML (Architecture Matrix, 4 Pillars, KZG & Proofs)
 # ====================================================================
 def build_protocol_html():
     css = get_shared_css() + """
-        /* 4 PILLARS OPEN EDITORIAL SPECIFICATION (ZERO CARDS) */
-        .pillars-editorial-list {
-            margin-top: 48px;
-            border-bottom: 1px solid var(--border);
+        /* OPEN EDITORIAL SWISS BRUTALIST SECTIONS (ZERO CARDS / ZERO PILLS) */
+        .protocol-sections {
+            margin-top: 56px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         }
 
-        .pillar-row {
+        .protocol-section {
             display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 48px;
-            padding: 48px 0;
-            border-top: 1px solid var(--border);
+            grid-template-columns: 260px 1fr;
+            gap: 56px;
+            padding: 56px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
             background: transparent;
             position: relative;
             transition: border-color 0.25s ease;
         }
 
-        .pillar-row:hover {
-            border-top-color: rgba(255, 41, 44, 0.45);
+        .protocol-section:hover {
+            border-top-color: rgba(255, 41, 44, 0.6);
         }
 
-        .pillar-col-left {
+        .section-num-col {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .pillar-num {
+        .section-num {
             font-family: 'Obel Mono', 'JetBrains Mono', monospace;
-            font-size: clamp(42px, 5vw, 64px);
+            font-size: clamp(48px, 5.5vw, 72px);
             font-weight: 700;
             color: var(--laser-red);
-            line-height: 1;
-            letter-spacing: -0.02em;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
         }
 
-        .pillar-meta {
+        .section-eyebrow {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             font-weight: 600;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             color: var(--slate);
             text-transform: uppercase;
         }
 
-        .pillar-col-right {
+        .section-body-col {
             display: flex;
             flex-direction: column;
         }
 
-        .pillar-heading {
+        .section-heading {
             font-family: 'Obel Mono', 'JetBrains Mono', monospace;
-            font-size: clamp(24px, 2.6vw, 32px);
+            font-size: clamp(26px, 2.8vw, 36px);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.02em;
-            color: var(--white);
-            margin-bottom: 16px;
-            line-height: 1.25;
+            color: #FFFFFF;
+            margin-bottom: 18px;
+            line-height: 1.2;
         }
 
-        .pillar-text {
+        .section-lead {
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 15px;
-            line-height: 1.7;
-            color: var(--chalk-dim);
-            margin-bottom: 24px;
-            max-width: 920px;
-        }
-
-        .pillar-tags {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            padding-top: 6px;
-        }
-
-        .tag-pill {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            background: transparent;
-            border: 1px solid var(--border);
-            padding: 6px 14px;
+            font-size: 15.5px;
+            line-height: 1.75;
             color: var(--chalk);
-            letter-spacing: 0.04em;
-            transition: border-color 0.2s ease, color 0.2s ease;
+            margin-bottom: 24px;
+            max-width: 960px;
         }
 
-        .tag-pill strong {
-            color: var(--laser-red);
-            font-weight: 600;
+        /* OPEN EDITORIAL TELEMETRY (NO BOXES / NO PILLS / NO BACKGROUNDS) */
+        .editorial-telemetry {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px 36px;
+            padding-top: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            letter-spacing: 0.06em;
         }
 
-        .tag-pill:hover {
-            border-color: rgba(255, 41, 44, 0.5);
-            color: var(--white);
-        }
-
-        /* OPEN EDITORIAL SPECIFICATION TABLE (NO BOX / NO CARDS) */
-        .spec-table-box {
+        .telemetry-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             background: transparent;
             border: none;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 56px 0 24px 0;
-            margin-top: 64px;
-            clip-path: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .telemetry-k {
+            color: var(--slate);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .telemetry-sep {
+            color: rgba(255, 41, 44, 0.65);
+            font-weight: 700;
+        }
+
+        .telemetry-v {
+            color: #FFFFFF;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* OPEN EDITORIAL SPECIFICATION MATRIX (ZERO CARDS / ZERO BOXES) */
+        .spec-matrix-container {
+            background: transparent;
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 60px 0 24px 0;
+            margin-top: 72px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
-        .spec-table {
+
+        .spec-matrix-table {
             width: 100%;
             border-collapse: collapse;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            margin-top: 20px;
+            font-size: 12px;
+            margin-top: 24px;
         }
-        .spec-table th, .spec-table td {
-            padding: 14px 18px;
+
+        .spec-matrix-table th, .spec-matrix-table td {
+            padding: 16px 20px;
             text-align: left;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         }
-        .spec-table th {
+
+        .spec-matrix-table th {
             color: var(--slate);
             text-transform: uppercase;
             font-weight: 700;
             background: transparent;
-            letter-spacing: 0.06em;
-            font-size: 10.5px;
+            letter-spacing: 0.08em;
+            font-size: 11px;
         }
-        .spec-table td {
+
+        .spec-matrix-table td {
             color: var(--chalk);
-            line-height: 1.5;
+            line-height: 1.55;
         }
-        .spec-table tr:hover td {
+
+        .spec-matrix-table tr:hover td {
             background: rgba(255, 41, 44, 0.03);
-            color: var(--white);
+            color: #FFFFFF;
         }
 
         @media (max-width: 860px) {
-            .pillar-row {
+            .protocol-section {
                 grid-template-columns: 1fr;
-                gap: 16px;
-                padding: 32px 0;
+                gap: 18px;
+                padding: 36px 0;
             }
-            .pillar-col-left {
+            .section-num-col {
                 flex-direction: row;
                 align-items: baseline;
                 gap: 16px;
             }
-            .pillar-num {
-                font-size: 36px;
+            .section-num {
+                font-size: 38px;
             }
-            .spec-table th, .spec-table td {
-                padding: 10px 12px;
-                font-size: 10.5px;
+            .editorial-telemetry {
+                gap: 14px 20px;
+            }
+            .spec-matrix-table th, .spec-matrix-table td {
+                padding: 12px 14px;
+                font-size: 11px;
             }
         }
     """
@@ -1620,89 +1640,137 @@ def build_protocol_html():
             A fault-tolerant DePIN computing fabric designed to guarantee deterministic verification across untrusted distributed hardware without performance degradation.
         </p>
 
-        <!-- 4 PILLARS OPEN EDITORIAL MATRIX (ZERO CARDS) -->
-        <div class="pillars-editorial-list">
-            <!-- Pillar 01 -->
-            <article class="pillar-row reveal-on-scroll">
-                <div class="pillar-col-left">
-                    <span class="pillar-num">01</span>
-                    <span class="pillar-meta">[ COORDINATION ]</span>
+        <!-- 4 PILLARS OPEN EDITORIAL MATRIX (ZERO CARDS / ZERO PILLS) -->
+        <div class="protocol-sections">
+            <!-- Section 01 -->
+            <article class="protocol-section reveal-on-scroll">
+                <div class="section-num-col">
+                    <span class="section-num">01</span>
+                    <span class="section-eyebrow">[ COORDINATION // TOPOLOGY ]</span>
                 </div>
-                <div class="pillar-col-right">
-                    <h2 class="pillar-heading" data-glitch>TENSOR ARBOR TOPOLOGY</h2>
-                    <p class="pillar-text">
+                <div class="section-body-col">
+                    <h2 class="section-heading" data-glitch>TENSOR ARBOR TOPOLOGY</h2>
+                    <p class="section-lead">
                         Hierarchical tree manifold partitioning distributed model parameters across heterogeneous GPU nodes. Dynamically matches pipeline stages and tensor parallelism to physical interconnect latencies, preventing inter-node bottlenecks across global clusters.
                     </p>
-                    <div class="pillar-tags">
-                        <span class="tag-pill">ROUTING: <strong>NON-EUCLIDEAN DAG</strong></span>
-                        <span class="tag-pill">BANDWIDTH: <strong>900 GB/s NVLINK</strong></span>
-                        <span class="tag-pill">TOPOLOGY: <strong>MAX 8 HOPS</strong></span>
+                    <div class="editorial-telemetry">
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">ROUTING</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">NON-EUCLIDEAN DAG</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">BANDWIDTH</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">900 GB/s NVLINK</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">TOPOLOGY</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">MAX 8 HOPS</span>
+                        </div>
                     </div>
                 </div>
             </article>
 
-            <!-- Pillar 02 -->
-            <article class="pillar-row reveal-on-scroll">
-                <div class="pillar-col-left">
-                    <span class="pillar-num">02</span>
-                    <span class="pillar-meta">[ VERIFICATION ]</span>
+            <!-- Section 02 -->
+            <article class="protocol-section reveal-on-scroll">
+                <div class="section-num-col">
+                    <span class="section-num">02</span>
+                    <span class="section-eyebrow">[ VERIFICATION // PROOFS ]</span>
                 </div>
-                <div class="pillar-col-right">
-                    <h2 class="pillar-heading" data-glitch>PROOF OF INFERENCE (POI)</h2>
-                    <p class="pillar-text">
+                <div class="section-body-col">
+                    <h2 class="section-heading" data-glitch>PROOF OF INFERENCE (POI)</h2>
+                    <p class="section-lead">
                         Zero-knowledge neural evaluations pairing randomized Chebyshev Activation Polynomial (CAP-FFN) challenges with BN254 KZG polynomial commitment schemes. Enables sub-2ms cryptographic verification directly inside Solana smart contracts without GPU re-computation.
                     </p>
-                    <div class="pillar-tags">
-                        <span class="tag-pill">SCHEME: <strong>BN254 KZG</strong></span>
-                        <span class="tag-pill">SOLANA ANCHOR: <strong>&lt; 184,500 CU</strong></span>
-                        <span class="tag-pill">PROOF TIME: <strong>1.418ms</strong></span>
+                    <div class="editorial-telemetry">
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">SCHEME</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">BN254 KZG</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">SOLANA ANCHOR</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">&lt; 184,500 CU</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">PROOF TIME</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">1.418ms</span>
+                        </div>
                     </div>
                 </div>
             </article>
 
-            <!-- Pillar 03 -->
-            <article class="pillar-row reveal-on-scroll">
-                <div class="pillar-col-left">
-                    <span class="pillar-num">03</span>
-                    <span class="pillar-meta">[ CONSENSUS ]</span>
+            <!-- Section 03 -->
+            <article class="protocol-section reveal-on-scroll">
+                <div class="section-num-col">
+                    <span class="section-num">03</span>
+                    <span class="section-eyebrow">[ CONSENSUS // FAULT TOLERANCE ]</span>
                 </div>
-                <div class="pillar-col-right">
-                    <h2 class="pillar-heading" data-glitch>BYZANTINE QUORUM MATRIX</h2>
-                    <p class="pillar-text">
+                <div class="section-body-col">
+                    <h2 class="section-heading" data-glitch>BYZANTINE FAULT TOLERANCE</h2>
+                    <p class="section-lead">
                         Asynchronous BFT consensus withstanding up to f &lt; K/3 malicious, compromised, or colluding nodes. Immediate automated slashing of bonded $33RD collateral upon mathematical detection of gradient poisoning, bit-rot, or block equivocation.
                     </p>
-                    <div class="pillar-tags">
-                        <span class="tag-pill">TOLERANCE: <strong>f &lt; 21 / 64</strong></span>
-                        <span class="tag-pill">COMMITTEE: <strong>K=64 VALIDATORS</strong></span>
-                        <span class="tag-pill">FINALITY: <strong>400ms SLOTS</strong></span>
+                    <div class="editorial-telemetry">
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">TOLERANCE</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">f &lt; 21 / 64</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">COMMITTEE</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">K=64 VALIDATORS</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">FINALITY</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">400ms SLOTS</span>
+                        </div>
                     </div>
                 </div>
             </article>
 
-            <!-- Pillar 04 -->
-            <article class="pillar-row reveal-on-scroll">
-                <div class="pillar-col-left">
-                    <span class="pillar-num">04</span>
-                    <span class="pillar-meta">[ HARDWARE ENCLAVES ]</span>
+            <!-- Section 04 -->
+            <article class="protocol-section reveal-on-scroll">
+                <div class="section-num-col">
+                    <span class="section-num">04</span>
+                    <span class="section-eyebrow">[ GAME THEORY // INCENTIVES ]</span>
                 </div>
-                <div class="pillar-col-right">
-                    <h2 class="pillar-heading" data-glitch>HETEROGENEOUS MULTI-TEE</h2>
-                    <p class="pillar-text">
-                        Eliminates single-vendor silicon vulnerability by requiring dual independent enclave attestations (Intel SGX/TDX, AMD SEV-SNP, or NVIDIA Confidential Computing). Verifies memory integrity and firmware state before admitting compute providers into the tensor arbor.
+                <div class="section-body-col">
+                    <h2 class="section-heading" data-glitch>ECONOMIC EQUILIBRIUM</h2>
+                    <p class="section-lead">
+                        Algorithmic equilibrium model orchestrating programmatic staking, dynamic yield distribution, and automated collateral liquidation. Nodes bond $33RD tokens against compute commitments; mathematical deviations or gradient poisoning trigger immediate deterministic slashing.
                     </p>
-                    <div class="pillar-tags">
-                        <span class="tag-pill">ENCLAVES: <strong>SGX + SEV-SNP + CC</strong></span>
-                        <span class="tag-pill">ATTESTATION: <strong>DYNAMIC QUORUM</strong></span>
-                        <span class="tag-pill">QUANTIZATION: <strong>FP8 SMOOTHQUANT</strong></span>
+                    <div class="editorial-telemetry">
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">COLLATERAL</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">BONDED $33RD STAKE</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">SLASHING</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">100% MALICIOUS FORFEIT</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-k">INCENTIVE</span>
+                            <span class="telemetry-sep">//</span>
+                            <span class="telemetry-v">DYNAMIC COMPUTE YIELD</span>
+                        </div>
                     </div>
                 </div>
             </article>
         </div>
 
         <!-- PROTOCOL PARAMETERS SPECIFICATION TABLE (OPEN EDITORIAL MATRIX) -->
-        <div class="spec-table-box reveal-on-scroll">
+        <div class="spec-matrix-container reveal-on-scroll">
             <div class="meta-tag" data-glitch>[ CRYPTOGRAPHIC &amp; NETWORK PARAMETERS ]</div>
-            <table class="spec-table">
+            <table class="spec-matrix-table">
                 <thead>
                     <tr>
                         <th>Parameter</th>
@@ -1761,7 +1829,7 @@ def build_protocol_html():
                 <a href="nodes.html" class="footer-link">[ NODES ]</a>
                 <a href="tokenomics.html" class="footer-link">[ TOKENOMICS ]</a>
                 <a href="research.html" class="footer-link">[ RESEARCH ]</a>
-                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="footer-link">[ WHITEPAPER PDF ]</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="footer-link">[ WHITEPAPER PDF &darr; ]</a>
             </div>
         </div>
     </footer>
@@ -2261,8 +2329,8 @@ def build_simulator_html():
 # 4. BUILD YIELD.HTML (Staking Rewards & Hardware Yield Calculator)
 # ====================================================================
 def build_yield_html():
-    from build_comprehensive_yield import generate_yield_page
-    html = generate_yield_page()
+    from build_open_brutalist_yield import generate_open_brutalist_yield
+    html = generate_open_brutalist_yield()
     with open(os.path.join(SITE_DIR, "yield.html"), "w", encoding="utf-8") as f:
         f.write(html)
     print("yield.html compiled successfully.")

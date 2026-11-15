@@ -1,0 +1,1780 @@
+import os
+import re
+
+SITE_DIR = "/Users/ianmora/Desktop/Projects/33rd-tree-labs-site"
+
+def generate_open_brutalist_yield():
+    html = r"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>33RD TREE LABS // Yield Architecture &bull; 33rdtreelabs.tech</title>
+    <meta name="description" content="Open brutalist quantitative yield architecture, 75% hardware node reward pool specification, stake weighting multipliers, deflationary Incinerator proofs, and Byzantine slashing penalty distribution on Solana.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <!-- KaTeX for Open Mathematical Typography -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        :root {
+            --bg: #070707;
+            --bg-elevated: #0B0B0E;
+            --border-hairline: rgba(255, 255, 255, 0.12);
+            --border-hairline-subtle: rgba(255, 255, 255, 0.06);
+            --laser-red: #FF2424;
+            --laser-glow: rgba(255, 36, 36, 0.45);
+            --chalk: #F2F2F5;
+            --chalk-dim: #D4D4DC;
+            --slate: #8E8E98;
+            --dark-slate: #4A4A56;
+            --white: #FFFFFF;
+            --green: #00E676;
+            --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            --fm: 'JetBrains Mono', ui-monospace, monospace;
+            --fh: 'Syne', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: default;
+        }
+
+        html {
+            background: var(--bg);
+            color: var(--chalk);
+            font-family: var(--fd);
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            position: relative;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--chalk);
+            font-family: var(--fd);
+            font-size: 15.5px;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* RETRO-TECH CURSOR */
+        #cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--laser-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--laser-red);
+            transition: opacity 0.2s;
+        }
+        #cursor-ring {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255, 36, 36, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99998;
+            transform: translate(-50%, -50%);
+            transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease;
+        }
+        body.cursor-hover #cursor-ring {
+            width: 48px;
+            height: 48px;
+            border-color: var(--laser-red);
+            background: rgba(255, 36, 36, 0.08);
+        }
+
+        /* SCROLL TELEMETRY PROGRESS LINE */
+        #scroll-progress-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--laser-red);
+            box-shadow: 0 0 8px var(--laser-red), 0 0 16px rgba(255, 36, 36, 0.6);
+            z-index: 100000;
+            pointer-events: none;
+            transition: width 0.04s linear;
+        }
+
+        /* FLOATING PILL NAVBAR */
+        .nav-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: fit-content;
+            max-width: 98vw;
+            pointer-events: none;
+        }
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            padding: 6px 14px 6px 10px;
+            border-radius: 9999px;
+            background: rgba(11, 11, 14, 0.85);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 36, 36, 0.15);
+            pointer-events: auto;
+            white-space: nowrap;
+        }
+        .nav-wrapper.nav-scrolled .nav-pill {
+            background: rgba(11, 11, 14, 0.96);
+            border-color: rgba(255, 36, 36, 0.35);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 36, 36, 0.15);
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #FFFFFF;
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            padding-right: 12px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .nav-logo-box {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .nav-title {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: #FFFFFF;
+            white-space: nowrap;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+        .nav-link {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.60);
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 9999px;
+            border: 1px solid transparent;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-link:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+        .nav-link.active {
+            color: #FFFFFF;
+            background: rgba(255, 36, 36, 0.14);
+            border-color: var(--laser-red);
+            box-shadow: 0 0 10px rgba(255, 36, 36, 0.35);
+        }
+        .nav-link.active::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--laser-red);
+            box-shadow: 0 0 6px var(--laser-red);
+            display: inline-block;
+        }
+        .nav-link.pdf-download {
+            color: #FFFFFF;
+            border-color: rgba(255, 36, 36, 0.35);
+            background: rgba(255, 36, 36, 0.08);
+        }
+        .nav-link.pdf-download:hover {
+            background: rgba(255, 36, 36, 0.2);
+            border-color: var(--laser-red);
+            color: #FFFFFF;
+        }
+
+        @media (max-width: 1080px) {
+            .nav-wrapper {
+                top: 10px;
+                left: 0;
+                right: 0;
+                transform: none;
+                width: 100%;
+                padding: 0 12px;
+                justify-content: center;
+                pointer-events: auto;
+            }
+            .nav-pill {
+                padding: 4px 8px;
+                max-width: calc(100vw - 24px);
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .nav-pill::-webkit-scrollbar { display: none; }
+            .nav-title { display: none; }
+            .nav-link { font-size: 10px; padding: 4px 8px; }
+        }
+
+        /* TABULAR NUMERICS */
+        table, td, th, code, pre, .mono, [data-mono], .telemetry-value, .stat-num, .sim-out-val {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum" 1;
+            font-family: var(--fm);
+        }
+
+        /* OPEN BRUTALIST PAGE WRAPPER (ZERO CARD CONTAINMENT) */
+        .page-wrap {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 140px clamp(20px, 4vw, 60px) 100px;
+            width: 100%;
+        }
+
+        /* EDITORIAL HEADER */
+        .ed-hero {
+            margin-bottom: 64px;
+        }
+        .ed-kicker {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            color: var(--laser-red);
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            display: block;
+        }
+        .ed-headline {
+            font-family: var(--fh);
+            font-size: clamp(34px, 5.5vw, 76px);
+            font-weight: 900;
+            line-height: 0.98;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 24px;
+        }
+        .ed-headline .accent {
+            color: var(--laser-red);
+            text-shadow: 0 0 35px rgba(255, 36, 36, 0.4);
+        }
+        .ed-lead {
+            font-family: var(--fd);
+            font-size: clamp(16px, 1.25vw, 19px);
+            line-height: 1.65;
+            color: var(--chalk-dim);
+            max-width: 980px;
+        }
+
+        /* OPEN BRUTALIST TELEMETRY STRIP (HAIRLINE BORDERS ONLY, NO CARDS) */
+        .ed-telemetry-strip {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            border-top: 1px solid var(--border-hairline);
+            border-bottom: 1px solid var(--border-hairline);
+            margin: 56px 0 84px 0;
+        }
+        @media (max-width: 1100px) {
+            .ed-telemetry-strip { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 680px) {
+            .ed-telemetry-strip { grid-template-columns: repeat(2, 1fr); }
+        }
+        .ed-telemetry-cell {
+            padding: 24px 20px;
+            border-right: 1px solid var(--border-hairline);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .ed-telemetry-cell:last-child {
+            border-right: none;
+        }
+        .ed-telemetry-label {
+            font-family: var(--fm);
+            font-size: 10px;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .ed-telemetry-value {
+            font-family: var(--fm);
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--chalk);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .ed-telemetry-value.accent {
+            color: var(--laser-red);
+        }
+
+        /* OPEN BRUTALIST EDITORIAL SECTIONS (HAIRLINE DIVIDERS ONLY - ZERO BOXED CARDS) */
+        .ed-section {
+            border-top: 1px solid var(--border-hairline);
+            padding: 80px 0;
+            position: relative;
+        }
+        .ed-section-numeral {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--laser-red);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .ed-section-title {
+            font-family: var(--fh);
+            font-size: clamp(26px, 3.5vw, 44px);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: var(--white);
+            line-height: 1.05;
+            margin-bottom: 18px;
+        }
+        .ed-section-desc {
+            font-family: var(--fd);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--slate);
+            max-width: 920px;
+            margin-bottom: 44px;
+        }
+
+        /* OPEN SIMULATOR WORKBENCH (ZERO CARD WRAPPER) */
+        .ed-sim-workbench {
+            border-top: 1px solid var(--border-hairline);
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            margin: 36px 0;
+        }
+        @media (max-width: 980px) {
+            .ed-sim-workbench {
+                grid-template-columns: 1fr;
+            }
+        }
+        .ed-sim-controls {
+            padding: 40px 48px 40px 0;
+            border-right: 1px solid var(--border-hairline);
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+        @media (max-width: 980px) {
+            .ed-sim-controls {
+                border-right: none;
+                border-bottom: 1px solid var(--border-hairline);
+                padding: 32px 0;
+            }
+        }
+        .ed-sim-outputs {
+            padding: 40px 0 40px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        @media (max-width: 980px) {
+            .ed-sim-outputs {
+                padding: 32px 0;
+            }
+        }
+
+        .ed-sim-field {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .ed-sim-field-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-family: var(--fm);
+            font-size: 11px;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .ed-sim-field-val {
+            font-family: var(--fm);
+            font-weight: 700;
+            color: var(--chalk);
+            font-size: 12.5px;
+        }
+        .ed-sim-select {
+            background: transparent;
+            border: 1px solid var(--border-hairline);
+            color: var(--chalk);
+            font-family: var(--fm);
+            font-size: 12px;
+            padding: 12px 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            cursor: pointer;
+            width: 100%;
+        }
+        .ed-sim-select:focus, .ed-sim-select:hover {
+            border-color: var(--laser-red);
+        }
+        .ed-sim-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            height: 4px;
+            border-radius: 0;
+            outline: none;
+            cursor: pointer;
+        }
+        .ed-sim-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--laser-red);
+            cursor: pointer;
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 0 12px rgba(255, 36, 36, 0.9);
+        }
+        .ed-sim-slider-meta {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--fm);
+            font-size: 9.5px;
+            color: var(--dark-slate);
+        }
+
+        /* SIMULATOR METRICS STACK */
+        .ed-sim-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .ed-sim-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-hairline-subtle);
+        }
+        .ed-sim-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .ed-sim-row-label {
+            font-family: var(--fm);
+            font-size: 11px;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .ed-sim-row-data {
+            font-family: var(--fm);
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--chalk);
+        }
+        .ed-sim-row-data.hero-apy {
+            font-size: 38px;
+            color: var(--laser-red);
+            font-weight: 900;
+            font-family: var(--fh);
+            letter-spacing: -0.02em;
+            text-shadow: 0 0 25px rgba(255, 36, 36, 0.45);
+        }
+
+        .ed-sim-telemetry-box {
+            margin-top: 32px;
+            padding: 16px 0;
+            border-top: 1px solid var(--border-hairline);
+            font-family: var(--fm);
+            font-size: 10.5px;
+            line-height: 1.6;
+            color: var(--slate);
+        }
+
+        /* OPEN MATHEMATICAL TYPOGRAPHY (ZERO CARD BOXES) */
+        .ed-math-block {
+            margin: 36px 0;
+            padding: 24px 0 24px 28px;
+            border-left: 2px solid var(--laser-red);
+            font-family: var(--fm);
+        }
+        .ed-math-title {
+            font-size: 11px;
+            color: var(--laser-red);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            margin-bottom: 14px;
+        }
+        .ed-math-eq {
+            font-size: 20px;
+            color: var(--white);
+            margin: 18px 0;
+            overflow-x: auto;
+        }
+        .ed-math-vars {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 32px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--slate);
+        }
+        @media (max-width: 800px) {
+            .ed-math-vars { grid-template-columns: 1fr; }
+        }
+        .ed-math-vars strong {
+            color: var(--white);
+        }
+
+        /* OPEN BRUTALIST DATA TABLES (ZERO CARD ENCLOSURES) */
+        .ed-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 36px 0;
+            border-top: 1px solid var(--border-hairline);
+            border-bottom: 1px solid var(--border-hairline);
+        }
+        .ed-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--fm);
+            font-size: 12px;
+            text-align: left;
+        }
+        .ed-table th {
+            padding: 16px 18px;
+            color: var(--slate);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-bottom: 1px solid var(--border-hairline);
+            white-space: nowrap;
+        }
+        .ed-table td {
+            padding: 16px 18px;
+            color: var(--chalk);
+            border-bottom: 1px solid var(--border-hairline-subtle);
+            white-space: nowrap;
+        }
+        .ed-table tr:last-child td {
+            border-bottom: none;
+        }
+        .ed-table tr:hover td {
+            background: rgba(255, 36, 36, 0.03);
+            color: #FFFFFF;
+        }
+        .ed-table td.accent {
+            color: var(--laser-red);
+            font-weight: 700;
+        }
+        .ed-table td.code-cell {
+            font-size: 11px;
+            color: #A0A0B0;
+        }
+
+        /* OPEN TWO-COLUMN EDITORIAL COMPARISON */
+        .ed-split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin: 36px 0;
+        }
+        @media (max-width: 860px) {
+            .ed-split-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+        .ed-col {
+            border-top: 1px solid var(--border-hairline);
+            padding-top: 24px;
+        }
+        .ed-col-title {
+            font-family: var(--fm);
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--chalk);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .ed-col-title::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: var(--laser-red);
+            display: inline-block;
+        }
+        .ed-col p {
+            font-family: var(--fd);
+            font-size: 14.5px;
+            line-height: 1.7;
+            color: var(--slate);
+            margin-bottom: 14px;
+        }
+
+        /* OPEN TIMELINE STRIP */
+        .ed-timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin: 40px 0;
+        }
+        @media (max-width: 860px) {
+            .ed-timeline { grid-template-columns: 1fr; gap: 20px; }
+        }
+        .ed-timeline-step {
+            border-top: 2px solid var(--border-hairline);
+            padding-top: 18px;
+        }
+        .ed-timeline-step.active {
+            border-top-color: var(--laser-red);
+        }
+        .ed-timeline-step-num {
+            font-family: var(--fm);
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--laser-red);
+            letter-spacing: 0.14em;
+            margin-bottom: 8px;
+        }
+        .ed-timeline-title {
+            font-family: var(--fm);
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--chalk);
+            margin-bottom: 10px;
+        }
+        .ed-timeline-desc {
+            font-family: var(--fd);
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--slate);
+        }
+
+        /* OPEN CODE AND ASCII DIAGRAM SPECIFICATION */
+        .ed-code-block {
+            border-top: 1px solid var(--border-hairline);
+            border-bottom: 1px solid var(--border-hairline);
+            margin: 36px 0;
+            padding: 24px 0;
+            font-family: var(--fm);
+            font-size: 11.5px;
+            line-height: 1.65;
+            color: #C0C0D0;
+            overflow-x: auto;
+        }
+        .ed-code-block .keyword { color: var(--laser-red); font-weight: 700; }
+        .ed-code-block .type { color: #64B5F6; }
+        .ed-code-block .fn { color: #81C784; }
+        .ed-code-block .comment { color: #5C5C6E; font-style: italic; }
+        .ed-code-block .string { color: #FFD54F; }
+
+        .ed-ascii-diag {
+            border-top: 1px solid var(--border-hairline);
+            border-bottom: 1px solid var(--border-hairline);
+            padding: 28px 0;
+            margin: 36px 0;
+            overflow-x: auto;
+            font-family: var(--fm);
+            font-size: 11px;
+            line-height: 1.45;
+            color: #B0B0C0;
+        }
+        .ed-ascii-diag .accent { color: var(--laser-red); font-weight: 700; }
+        .ed-ascii-diag .dim { color: var(--dark-slate); }
+
+        /* FOOTER */
+        .global-footer {
+            border-top: 1px solid var(--border-hairline);
+            padding: 60px 0 40px;
+            margin-top: 100px;
+        }
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(20px, 4vw, 60px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .footer-brand {
+            font-family: var(--fm);
+            font-size: 11.5px;
+            color: var(--slate);
+        }
+        .footer-brand strong { color: var(--white); }
+        .footer-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .footer-link {
+            font-family: var(--fm);
+            font-size: 11px;
+            color: var(--slate);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-link:hover { color: var(--laser-red); }
+    </style>
+</head>
+<body>
+
+    <!-- SCROLL PROGRESS -->
+    <div id="scroll-progress-line" aria-hidden="true"></div>
+
+    <!-- RETRO-TECH CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- FLOATING PILL NAVBAR UNIFIED WITH WHITEPAPER PDF -->
+    <div class="nav-wrapper">
+        <nav class="nav-pill">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo-box">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="12" cy="4" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+                        <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+                        <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+                        <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+                        <line x1="12" y1="2" x2="12" y2="22" stroke="#FF2424" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+                        <circle cx="12" cy="12" r="1.8" fill="#FF2424"/>
+                    </svg>
+                </div>
+                <span class="nav-title" data-glitch>33RD TREE LABS</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" data-glitch>[ OVERVIEW ]</a>
+                <a href="protocol.html" class="nav-link" data-glitch>[ PROTOCOL ]</a>
+                <a href="simulator.html" class="nav-link" data-glitch>[ SIMULATOR ]</a>
+                <a href="yield.html" class="nav-link active" data-glitch>[ YIELD ]</a>
+                <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
+                <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
+                <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="nav-link pdf-download" data-glitch>[ WHITEPAPER PDF ↓ ]</a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="page-wrap">
+        <!-- EDITORIAL HERO HEADER -->
+        <header class="ed-hero">
+            <span class="ed-kicker">( 03 ) // PROTOCOL ECONOMICS &bull; CANARY SPECIFICATION v4.0</span>
+            <h1 class="ed-headline" data-glitch>QUANTITATIVE YIELD <span class="accent">&amp;</span> ACCUMULATION</h1>
+            <p class="ed-lead">
+                Deterministic emission schedules, stake-weighted tensor multipliers, deflationary Incinerator dynamics, and Byzantine slashing penalty distribution on Solana.
+            </p>
+        </header>
+
+        <!-- OPEN TELEMETRY STRIP (HAIRLINE BORDERS ONLY, NO CARDS) -->
+        <div class="ed-telemetry-strip">
+            <div class="ed-telemetry-cell">
+                <span class="ed-telemetry-label">Canonical Hard Cap</span>
+                <span class="ed-telemetry-value">33,333,333 $33RD</span>
+            </div>
+            <div class="ed-telemetry-cell">
+                <span class="ed-telemetry-label">Compute Subsidy Pool</span>
+                <span class="ed-telemetry-value">15,000,000 $33RD</span>
+            </div>
+            <div class="ed-telemetry-cell">
+                <span class="ed-telemetry-label">Epoch Slot Cadence</span>
+                <span class="ed-telemetry-value">12.0 Seconds</span>
+            </div>
+            <div class="ed-telemetry-cell">
+                <span class="ed-telemetry-label">Minimum Validator Bond</span>
+                <span class="ed-telemetry-value accent">25,000 $33RD</span>
+            </div>
+            <div class="ed-telemetry-cell">
+                <span class="ed-telemetry-label">Protocol Fee Routing</span>
+                <span class="ed-telemetry-value">75% / 15% / 10%</span>
+            </div>
+            <div class="ed-telemetry-cell">
+                <span class="ed-telemetry-label">Canonical Target</span>
+                <span class="ed-telemetry-value">33rdtreelabs.tech</span>
+            </div>
+        </div>
+
+        <!-- ==================================================================== -->
+        <!-- INTERACTIVE YIELD SIMULATOR (OPEN BRUTALIST // ZERO CARD WRAPPER) -->
+        <!-- ==================================================================== -->
+        <section class="ed-section" style="border-top:none; padding-top:0;">
+            <span class="ed-section-numeral">[ SIMULATOR ENGINE // LIVE MODEL ]</span>
+            <h2 class="ed-section-title">INTERACTIVE VALIDATOR YIELD SIMULATOR</h2>
+            <p class="ed-section-desc">
+                Model validator yields, collateral requirements, APY, and deflationary buyback dynamics across hardware configurations, compute utilization, and halving epochs.
+            </p>
+
+            <div class="ed-sim-workbench">
+                <!-- CONTROLS PANE -->
+                <div class="ed-sim-controls">
+                    <div class="ed-sim-field">
+                        <div class="ed-sim-field-header">
+                            <span>Accelerator Architecture Tier</span>
+                            <span class="ed-sim-field-val">WEIGHT MULTIPLIER</span>
+                        </div>
+                        <select id="sim-hw" class="ed-sim-select" onchange="calculateValidatorYield()">
+                            <option value="b200">NVIDIA Blackwell B200 (192GB HBM3e, 8.0 TB/s NVLink) &bull; 6.2x Multiplier</option>
+                            <option value="h100" selected>NVIDIA Hopper H100 SXM5 (80GB HBM3, 900 GB/s) &bull; 4.8x Multiplier</option>
+                            <option value="l40s">NVIDIA L40S (48GB GDDR6, 864 GB/s PCIe 4.0) &bull; 2.1x Multiplier</option>
+                            <option value="rtx4090">NVIDIA RTX 4090 (24GB GDDR6X, PCIe 4.0 x16) &bull; 1.0x Edge Quorum</option>
+                        </select>
+                    </div>
+
+                    <div class="ed-sim-field">
+                        <div class="ed-sim-field-header">
+                            <span>Active Validator Node Count</span>
+                            <span class="ed-sim-field-val" id="sim-nodes-val">4 NODES</span>
+                        </div>
+                        <input type="range" id="sim-nodes" class="ed-sim-slider" min="1" max="32" step="1" value="4" oninput="calculateValidatorYield()">
+                        <div class="ed-sim-slider-meta">
+                            <span>1 Node (Solo)</span>
+                            <span>16 Nodes</span>
+                            <span>32 Nodes (Data Center)</span>
+                        </div>
+                    </div>
+
+                    <div class="ed-sim-field">
+                        <div class="ed-sim-field-header">
+                            <span>Bonded Collateral ($33RD)</span>
+                            <span class="ed-sim-field-val" id="sim-stake-val">100,000 $33RD</span>
+                        </div>
+                        <input type="range" id="sim-stake" class="ed-sim-slider" min="25000" max="1000000" step="5000" value="100000" oninput="calculateValidatorYield()">
+                        <div class="ed-sim-slider-meta">
+                            <span>Min: 25k / Node</span>
+                            <span>500,000 $33RD</span>
+                            <span>1,000,000 $33RD</span>
+                        </div>
+                    </div>
+
+                    <div class="ed-sim-field">
+                        <div class="ed-sim-field-header">
+                            <span>Network Compute Utilization &amp; Uptime</span>
+                            <span class="ed-sim-field-val" id="sim-util-val">85%</span>
+                        </div>
+                        <input type="range" id="sim-util" class="ed-sim-slider" min="20" max="100" step="5" value="85" oninput="calculateValidatorYield()">
+                        <div class="ed-sim-slider-meta">
+                            <span>20% (Idle Standby)</span>
+                            <span>60%</span>
+                            <span>100% (Full Tensor Saturation)</span>
+                        </div>
+                    </div>
+
+                    <div class="ed-sim-field">
+                        <div class="ed-sim-field-header">
+                            <span>Emission Halving Era</span>
+                            <span class="ed-sim-field-val">BASE SUBSIDY</span>
+                        </div>
+                        <select id="sim-era" class="ed-sim-select" onchange="calculateValidatorYield()">
+                            <option value="1" selected>Era 1 (Years 1&ndash;4) &bull; 5,136.98 $33RD / day (0.7135 / block)</option>
+                            <option value="2">Era 2 (Years 5&ndash;8) &bull; 2,568.49 $33RD / day (0.3567 / block)</option>
+                            <option value="3">Era 3 (Years 9&ndash;12) &bull; 1,284.25 $33RD / day (0.1784 / block)</option>
+                            <option value="4">Era 4 (Years 13&ndash;16) &bull; 642.12 $33RD / day (0.0892 / block)</option>
+                        </select>
+                    </div>
+
+                    <div class="ed-sim-field">
+                        <div class="ed-sim-field-header">
+                            <span>Daily Network Invoiced Fee Volume</span>
+                            <span class="ed-sim-field-val" id="sim-fees-val">65,000 $33RD / DAY</span>
+                        </div>
+                        <input type="range" id="sim-fees" class="ed-sim-slider" min="10000" max="250000" step="5000" value="65000" oninput="calculateValidatorYield()">
+                        <div class="ed-sim-slider-meta">
+                            <span>10k (Bootstrap)</span>
+                            <span>51,370 (Burn Floor)</span>
+                            <span>250,000 $33RD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OUTPUTS PANE -->
+                <div class="ed-sim-outputs">
+                    <div class="ed-sim-stack">
+                        <div class="ed-sim-row">
+                            <span class="ed-sim-row-label">ESTIMATED APY (ANNUALIZED)</span>
+                            <span class="ed-sim-row-data hero-apy" id="res-apy">42.6%</span>
+                        </div>
+                        <div class="ed-sim-row">
+                            <span class="ed-sim-row-label">PER-EPOCH PAYOUT (12s SLOT)</span>
+                            <span class="ed-sim-row-data" id="res-epoch">0.0162 $33RD</span>
+                        </div>
+                        <div class="ed-sim-row">
+                            <span class="ed-sim-row-label">PROJECTED DAILY REWARDS</span>
+                            <span class="ed-sim-row-data" id="res-daily">116.82 $33RD</span>
+                        </div>
+                        <div class="ed-sim-row">
+                            <span class="ed-sim-row-label">PROJECTED MONTHLY REWARDS (30D)</span>
+                            <span class="ed-sim-row-data" id="res-monthly">3,504.6 $33RD</span>
+                        </div>
+                        <div class="ed-sim-row">
+                            <span class="ed-sim-row-label">PROJECTED ANNUAL REWARDS (365D)</span>
+                            <span class="ed-sim-row-data" id="res-annual">42,639 $33RD</span>
+                        </div>
+                        <div class="ed-sim-row">
+                            <span class="ed-sim-row-label">EFFECTIVE CLUSTER WEIGHT</span>
+                            <span class="ed-sim-row-data" id="res-cluster-weight">19.2x (4.8x * 4)</span>
+                        </div>
+                        <div class="ed-sim-row">
+                            <span class="ed-sim-row-label">NETWORK POI CAPACITY SHARE</span>
+                            <span class="ed-sim-row-data" id="res-network-share">4.025%</span>
+                        </div>
+                        <div class="ed-sim-row">
+                            <span class="ed-sim-row-label">INCINERATOR DAILY BURN (10%)</span>
+                            <span class="ed-sim-row-data" style="color:var(--laser-red);" id="res-burn-daily">6,500.0 $33RD</span>
+                        </div>
+                        <div class="ed-sim-row">
+                            <span class="ed-sim-row-label">NETWORK MONETARY SUPPLY STATE</span>
+                            <span class="ed-sim-row-data" id="res-deflation-status">NET DEFLATIONARY</span>
+                        </div>
+                    </div>
+
+                    <div class="ed-sim-telemetry-box">
+                        <pre id="res-diagnostic-log" style="font-family:var(--fm); font-size:10.5px; line-height:1.5; color:#9E9EA8; white-space:pre-wrap; margin:0;"></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- SECTION 01: 75% HARDWARE NODE REWARD POOL ARCHITECTURE -->
+        <!-- ==================================================================== -->
+        <section class="ed-section">
+            <span class="ed-section-numeral">[ SECTION 01 // FORMAL SPECIFICATION ]</span>
+            <h2 class="ed-section-title">75% HARDWARE NODE REWARD POOL</h2>
+            <p class="ed-section-desc">
+                The protocol directs 75% of all aggregate value directly to verified compute node operators. Yield is distributed deterministically per epoch slot based on verifiable tensor execution and hardware performance tiering.
+            </p>
+
+            <div class="ed-math-block">
+                <div class="ed-math-title">CANONICAL EPOCH YIELD FORMULATION &bull; ANCHOR PROGRAM EVALUATION</div>
+                <div class="ed-math-eq">
+                    $$R_{\text{epoch}}(i) = \frac{W_i \cdot U_i}{\sum_{j=1}^{N} (W_j \cdot U_j)} \times \mathcal{Y}_{\text{pool}}$$
+                </div>
+                <div class="ed-math-vars">
+                    <div>
+                        <strong>R_{epoch}(i)</strong>: Cryptographic reward in $33RD credited to validator node $i$ for the committed 12.0s consensus slot.
+                    </div>
+                    <div>
+                        <strong>W_i</strong>: Hardware architecture weighting factor determined by verified accelerator memory bandwidth, VRAM capacity, and FP8 tensor throughput.
+                    </div>
+                    <div>
+                        <strong>U_i</strong>: Validated uptime and attestation coefficient ($0.0 \le U_i \le 1.0$), verified via bit-exact intermediate activations and proof latency.
+                    </div>
+                    <div>
+                        <strong>\sum (W_j \cdot U_j)</strong>: Dynamic network-wide aggregate compute power denominator across all active validator nodes in the current committee.
+                    </div>
+                    <div>
+                        <strong>\mathcal{Y}_{pool}</strong>: Total epoch reward pool, comprising base scheduled emission ($\mathcal{E}_{\text{epoch}}$) plus 75% of incoming protocol inference fees.
+                    </div>
+                    <div>
+                        <strong>N</strong>: Total count of active stake-bonded validator nodes satisfying the 25,000 $33RD admission bond.
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-family:var(--fh); font-size:20px; color:var(--white); text-transform:uppercase; margin:48px 0 16px 0;">
+                GPU ACCELERATOR MULTIPLIER MATRIX (W_i)
+            </h3>
+            <p style="font-family:var(--fd); font-size:15px; line-height:1.65; color:var(--slate); margin-bottom:24px;">
+                Accelerators are verified on-chain via TEE hardware attestations (AMD SEV-SNP / NVIDIA Confidential Computing) and bit-exact INT8/FP8 GEMM challenge kernels. Compute weights directly scale validator reward allocation:
+            </p>
+
+            <div class="ed-table-wrap">
+                <table class="ed-table">
+                    <thead>
+                        <tr>
+                            <th>Hardware Tier</th>
+                            <th>Accelerator Spec</th>
+                            <th>Memory Architecture</th>
+                            <th>Interconnect Bandwidth</th>
+                            <th>FP8 Compute</th>
+                            <th>Weight Multiplier ($W_i$)</th>
+                            <th>Quorum Assignment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="accent">Tier-1 Ultra</td>
+                            <td>NVIDIA Blackwell B200</td>
+                            <td>192 GB HBM3e</td>
+                            <td>8.0 TB/s NVLink 5.0</td>
+                            <td>2,250 TFLOPS</td>
+                            <td class="accent">6.2x</td>
+                            <td>Primary Model Sharding &bull; Deep LLM Weights</td>
+                        </tr>
+                        <tr>
+                            <td class="accent">Tier-1 Enterprise</td>
+                            <td>NVIDIA Hopper H100 SXM5</td>
+                            <td>80 GB HBM3</td>
+                            <td>900 GB/s NVLink 4.0</td>
+                            <td>989 TFLOPS</td>
+                            <td class="accent">4.8x</td>
+                            <td>Core BFT Proposal Committee &bull; KZG Prover</td>
+                        </tr>
+                        <tr>
+                            <td>Tier-1 Standard</td>
+                            <td>NVIDIA L40S</td>
+                            <td>48 GB GDDR6</td>
+                            <td>864 GB/s PCIe 4.0 x16</td>
+                            <td>366 TFLOPS</td>
+                            <td>2.1x</td>
+                            <td>Mid-Weight Shards &bull; Continuous Prover</td>
+                        </tr>
+                        <tr>
+                            <td>Tier-2 Edge</td>
+                            <td>NVIDIA RTX 4090</td>
+                            <td>24 GB GDDR6X</td>
+                            <td>64 GB/s PCIe 4.0 x16</td>
+                            <td>330 TFLOPS</td>
+                            <td>1.0x (Base)</td>
+                            <td>Edge Inference Quorum &bull; Interactive Bisection</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- SECTION 02: 25,000 $33RD MINIMUM VALIDATOR STAKE BOND -->
+        <!-- ==================================================================== -->
+        <section class="ed-section">
+            <span class="ed-section-numeral">[ SECTION 02 // SECURITY &amp; COLLATERAL ]</span>
+            <h2 class="ed-section-title">25,000 $33RD MINIMUM VALIDATOR STAKE BOND</h2>
+            <p class="ed-section-desc">
+                Hardware nodes must deposit a non-custodial collateral bond of 25,000 $33RD into the Solana Anchor Staking Program before receiving permission to join the active slot proposal committee.
+            </p>
+
+            <div class="ed-split-grid">
+                <div class="ed-col">
+                    <div class="ed-col-title">Sybil Resistance &amp; Capital Gate</div>
+                    <p>
+                        A malicious adversary attempting to spoof virtual compute nodes faces a mandatory capital barrier of 25,000 $33RD per node identity. Across the standard $K=64$ node committee, controlling the minimum Byzantine threshold ($f \ge 22$) requires locking over 550,000 $33RD.
+                    </p>
+                    <p>
+                        This capital barrier guarantees that the cost of executing an economic or Sybil attack strictly dwarfs the maximum potential extractable value of any single inference execution batch.
+                    </p>
+                </div>
+                <div class="ed-col">
+                    <div class="ed-col-title">Collateral Protection Against Gradient Corruption</div>
+                    <p>
+                        Distributed model inference is vulnerable to Byzantine gradient poisoning and bit-flipping attacks. By holding 25,000 $33RD in bonded escrow per node, the protocol maintains a 100% slashable collateral pool against deliberate arithmetic tampering.
+                    </p>
+                    <p>
+                        If a node injects malicious noise into model activations, its bond is immediately seized on-chain, eliminating the economic viability of tensor corruption attacks.
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="font-family:var(--fh); font-size:20px; color:var(--white); text-transform:uppercase; margin:48px 0 16px 0;">
+                7-DAY UNBONDING COOLDOWN PERIOD (10,080 BLOCKS)
+            </h3>
+            <p style="font-family:var(--fd); font-size:15px; line-height:1.65; color:var(--slate); margin-bottom:24px;">
+                Validators requesting capital unbonding must undergo a mandatory 7-day cooldown window (10,080 consensus blocks / 50,400 Solana slots). During this interval, collateral remains locked in the Anchor PDA escrow account:
+            </p>
+
+            <div class="ed-timeline">
+                <div class="ed-timeline-step active">
+                    <div class="ed-timeline-step-num">PHASE 01 // SLOT 0</div>
+                    <div class="ed-timeline-title">Unbonding Requested</div>
+                    <div class="ed-timeline-desc">
+                        Node signals withdrawal intent on-chain. Node is immediately removed from the active BFT committee proposal pool.
+                    </div>
+                </div>
+                <div class="ed-timeline-step active">
+                    <div class="ed-timeline-step-num">PHASE 02 // SLOTS 1&ndash;64</div>
+                    <div class="ed-timeline-title">Optimistic Dispute Window</div>
+                    <div class="ed-timeline-desc">
+                        Slot proposals submitted during the node's tenure remain subject to zero-knowledge verification challenge by edge verifiers.
+                    </div>
+                </div>
+                <div class="ed-timeline-step active">
+                    <div class="ed-timeline-step-num">PHASE 03 // HOURS 1&ndash;48</div>
+                    <div class="ed-timeline-title">Interactive Bisection Window</div>
+                    <div class="ed-timeline-desc">
+                        If an activation hash is disputed, the protocol runs an interactive bisection game across the tensor execution graph.
+                    </div>
+                </div>
+                <div class="ed-timeline-step">
+                    <div class="ed-timeline-step-num">PHASE 04 // DAY 7</div>
+                    <div class="ed-timeline-title">Final Capital Release</div>
+                    <div class="ed-timeline-desc">
+                        If zero cryptographic slashing events are recorded, the 25,000 $33RD principal is released to the operator's payout wallet.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- SECTION 03: PROTOCOL FEE SPLIT & THE SOLANA INCINERATOR -->
+        <!-- ==================================================================== -->
+        <section class="ed-section">
+            <span class="ed-section-numeral">[ SECTION 03 // VALUE ACCRUAL ARCHITECTURE ]</span>
+            <h2 class="ed-section-title">PROTOCOL FEE SPLIT &amp; THE SOLANA INCINERATOR</h2>
+            <p class="ed-section-desc">
+                Every compute contract, API query, and verification fee paid across the 33rd Tree Labs network is routed atomically on-chain via the Anchor Settlement Program.
+            </p>
+
+            <div class="ed-ascii-diag">
+<span class="dim">+----------------------------------------------------------------------------------------------------+</span>
+|                            <span class="accent">INCOMING INFERENCE FEE TRANSACTION (100%)</span>                               |
+<span class="dim">+----------------------------------------------------------------------------------------------------+</span>
+                                                 |
+                       +-------------------------+-------------------------+
+                       |                                                   |
+                       v                                                   v
+        <span class="accent">[ 75.0% HARDWARE POOL ]</span>                             <span class="accent">[ 25.0% PROTOCOL ACCRUAL ]</span>
+        Distributed to active $K=64$                                       |
+        committee nodes weighted by                               +--------+--------+
+        $W_i \cdot U_i$ PoI exactness                             |                 |
+                                                                  v                 v
+                                                      <span class="accent">[ 15.0% TREASURY ]</span>    <span class="accent">[ 10.0% INCINERATOR ]</span>
+                                                      Squads Multisig       Canonical Solana Burn
+                                                      Audits &amp; R&amp;D          1nc1nerator1111...
+                                                      Zero Custody          PERMANENT DESTRUCTION
+<span class="dim">+----------------------------------------------------------------------------------------------------+</span>
+            </div>
+
+            <div class="ed-table-wrap">
+                <table class="ed-table">
+                    <thead>
+                        <tr>
+                            <th>Fee Destination</th>
+                            <th>Split Share</th>
+                            <th>Execution Mechanism</th>
+                            <th>Target Recipient / Address</th>
+                            <th>Governance Control</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="accent">Active Validator Nodes</td>
+                            <td class="accent">75.0%</td>
+                            <td>Per-Epoch Atomic Payout CPI</td>
+                            <td class="code-cell">Program Derived Address (PDA) Epoch Vault</td>
+                            <td>Algorithmic (PoI Consensus)</td>
+                        </tr>
+                        <tr>
+                            <td>Protocol Treasury</td>
+                            <td>15.0%</td>
+                            <td>Direct Spl-Token Transfer</td>
+                            <td class="code-cell">Squads v4 Multisig (Security, R&amp;D, Audits)</td>
+                            <td>3-of-5 Cryptographic Quorum</td>
+                        </tr>
+                        <tr>
+                            <td class="accent">Permanent Incinerator Burn</td>
+                            <td class="accent">10.0%</td>
+                            <td>spl_token_2022::instruction::burn</td>
+                            <td class="code-cell accent">1nc1nerator11111111111111111111111111111111</td>
+                            <td>Immutable &bull; Irrevocable Supply Removal</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- SECTION 04: DEFLATIONARY BURN FLOOR MECHANICS -->
+        <!-- ==================================================================== -->
+        <section class="ed-section">
+            <span class="ed-section-numeral">[ SECTION 04 // MATHEMATICAL PROOF ]</span>
+            <h2 class="ed-section-title">DEFLATIONARY BURN FLOOR MECHANICS</h2>
+            <p class="ed-section-desc">
+                Rigorous mathematical proof that the $33RD token transitions from disinflationary to strictly and permanently deflationary when network fee volume crosses the critical threshold.
+            </p>
+
+            <div class="ed-math-block">
+                <div class="ed-math-title">THEOREM: PROTOCOL NET MONETARY DEFLATION TIPPING POINT</div>
+                <p style="font-family:var(--fd); font-size:14.5px; line-height:1.65; color:var(--chalk); margin-bottom:12px;">
+                    Let circulating supply at time $t$ be $S(t)$, governed by continuous emissions $\mathcal{E}(t)$ and fee-driven incinerator burns $\mathcal{B}(t)$:
+                </p>
+                <div class="ed-math-eq">
+                    $$\frac{dS}{dt} = \mathcal{E}_{\text{daily}}(t) - \mathcal{B}_{\text{daily}}(t)$$
+                </div>
+                <p style="font-family:var(--fd); font-size:14.5px; line-height:1.65; color:var(--chalk); margin-bottom:12px;">
+                    In Emission Era 1 (Years 1&ndash;4), daily compute subsidy emission is fixed at:
+                </p>
+                <div class="ed-math-eq">
+                    $$\mathcal{E}_{\text{daily}}(1) = \frac{7,500,000\text{ }33RD}{4 \times 365\text{ days}} = 5,136.986\text{ }33RD/\text{day}$$
+                </div>
+                <p style="font-family:var(--fd); font-size:14.5px; line-height:1.65; color:var(--chalk); margin-bottom:12px;">
+                    Daily burn $\mathcal{B}_{\text{daily}}$ is defined by the 10% fee routing over total daily invoiced fee volume $\mathcal{V}_{\text{fee}}$:
+                </p>
+                <div class="ed-math-eq">
+                    $$\mathcal{B}_{\text{daily}} = 0.10 \times \mathcal{V}_{\text{fee}}$$
+                </div>
+                <p style="font-family:var(--fd); font-size:14.5px; line-height:1.65; color:var(--chalk); margin-bottom:12px;">
+                    Net monetary deflation occurs when $\frac{dS}{dt} &lt; 0$, which requires:
+                </p>
+                <div class="ed-math-eq">
+                    $$\mathcal{B}_{\text{daily}} &gt; \mathcal{E}_{\text{daily}}(1) \iff 0.10 \times \mathcal{V}_{\text{fee}} &gt; 5,136.986 \iff \mathcal{V}_{\text{fee}} &gt; 51,369.86\text{ }33RD/\text{day}$$
+                </div>
+                <p style="font-family:var(--fd); font-size:14px; line-height:1.65; color:var(--slate);">
+                    <strong style="color:var(--white);">Q.E.D.</strong> When daily inference volume exceeds <strong style="color:var(--laser-red);">51,370 $33RD</strong>, the daily burn rate exceeds maximum theoretical emissions. Circulating supply permanently decreases with every subsequent model evaluation.
+                </p>
+            </div>
+
+            <h3 style="font-family:var(--fh); font-size:20px; color:var(--white); text-transform:uppercase; margin:48px 0 16px 0;">
+                DEFLATIONARY TIPPING POINTS ACROSS HALVING ERAS
+            </h3>
+            <p style="font-family:var(--fd); font-size:15px; line-height:1.65; color:var(--slate); margin-bottom:24px;">
+                Because emission subsidies halve geometrically every 4 years, the required fee volume to maintain absolute supply deflation drops by 50% with each era:
+            </p>
+
+            <div class="ed-table-wrap">
+                <table class="ed-table">
+                    <thead>
+                        <tr>
+                            <th>Halving Era</th>
+                            <th>Calendar Range</th>
+                            <th>Daily Max Emissions</th>
+                            <th>Deflationary Fee Threshold</th>
+                            <th>Deflation Acceleration</th>
+                            <th>Monetary Phase</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="accent">Era 1</td>
+                            <td>Years 1&ndash;4</td>
+                            <td>5,136.98 $33RD / day</td>
+                            <td class="accent">51,370 $33RD / day</td>
+                            <td>1.0x (Baseline)</td>
+                            <td>Bootstrapping &bull; Disinflationary Transition</td>
+                        </tr>
+                        <tr>
+                            <td>Era 2</td>
+                            <td>Years 5&ndash;8</td>
+                            <td>2,568.49 $33RD / day</td>
+                            <td class="accent">25,685 $33RD / day</td>
+                            <td>2.0x Acceleration</td>
+                            <td>Structural Scarcity &bull; Supply Contraction</td>
+                        </tr>
+                        <tr>
+                            <td>Era 3</td>
+                            <td>Years 9&ndash;12</td>
+                            <td>1,284.25 $33RD / day</td>
+                            <td class="accent">12,842 $33RD / day</td>
+                            <td>4.0x Acceleration</td>
+                            <td>Deep Deflationary Convergence</td>
+                        </tr>
+                        <tr>
+                            <td>Era 4</td>
+                            <td>Years 13&ndash;16</td>
+                            <td>642.12 $33RD / day</td>
+                            <td class="accent">6,421 $33RD / day</td>
+                            <td>8.0x Acceleration</td>
+                            <td>Asymptotic Supply Floor</td>
+                        </tr>
+                        <tr>
+                            <td class="accent">Tail Era</td>
+                            <td>Year 17+</td>
+                            <td>0.00 $33RD / day</td>
+                            <td class="accent">&gt; 0 $33RD / day</td>
+                            <td>Pure Deflation</td>
+                            <td>100% Fee-Driven Ultra-Sound Supply</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- SECTION 05: SLASHING PENALTY REDISTRIBUTION -->
+        <!-- ==================================================================== -->
+        <section class="ed-section">
+            <span class="ed-section-numeral">[ SECTION 05 // BYZANTINE FAULT TOLERANCE ]</span>
+            <h2 class="ed-section-title">SLASHING PENALTY REDISTRIBUTION</h2>
+            <p class="ed-section-desc">
+                Byzantine behavior and cryptographic fraud are penalized aggressively via automated on-chain slashing. Slashed funds are split between permanent Incinerator destruction and whistleblower challenger bounties.
+            </p>
+
+            <div class="ed-table-wrap">
+                <table class="ed-table">
+                    <thead>
+                        <tr>
+                            <th>Infraction Type</th>
+                            <th>Cryptographic Proof</th>
+                            <th>Slashed Stake</th>
+                            <th>Challenger Bounty</th>
+                            <th>Incinerator Destruction</th>
+                            <th>Validator Penalty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="accent">Equivocation &amp; Bit-Rot</td>
+                            <td>Dual-Signed Slot Headers / Divergent State</td>
+                            <td class="accent">100% (25,000+ $33RD)</td>
+                            <td class="accent">50% Bounty to Challenger</td>
+                            <td>50% Burned to Incinerator</td>
+                            <td>Permanent Hardware Pubkey Revocation</td>
+                        </tr>
+                        <tr>
+                            <td class="accent">Failed Halo2-KZG Proof</td>
+                            <td>Invalid Polynomial Evaluation Point</td>
+                            <td class="accent">25% (6,250 $33RD)</td>
+                            <td class="accent">5,000 $33RD Flat Bounty</td>
+                            <td>1,250 $33RD Burned</td>
+                            <td>Epoch Disqualification &bull; Standby Queue</td>
+                        </tr>
+                        <tr>
+                            <td>Invalid INT8 Tensor Output</td>
+                            <td>CAP-FFN Arithmetic Mismatch Verification</td>
+                            <td>50% (12,500 $33RD)</td>
+                            <td>20% Bounty (2,500 $33RD)</td>
+                            <td>80% Burned (10,000 $33RD)</td>
+                            <td>Slot Rollback &bull; Score Reset</td>
+                        </tr>
+                        <tr>
+                            <td>TEE Attestation Mismatch</td>
+                            <td>Quote Signature Failure (SEV / CC)</td>
+                            <td>30% (7,500 $33RD)</td>
+                            <td>0% (Automated Anchor Check)</td>
+                            <td>100% Burned (7,500 $33RD)</td>
+                            <td>Silicon Certificate Blacklisted</td>
+                        </tr>
+                        <tr>
+                            <td>Liveness Failure (&gt;10 Slots)</td>
+                            <td>Anchor Slot Proposal Timeout</td>
+                            <td>5% (1,250 $33RD)</td>
+                            <td>0%</td>
+                            <td>0% (Sent to Treasury)</td>
+                            <td>Standby Demotion for 24 Hours</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="font-family:var(--fh); font-size:20px; color:var(--white); text-transform:uppercase; margin:48px 0 16px 0;">
+                THE CRYPTOGRAPHIC CHALLENGER GAME &bull; 5,000 $33RD FLAT REWARD
+            </h3>
+            <p style="font-family:var(--fd); font-size:15px; line-height:1.65; color:var(--slate); margin-bottom:24px;">
+                The network incentivizes third-party decentralized verifiers (including consumer-grade RTX 4090 operators) to monitor validator proposals. When a verifier discovers a corrupt polynomial commitment or invalid INT8 activation state, the dispute protocol executes:
+            </p>
+
+            <div class="ed-timeline">
+                <div class="ed-timeline-step active">
+                    <div class="ed-timeline-step-num">STEP 01 // DETECTION</div>
+                    <div class="ed-timeline-title">Discrepancy Isolated</div>
+                    <div class="ed-timeline-desc">
+                        Challenger recalculates tensor layer intermediate activations and isolates a divergent commitment hash $\mathcal{H}(A) \ne \mathcal{H}(B)$.
+                    </div>
+                </div>
+                <div class="ed-timeline-step active">
+                    <div class="ed-timeline-step-num">STEP 02 // BISECTION</div>
+                    <div class="ed-timeline-title">Interactive Bisection</div>
+                    <div class="ed-timeline-desc">
+                        Anchor coordinates a binary search over the computation tree, narrowing the dispute down to a single CUDA assembly instruction.
+                    </div>
+                </div>
+                <div class="ed-timeline-step active">
+                    <div class="ed-timeline-step-num">STEP 03 // KZG PROOF</div>
+                    <div class="ed-timeline-title">On-Chain Evaluation</div>
+                    <div class="ed-timeline-desc">
+                        The Solana Anchor program executes pairing checks over BN254/BLS12-381 curves to mathematically confirm the fraudulent evaluation.
+                    </div>
+                </div>
+                <div class="ed-timeline-step active">
+                    <div class="ed-timeline-step-num">STEP 04 // BOUNTY</div>
+                    <div class="ed-timeline-title">Instant Payout</div>
+                    <div class="ed-timeline-desc">
+                        The malicious node is slashed 25% to 100%. The challenger automatically receives the 5,000 $33RD bounty in the same slot transaction.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- SECTION 06: ON-CHAIN SOLANA ANCHOR CODE ARCHITECTURE -->
+        <!-- ==================================================================== -->
+        <section class="ed-section">
+            <span class="ed-section-numeral">[ SECTION 06 // CODE SPECIFICATION ]</span>
+            <h2 class="ed-section-title">SOLANA ANCHOR SMART CONTRACT INTERFACES</h2>
+            <p class="ed-section-desc">
+                Verifiable on-chain implementation of the validator staking bond, epoch yield calculation, and atomic Solana Incinerator fee burning.
+            </p>
+
+            <div class="ed-code-block">
+                <div style="color:var(--slate); margin-bottom:12px; font-size:11px;">// programs/singularity_consensus/src/yield_engine.rs &bull; ANCHOR v0.30</div>
+<pre><code><span class="keyword">use</span> anchor_lang::prelude::*;
+<span class="keyword">use</span> anchor_spl::token_interface::{<span class="keyword">self</span>, Mint, TokenAccount, TokenInterface, Burn};
+
+<span class="comment">/// Canonical Solana Incinerator address for permanent token destruction</span>
+<span class="keyword">pub const</span> <span class="type">SOLANA_INCINERATOR</span>: Pubkey = pubkey!(<span class="string">"1nc1nerator11111111111111111111111111111111"</span>);
+<span class="keyword">pub const</span> <span class="type">MINIMUM_VALIDATOR_STAKE</span>: u64 = 25_000_000_000_000; <span class="comment">// 25,000 $33RD (9 decimals)</span>
+<span class="keyword">pub const</span> <span class="type">UNBONDING_COOLDOWN_SLOTS</span>: u64 = 50_400; <span class="comment">// 7 Days @ 12.0s block sync</span>
+
+<span class="comment">/// Evaluates and credits validator node rewards for committed consensus epoch</span>
+<span class="keyword">pub fn</span> <span class="fn">claim_epoch_yield</span>(ctx: Context&lt;ClaimEpochYield&gt;, epoch_index: u64) -&gt; Result&lt;()&gt; {
+    <span class="keyword">let</span> validator = &amp;<span class="keyword">mut</span> ctx.accounts.validator_record;
+    <span class="keyword">let</span> epoch_pool = &amp;ctx.accounts.epoch_yield_pool;
+
+    <span class="comment">// Verify minimum stake bond remains active</span>
+    require!(validator.bonded_stake &gt;= MINIMUM_VALIDATOR_STAKE, YieldError::InsufficientBond);
+    require!(!validator.is_slashed, YieldError::ValidatorSlashed);
+
+    <span class="comment">// Compute node weighted contribution: W_i * U_i</span>
+    <span class="keyword">let</span> node_power = (validator.hardware_weight <span class="keyword">as</span> u128)
+        .checked_mul(validator.validated_uptime_bps <span class="keyword">as</span> u128)
+        .ok_or(YieldError::MathOverflow)?;
+
+    <span class="comment">// Calculate proportional reward: R_epoch = (W_i * U_i / sum(W_j * U_j)) * Y_pool</span>
+    <span class="keyword">let</span> reward_amount = node_power
+        .checked_mul(epoch_pool.total_pool_reward <span class="keyword">as</span> u128)
+        .ok_or(YieldError::MathOverflow)?
+        .checked_div(epoch_pool.aggregate_network_power)
+        .ok_or(YieldError::ZeroNetworkPower)? <span class="keyword">as</span> u64;
+
+    <span class="comment">// Transfer reward from Epoch Vault to Validator Token Account</span>
+    token_interface::transfer_checked(
+        ctx.accounts.into_reward_transfer_context(),
+        reward_amount,
+        9,
+    )?;
+
+    emit!(EpochRewardClaimed {
+        validator: validator.key(),
+        epoch: epoch_index,
+        payout_amount: reward_amount,
+        hardware_multiplier: validator.hardware_weight,
+    });
+
+    Ok(())
+}
+
+<span class="comment">/// Atomically routes inference fee: 75% Nodes, 15% Treasury, 10% Solana Incinerator</span>
+<span class="keyword">pub fn</span> <span class="fn">settle_protocol_fee</span>(ctx: Context&lt;SettleFee&gt;, total_fee: u64) -&gt; Result&lt;()&gt; {
+    <span class="keyword">let</span> node_share = total_fee.checked_mul(75).unwrap().checked_div(100).unwrap();
+    <span class="keyword">let</span> treasury_share = total_fee.checked_mul(15).unwrap().checked_div(100).unwrap();
+    <span class="keyword">let</span> incinerator_burn = total_fee.checked_sub(node_share).unwrap().checked_sub(treasury_share).unwrap();
+
+    token_interface::transfer_checked(ctx.accounts.into_node_pool_context(), node_share, 9)?;
+    token_interface::transfer_checked(ctx.accounts.into_treasury_context(), treasury_share, 9)?;
+    token_interface::burn(
+        CpiContext::new(
+            ctx.accounts.token_program.to_account_info(),
+            Burn {
+                mint: ctx.accounts.token_mint.to_account_info(),
+                from: ctx.accounts.fee_escrow.to_account_info(),
+                authority: ctx.accounts.authority.to_account_info(),
+            },
+        ),
+        incinerator_burn,
+    )?;
+
+    Ok(())
+}</code></pre>
+            </div>
+        </section>
+    </div>
+
+    <!-- GLOBAL FOOTER -->
+    <footer class="global-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <strong>33RD TREE LABS</strong> &bull; THE SINGULARITY PROTOCOL &bull; <code>33rdtreelabs.tech</code>
+            </div>
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">[ OVERVIEW ]</a>
+                <a href="protocol.html" class="footer-link">[ PROTOCOL ]</a>
+                <a href="simulator.html" class="footer-link">[ SIMULATOR ]</a>
+                <a href="yield.html" class="footer-link" style="color:var(--laser-red);">[ YIELD ]</a>
+                <a href="nodes.html" class="footer-link">[ NODES ]</a>
+                <a href="tokenomics.html" class="footer-link">[ TOKENOMICS ]</a>
+                <a href="research.html" class="footer-link">[ RESEARCH ]</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="footer-link">[ WHITEPAPER PDF ↓ ]</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lenis & GSAP Engine with snappy lerp: 0.14 -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Calibrate snappy Lenis scroll
+        const lenis = new Lenis({
+            lerp: 0.14,
+            wheelMultiplier: 1.15,
+            touchMultiplier: 1.5,
+            smoothWheel: true
+        });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        // Custom Cursor
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+        if (cursorDot && cursorRing) {
+            window.addEventListener('mousemove', (e) => {
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+                cursorRing.style.left = e.clientX + 'px';
+                cursorRing.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, input, select, [data-glitch]').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+        }
+
+        // Top-edge scroll telemetry progress line
+        const progressBar = document.getElementById('scroll-progress-line');
+        const navWrapper = document.querySelector('.nav-wrapper');
+        function onScrollTelemetry() {
+            const doc = document.documentElement;
+            const sy = window.scrollY || doc.scrollTop;
+            const max = doc.scrollHeight - window.innerHeight;
+            if (progressBar && max > 0) {
+                progressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
+            }
+            if (navWrapper) {
+                if (sy > 50) {
+                    navWrapper.classList.add('nav-scrolled');
+                } else {
+                    navWrapper.classList.remove('nav-scrolled');
+                }
+            }
+        }
+        window.addEventListener('scroll', onScrollTelemetry, { passive: true });
+        lenis.on('scroll', onScrollTelemetry);
+        onScrollTelemetry();
+
+        // Mechanical Glitch Decoder
+        class MechanicalGlitch {
+            constructor(el) {
+                this.el = el;
+                this.chars = '01X_/*+-[]#';
+                this.originalText = el.getAttribute('data-glitch-text') || el.textContent.trim();
+                el.setAttribute('data-glitch-text', this.originalText);
+                this.tickInterval = 250;
+                this.totalDuration = 3500;
+                this.totalTicks = Math.round(this.totalDuration / this.tickInterval);
+                this.currentTick = 0;
+                this.timer = null;
+                this.isRunning = false;
+                this.hasPlayed = false;
+            }
+            start() {
+                if (this.isRunning) return;
+                this.isRunning = true;
+                this.currentTick = 0;
+                clearInterval(this.timer);
+                this.timer = setInterval(() => {
+                    this.currentTick++;
+                    const progress = this.currentTick / this.totalTicks;
+                    const resolvedChars = Math.floor(progress * this.originalText.length);
+                    let out = '';
+                    for (let i = 0; i < this.originalText.length; i++) {
+                        const ch = this.originalText[i];
+                        if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
+                            out += ch;
+                        } else if (i < resolvedChars) {
+                            out += ch;
+                        } else {
+                            out += this.chars[Math.floor(Math.random() * this.chars.length)];
+                        }
+                    }
+                    this.el.textContent = out;
+                    if (this.currentTick >= this.totalTicks) {
+                        clearInterval(this.timer);
+                        this.el.textContent = this.originalText;
+                        this.isRunning = false;
+                        this.hasPlayed = true;
+                    }
+                }, this.tickInterval);
+            }
+        }
+
+        const glitchElements = document.querySelectorAll('[data-glitch]');
+        glitchElements.forEach(el => {
+            const mg = new MechanicalGlitch(el);
+            el.addEventListener('mouseenter', () => mg.start());
+        });
+
+        // Render KaTeX Math once loaded
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        });
+
+        // QUANTITATIVE YIELD & HARDWARE SIMULATOR ENGINE (OPEN BRUTALIST)
+        function calculateValidatorYield() {
+            const hwSelect = document.getElementById('sim-hw');
+            const nodesSlider = document.getElementById('sim-nodes');
+            const stakeSlider = document.getElementById('sim-stake');
+            const utilSlider = document.getElementById('sim-util');
+            const eraSelect = document.getElementById('sim-era');
+            const feesSlider = document.getElementById('sim-fees');
+
+            if (!hwSelect || !nodesSlider || !stakeSlider || !utilSlider || !eraSelect || !feesSlider) return;
+
+            const hwTier = hwSelect.value;
+            const nodeCount = parseInt(nodesSlider.value, 10);
+            let rawStake = parseInt(stakeSlider.value, 10);
+            const utilizationPct = parseInt(utilSlider.value, 10);
+            const era = parseInt(eraSelect.value, 10);
+            const dailyFeeVolume = parseInt(feesSlider.value, 10);
+
+            // Minimum 25,000 $33RD per node mandatory validation bond
+            const minRequiredStake = nodeCount * 25000;
+            if (rawStake < minRequiredStake) {
+                rawStake = minRequiredStake;
+                stakeSlider.value = rawStake;
+            }
+            stakeSlider.min = minRequiredStake;
+
+            // Update Input Labels
+            document.getElementById('sim-nodes-val').textContent = nodeCount + (nodeCount === 1 ? ' NODE' : ' NODES');
+            document.getElementById('sim-stake-val').textContent = rawStake.toLocaleString() + ' $33RD';
+            document.getElementById('sim-util-val').textContent = utilizationPct + '%';
+            document.getElementById('sim-fees-val').textContent = dailyFeeVolume.toLocaleString() + ' $33RD / DAY';
+
+            // Hardware Weight Multiplier (W_i): B200 6.2x, H100 4.8x, L40S 2.1x, RTX 4090 1.0x
+            let hwWeight = 4.8;
+            let hwSpecName = "NVIDIA Hopper H100 SXM5 (80GB)";
+            if (hwTier === 'b200') {
+                hwWeight = 6.2;
+                hwSpecName = "NVIDIA Blackwell B200 (192GB HBM3e)";
+            } else if (hwTier === 'h100') {
+                hwWeight = 4.8;
+                hwSpecName = "NVIDIA Hopper H100 SXM5 (80GB)";
+            } else if (hwTier === 'l40s') {
+                hwWeight = 2.1;
+                hwSpecName = "NVIDIA L40S (48GB GDDR6)";
+            } else if (hwTier === 'rtx4090') {
+                hwWeight = 1.0;
+                hwSpecName = "NVIDIA RTX 4090 (24GB GDDR6X)";
+            }
+
+            const clusterWeight = nodeCount * hwWeight;
+            const effectiveUptime = utilizationPct / 100.0;
+            const operatorPower = clusterWeight * effectiveUptime;
+
+            // Reference baseline network denominator
+            const baselineNetworkPower = 128 * 3.8 * 0.80;
+            const totalNetworkPower = baselineNetworkPower + operatorPower;
+            const operatorShare = operatorPower / totalNetworkPower;
+
+            // Daily Emission by Halving Era
+            let dailyBaseEmission = 5136.986;
+            if (era === 2) dailyBaseEmission = 2568.493;
+            if (era === 3) dailyBaseEmission = 1284.246;
+            if (era === 4) dailyBaseEmission = 642.123;
+
+            // Protocol Fee Split: 75% Nodes, 15% Treasury, 10% Incinerator
+            const dailyFeeNodePool = dailyFeeVolume * 0.75;
+            const dailyIncineratorBurn = dailyFeeVolume * 0.10;
+
+            // Total Node Reward Pool per day
+            const totalDailyRewardPool = dailyBaseEmission + dailyFeeNodePool;
+
+            // Operator Projected Payouts
+            const operatorDailyReward = operatorShare * totalDailyRewardPool;
+            const operatorEpochReward = operatorDailyReward / 7200.0;
+            const operatorMonthlyReward = operatorDailyReward * 30.0;
+            const operatorAnnualReward = operatorDailyReward * 365.0;
+
+            const apy = (operatorAnnualReward / rawStake) * 100.0;
+
+            // Net Supply Delta: Emission - Burn
+            const netSupplyDelta = dailyBaseEmission - dailyIncineratorBurn;
+
+            // Render Results to UI
+            document.getElementById('res-apy').textContent = apy.toFixed(1) + '%';
+            document.getElementById('res-epoch').textContent = operatorEpochReward.toFixed(4) + ' $33RD';
+            document.getElementById('res-daily').textContent = operatorDailyReward.toFixed(2) + ' $33RD';
+            document.getElementById('res-monthly').textContent = operatorMonthlyReward.toFixed(1) + ' $33RD';
+            document.getElementById('res-annual').textContent = Math.round(operatorAnnualReward).toLocaleString() + ' $33RD';
+            document.getElementById('res-cluster-weight').textContent = clusterWeight.toFixed(1) + 'x (' + hwWeight.toFixed(1) + 'x * ' + nodeCount + ')';
+            document.getElementById('res-network-share').textContent = (operatorShare * 100).toFixed(3) + '%';
+            document.getElementById('res-burn-daily').textContent = dailyIncineratorBurn.toFixed(1) + ' $33RD';
+
+            const statusEl = document.getElementById('res-deflation-status');
+            if (netSupplyDelta < 0) {
+                statusEl.innerHTML = '<span style="color:var(--green); font-weight:700;">NET DEFLATIONARY (' + Math.abs(netSupplyDelta).toFixed(1) + ' $33RD / DAY BURNED NET)</span>';
+            } else {
+                statusEl.innerHTML = '<span style="color:var(--laser-red); font-weight:700;">NET EMISSION (' + netSupplyDelta.toFixed(1) + ' $33RD / DAY NET INFLOW)</span>';
+            }
+
+            // Realtime Diagnostic Log
+            const logEl = document.getElementById('res-diagnostic-log');
+            if (logEl) {
+                logEl.textContent = 
+                    "[SIMULATOR DIAGNOSTIC]\\n" +
+                    ">> Target Cluster: " + nodeCount + "x " + hwSpecName + "\\n" +
+                    ">> Cluster Effective Power: " + operatorPower.toFixed(2) + " / Total Network: " + totalNetworkPower.toFixed(2) + "\\n" +
+                    ">> Bond Coverage: " + rawStake.toLocaleString() + " $33RD (" + (rawStake / nodeCount).toFixed(0) + " / node, min: 25,000)\\n" +
+                    ">> Daily Pool: Base=" + dailyBaseEmission.toFixed(1) + " + FeePool(75%)=" + dailyFeeNodePool.toFixed(1) + " = " + totalDailyRewardPool.toFixed(1) + " $33RD\\n" +
+                    ">> Incinerator Burn: " + dailyIncineratorBurn.toFixed(1) + " $33RD/day (Floor breakeven: 51,370 $33RD fee vol)";
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            calculateValidatorYield();
+        });
+    </script>
+</body>
+</html>"""
+    return html
+
+if __name__ == "__main__":
+    out_path = os.path.join(SITE_DIR, "yield.html")
+    html_content = generate_open_brutalist_yield()
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(html_content)
+    print(f"Compiled open brutalist yield.html ({len(html_content)} bytes, {len(html_content.splitlines())} lines)")
