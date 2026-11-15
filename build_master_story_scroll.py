@@ -50,9 +50,105 @@ html_template = """<!doctype html>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/poincare_simulator.js"></script>
 
   <link rel="stylesheet" href="assets/tokens.css">
   <style>
+    
+    /* TOP FLOATING PILL NAVBAR */
+    .top-nav-bar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: max-content;
+      max-width: 98vw;
+      pointer-events: none;
+    }
+    .nav-pill-float {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(7, 7, 7, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      padding: 10px 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 1px rgba(255, 255, 255, 0.15);
+      pointer-events: auto;
+      white-space: nowrap;
+    }
+    .nav-float-link {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+    .nav-float-link:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .nav-float-link.active {
+      color: #FF2424;
+      background: rgba(255, 36, 36, 0.12);
+    }
+    .nav-float-btn {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #070707;
+      background: #FFFFFF;
+      border: 1px solid #FFFFFF;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      margin-left: 6px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-float-btn:hover {
+      background: #FF2424;
+      border-color: #FF2424;
+      color: #FFFFFF;
+      box-shadow: 0 0 12px rgba(255, 36, 36, 0.5);
+    }
+    @media (max-width: 992px) {
+      .top-nav-bar {
+        top: 10px;
+        width: 98vw;
+      }
+      .nav-pill-float {
+        padding: 6px 12px;
+        gap: 3px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .nav-pill-float::-webkit-scrollbar {
+        display: none;
+      }
+      .nav-float-link {
+        font-size: 10px;
+        padding: 5px 8px;
+      }
+      .nav-float-btn {
+        font-size: 10px;
+        padding: 5px 10px;
+      }
+    }
+
     /* BRAND TYPOGRAPHY: OBEL MONO + FALLBACKS */
     @font-face {
       font-family: 'Obel Mono';
@@ -737,23 +833,21 @@ html_template = """<!doctype html>
        ===================================================================== */
     .rule {
       position: relative;
-      height: 100vh;
-      min-height: 640px;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #08080C;
       z-index: 5;
-      overflow: hidden;
       border-top: 1px solid var(--border);
     }
     .rule__pin {
       width: 100%;
       max-width: 1320px;
       margin: 0 auto;
-      padding: clamp(12px, 1.8vh, 20px) var(--pad);
+      padding: clamp(12px, 2vh, 20px) var(--pad);
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.1fr 0.9fr;
       gap: clamp(24px, 4vw, 56px);
       align-items: center;
     }
@@ -763,11 +857,11 @@ html_template = """<!doctype html>
       gap: clamp(8px, 1.2vh, 12px);
     }
     .step {
-      background: rgba(16, 16, 22, 0.7);
-      border: 1px solid var(--border);
-      padding: clamp(10px, 1.3vh, 15px) clamp(14px, 1.6vw, 20px);
-      border-radius: 6px;
-      transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(16, 16, 22, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: clamp(10px, 1.4vh, 15px) clamp(12px, 1.6vw, 18px);
+      border-radius: 4px;
+      transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
       position: relative;
       opacity: 0.25;
     }
@@ -781,31 +875,31 @@ html_template = """<!doctype html>
       transform: scaleY(0);
       transform-origin: center;
       transition: transform 0.25s ease;
-      border-top-left-radius: 6px;
-      border-bottom-left-radius: 6px;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
     }
     .step.is-active {
       border-color: var(--t);
-      background: rgba(255, 36, 36, 0.08);
+      background: rgba(255, 36, 36, 0.09);
       transform: translateX(6px);
       opacity: 1.0;
-      box-shadow: 0 0 24px rgba(255, 36, 36, 0.18), inset 0 0 12px rgba(255, 36, 36, 0.05);
+      box-shadow: 0 0 20px rgba(255, 36, 36, 0.2), inset 0 0 12px rgba(255, 36, 36, 0.05);
     }
     .step.is-active::before {
       transform: scaleY(1);
       box-shadow: 0 0 10px var(--t);
     }
     .step.is-done {
-      border-color: rgba(255, 36, 36, 0.3);
+      border-color: rgba(255, 36, 36, 0.35);
       background: rgba(16, 16, 22, 0.85);
-      opacity: 0.65;
+      opacity: 0.75;
     }
     .step.is-active .step__verb {
       color: #FFFFFF;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
     }
     .step.is-active .step__desc {
-      color: #E2E8F0;
+      color: #F0F0F5;
     }
     .step.is-active .step__nr {
       color: var(--t);
@@ -834,13 +928,13 @@ html_template = """<!doctype html>
     .step__desc {
       font-size: clamp(11.5px, 1.2vw, 13px);
       color: var(--dim);
-      line-height: 1.42;
+      line-height: 1.35;
     }
     .step__bar {
       height: 2px;
       width: 100%;
       background: rgba(255, 255, 255, 0.08);
-      margin-top: clamp(8px, 1vh, 12px);
+      margin-top: clamp(8px, 1vh, 10px);
       overflow: hidden;
       border-radius: 1px;
     }
@@ -857,13 +951,13 @@ html_template = """<!doctype html>
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: clamp(16px, 2.2vh, 26px);
+      padding: clamp(16px, 2.2vh, 24px);
       box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(14px);
     }
     .rule__canvas-box {
       width: 100%;
-      height: clamp(180px, 26vh, 280px);
+      height: clamp(180px, 26vh, 250px);
       background: #000000;
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -1199,62 +1293,143 @@ html_template = """<!doctype html>
     }
 
     /* =====================================================================
-       CHAPTER 07: INTERACTIVE CONSENSUS & CELLULAR PLAYGROUND
+       CHAPTER 07: POINCARÉ HYPERBOLIC CONSENSUS PLAYGROUND
        ===================================================================== */
     .play {
-      padding: clamp(90px, 14vh, 160px) var(--pad);
-      background: var(--f);
+      padding: clamp(80px, 12vh, 140px) var(--pad);
+      background: #040406;
       z-index: 8;
       position: relative;
       border-top: 1px solid var(--border);
+      border-bottom: none;
+      margin-bottom: 0;
+      box-sizing: border-box;
     }
     .play__inner {
       max-width: 1320px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: clamp(36px, 5vw, 64px);
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: clamp(32px, 4.5vw, 60px);
       align-items: center;
+    }
+    .play__stage {
+      width: 100%;
     }
     .play__canvas-box {
       width: 100%;
-      height: 420px;
-      background: #000000;
+      height: clamp(380px, 52vh, 500px);
+      background: #020204;
       border: 1px solid var(--border);
-      border-radius: 0;
+      border-radius: 8px;
       overflow: hidden;
       position: relative;
-      box-shadow: none;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 36, 36, 0.2);
     }
-    #playground-canvas { width: 100%; height: 100%; cursor: crosshair; }
+    #playground-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: crosshair;
+    }
+    #play-flash-banner {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(7, 7, 7, 0.92);
+      border: 1px solid #FF2424;
+      color: #FFFFFF;
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      padding: 6px 18px;
+      border-radius: 4px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 10;
+      white-space: nowrap;
+      box-shadow: 0 0 20px rgba(255, 36, 36, 0.4);
+    }
     .play__canvas-badge {
       position: absolute;
-      top: 14px;
+      bottom: 14px;
       left: 14px;
       font-family: var(--fm);
-      font-size: 9.5px;
+      font-size: 10px;
       color: var(--chalk);
-      background: rgba(0, 0, 0, 0.75);
-      padding: 4px 10px;
+      background: rgba(4, 4, 6, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 5px 12px;
       border-radius: 4px;
       border: 1px solid var(--border);
       pointer-events: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .play__canvas-badge .live-dot {
+      color: #FF2424;
+      font-size: 10px;
+      animation: pulseDot 1.5s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
     .play__controls {
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      background: transparent;
-      border: 1px solid var(--border);
-      padding: clamp(26px, 3.2vw, 40px);
-      border-radius: 0;
+      gap: 18px;
     }
-    .play__controls h3 {
+    .play__title {
       font-family: var(--fh);
-      font-size: 26px;
-      font-weight: 800;
+      font-size: clamp(26px, 3.2vw, 42px);
+      font-weight: 900;
       text-transform: uppercase;
       letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: #FFFFFF;
+    }
+    .play__desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--dim);
+    }
+    .play__telemetry-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .play__telemetry-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .telemetry-lbl {
+      font-family: var(--fm);
+      font-size: 9.5px;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .telemetry-val {
+      font-family: var(--fm);
+      font-size: 15px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .telemetry-val.crimson {
+      color: #FF2424;
+    }
+    .telemetry-sub {
+      font-size: 11px;
+      color: var(--dim);
     }
     .play__row {
       display: flex;
@@ -1268,7 +1443,10 @@ html_template = """<!doctype html>
       font-size: 11px;
       color: var(--dim);
     }
-    .play__row-head span:last-child { color: var(--t); font-weight: 700; }
+    .play__row-head span:last-child {
+      color: #FF2424;
+      font-weight: 700;
+    }
     input[type=range] {
       -webkit-appearance: none;
       width: 100%;
@@ -1285,30 +1463,6 @@ html_template = """<!doctype html>
       background: var(--t);
       cursor: pointer;
       box-shadow: 0 0 10px var(--t);
-    }
-    .play__charset-grid {
-      display: flex;
-      gap: 8px;
-    }
-    .play__charset-btn {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border);
-      color: var(--dim);
-      font-family: var(--fm);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .play__charset-btn:hover { color: var(--chalk); border-color: rgba(255, 255, 255, 0.3); }
-    .play__charset-btn.active {
-      background: var(--t);
-      color: #FFFFFF;
-      border-color: var(--t);
-      box-shadow: 0 0 12px rgba(255, 36, 36, 0.45);
     }
     .play__btn-row {
       display: flex;
@@ -1347,8 +1501,37 @@ html_template = """<!doctype html>
       box-shadow: 0 0 24px rgba(255, 36, 36, 0.6);
       color: #FFFFFF;
     }
-
-    /* =====================================================================
+    .btn-action.fault {
+      background: #FF2424;
+      border-color: #FF2424;
+      color: #000000;
+      font-weight: 800;
+    }
+    .btn-action.fault:hover {
+      background: #FF4444;
+      border-color: #FF4444;
+      color: #000000;
+      box-shadow: 0 0 16px rgba(255, 36, 36, 0.6);
+    }
+    .btn-action.reset {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #FFFFFF;
+    }
+    .btn-action.reset:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #FFFFFF;
+      color: #FFFFFF;
+    }
+    @media (max-width: 900px) {
+      .play__inner {
+        grid-template-columns: 1fr;
+      }
+      .play__canvas-box {
+        height: 360px;
+      }
+    }
+/* =====================================================================
        CHAPTER 08: INVERTED COLORWAY FINALE & TECHNICAL SPECIFICATION TABLE
        ===================================================================== */
     .finale {
@@ -1489,6 +1672,110 @@ html_template = """<!doctype html>
       border-radius: 9999px;
       transition: all 0.2s ease;
     }
+    
+    /* NEWSLETTER & SOCIAL MODULE (ZERO CARDS, OPEN EDITORIAL) */
+    .newsletter-section {
+      margin-top: 48px;
+      padding-top: 36px;
+      border-top: 1px solid rgba(7, 7, 7, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .newsletter-head h3 {
+      font-family: var(--fh);
+      font-size: clamp(20px, 2.4vw, 32px);
+      font-weight: 800;
+      color: #070707;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin: 4px 0 8px;
+    }
+    .newsletter-head p {
+      font-family: var(--fm);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #4A4A5A;
+      max-width: 680px;
+    }
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .newsletter-input-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .newsletter-input {
+      flex: 1;
+      min-width: 260px;
+      background: #FFFFFF;
+      border: 1.5px solid #070707;
+      padding: 12px 16px;
+      font-family: var(--fm);
+      font-size: 12px;
+      color: #070707;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .newsletter-input:focus {
+      border-color: #FF2424;
+    }
+    .newsletter-submit {
+      background: #070707;
+      color: #FFFFFF;
+      border: 1.5px solid #070707;
+      padding: 12px 24px;
+      font-family: var(--fm);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .newsletter-submit:hover {
+      background: #FF2424;
+      border-color: #FF2424;
+      color: #FFFFFF;
+    }
+    .social-links-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(7, 7, 7, 0.15);
+    }
+    .social-link {
+      font-family: var(--fm);
+      font-size: 11px;
+      font-weight: 700;
+      color: #070707;
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid #070707;
+      border-radius: 4px;
+      letter-spacing: 0.08em;
+      transition: all 0.2s ease;
+    }
+    .social-link:hover {
+      background: #070707;
+      color: #FFFFFF;
+    }
+    .social-link.highlight {
+      background: #070707;
+      color: #FFFFFF;
+    }
+    .social-link.highlight:hover {
+      background: #FF2424;
+      border-color: #FF2424;
+    }
+
     .start-over:hover {
       background: #FF2424;
       border-color: #FF2424;
@@ -1543,6 +1830,21 @@ html_template = """<!doctype html>
   </style>
 </head>
 <body id="top">
+
+  <!-- FLOATING TOP NAVIGATION PILL NAVBAR -->
+  <header class="top-nav-bar" id="top-nav-bar">
+    <nav class="nav-pill-float">
+      <a href="#top" class="nav-float-link active">[ OVERVIEW ]</a>
+      <a href="protocol.html" class="nav-float-link">[ PROTOCOL ]</a>
+      <a href="simulator.html" class="nav-float-link">[ SIMULATOR ]</a>
+      <a href="yield.html" class="nav-float-link">[ YIELD ]</a>
+      <a href="nodes.html" class="nav-float-link">[ NODES ]</a>
+      <a href="tokenomics.html" class="nav-float-link">[ TOKENOMICS ]</a>
+      <a href="research.html" class="nav-float-link">[ RESEARCH ]</a>
+      <a href="assets/docs/33rd_Tree_Labs_Whitepaper.pdf" download class="nav-float-btn">[ WHITEPAPER PDF &darr; ]</a>
+    </nav>
+  </header>
+
 
   <!-- RIGHT HAIRLINE SCROLLBAR & TELEMETRY RAIL -->
   <div class="sbar" id="sbar" aria-hidden="true">
@@ -2040,61 +2342,54 @@ html_template = """<!doctype html>
     </section>
 
     <!-- ===================================================================
-         CHAPTER 07: INTERACTIVE CONSENSUS & CELLULAR PLAYGROUND
+         CHAPTER 07: POINCARÉ HYPERBOLIC CONSENSUS PLAYGROUND
          =================================================================== -->
     <section class="play" id="playground">
       <div class="play__inner">
-        <div class="play__canvas-box">
-          <canvas id="playground-canvas"></canvas>
-          <div class="play__canvas-badge">CELLULAR TENSOR MATRIX // INTERACTIVE FIELD</div>
+        <div class="play__stage">
+          <div class="play__canvas-box">
+            <canvas id="playground-canvas"></canvas>
+            <div id="play-flash-banner">STATE COMMITTED // ANCHOR VERIFIED</div>
+            <div class="play__canvas-badge">
+              <span class="live-dot">&#9679;</span> POINCARÉ HYPERBOLIC MANIFOLD // &kappa; = -1.414
+            </div>
+          </div>
         </div>
 
         <div class="play__controls">
           <div class="kicker">CHAPTER 07 // LIVE PROTOCOL SIMULATOR &amp; CONSENSUS SANDBOX</div>
-          <h3>CONSENSUS PLAYGROUND</h3>
+          <h3 class="play__title">CONSENSUS PLAYGROUND</h3>
           
-          <div class="play__row">
-            <div class="play__row-head">
-              <span>BYZANTINE QUORUM COMMITTEE (K)</span>
-              <span id="k-out">64</span>
+          <p class="play__desc">
+            Validators mapped into Poincaré hyperbolic coordinates plunging toward the central singularity coordinate. Byzantine committees achieve bit-exact INT8 convergence with sub-second Solana anchor settlement.
+          </p>
+
+          <!-- LIVE TELEMETRY STATS STRIP (NO CARDS) -->
+          <div class="play__telemetry-strip">
+            <div class="play__telemetry-cell">
+              <span class="telemetry-lbl">QUORUM CONVERGENCE</span>
+              <span class="telemetry-val" id="hud-quorum">64 / 64 Converged</span>
+              <span class="telemetry-sub" id="hud-quorum-sub">100% Agreement (&gt; 66.7% Req)</span>
             </div>
-            <input type="range" id="k-slider" min="16" max="64" value="64" step="8">
+            <div class="play__telemetry-cell">
+              <span class="telemetry-lbl">INFERENCE PRECISION</span>
+              <span class="telemetry-val crimson" id="hud-invariant">&Delta;&epsilon; = 0.00 INT8</span>
+              <span class="telemetry-sub">Deterministic FMA Invariant</span>
+            </div>
           </div>
 
           <div class="play__row">
             <div class="play__row-head">
-              <span>CELL RESOLUTION</span>
-              <span id="res-out">32</span>
+              <span>QUORUM COMMITTEE SIZE (K)</span>
+              <span id="k-out">K = 64 / 64 (100% QUORUM)</span>
             </div>
-            <input type="range" id="res-slider" min="16" max="64" value="32" step="4">
-          </div>
-
-          <div class="play__row">
-            <div class="play__row-head">
-              <span>MANIFOLD VELOCITY</span>
-              <span id="speed-out">0.6</span>
-            </div>
-            <input type="range" id="speed-slider" min="0.1" max="2.5" value="0.6" step="0.1">
-          </div>
-
-          <div class="play__row">
-            <div class="play__row-head">
-              <span>TENSOR SYMBOL FIELD SWITCHER</span>
-              <span id="mode-out">TENSOR [⊗ / ∇]</span>
-            </div>
-            <div class="play__charset-grid">
-              <button type="button" class="play__charset-btn active" data-mode="tensor">&otimes; / &nabla;</button>
-              <button type="button" class="play__charset-btn" data-mode="hyperbolic">&lambda; / &Delta;</button>
-              <button type="button" class="play__charset-btn" data-mode="lattice">&#9532; / &middot;</button>
-              <button type="button" class="play__charset-btn" data-mode="reduction">&Sigma; / T</button>
-            </div>
+            <input type="range" id="k-slider" min="16" max="64" value="64" step="1">
           </div>
 
           <div class="play__btn-row">
-            <button type="button" id="btn-pause" class="btn-action">PAUSE</button>
-            <button type="button" id="btn-random" class="btn-action">RANDOM SEED</button>
-            <button type="button" id="btn-save-png" class="btn-action">EXPORT PNG</button>
-            <a href="simulator.html" class="btn-action primary">FULL SIMULATOR &rarr;</a>
+            <button type="button" id="btn-play-fault" class="btn-action fault">[ INJECT BYZANTINE FAULT ]</button>
+            <button type="button" id="btn-play-reset" class="btn-action reset">[ RESET / SYNC QUORUM ]</button>
+            <a href="simulator.html" class="btn-action primary">FULL SIMULATOR SUITE &rarr;</a>
           </div>
         </div>
       </div>
@@ -2167,9 +2462,36 @@ html_template = """<!doctype html>
           </div>
         </div>
 
+                <!-- NEWSLETTER SUBSCRIPTION DISPATCH (OPEN EDITORIAL - ZERO CARDS) -->
+        <div class="newsletter-section">
+          <div class="newsletter-head">
+            <span class="kicker" style="margin-bottom: 6px;">PROTOCOL TELEMETRY // DISPATCH</span>
+            <h3>SUBSCRIBE TO THE ARBOR DISPATCH</h3>
+            <p>Receive verified consensus telemetry, validator slashing audits, and epoch burn reports directly to your terminal or inbox.</p>
+          </div>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('.newsletter-success').style.display='block'; this.querySelector('.newsletter-input-group').style.display='none';">
+            <div class="newsletter-input-group">
+              <input type="email" placeholder="ENTER VALIDATOR OR OPERATOR EMAIL..." required class="newsletter-input">
+              <button type="submit" class="newsletter-submit">[ SUBSCRIBE ]</button>
+            </div>
+            <div class="newsletter-success" style="display: none; color: #FF2424; font-family: var(--fm); font-size: 12px; margin-top: 10px; font-weight: 700;">
+              [ SUBSCRIPTION CONFIRMED // TELEMETRY LINKED ]
+            </div>
+          </form>
+        </div>
+
+        <!-- SOCIAL LINKS (CLEANLY STYLED WITHOUT CARDS) -->
+        <div class="social-links-grid">
+          <a href="https://x.com/33rdtreelabs" target="_blank" rel="noopener noreferrer" class="social-link">[ X // TWITTER ]</a>
+          <a href="https://github.com/0xplayboi-ian/33rd-tree-labs" target="_blank" rel="noopener noreferrer" class="social-link">[ GITHUB ]</a>
+          <a href="https://discord.gg/33rdtreelabs" target="_blank" rel="noopener noreferrer" class="social-link">[ DISCORD ]</a>
+          <a href="assets/docs/33rd_Tree_Labs_Whitepaper.pdf" download class="social-link highlight">[ WHITEPAPER PDF &darr; ]</a>
+          <a href="https://33rdtreelabs.tech/" class="social-link">[ 33RDTREELABS.TECH ]</a>
+        </div>
+
         <div class="finale__actions">
           <div class="finale__links">
-            <a href="whitepaper.html" class="btn-finale">[ READ FULL WHITEPAPER ]</a>
+            <a href="assets/docs/33rd_Tree_Labs_Whitepaper.pdf" download class="btn-finale">[ DOWNLOAD WHITEPAPER PDF ]</a>
             <a href="protocol.html" class="btn-finale outline">[ PROTOCOL SPECS ]</a>
             <a href="nodes.html" class="btn-finale outline">[ JOIN NODE NETWORK ]</a>
           </div>
@@ -2399,11 +2721,20 @@ html_template = """<!doctype html>
       aboveField = new MatrixField(aboveCanvas, { cell: 38, mode: "hyperbolic", speed: 0.3 });
     }
 
-    // Initialize Playground Field
+    // Initialize Poincaré Hyperbolic Simulator on Playground Canvas
     const playCanvas = document.getElementById('playground-canvas');
-    let playField = null;
-    if (playCanvas) {
-      playField = new MatrixField(playCanvas, { cell: 32, mode: currentMode, speed: 0.6 });
+    let playSim = null;
+    if (playCanvas && typeof PoincareHyperbolicSimulator !== 'undefined') {
+      playSim = new PoincareHyperbolicSimulator(playCanvas, {
+        k: 64,
+        speed: 0.8,
+        interactive: true,
+        showHud: true,
+        onQuorumChange: (m) => {
+          const kOutEl = document.getElementById('k-out');
+          if (kOutEl) kOutEl.textContent = `K = ${m.k} (${m.isQuorum ? 'VALIDATED' : 'BREACH'})`;
+        }
+      });
     }
 
     // Global Animation Render Loop
@@ -2413,7 +2744,7 @@ html_template = """<!doctype html>
       lastTime = now;
       if (heroField) heroField.frame(dt);
       if (aboveField) aboveField.frame(dt);
-      if (playField) playField.frame(dt);
+      // PoincareHyperbolicSimulator animates via its own internal 60fps loop
       requestAnimationFrame(renderLoop);
     }
     requestAnimationFrame(renderLoop);
@@ -2802,76 +3133,71 @@ html_template = """<!doctype html>
       window.addEventListener('resize', drawFilmCanvas);
     }
 
-    /* L. CHAPTER 07: PLAYGROUND CONTROLS */
+    /* L. CHAPTER 07: POINCARÉ HYPERBOLIC SIMULATOR */
+    const playCanvas = document.getElementById('playground-canvas');
+    const playFlashBanner = document.getElementById('play-flash-banner');
+    const hudQuorum = document.getElementById('hud-quorum');
+    const hudQuorumSub = document.getElementById('hud-quorum-sub');
+    const hudInvariant = document.getElementById('hud-invariant');
     const kSlider = document.getElementById('k-slider');
     const kOut = document.getElementById('k-out');
+    const btnPlayFault = document.getElementById('btn-play-fault');
+    const btnPlayReset = document.getElementById('btn-play-reset');
+
+    let playSim = null;
+
+    function updatePlaygroundHUD(m) {
+      if (!m) return;
+      if (kOut) {
+        const pct = Math.round((m.k / 64) * 100);
+        kOut.textContent = `K = ${m.k} / 64 (${pct}% QUORUM)`;
+      }
+      if (hudQuorum) {
+        hudQuorum.textContent = `${m.honestCount} / ${m.totalActive} Converged`;
+      }
+      if (hudQuorumSub) {
+        const pct = Math.round(m.honestRatio * 100);
+        hudQuorumSub.textContent = `${pct}% Agreement (${m.isQuorum ? '> 66.7% Req' : 'PARTITION DETECTED'})`;
+        hudQuorumSub.style.color = m.isQuorum ? 'var(--dim)' : '#FFAA00';
+      }
+      if (hudInvariant) {
+        if (m.faultCount === 0) {
+          hudInvariant.textContent = 'Δε = 0.00 INT8';
+          hudInvariant.style.color = '#FF2424';
+        } else {
+          hudInvariant.textContent = 'Δε = +0.47 FP16 (BYPASS)';
+          hudInvariant.style.color = '#FFAA00';
+        }
+      }
+    }
+
+    if (playCanvas && typeof PoincareHyperbolicSimulator !== 'undefined') {
+      playSim = new PoincareHyperbolicSimulator(playCanvas, {
+        k: 64,
+        speed: 1.0,
+        interactive: true,
+        flashBannerElement: playFlashBanner,
+        onQuorumChange: (m) => updatePlaygroundHUD(m),
+        onByzantineEvent: (node, m) => updatePlaygroundHUD(m)
+      });
+    }
+
     if (kSlider) {
       kSlider.addEventListener('input', (e) => {
-        kOut.textContent = e.target.value;
+        const val = parseInt(e.target.value, 10);
+        if (playSim) playSim.setK(val);
       });
     }
 
-    const resSlider = document.getElementById('res-slider');
-    const resOut = document.getElementById('res-out');
-    if (resSlider) {
-      resSlider.addEventListener('input', (e) => {
-        resOut.textContent = e.target.value;
-        if (playField) playField.setCell(e.target.value);
+    if (btnPlayFault) {
+      btnPlayFault.addEventListener('click', () => {
+        if (playSim) playSim.injectByzantineFault();
       });
     }
 
-    const speedSlider = document.getElementById('speed-slider');
-    const speedOut = document.getElementById('speed-out');
-    if (speedSlider) {
-      speedSlider.addEventListener('input', (e) => {
-        speedOut.textContent = e.target.value;
-        if (playField) playField.speed = parseFloat(e.target.value);
-      });
-    }
-
-    // Charset switchers
-    const modeOut = document.getElementById('mode-out');
-    document.querySelectorAll('.play__charset-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.play__charset-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        const m = this.getAttribute('data-mode');
-        currentMode = m;
-        if (playField) playField.mode = m;
-        if (heroField) heroField.mode = m;
-        if (aboveField) aboveField.mode = m;
-        if (modeOut && MODES[m]) modeOut.textContent = MODES[m].label;
-        document.documentElement.style.setProperty('--t', MODES[m].tc);
-      });
-    });
-
-    // Pause / Play
-    const btnPause = document.getElementById('btn-pause');
-    if (btnPause) {
-      btnPause.addEventListener('click', () => {
-        if (playField) {
-          playField.paused = !playField.paused;
-          btnPause.textContent = playField.paused ? 'PLAY' : 'PAUSE';
-        }
-      });
-    }
-
-    // Random Seed
-    const btnRandom = document.getElementById('btn-random');
-    if (btnRandom) {
-      btnRandom.addEventListener('click', () => {
-        Noise.seed(Math.floor(Math.random() * 100000));
-      });
-    }
-
-    // Export PNG
-    const btnSavePng = document.getElementById('btn-save-png');
-    if (btnSavePng && playCanvas) {
-      btnSavePng.addEventListener('click', () => {
-        const link = document.createElement('a');
-        link.download = '33rd-tree-labs-tensor-matrix.png';
-        link.href = playCanvas.toDataURL('image/png');
-        link.click();
+    if (btnPlayReset) {
+      btnPlayReset.addEventListener('click', () => {
+        if (playSim) playSim.resetQuorum();
       });
     }
 
