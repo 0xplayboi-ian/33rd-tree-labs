@@ -2834,9 +2834,10 @@
     ScrollTrigger.create({
       trigger: '.above',
       start: 'top top',
-      end: '+=150%',
+      end: '+=140%',
       pin: true,
       pinSpacing: true,
+      anticipatePin: 1,
       scrub: true,
       onUpdate: (self) => {
         if (altitudeCounter) {

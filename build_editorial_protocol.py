@@ -43,23 +43,38 @@ def generate_protocol_page():
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
+  <link rel="stylesheet" href="assets/tokens.css">
   <style>
     :root {
-      --t: #FF2424; /* Primary Laser Crimson */
+      --bg: #070707;
+      --f: #070707;
+      --t: #FF2424;
       --t-glow: rgba(255, 36, 36, 0.45);
-      --t-subtle: rgba(255, 36, 36, 0.08);
-      --f: #070707; /* Pure Obsidian Background */
       --chalk: #F2F2F5;
-      --chalk-dim: #C8C8D2;
       --dim: #8E8E98;
-      --slate: #6E6E78;
       --border: rgba(255, 255, 255, 0.12);
       --border-light: rgba(255, 255, 255, 0.18);
+      --border-hover: rgba(255, 255, 255, 0.25);
       --border-accent: rgba(255, 36, 36, 0.35);
-      --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-      --fm: 'JetBrains Mono', ui-monospace, monospace;
-      --fh: 'Syne', sans-serif;
+      --bg-elevated: #0B0B0E;
+      --bg-card: transparent;
+      --bg-card-hover: transparent;
+      --card-bg: transparent;
+      --laser-red: var(--t);
+      --laser-glow: var(--t-glow);
+      --laser-subtle: rgba(255, 36, 36, 0.08);
+      --chalk-dim: #D4D4DC;
+      --slate: var(--dim);
+      --dark-slate: #4A4A56;
+      --white: #FFFFFF;
       --green: #00E676;
+      --green-glow: rgba(0, 230, 118, 0.35);
+      --amber: #FFAA00;
+      --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --fm: 'Obel Mono', 'JetBrains Mono', ui-monospace, monospace;
+      --fh: 'Obel Mono Masked', 'Syne', -apple-system, sans-serif;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
     }
 
     *, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -519,6 +534,42 @@ def generate_protocol_page():
     .foot__top:hover {
       text-decoration: underline;
     }
+  
+    /* TABULAR NUMERICS FOR ALL METRICS & TELEMETRY */
+    table, td, th, code, pre, .mono, [data-mono], .telemetry-val, .telemetry-value, .telemetry-cell,
+    .metric-val, .metric-value, .stat-val, .stat-value, .token-val, .sbar__coord,
+    .pillar-num, .spec-val, .spec-table, .spec-table-box, .sim-field-val, .sim-metric-data,
+    .sim-metric-row, .sim-metric-title, .out-metric-val, .cmd-val, .sec-giant-num,
+    .terminal-text, [data-glitch], .mechanical-glitch, .manifesto-metric__val,
+    .pair-card__stat-val, .above__counter, .calc-res-value, .calc-res-sub,
+    .sim-status-banner, .sim-status-head, [data-metric], .tier-metric-val, .kpi-val,
+    .telemetry-row, .kpi-number, .timeline-num, .tag-pill {
+      font-variant-numeric: tabular-nums !important;
+      font-feature-settings: "tnum" 1 !important;
+    }
+
+    /* BRUTALIST ZERO-CARDS & CLEAN FULL-WIDTH HAIRLINE DIVIDERS */
+    .card, .bg-card, [data-card] {
+      background: transparent !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+    }
+
+    /* RESPONSIVE TYPOGRAPHY (1440px+ down to 375px mobile) */
+    @media (max-width: 640px) {
+      body { font-size: 14.5px; }
+      .page-wrap { padding: 100px 16px 60px !important; }
+      .telemetry-strip { grid-template-columns: 1fr !important; }
+      .telemetry-cell { border-right: none !important; border-bottom: 1px solid var(--border) !important; padding: 18px 16px !important; }
+      .telemetry-cell:last-child { border-bottom: none !important; }
+      .ed-headline { font-size: clamp(30px, 8.5vw, 42px) !important; line-height: 1.05 !important; }
+      .ed-lead { font-size: 15px !important; }
+    }
+    @media (max-width: 375px) {
+      body { font-size: 14px; }
+      .page-wrap { padding: 90px 12px 50px !important; }
+      .ed-headline { font-size: 28px !important; }
+    }
   </style>
 </head>
 <body>
@@ -536,8 +587,8 @@ def generate_protocol_page():
             <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
             <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
             <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
-            <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
+            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF2424" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#FF2424"/>
           </svg>
         </div>
         <span class="nav-title" data-glitch>33RD TREE LABS</span>
@@ -1092,9 +1143,15 @@ def generate_protocol_page():
             </tr>
             <tr>
               <td class="highlight">Consensus Quorum</td>
-              <td>K = 64 Active Validators</td>
+              <td>K=64 Hyperbolic Byzantine Quorum</td>
               <td>2/3 + 1 Honest Majority (f &le; 21)</td>
               <td>BLS aggregate multi-signature verification</td>
+            </tr>
+            <tr>
+              <td class="highlight">Validator Stake Bond</td>
+              <td>25,000 $33RD Validator Stake Bond</td>
+              <td>100% Automated Slashing on Equivocation / Tampering</td>
+              <td>Anchor Staking Escrow Vault Program</td>
             </tr>
             <tr>
               <td class="highlight">Block Commit Payload</td>
@@ -1116,7 +1173,7 @@ def generate_protocol_page():
             </tr>
             <tr>
               <td class="highlight">Burn Target Address</td>
-              <td>Canonical Solana Incinerator</td>
+              <td>Canonical Solana Incinerator (Automated 10% Fee Burn)</td>
               <td>Permanent SPL Token-2022 Burn</td>
               <td><code>1nc1nerator11111111111111111111111111111111</code></td>
             </tr>
@@ -1141,7 +1198,7 @@ def generate_protocol_page():
         <a href="nodes.html" class="foot__link">[ NODES ]</a>
         <a href="tokenomics.html" class="foot__link">[ TOKENOMICS ]</a>
         <a href="research.html" class="foot__link">[ RESEARCH ]</a>
-        <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="foot__link">[ WHITEPAPER PDF ↓ ]</a>
+        <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="foot__link">[ WHITEPAPER PDF ]</a>
       </div>
       <div>CANONICAL DOMAIN: <code>33rdtreelabs.tech</code></div>
       <a href="#top" class="foot__top" id="back-to-top">START OVER &uarr;</a>
