@@ -3,8 +3,9 @@
 33rd Tree Labs - Master Subpage Generator for nodes.html, tokenomics.html, and research.html
 Complies strictly with all user directives:
 - No boxed cards (Open brutalist editorial layouts with stark hairlines, multi-column comparison grids without card wrappers)
-- Massive length & deep technical substance
+- Tabular brutalist metrics separated by hairlines
 - Fast snappy scroll (Lenis lerp: 0.14, wheelMultiplier: 1.25)
+- Direct PDF download in navbar: [ WHITEPAPER PDF ↓ ]
 - Zero emojis, official domain 33rdtreelabs.tech
 """
 
@@ -23,8 +24,8 @@ def get_base_css():
       --chalk-dim: #C8C8D2;
       --dim: #8E8E98;
       --slate: #6E6E78;
-      --border: rgba(255, 255, 255, 0.12);
-      --border-light: rgba(255, 255, 255, 0.18);
+      --border: #1C1C24;
+      --border-light: #2A2A36;
       --border-accent: rgba(255, 36, 36, 0.35);
       --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
       --fm: 'JetBrains Mono', ui-monospace, monospace;
@@ -197,7 +198,7 @@ def get_base_css():
 
     /* EDITORIAL HERO / HEADER */
     .ed-hero {
-      margin-bottom: 70px;
+      margin-bottom: 50px;
       position: relative;
     }
     .ed-kicker {
@@ -231,40 +232,59 @@ def get_base_css():
       margin-bottom: 40px;
     }
 
-    /* TELEMETRY STRIP (NO CARD WRAPPER - CLEAN HAIRLINE BORDERS) */
-    .telemetry-strip {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    /* OPEN TABULAR BRUTALIST METRICS SEPARATED BY HAIRLINES (ZERO BOXED CARDS) */
+    .brutalist-metric-table {
+      width: 100%;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      margin-bottom: 80px;
+      margin: 48px 0 70px 0;
+      background: transparent;
     }
-    .telemetry-cell {
+    .b-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @media (max-width: 1024px) {
+      .b-row { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .b-row { grid-template-columns: 1fr; }
+    }
+    .b-col {
       padding: 24px 28px;
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
+      background: transparent;
     }
-    .telemetry-cell:last-child {
+    .b-col:last-child {
       border-right: none;
     }
-    .telemetry-lbl {
+    .b-idx {
+      font-family: var(--fm);
+      font-size: 9.5px;
+      letter-spacing: 0.15em;
+      color: var(--t);
+      font-weight: 700;
+    }
+    .b-label {
       font-family: var(--fm);
       font-size: 10.5px;
-      text-transform: uppercase;
       letter-spacing: 0.12em;
+      text-transform: uppercase;
       color: var(--dim);
     }
-    .telemetry-val {
+    .b-val {
       font-family: var(--fm);
-      font-size: 20px;
+      font-size: 16.5px;
       font-weight: 700;
       color: var(--chalk);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
     }
-    .telemetry-val.accent { color: var(--t); }
-    .telemetry-val.green { color: var(--green); }
+    .b-val.accent { color: var(--t); }
+    .b-val.green { color: var(--green); }
 
     /* OPEN EDITORIAL SECTIONS (DIVIDED BY STARK HAIRLINES, ZERO CARDS) */
     .ed-section {
@@ -537,43 +557,26 @@ def get_base_css():
     .calc-matrix-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      border-left: none;
-      border-right: none;
+      border: 1px solid var(--border);
       margin: 36px 0;
-      background: transparent;
     }
     @media (max-width: 900px) {
       .calc-matrix-grid { grid-template-columns: 1fr; }
     }
     .calc-controls {
-      padding: 36px 36px 36px 0;
+      padding: 36px;
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       gap: 24px;
-      background: transparent;
-    }
-    @media (max-width: 900px) {
-      .calc-controls {
-        padding: 24px 0;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
     }
     .calc-outputs {
-      padding: 36px 0 36px 36px;
+      padding: 36px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 24px;
-      background: transparent;
-    }
-    @media (max-width: 900px) {
-      .calc-outputs {
-        padding: 24px 0;
-      }
+      background: rgba(255, 36, 36, 0.015);
     }
     .calc-field label {
       display: block;
@@ -726,8 +729,8 @@ def get_page_head(title, description, active_page="nodes"):
             <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
             <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
             <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
-            <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
+            <line x1="12" y1="2" x2="12" y2="22" stroke="#FF2424" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#FF2424"/>
           </svg>
         </div>
         <span class="nav-title" data-glitch>33RD TREE LABS</span>
@@ -741,7 +744,7 @@ def get_page_head(title, description, active_page="nodes"):
         <a href="nodes.html" class="nav-link {'active' if active_page == 'nodes' else ''}" data-glitch>[ NODES ]</a>
         <a href="tokenomics.html" class="nav-link {'active' if active_page == 'tokenomics' else ''}" data-glitch>[ TOKENOMICS ]</a>
         <a href="research.html" class="nav-link {'active' if active_page == 'research' else ''}" data-glitch>[ RESEARCH ]</a>
-        <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>
+        <a href="33rd_Tree_Labs_Whitepaper.pdf" class="nav-link" data-glitch download="33rd_Tree_Labs_Whitepaper.pdf">[ WHITEPAPER PDF &darr; ]</a>
       </div>
     </nav>
   </div>
@@ -764,8 +767,7 @@ def get_page_foot():
   <script>
     const lenis = new Lenis({
       lerp: 0.14,
-      wheelMultiplier: 1.15,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 1.25,
       smoothWheel: true,
       smoothTouch: false
     });
@@ -851,4 +853,4 @@ def get_page_foot():
 </html>
 """
 
-print("Base generator loaded successfully.")
+print("build_subpages_full.py core loaded.")

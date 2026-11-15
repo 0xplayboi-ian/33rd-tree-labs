@@ -20,7 +20,7 @@ def get_shared_css():
             --border: #1C1C24;
             --border-hover: #343442;
             --border-accent: rgba(255, 41, 44, 0.35);
-            --laser-red: #FF292C;
+            --laser-red: #FF2424;
             --laser-glow: rgba(255, 41, 44, 0.45);
             --laser-subtle: rgba(255, 41, 44, 0.08);
             --chalk: #F2F2F5;
@@ -242,7 +242,7 @@ def get_shared_css():
         .nav-link.active {
             color: #FFFFFF;
             background: rgba(255, 41, 44, 0.14);
-            border-color: #FF292C;
+            border-color: #FF2424;
             box-shadow: 0 0 10px rgba(255, 41, 44, 0.35);
         }
         .nav-link.active::before {
@@ -250,8 +250,8 @@ def get_shared_css():
             width: 4px;
             height: 4px;
             border-radius: 50%;
-            background: #FF292C;
-            box-shadow: 0 0 6px #FF292C;
+            background: #FF2424;
+            box-shadow: 0 0 6px #FF2424;
             display: inline-block;
         }
 
@@ -546,8 +546,8 @@ def get_navbar(active_key):
                         <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
                         <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
                         <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-                        <line x1="12" y1="2" x2="12" y2="22" stroke="#FF292C" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
-                        <circle cx="12" cy="12" r="1.8" fill="#FF292C"/>
+                        <line x1="12" y1="2" x2="12" y2="22" stroke="#FF2424" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+                        <circle cx="12" cy="12" r="1.8" fill="#FF2424"/>
                     </svg>
                 </div>
                 <span class="nav-title" data-glitch>33RD TREE LABS</span>
@@ -1131,8 +1131,8 @@ def build_index_html():
                 ctx.stroke();
 
                 // Core Node
-                ctx.fillStyle = '#FF292C';
-                ctx.shadowColor = '#FF292C';
+                ctx.fillStyle = '#FF2424';
+                ctx.shadowColor = '#FF2424';
                 ctx.shadowBlur = 14;
                 ctx.beginPath();
                 ctx.arc(cx, cy, 5.5, 0, Math.PI * 2);
@@ -1159,7 +1159,7 @@ def build_index_html():
                     const y = cy + Math.sin(n.angle) * n.radius;
                     const p = Math.sin(n.pulse);
 
-                    ctx.fillStyle = (i % 4 === 0) ? '#FF292C' : '#FFFFFF';
+                    ctx.fillStyle = (i % 4 === 0) ? '#FF2424' : '#FFFFFF';
                     ctx.beginPath();
                     ctx.arc(x, y, n.size + p * 0.5, 0, Math.PI * 2);
                     ctx.fill();
@@ -2370,8 +2370,8 @@ def update_existing_subpage(file_name, active_key):
             left: 0;
             width: 0%;
             height: 2px;
-            background: #FF292C;
-            box-shadow: 0 0 8px #FF292C, 0 0 16px rgba(255, 41, 44, 0.6);
+            background: #FF2424;
+            box-shadow: 0 0 8px #FF2424, 0 0 16px rgba(255, 41, 44, 0.6);
             z-index: 100000;
             pointer-events: none;
             transition: width 0.04s linear;
@@ -2496,7 +2496,7 @@ def update_existing_subpage(file_name, active_key):
         .nav-link.active {
             color: #FFFFFF;
             background: rgba(255, 41, 44, 0.14);
-            border-color: #FF292C;
+            border-color: #FF2424;
             box-shadow: 0 0 10px rgba(255, 41, 44, 0.35);
         }
         .nav-link.active::before {
@@ -2504,8 +2504,8 @@ def update_existing_subpage(file_name, active_key):
             width: 4px;
             height: 4px;
             border-radius: 50%;
-            background: #FF292C;
-            box-shadow: 0 0 6px #FF292C;
+            background: #FF2424;
+            box-shadow: 0 0 6px #FF2424;
             display: inline-block;
         }
 

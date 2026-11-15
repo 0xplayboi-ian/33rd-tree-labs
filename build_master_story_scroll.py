@@ -730,6 +730,7 @@ html_template = """<!doctype html>
     .rule {
       position: relative;
       height: 100vh;
+      min-height: 640px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -742,63 +743,96 @@ html_template = """<!doctype html>
       width: 100%;
       max-width: 1320px;
       margin: 0 auto;
-      padding: 0 var(--pad);
+      padding: clamp(12px, 1.8vh, 20px) var(--pad);
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: clamp(36px, 5.5vw, 70px);
+      gap: clamp(24px, 4vw, 56px);
       align-items: center;
     }
     .rule__steps {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: clamp(8px, 1.2vh, 12px);
     }
     .step {
       background: rgba(16, 16, 22, 0.7);
       border: 1px solid var(--border);
-      padding: 20px 24px;
+      padding: clamp(10px, 1.3vh, 15px) clamp(14px, 1.6vw, 20px);
       border-radius: 6px;
-      transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+      transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
       position: relative;
+      opacity: 0.25;
+    }
+    .step::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--t);
+      transform: scaleY(0);
+      transform-origin: center;
+      transition: transform 0.25s ease;
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
     }
     .step.is-active {
       border-color: var(--t);
       background: rgba(255, 36, 36, 0.08);
-      transform: translateX(8px);
+      transform: translateX(6px);
+      opacity: 1.0;
+      box-shadow: 0 0 24px rgba(255, 36, 36, 0.18), inset 0 0 12px rgba(255, 36, 36, 0.05);
+    }
+    .step.is-active::before {
+      transform: scaleY(1);
+      box-shadow: 0 0 10px var(--t);
     }
     .step.is-done {
-      border-color: rgba(255, 36, 36, 0.35);
+      border-color: rgba(255, 36, 36, 0.3);
+      background: rgba(16, 16, 22, 0.85);
       opacity: 0.65;
+    }
+    .step.is-active .step__verb {
+      color: #FFFFFF;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    }
+    .step.is-active .step__desc {
+      color: #E2E8F0;
+    }
+    .step.is-active .step__nr {
+      color: var(--t);
+      text-shadow: 0 0 8px rgba(255, 36, 36, 0.6);
     }
     .step__header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: clamp(3px, 0.5vh, 6px);
     }
     .step__nr {
       font-family: var(--fm);
-      font-size: 11px;
+      font-size: clamp(9.5px, 1.1vw, 11px);
       font-weight: 700;
       color: var(--t);
+      letter-spacing: 0.08em;
     }
     .step__verb {
       font-family: var(--fm);
-      font-size: 12.5px;
+      font-size: clamp(11.5px, 1.25vw, 13px);
       font-weight: 700;
       letter-spacing: 0.1em;
       color: var(--chalk);
     }
     .step__desc {
-      font-size: 14px;
+      font-size: clamp(11.5px, 1.2vw, 13px);
       color: var(--dim);
-      line-height: 1.5;
+      line-height: 1.42;
     }
     .step__bar {
       height: 2px;
       width: 100%;
       background: rgba(255, 255, 255, 0.08);
-      margin-top: 14px;
+      margin-top: clamp(8px, 1vh, 12px);
       overflow: hidden;
       border-radius: 1px;
     }
@@ -815,19 +849,19 @@ html_template = """<!doctype html>
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 30px;
+      padding: clamp(16px, 2.2vh, 26px);
       box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(14px);
     }
     .rule__canvas-box {
       width: 100%;
-      height: 300px;
+      height: clamp(180px, 26vh, 280px);
       background: #000000;
       border: 1px solid var(--border);
       border-radius: 6px;
       position: relative;
       overflow: hidden;
-      margin-bottom: 20px;
+      margin-bottom: clamp(10px, 1.4vh, 16px);
     }
     #rule-canvas { width: 100%; height: 100%; }
     .rule__preview-foot {
@@ -838,7 +872,7 @@ html_template = """<!doctype html>
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid var(--border);
-      padding-top: 14px;
+      padding-top: clamp(8px, 1.2vh, 12px);
     }
 
     /* =====================================================================
@@ -1699,7 +1733,7 @@ html_template = """<!doctype html>
       <div class="rule__pin">
         <div class="rule__steps">
           <div class="kicker">CHAPTER 03 // EXECUTION PIPELINE</div>
-          <h2 style="font-family: var(--fh); font-size: clamp(32px, 4.2vw, 54px); font-weight: 900; text-transform: uppercase; margin-bottom: 20px;">
+          <h2 style="font-family: var(--fh); font-size: clamp(24px, 2.8vw, 42px); font-weight: 900; line-height: 1.05; text-transform: uppercase; margin-bottom: clamp(10px, 1.4vh, 16px); letter-spacing: -0.02em;">
             ONE PROTOCOL.<br>FOUR INSTRUCTIONS.
           </h2>
           
@@ -2503,7 +2537,8 @@ html_template = """<!doctype html>
       trigger: '.above',
       start: 'top top',
       end: '+=150%',
-      pin: '.above__pin',
+      pin: true,
+      pinSpacing: true,
       scrub: true,
       onUpdate: (self) => {
         if (altitudeCounter) {
@@ -2535,8 +2570,8 @@ html_template = """<!doctype html>
 
     function drawRuleVisual(stepIdx, frac) {
       if (!ruleCanvas || !ruleCtx) return;
-      ruleCanvas.width = ruleCanvas.offsetWidth;
-      ruleCanvas.height = ruleCanvas.offsetHeight;
+      ruleCanvas.width = ruleCanvas.offsetWidth || 300;
+      ruleCanvas.height = ruleCanvas.offsetHeight || 220;
       const w = ruleCanvas.width;
       const h = ruleCanvas.height;
       const cx = w / 2;
@@ -2605,21 +2640,36 @@ html_template = """<!doctype html>
       }
     }
 
+    drawRuleVisual(0, 0);
+
     ScrollTrigger.create({
       trigger: '.rule',
       start: 'top top',
-      end: '+=250%',
-      pin: '.rule__pin',
+      end: '+=240%',
+      pin: true,
+      pinSpacing: true,
       scrub: true,
       onUpdate: (self) => {
-        const raw = self.progress * 3.99;
+        const raw = self.progress * 3.999;
         const idx = Math.min(3, Math.floor(raw));
         currentStepIndex = idx;
         const currentFrac = raw - idx;
 
         steps.forEach((st, i) => {
-          st.classList.toggle('is-active', i === idx);
-          st.classList.toggle('is-done', raw > i + 1);
+          const isActive = (i === idx);
+          const isDone = (raw > i + 1);
+          st.classList.toggle('is-active', isActive);
+          st.classList.toggle('is-done', isDone);
+
+          // Sequential scrub stepper: 0.25 opacity for inactive -> 1.0 stark white with crimson active
+          if (isActive) {
+            st.style.opacity = '1.0';
+          } else if (isDone) {
+            st.style.opacity = '0.65';
+          } else {
+            st.style.opacity = '0.25';
+          }
+
           const bar = st.querySelector('.step__bar i');
           if (bar) {
             const frac = Math.min(1, Math.max(0, raw - i));

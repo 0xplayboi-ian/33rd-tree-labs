@@ -1,0 +1,1721 @@
+#!/usr/bin/env python3
+"""
+33rd Tree Labs - Protocol Architecture Page Generator (protocol.html)
+Strictly adheres to:
+- No boxed cards, card borders, or enclosed panels: transforms all sections into open brutalist editorial spreads separated by clean 1px hairline dividers (1px solid rgba(255, 255, 255, 0.12)).
+- Formats open editorial specs for the 4 pillars:
+  1. Hierarchical Tensor Arbor Topology (Gromov hyperbolic manifold, diameter <= 8 hops under 40% churn)
+  2. Proof of Intelligence (PoI) & CAP-FFN Consensus (32-layer transformer benchmark, Freivalds randomized checks)
+  3. Heterogeneous Multi-TEE Attestation Quorum (Intel TDX, AMD SEV-SNP, NVIDIA Hopper CC, 2-of-3 threshold) + ZK-Fallback
+  4. Solana Anchor Settlement (184,500 CU, 304-byte block header, 544-byte tx payload)
+- Lenis scroll configuration: lerp: 0.14, wheelMultiplier: 1.15, touchMultiplier: 1.5, smoothWheel: true per design-tokens.json motion_contract.lenis_subpages.
+- Enforces design tokens strictly: #070707, #FFFFFF, #FF2424, 0 emojis, domain strictly 33rdtreelabs.tech.
+- Canonical metrics: Hard cap 33,333,333 $33RD, K=64, Min bond 25,000 $33RD, 10% fee burn to 1nc1nerator...1111, 75% hardware reward, 15% R&D multisig.
+"""
+
+import os
+
+OUTPUT_PATH = "/Users/ianmora/Desktop/Projects/33rd-tree-labs-site/protocol.html"
+
+HTML_CONTENT = r"""<!DOCTYPE html>
+<html lang="en" class="lenis" style="--t: #FF2424; --f: #070707;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>33RD TREE LABS // The Singularity Protocol Architecture &bull; 33rdtreelabs.tech</title>
+    <meta name="description" content="The Singularity Protocol Architecture: Gromov Hyperbolic Tensor Arbor Topology, Proof of Intelligence (PoI) CAP-FFN Consensus with Freivalds checks, Heterogeneous Multi-TEE Quorum with ZK-Fallback, and Solana Anchor Settlement.">
+    <meta name="theme-color" content="#070707">
+
+    <!-- OpenGraph & Twitter Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://33rdtreelabs.tech/protocol.html">
+    <meta property="og:title" content="33RD TREE LABS // The Singularity Protocol Architecture &bull; 33rdtreelabs.tech">
+    <meta property="og:description" content="A fault-tolerant DePIN computing fabric: Gromov Hyperbolic Tensor Arbor, Proof of Intelligence, Heterogeneous Multi-TEE Quorum, and Solana Anchor settlement.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="33RD TREE LABS // The Singularity Protocol Architecture &bull; 33rdtreelabs.tech">
+    <meta name="twitter:description" content="A fault-tolerant DePIN computing fabric: Gromov Hyperbolic Tensor Arbor, Proof of Intelligence, Heterogeneous Multi-TEE Quorum, and Solana Anchor settlement.">
+
+    <!-- Core Fonts & CDN Engines -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Fast Snappy Lenis, GSAP & KaTeX -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+    <style>
+        :root {
+            /* 33RD TREE LABS DESIGN SYSTEM CONTRACT v2.0.0 */
+            --bg-void: #000000;
+            --bg-obsidian: #070707;
+            --bg-elevated: #0B0B0E;
+            --bg: #070707;
+            --t: #FF2424; /* primary_crimson */
+            --t-glow: rgba(255, 36, 36, 0.45);
+            --t-subtle: rgba(255, 36, 36, 0.08);
+            --laser-red: #FF2424;
+            --laser-glow: rgba(255, 36, 36, 0.45);
+            --laser-subtle: rgba(255, 36, 36, 0.08);
+            --chalk: #F2F2F5;
+            --chalk-dim: #D4D4DC;
+            --dim: #8E8E98;
+            --slate: #5A5A66;
+            --white: #FFFFFF;
+            --hairline: rgba(255, 255, 255, 0.12);
+            --border: rgba(255, 255, 255, 0.12);
+            --border-hover: rgba(255, 36, 36, 0.35);
+            --border-accent: rgba(255, 36, 36, 0.35);
+            --green: #00E676;
+            --green-glow: rgba(0, 230, 118, 0.35);
+            --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            --fm: 'Obel Mono', 'JetBrains Mono', ui-monospace, monospace;
+            --fh: 'Obel Mono Masked', 'Syne', -apple-system, sans-serif;
+        }
+
+        /* TYPOGRAPHY: OBEL MONO & MONO MASKED */
+        @font-face {
+            font-family: 'Obel Mono';
+            src: url('assets/fonts/ObelMono.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Obel Mono';
+            src: url('assets/fonts/ObelMono-Italic.ttf') format('truetype');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Obel Mono Masked';
+            src: url('assets/fonts/ObelMonoMasked.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: default;
+        }
+
+        html {
+            background: var(--bg-obsidian);
+            color: var(--chalk);
+            font-family: var(--fd);
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+            scrollbar-width: none;
+        }
+        html::-webkit-scrollbar { display: none; }
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-stopped { overflow: hidden; }
+
+        body {
+            position: relative;
+            min-height: 100vh;
+            background: var(--bg-obsidian);
+            color: var(--chalk);
+            font-family: var(--fd);
+            font-size: 15px;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* RETRO-TECH PRECISION CURSOR */
+        #cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--t);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--t);
+            transition: opacity 0.2s;
+        }
+        #cursor-ring {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255, 36, 36, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99998;
+            transform: translate(-50%, -50%);
+            transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+        }
+        body.cursor-hover #cursor-ring {
+            width: 48px;
+            height: 48px;
+            border-color: var(--t);
+            background: rgba(255, 36, 36, 0.08);
+        }
+
+        /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
+        #scroll-progress-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--t);
+            box-shadow: 0 0 10px var(--t), 0 0 20px var(--t-glow);
+            z-index: 100000;
+            pointer-events: none;
+            transition: width 0.03s linear;
+            will-change: width;
+        }
+
+        /* RIGHT TELEMETRY RAIL */
+        .sbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            width: 14px;
+            background: rgba(7, 7, 7, 0.85);
+            border-left: 1px solid rgba(255, 36, 36, 0.25);
+            touch-action: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 0 20px;
+        }
+        .sbar__ticks {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-family: var(--fm);
+            font-size: 8px;
+            color: var(--dim);
+            user-select: none;
+        }
+        .sbar__ticks span { line-height: 1; }
+        .sbar__ticks span.active { color: var(--t); font-weight: 700; }
+        .sbar__coord {
+            font-family: var(--fm);
+            font-size: 9px;
+            color: var(--dim);
+            writing-mode: vertical-rl;
+            letter-spacing: 0.1em;
+            user-select: none;
+        }
+        .sbar i {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--t);
+            box-shadow: 0 0 12px rgba(255, 36, 36, 0.85);
+            will-change: transform;
+            border-radius: 1px;
+        }
+        @media (hover: none) { .sbar { display: none; } }
+
+        /* UNIFIED FLOATING PILL NAVBAR */
+        .nav-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: fit-content;
+            max-width: 98vw;
+            pointer-events: none;
+        }
+
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            padding: 6px 14px 6px 10px;
+            border-radius: 9999px;
+            background: rgba(11, 11, 14, 0.88);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 36, 36, 0.15);
+            pointer-events: auto;
+            white-space: nowrap;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #FFFFFF;
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            padding-right: 12px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .nav-logo-box {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .nav-title {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: #FFFFFF;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+        .nav-link {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.60);
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 9999px;
+            border: 1px solid transparent;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-link:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+        .nav-link.active {
+            color: #FFFFFF;
+            background: rgba(255, 36, 36, 0.14);
+            border-color: var(--t);
+            box-shadow: 0 0 10px rgba(255, 36, 36, 0.35);
+        }
+        .nav-link.active::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--t);
+            box-shadow: 0 0 6px var(--t);
+            display: inline-block;
+        }
+
+        .nav-wrapper.nav-scrolled .nav-pill {
+            background: rgba(11, 11, 14, 0.96);
+            border-color: rgba(255, 36, 36, 0.35);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 36, 36, 0.15);
+        }
+
+        @media (max-width: 900px) {
+            .nav-wrapper {
+                top: 10px;
+                left: 0;
+                right: 0;
+                transform: none;
+                width: 100%;
+                padding: 0 12px;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: center;
+                pointer-events: auto;
+            }
+            .nav-pill {
+                padding: 4px 8px;
+                width: auto;
+                max-width: calc(100vw - 24px);
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                justify-content: flex-start;
+            }
+            .nav-pill::-webkit-scrollbar { display: none; }
+            .nav-brand {
+                position: sticky;
+                left: 0;
+                background: rgba(11, 11, 14, 0.95);
+                z-index: 2;
+                padding-right: 8px;
+                margin-right: 8px;
+            }
+            .nav-title { display: none; }
+            .nav-link {
+                font-size: 10px;
+                padding: 4px 8px;
+                flex-shrink: 0;
+            }
+        }
+
+        /* TABULAR NUMERICS ACROSS STATS, METRICS & CODE */
+        table, td, th, code, pre, .mono, [data-mono], .terminal-text, .metric-value, .stat-value, .token-val, .sbar__coord, .telemetry-val {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum" 1;
+        }
+
+        /* BRUTALIST OPEN EDITORIAL SPREAD LAYOUT & 1PX HAIRLINES */
+        .page-wrap {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 120px 24px 80px 24px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        /* HERO EDITORIAL SPREAD */
+        .hero-spread {
+            padding-bottom: 56px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            margin-bottom: 0;
+        }
+
+        .meta-tag {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            color: var(--t);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-family: var(--fh);
+            font-size: clamp(34px, 5.2vw, 68px);
+            font-weight: 900;
+            line-height: 0.98;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 22px;
+        }
+        .section-title .accent {
+            color: var(--t);
+            text-shadow: 0 0 32px rgba(255, 36, 36, 0.4);
+        }
+
+        .section-desc {
+            font-family: var(--fd);
+            font-size: clamp(15px, 1.25vw, 17px);
+            line-height: 1.65;
+            color: var(--chalk-dim);
+            max-width: 900px;
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        /* TELEMETRY STRIP: 4 OPEN CELLS, 1PX HAIRLINE DIVIDERS, ZERO CARDS */
+        .telemetry-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            margin-top: 40px;
+        }
+        @media (max-width: 1024px) {
+            .telemetry-strip { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .telemetry-strip { grid-template-columns: 1fr; }
+        }
+
+        .telemetry-cell {
+            padding: 24px 28px;
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: transparent;
+        }
+        .telemetry-cell:last-child {
+            border-right: none;
+        }
+        @media (max-width: 1024px) {
+            .telemetry-cell:nth-child(2) { border-right: none; }
+            .telemetry-cell:nth-child(3), .telemetry-cell:nth-child(4) {
+                border-top: 1px solid rgba(255, 255, 255, 0.12);
+            }
+        }
+        @media (max-width: 600px) {
+            .telemetry-cell { border-right: none !important; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+            .telemetry-cell:last-child { border-bottom: none; }
+        }
+
+        .telemetry-lbl {
+            font-family: var(--fm);
+            font-size: 10.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--dim);
+        }
+        .telemetry-val {
+            font-family: var(--fm);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--chalk);
+            letter-spacing: -0.01em;
+        }
+        .telemetry-val.accent { color: var(--t); }
+        .telemetry-val.green { color: var(--green); }
+
+        /* THE 4 PILLARS OPEN BRUTALIST EDITORIAL SPREADS (ZERO CARDS, 1PX HAIRLINE DIVIDERS) */
+        .pillars-editorial-list {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .pillar-row {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 56px;
+            padding: 64px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            background: transparent;
+            position: relative;
+            transition: border-color 0.25s ease;
+        }
+        .pillar-row:hover {
+            border-top-color: rgba(255, 36, 36, 0.45);
+        }
+
+        .pillar-col-left {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .pillar-num {
+            font-family: var(--fm);
+            font-size: clamp(48px, 5.5vw, 76px);
+            font-weight: 700;
+            color: var(--t);
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+        }
+
+        .pillar-meta {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            color: var(--dim);
+            text-transform: uppercase;
+        }
+
+        .pillar-col-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pillar-heading {
+            font-family: var(--fh);
+            font-size: clamp(26px, 3vw, 36px);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--white);
+            margin-bottom: 8px;
+            line-height: 1.15;
+        }
+
+        .pillar-subheading {
+            font-family: var(--fm);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--t);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .pillar-text {
+            font-family: var(--fd);
+            font-size: 15.5px;
+            line-height: 1.75;
+            color: var(--chalk-dim);
+            margin-bottom: 28px;
+            max-width: 960px;
+        }
+
+        .pillar-text p {
+            margin-bottom: 16px;
+        }
+        .pillar-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .pillar-text strong {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .pillar-text code {
+            font-family: var(--fm);
+            font-size: 13.5px;
+            color: var(--chalk);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* OPEN EDITORIAL SPEC TAGS (NO PILL BOXES, CLEAN HAIRLINES) */
+        .pillar-tags {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding-top: 10px;
+            margin-bottom: 28px;
+        }
+
+        .tag-hairline {
+            font-family: var(--fm);
+            font-size: 11px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 6px 14px;
+            color: var(--chalk);
+            letter-spacing: 0.05em;
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+        }
+        .tag-hairline strong {
+            color: var(--t);
+            font-weight: 700;
+        }
+        .tag-hairline:hover {
+            border-color: rgba(255, 36, 36, 0.5);
+            color: var(--white);
+            background: rgba(255, 36, 36, 0.04);
+        }
+
+        /* SUB-SPECS GRID WITHIN PILLAR ROW (HAIRLINE STRIP) */
+        .pillar-subspecs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            margin-top: 8px;
+        }
+        @media (max-width: 860px) {
+            .pillar-subspecs { grid-template-columns: 1fr; }
+        }
+        .subspec-cell {
+            padding: 16px 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .subspec-cell:last-child {
+            border-right: none;
+        }
+        @media (max-width: 860px) {
+            .subspec-cell { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+            .subspec-cell:last-child { border-bottom: none; }
+        }
+        .subspec-key {
+            font-family: var(--fm);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--dim);
+        }
+        .subspec-val {
+            font-family: var(--fm);
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--chalk);
+        }
+        .subspec-val.accent { color: var(--t); }
+
+        @media (max-width: 900px) {
+            .pillar-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 40px 0;
+            }
+            .pillar-col-left {
+                flex-direction: row;
+                align-items: baseline;
+                gap: 16px;
+            }
+            .pillar-num {
+                font-size: 40px;
+            }
+        }
+
+        /* SECTION HEADERS (OPEN EDITORIAL) */
+        .ed-section {
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 72px 0;
+            position: relative;
+        }
+        .ed-sec-head {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 56px;
+            margin-bottom: 40px;
+        }
+        @media (max-width: 900px) {
+            .ed-sec-head { grid-template-columns: 1fr; gap: 16px; }
+        }
+        .sec-giant-num {
+            font-family: var(--fm);
+            font-size: clamp(48px, 5.5vw, 76px);
+            font-weight: 700;
+            line-height: 0.9;
+            color: rgba(255, 36, 36, 0.3);
+            user-select: none;
+        }
+        .sec-kicker {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            color: var(--t);
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+        .sec-title {
+            font-family: var(--fh);
+            font-weight: 800;
+            font-size: clamp(26px, 3.2vw, 42px);
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 14px;
+        }
+        .sec-summary {
+            font-size: 15.5px;
+            line-height: 1.7;
+            color: var(--chalk-dim);
+            max-width: 880px;
+        }
+
+        /* OPEN EDITORIAL SPECIFICATION TABLE (NO BOX, NO ENCLOSED CARDS) */
+        .spec-table-box {
+            background: transparent;
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 24px 0;
+            margin-top: 24px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--fm);
+            font-size: 12px;
+        }
+        .spec-table th, .spec-table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .spec-table th {
+            color: var(--dim);
+            text-transform: uppercase;
+            font-weight: 700;
+            background: transparent;
+            letter-spacing: 0.1em;
+            font-size: 10.5px;
+        }
+        .spec-table td {
+            color: var(--chalk);
+            line-height: 1.55;
+        }
+        .spec-table tr:last-child td {
+            border-bottom: none;
+        }
+        .spec-table tr:hover td {
+            background: rgba(255, 36, 36, 0.03);
+            color: var(--white);
+        }
+        .spec-table code {
+            font-family: var(--fm);
+            font-size: 11.5px;
+            color: var(--t);
+            background: rgba(255, 36, 36, 0.06);
+            padding: 2px 6px;
+            border: 1px solid rgba(255, 36, 36, 0.2);
+            border-radius: 2px;
+        }
+
+        /* 4-COLUMN & 3-COLUMN OPEN EDITORIAL COMPARISON GRIDS (ZERO CARDS, HAIRLINE CELLS) */
+        .ed-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: 1px solid rgba(255, 255, 255, 0.12);
+            margin: 36px 0;
+        }
+        .ed-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: 1px solid rgba(255, 255, 255, 0.12);
+            margin: 36px 0;
+        }
+        @media (max-width: 1024px) {
+            .ed-grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .ed-grid-3 { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
+            .ed-grid-4 { grid-template-columns: 1fr; }
+        }
+        .ed-grid-cell {
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 32px 26px;
+            background: transparent;
+            transition: background 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .ed-grid-cell:hover {
+            background: rgba(255, 36, 36, 0.025);
+        }
+        .cell-tag {
+            font-family: var(--fm);
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--t);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .cell-title {
+            font-family: var(--fh);
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -0.01em;
+            color: var(--white);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .cell-body {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--chalk-dim);
+            margin-bottom: 20px;
+        }
+        .cell-spec-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-family: var(--fm);
+            font-size: 11px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 16px;
+        }
+        .cell-spec-list li {
+            display: flex;
+            justify-content: space-between;
+            color: var(--dim);
+        }
+        .cell-spec-list li strong {
+            color: var(--white);
+        }
+
+        /* REVEAL ANIMATIONS (GPU-ACCELERATED) */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-on-scroll.is-revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* MECHANICAL GLITCH TARGETS */
+        [data-glitch] {
+            font-variant-numeric: tabular-nums;
+            display: inline-block;
+        }
+        .glitch-active {
+            opacity: 0.94;
+            letter-spacing: 0.02em;
+        }
+
+        /* GLOBAL FOOTER (MARQUEE & MINIMAL BRUTALIST) */
+        .global-footer {
+            background: var(--bg-void);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 56px 0 40px;
+            margin-top: 96px;
+        }
+        .foot__marquee {
+            overflow: hidden;
+            white-space: nowrap;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            padding-bottom: 24px;
+            margin-bottom: 32px;
+            font-family: var(--fm);
+            font-size: 11px;
+            color: var(--dim);
+            letter-spacing: 0.15em;
+        }
+        .footer-inner {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-family: var(--fm);
+            font-size: 11.5px;
+            color: var(--slate);
+        }
+        .footer-brand strong {
+            color: var(--white);
+        }
+        .footer-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .footer-link {
+            font-family: var(--fm);
+            font-size: 11px;
+            color: var(--dim);
+            text-decoration: none;
+            transition: color 0.2s, text-shadow 0.2s;
+        }
+        .footer-link:hover {
+            color: var(--t);
+            text-shadow: 0 0 10px rgba(255, 36, 36, 0.5);
+        }
+        .footer-top {
+            color: var(--t);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+        }
+        .footer-top:hover {
+            text-decoration: underline;
+        }
+
+        @media print {
+            .nav-wrapper, #cursor-dot, #cursor-ring, .sbar, #scroll-progress-line {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP-EDGE SCROLL TELEMETRY PROGRESS LINE -->
+    <div id="scroll-progress-line" aria-hidden="true"></div>
+
+    <!-- RETRO-TECH CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- RIGHT TELEMETRY RAIL -->
+    <div class="sbar" id="telemetry-rail">
+        <div class="sbar__ticks">
+            <span>00</span>
+            <span>25</span>
+            <span>50</span>
+            <span>75</span>
+            <span class="active">99</span>
+        </div>
+        <div class="sbar__coord">33RDTREELABS // PROTOCOL // SOLANA</div>
+        <div style="font-family:var(--fm); font-size:9px; color:var(--t);" id="telemetry-scroll-pct">00%</div>
+        <i id="sbar-thumb" style="height:35px; top:0;"></i>
+    </div>
+
+    <!-- FLOATING PILL NAVBAR -->
+    <div class="nav-wrapper">
+        <nav class="nav-pill">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo-box">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="12" cy="4" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+                        <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+                        <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+                        <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+                        <line x1="12" y1="2" x2="12" y2="22" stroke="#FF2424" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+                        <circle cx="12" cy="12" r="1.8" fill="#FF2424"/>
+                    </svg>
+                </div>
+                <span class="nav-title" data-glitch>33RD TREE LABS</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" data-glitch>[ OVERVIEW ]</a>
+                <a href="protocol.html" class="nav-link active" data-glitch>[ PROTOCOL ]</a>
+                <a href="simulator.html" class="nav-link" data-glitch>[ SIMULATOR ]</a>
+                <a href="yield.html" class="nav-link" data-glitch>[ YIELD ]</a>
+                <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
+                <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
+                <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- MAIN EDITORIAL CONTAINER -->
+    <main class="page-wrap">
+
+        <!-- HERO EDITORIAL SPREAD -->
+        <header class="hero-spread">
+            <div class="meta-tag" data-glitch>( 002 ) // PROTOCOL SPECIFICATION &bull; CANARY ARCHITECTURE MATRIX v4.0</div>
+            <h1 class="section-title" data-glitch>THE SINGULARITY PROTOCOL<br><span class="accent">ENGINEERED FOR UNCOMPROMISING INTEGRITY</span></h1>
+            <p class="section-desc">
+                A fault-tolerant DePIN computing fabric designed to guarantee deterministic verification across untrusted distributed hardware without performance degradation. Governed by non-Euclidean Gromov hyperbolic routing, neural proof verification, heterogeneous silicon enclaves, and wire-speed Solana settlement.
+            </p>
+
+            <!-- TELEMETRY STRIP (NO CARD CONTAINERS, HAIRLINE CELLS) -->
+            <div class="telemetry-strip reveal-on-scroll">
+                <div class="telemetry-cell">
+                    <span class="telemetry-lbl">Topology Manifold</span>
+                    <span class="telemetry-val accent">Gromov Hyperbolic (&delta; &le; 1.2)</span>
+                </div>
+                <div class="telemetry-cell">
+                    <span class="telemetry-lbl">Consensus Verification</span>
+                    <span class="telemetry-val">PoI // CAP-FFN (Freivalds O(n&sup2;))</span>
+                </div>
+                <div class="telemetry-cell">
+                    <span class="telemetry-lbl">Silicon Attestation</span>
+                    <span class="telemetry-val">2-of-3 Multi-TEE + ZK-Fallback</span>
+                </div>
+                <div class="telemetry-cell">
+                    <span class="telemetry-lbl">Settlement Layer</span>
+                    <span class="telemetry-val green">Solana Anchor (184,500 CU)</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 4 PILLARS OPEN EDITORIAL MATRIX (ZERO CARDS, 1PX HAIRLINE DIVIDERS) -->
+        <section class="pillars-editorial-list" id="pillars">
+
+            <!-- PILLAR 01: HIERARCHICAL TENSOR ARBOR TOPOLOGY -->
+            <article class="pillar-row reveal-on-scroll" id="pillar-topology">
+                <div class="pillar-col-left">
+                    <span class="pillar-num">01</span>
+                    <span class="pillar-meta">[ COORDINATION // TOPOLOGY ]</span>
+                </div>
+                <div class="pillar-col-right">
+                    <h2 class="pillar-heading" data-glitch>HIERARCHICAL TENSOR ARBOR TOPOLOGY</h2>
+                    <div class="pillar-subheading">Gromov Hyperbolic Manifold Routing &bull; Bounded Diameter Graph Partitioning</div>
+                    
+                    <div class="pillar-text">
+                        <p>
+                            Physical GPU nodes across global data centers are embedded directly into a continuous <strong>Gromov &delta;-hyperbolic metric space</strong> ($\delta \le 1.2$). In hyperbolic geometry, space expands exponentially rather than polynomially, naturally accommodating hierarchical tree structures without distortion. Communication geodesics between arbitrary tensor shards route along high-capacity interior trunks rather than traversing high-latency perimeter WAN bottlenecks.
+                        </p>
+                        <p>
+                            The topology enforces a formal mathematical bound on network diameter: <strong>diameter &le; 8 hops under continuous 40% adversarial or churn conditions</strong>. Greedy coordinate-based routing guarantees that packet forwarding decisions require only localized knowledge of 1-hop neighbor hyperbolic coordinates, eliminating global routing table synchronization overhead. Dynamic sub-tree re-parenting converges in sub-12ms upon node departure without stalling pipeline execution.
+                        </p>
+                        <p>
+                            Hierarchical partitioning aligns multi-dimensional tensor parallelism (TP) with physical interconnects: intra-node tensor shards communicate across <strong>900 GB/s NVLink fabrics</strong>, pipeline parallel (PP) stages map across 400 Gbps InfiniBand clusters, and data parallel (DP) gradient synchronizations traverse inter-region overlays.
+                        </p>
+                    </div>
+
+                    <div class="pillar-tags">
+                        <span class="tag-hairline">MANIFOLD: <strong>GROMOV &delta;-HYPERBOLIC (&delta; &le; 1.2)</strong></span>
+                        <span class="tag-hairline">DIAMETER BOUND: <strong>&le; 8 HOPS @ 40% CHURN</strong></span>
+                        <span class="tag-hairline">INTERCONNECT: <strong>900 GB/s NVLINK TRUNK</strong></span>
+                        <span class="tag-hairline">RE-ROUTING CONVERGENCE: <strong>&lt; 12ms HEALING</strong></span>
+                    </div>
+
+                    <div class="pillar-subspecs">
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Metric Space</span>
+                            <span class="subspec-val">Poincar&eacute; Ball Model $\mathbb{B}^n$</span>
+                        </div>
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Max Graph Diameter</span>
+                            <span class="subspec-val accent">&le; 8 Hops (Worst-Case Churn)</span>
+                        </div>
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Routing Overhead</span>
+                            <span class="subspec-val">O(1) Local Greedy Forwarding</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PILLAR 02: PROOF OF INTELLIGENCE (POI) & CAP-FFN CONSENSUS -->
+            <article class="pillar-row reveal-on-scroll" id="pillar-poi">
+                <div class="pillar-col-left">
+                    <span class="pillar-num">02</span>
+                    <span class="pillar-meta">[ VERIFICATION // CONSENSUS ]</span>
+                </div>
+                <div class="pillar-col-right">
+                    <h2 class="pillar-heading" data-glitch>PROOF OF INTELLIGENCE (POI) &amp; CAP-FFN CONSENSUS</h2>
+                    <div class="pillar-subheading">32-Layer Transformer Benchmark &bull; Freivalds Randomized O(n&sup2;) Verification</div>
+                    
+                    <div class="pillar-text">
+                        <p>
+                            Proof of Intelligence replaces resource-wasting hashing puzzles with mathematically useful neural evaluation benchmarks. Compute nodes execute forward passes over a canonical <strong>32-layer transformer benchmark</strong> architecture, evaluating multi-head attention projections and feed-forward networks (FFN) under deterministic floating-point precision bounds.
+                        </p>
+                        <p>
+                            Non-linear activation functions (GELU / SwiGLU) are substituted during verification rounds with <strong>Chebyshev Activation Polynomials (CAP-FFN) of degree $d = 16$</strong>. This algebraic transformation maps transcendental activation evaluations into structured low-degree polynomial constraints over the scalar field $\mathbb{F}_r$, enabling zero-knowledge opening proofs without precision loss.
+                        </p>
+                        <p>
+                            Massive matrix multiplications ($A \cdot B = C$) in attention projections and feed-forward layers are verified using <strong>Freivalds randomized checks</strong>. Instead of recalculating full $O(n^3)$ matrix multiplications, validators compute $A \cdot (B \cdot x) \stackrel{?}{=} C \cdot x$ for 128 pseudo-random challenge vectors $x \in \{0, 1\}^n$. This reduces verification complexity to $O(n^2)$ while bounding the probability of an undetected faulty or forged calculation to <strong>$\epsilon &le; 2^{-128}$</strong>. Proof commits are paired with BN254 KZG polynomial commitments verified on-chain in sub-2ms.
+                        </p>
+                    </div>
+
+                    <div class="pillar-tags">
+                        <span class="tag-hairline">BENCHMARK: <strong>32-LAYER TRANSFORMER</strong></span>
+                        <span class="tag-hairline">POLYNOMIAL ACTIVATION: <strong>CAP-FFN (DEGREE d=16)</strong></span>
+                        <span class="tag-hairline">VERIFICATION COMPLEXITY: <strong>FREIVALDS O(n&sup2;)</strong></span>
+                        <span class="tag-hairline">SOUNDNESS BOUND: <strong>&epsilon; &le; 2&minus;128 (128 PROBES)</strong></span>
+                        <span class="tag-hairline">COMMITMENT SCHEME: <strong>BN254 KZG</strong></span>
+                    </div>
+
+                    <div class="pillar-subspecs">
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Proof Generation Time</span>
+                            <span class="subspec-val">1.418ms On-Chip Latency</span>
+                        </div>
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Matrix Check Speedup</span>
+                            <span class="subspec-val accent">O(n&sup3;) &rarr; O(n&sup2;) (99.8% Faster)</span>
+                        </div>
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Curve &amp; Pairing</span>
+                            <span class="subspec-val">BN254 (alt_bn128) Scalar Field</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PILLAR 03: HETEROGENEOUS MULTI-TEE ATTESTATION QUORUM + ZK-FALLBACK -->
+            <article class="pillar-row reveal-on-scroll" id="pillar-tee">
+                <div class="pillar-col-left">
+                    <span class="pillar-num">03</span>
+                    <span class="pillar-meta">[ HARDWARE ENCLAVES // SILICON DIVERSITY ]</span>
+                </div>
+                <div class="pillar-col-right">
+                    <h2 class="pillar-heading" data-glitch>HETEROGENEOUS MULTI-TEE ATTESTATION QUORUM</h2>
+                    <div class="pillar-subheading">Intel TDX &bull; AMD SEV-SNP &bull; NVIDIA Hopper CC &bull; 2-of-3 Threshold + ZK-Fallback</div>
+                    
+                    <div class="pillar-text">
+                        <p>
+                            To prevent single-vendor silicon vulnerability, 33rd Tree Labs forbids hardware monocultures. A single-enclave network remains vulnerable to microarchitectural side-channel attacks, manufacturer root key revocations, or microcode zero-days. The Singularity Protocol enforces a strict <strong>2-of-3 heterogeneous attestation threshold</strong> across three distinct silicon architectures: <strong>Intel TDX</strong> (Trust Domain Extensions), <strong>AMD SEV-SNP</strong> (Secure Encrypted Virtualization-Secure Nested Paging), and <strong>NVIDIA Hopper Confidential Computing</strong> (H100/H200 CC).
+                        </p>
+                        <p>
+                            Every execution batch must submit cryptographic hardware quotes signed by at least two distinct silicon root-of-trust certificates. Quotes prove uncompromised memory encryption, firmware PCR hash measurements, and kernel enclave isolation prior to node admission into the arbor.
+                        </p>
+                        <p>
+                            <strong>Automated ZK-Fallback Engine:</strong> If hardware enclave quotes fail attestation, encounter upstream certificate revocation lists (CRL), or exhibit inter-silicon disagreement, the execution pipeline automatically triggers an integrated zero-knowledge fallback engine. The node generates a recursive <strong>Plonky2 / STARK proof</strong> certifying exact INT8/FP8 arithmetic trace execution, maintaining consensus finality without halting the compute arbor.
+                        </p>
+                    </div>
+
+                    <div class="pillar-tags">
+                        <span class="tag-hairline">SUPPORTED SILICON: <strong>INTEL TDX + AMD SEV-SNP + HOPPER CC</strong></span>
+                        <span class="tag-hairline">QUORUM THRESHOLD: <strong>2-OF-3 INDEPENDENT SILICON</strong></span>
+                        <span class="tag-hairline">FAILSAFE ENGINE: <strong>RECURSIVE PLONKY2 ZK-FALLBACK</strong></span>
+                        <span class="tag-hairline">NUMERICAL PARITY: <strong>INT8 / FP8 DETERMINISTIC (&Delta;=0.00%)</strong></span>
+                    </div>
+
+                    <div class="pillar-subspecs">
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Attestation Quorum</span>
+                            <span class="subspec-val accent">2-of-3 Hardware Threshold</span>
+                        </div>
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Fallback Proof System</span>
+                            <span class="subspec-val">Recursive Plonky2 / STARK</span>
+                        </div>
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Side-Channel Isolation</span>
+                            <span class="subspec-val">Hardware Memory Encryption Gating</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PILLAR 04: SOLANA ANCHOR SETTLEMENT -->
+            <article class="pillar-row reveal-on-scroll" id="pillar-settlement">
+                <div class="pillar-col-left">
+                    <span class="pillar-num">04</span>
+                    <span class="pillar-meta">[ SETTLEMENT // HIGH-THROUGHPUT L1 ]</span>
+                </div>
+                <div class="pillar-col-right">
+                    <h2 class="pillar-heading" data-glitch>SOLANA ANCHOR SETTLEMENT &amp; FINALITY</h2>
+                    <div class="pillar-subheading">Sub-400ms Pipeline Commit &bull; 184,500 CU Verification &bull; Canonical Wire Packaging</div>
+                    
+                    <div class="pillar-text">
+                        <p>
+                            All network state transitions, attestation quorums, and PoI commitments settle directly on Solana Mainnet via optimized Anchor smart contract programs. Solana's parallel Sealevel runtime executes verification transactions without lock contention, achieving deterministic slot finality in <strong>sub-400ms</strong>.
+                        </p>
+                        <p>
+                            The verification instruction consumes strictly <strong>184,500 Compute Units (CU)</strong>, invoking Solana's native <code>sol_alt_bn128_pairing</code> syscall to evaluate pairing equations directly inside the eBPF virtual machine. No costly GPU re-computation or off-chain consensus round is required on-chain.
+                        </p>
+                        <p>
+                            The canonical wire protocol is engineered for maximum throughput and minimal bandwidth: a compact <strong>304-byte block header</strong> packages the hyperbolic arbor state root, multi-TEE quorum mask, and BN254 commitment; a compressed <strong>544-byte transaction payload</strong> encapsulates execution parameters, fitting safely inside Solana's <strong>1,232-byte network MTU packet size limit</strong>.
+                        </p>
+                        <p>
+                            Malicious node behavior—such as bit-flip gradient tampering, equivocation, or fraudulent TEE quotes—triggers instantaneous mathematical slashing of the validator's <strong>25,000 $33RD bonded collateral</strong>. Exactly <strong>10% of all protocol verification fees</strong> are burned directly to the Solana Incinerator address <code>1nc1nerator...1111</code>, permanently shrinking the token supply.
+                        </p>
+                    </div>
+
+                    <div class="pillar-tags">
+                        <span class="tag-hairline">COMPUTE BUDGET: <strong>184,500 CU PER VERIFICATION</strong></span>
+                        <span class="tag-hairline">BLOCK HEADER: <strong>304 BYTES CANONICAL</strong></span>
+                        <span class="tag-hairline">TRANSACTION PAYLOAD: <strong>544 BYTES (MTU SAFE)</strong></span>
+                        <span class="tag-hairline">SOLANA SYSCALL: <strong>sol_alt_bn128_pairing</strong></span>
+                        <span class="tag-hairline">FINALITY: <strong>400ms SLOTS</strong></span>
+                    </div>
+
+                    <div class="pillar-subspecs">
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Compute Consumption</span>
+                            <span class="subspec-val accent">184,500 CU (eBPF Native)</span>
+                        </div>
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Network Wire Format</span>
+                            <span class="subspec-val">304B Header // 544B Payload</span>
+                        </div>
+                        <div class="subspec-cell">
+                            <span class="subspec-key">Incinerator Fee Burn</span>
+                            <span class="subspec-val">10% Burned to 1nc1nerator...1111</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- FORMAL CRYPTOGRAPHIC & NETWORK PARAMETERS MATRIX -->
+        <section class="ed-section reveal-on-scroll" id="specifications">
+            <div class="ed-sec-head">
+                <div>
+                    <span class="sec-giant-num">02</span>
+                    <div class="sec-kicker">// PARAMETER CONTRACT</div>
+                </div>
+                <div>
+                    <h2 class="sec-title">CRYPTOGRAPHIC &amp; NETWORK FORMAL SPECIFICATIONS</h2>
+                    <p class="sec-summary">
+                        Rigorous mathematical bounds and runtime parameters enforced across the 33rd Tree Labs network fabric. All operations are strictly deterministic and verifiable on-chain.
+                    </p>
+                </div>
+            </div>
+
+            <div class="spec-table-box">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter Dimension</th>
+                            <th>Formal Specification</th>
+                            <th>Mathematical Invariant / Bound</th>
+                            <th>On-Chain Target</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Curve &amp; Pairing</td>
+                            <td>BN254 (alt_bn128)</td>
+                            <td>r = 21888242871839275222246405745257275088548364400416034343698204186575808495617</td>
+                            <td><code>sol_alt_bn128_pairing</code> syscall</td>
+                        </tr>
+                        <tr>
+                            <td>Neural Benchmark</td>
+                            <td>32-Layer Transformer Model</td>
+                            <td>Multi-head self-attention + FFN feed-forward layer checks</td>
+                            <td>Bit-exact verification across H100 vs RTX 4090</td>
+                        </tr>
+                        <tr>
+                            <td>Polynomial Activation</td>
+                            <td>CAP-FFN Chebyshev Degree d = 16</td>
+                            <td>O(1) constant-time KZG opening proof verification</td>
+                            <td>Sub-2.0ms evaluation inside eBPF VM</td>
+                        </tr>
+                        <tr>
+                            <td>Matrix Verification</td>
+                            <td>Freivalds Randomized Algorithm</td>
+                            <td>Soundness error &epsilon; &le; 2&minus;128 using 128 scalar probes</td>
+                            <td>Reduces O(n&sup3;) GEMM to O(n&sup2;) verification</td>
+                        </tr>
+                        <tr>
+                            <td>Silicon Enclaves</td>
+                            <td>Intel TDX + AMD SEV-SNP + Hopper CC</td>
+                            <td>2-of-3 independent manufacturer root threshold</td>
+                            <td>Zero single-vendor silicon vulnerability</td>
+                        </tr>
+                        <tr>
+                            <td>Fallback Proofs</td>
+                            <td>Recursive Plonky2 / STARK System</td>
+                            <td>Soundness &gt; 100 bits over Goldilocks field $\mathbb{F}_{2^{64}-2^{32}+1}$</td>
+                            <td>Automated failover on TEE dispute or CRL revocation</td>
+                        </tr>
+                        <tr>
+                            <td>Routing Metric Space</td>
+                            <td>Gromov &delta;-Hyperbolic Manifold (&delta; &le; 1.2)</td>
+                            <td>Network diameter &le; 8 hops under 40% adversarial churn</td>
+                            <td>Local greedy forwarding on Poincar&eacute; coordinates</td>
+                        </tr>
+                        <tr>
+                            <td>Solana Settlement</td>
+                            <td>Anchor Framework Contract Program</td>
+                            <td>184,500 CU compute budget; 304B header; 544B payload</td>
+                            <td>Single-slot commitment finality (&lt; 400ms)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- EXECUTION LIFECYCLE PIPELINE (OPEN 4-COLUMN BRUTALIST GRID) -->
+        <section class="ed-section reveal-on-scroll" id="lifecycle">
+            <div class="ed-sec-head">
+                <div>
+                    <span class="sec-giant-num">03</span>
+                    <div class="sec-kicker">// EXECUTION PIPELINE</div>
+                </div>
+                <div>
+                    <h2 class="sec-title">DETERMINISTIC INFERENCE &amp; SETTLEMENT LIFECYCLE</h2>
+                    <p class="sec-summary">
+                        Four synchronized stages executing continuously across distributed clusters, translating user inference demands into cryptographically verified on-chain settlements.
+                    </p>
+                </div>
+            </div>
+
+            <div class="ed-grid-4">
+                <div class="ed-grid-cell">
+                    <div>
+                        <span class="cell-tag">[ STAGE 01 // DISPATCH ]</span>
+                        <h3 class="cell-title">Hyperbolic Partition</h3>
+                        <p class="cell-body">
+                            Model parameters and incoming inference requests are mapped to the Poincar&eacute; disc manifold. Pipeline stages are greedily assigned to nodes with optimal hyperbolic proximity, maximizing NVLink and InfiniBand bandwidth.
+                        </p>
+                    </div>
+                    <ul class="cell-spec-list">
+                        <li><span>Latency:</span> <strong>&lt; 3.2ms</strong></li>
+                        <li><span>Routing:</span> <strong>Local Greedy DAG</strong></li>
+                        <li><span>Hops:</span> <strong>&le; 8 Hops Bound</strong></li>
+                    </ul>
+                </div>
+
+                <div class="ed-grid-cell">
+                    <div>
+                        <span class="cell-tag">[ STAGE 02 // EXECUTION ]</span>
+                        <h3 class="cell-title">Multi-TEE Enclaves</h3>
+                        <p class="cell-body">
+                            Nodes execute the 32-layer transformer forward pass inside Intel TDX, AMD SEV-SNP, or Hopper CC enclaves. Memory encryption prevents tampering, and hardware quotes are collected across independent vendors.
+                        </p>
+                    </div>
+                    <ul class="cell-spec-list">
+                        <li><span>Quorum:</span> <strong>2-of-3 Threshold</strong></li>
+                        <li><span>Precision:</span> <strong>INT8 / FP8 Exact</strong></li>
+                        <li><span>Failsafe:</span> <strong>ZK-Fallback Ready</strong></li>
+                    </ul>
+                </div>
+
+                <div class="ed-grid-cell">
+                    <div>
+                        <span class="cell-tag">[ STAGE 03 // AUDIT ]</span>
+                        <h3 class="cell-title">Freivalds Verification</h3>
+                        <p class="cell-body">
+                            Validators run Freivalds randomized checks on projection matrices and CAP-FFN Chebyshev polynomials (d=16). Matrix checks complete in O(n&sup2;) with soundness error bounded below 2&minus;128.
+                        </p>
+                    </div>
+                    <ul class="cell-spec-list">
+                        <li><span>Complexity:</span> <strong>O(n&sup2;) vs O(n&sup3;)</strong></li>
+                        <li><span>Probe Vectors:</span> <strong>128 Scalar Tests</strong></li>
+                        <li><span>Soundness:</span> <strong>&epsilon; &le; 2&minus;128</strong></li>
+                    </ul>
+                </div>
+
+                <div class="ed-grid-cell">
+                    <div>
+                        <span class="cell-tag">[ STAGE 04 // SETTLE ]</span>
+                        <h3 class="cell-title">Anchor Settlement</h3>
+                        <p class="cell-body">
+                            The 304-byte header and 544-byte payload are submitted to Solana. Anchor verifies the BN254 KZG proof in 184,500 CU. Slashing enforces integrity; 10% of fees burn to 1nc1nerator...1111.
+                        </p>
+                    </div>
+                    <ul class="cell-spec-list">
+                        <li><span>Compute:</span> <strong>184,500 CU</strong></li>
+                        <li><span>Finality:</span> <strong>&lt; 400ms Slot</strong></li>
+                        <li><span>Fee Burn:</span> <strong>10% Permanent</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CANONICAL METRICS & MONETARY POLICY INVARIANTS (OPEN 3-COLUMN BRUTALIST GRID) -->
+        <section class="ed-section reveal-on-scroll" id="token-invariants">
+            <div class="ed-sec-head">
+                <div>
+                    <span class="sec-giant-num">04</span>
+                    <div class="sec-kicker">// CANONICAL METRICS</div>
+                </div>
+                <div>
+                    <h2 class="sec-title">CANONICAL PROTOCOL INVARIANTS &amp; TOKENOMICS</h2>
+                    <p class="sec-summary">
+                        Strict economic parameters governing validator collateral, hardware yield distribution, and deflationary burns per the 33rd Tree Labs Design System Contract.
+                    </p>
+                </div>
+            </div>
+
+            <div class="ed-grid-3">
+                <div class="ed-grid-cell">
+                    <div>
+                        <span class="cell-tag">[ HARD CAP INVARIANT ]</span>
+                        <h3 class="cell-title">33,333,333 $33RD</h3>
+                        <p class="cell-body">
+                            Strict asymptotic supply ceiling. Mint authority was permanently revoked at genesis with <code>new_authority: None</code>. No additional tokens can ever be created.
+                        </p>
+                    </div>
+                    <ul class="cell-spec-list">
+                        <li><span>Standard:</span> <strong>SPL Token-2022</strong></li>
+                        <li><span>Mint Authority:</span> <strong>Permanently Revoked</strong></li>
+                        <li><span>Supply:</span> <strong>Fixed Asymptote</strong></li>
+                    </ul>
+                </div>
+
+                <div class="ed-grid-cell">
+                    <div>
+                        <span class="cell-tag">[ CONSENSUS COMMITTEE ]</span>
+                        <h3 class="cell-title">K = 64 Validators</h3>
+                        <p class="cell-body">
+                            Byzantine consensus committee size. Requires 2/3 + 1 honest majority (f &le; 21 tolerated Byzantine nodes) for block finalization and state commit validity.
+                        </p>
+                    </div>
+                    <ul class="cell-spec-list">
+                        <li><span>Committee Size:</span> <strong>K = 64 Active</strong></li>
+                        <li><span>Fault Tolerance:</span> <strong>f &le; 21 Byzantine</strong></li>
+                        <li><span>Signatures:</span> <strong>BLS Aggregate</strong></li>
+                    </ul>
+                </div>
+
+                <div class="ed-grid-cell">
+                    <div>
+                        <span class="cell-tag">[ COLLATERAL BOND ]</span>
+                        <h3 class="cell-title">25,000 $33RD Min</h3>
+                        <p class="cell-body">
+                            Mandatory staked collateral per validator node. Subject to 100% automated slashing upon mathematical detection of bit-flip tampering, equivocation, or fraudulent quotes.
+                        </p>
+                    </div>
+                    <ul class="cell-spec-list">
+                        <li><span>Min Bond:</span> <strong>25,000 $33RD</strong></li>
+                        <li><span>Slashing Penalty:</span> <strong>100% Liquidation</strong></li>
+                        <li><span>Vault PDA:</span> <strong>Anchor Collateral PDA</strong></li>
+                    </ul>
+                </div>
+
+                <div class="ed-grid-cell">
+                    <div>
+                        <span class="cell-tag">[ DEFLATIONARY SINK ]</span>
+                        <h3 class="cell-title">10% Incinerator Burn</h3>
+                        <p class="cell-body">
+                            Exactly 10% of all protocol verification fees are transferred directly to the canonical Solana Incinerator address, continuously shrinking the circulating token supply.
+                        </p>
+                    </div>
+                    <ul class="cell-spec-list">
+                        <li><span>Burn Rate:</span> <strong>10% of All Fees</strong></li>
+                        <li><span>Burn Destination:</span> <strong>1nc1nerator...1111</strong></li>
+                        <li><span>LP Status:</span> <strong>100% LP Incinerated</strong></li>
+                    </ul>
+                </div>
+
+                <div class="ed-grid-cell">
+                    <div>
+                        <span class="cell-tag">[ HARDWARE SUBSIDY ]</span>
+                        <h3 class="cell-title">75% Worker Yield</h3>
+                        <p class="cell-body">
+                            Three quarters of all protocol fee revenue is routed directly to verified GPU node operators executing deterministic forward passes and multi-TEE attestation batches.
+                        </p>
+                    </div>
+                    <ul class="cell-spec-list">
+                        <li><span>Fee Share:</span> <strong>75% Direct Yield</strong></li>
+                        <li><span>Payout Cadence:</span> <strong>Per Epoch Settlement</strong></li>
+                        <li><span>Eligible Hardware:</span> <strong>H100 / H200 / RTX 4090</strong></li>
+                    </ul>
+                </div>
+
+                <div class="ed-grid-cell">
+                    <div>
+                        <span class="cell-tag">[ PROTOCOL R&amp;D ]</span>
+                        <h3 class="cell-title">15% Research Multisig</h3>
+                        <p class="cell-body">
+                            Dedicated to continuous mathematical research in Gromov hyperbolic graph algorithms, recursive STARK proving systems, and hardware enclave microarchitectures.
+                        </p>
+                    </div>
+                    <ul class="cell-spec-list">
+                        <li><span>Allocation:</span> <strong>15% Core Protocol</strong></li>
+                        <li><span>Governance:</span> <strong>Multi-Party Compute</strong></li>
+                        <li><span>Vesting:</span> <strong>48-Month Linear Stream</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- GLOBAL BRUTALIST FOOTER -->
+    <footer class="global-footer">
+        <div class="foot__marquee">
+            0/1 33RD TREE LABS // THE SINGULARITY PROTOCOL // GROMOV HYPERBOLIC ARBOR // PROOF OF INTELLIGENCE // MULTI-TEE QUORUM // SOLANA ANCHOR 184,500 CU // 0/1 33RD TREE LABS //
+        </div>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <strong>33RD TREE LABS</strong> &bull; THE SINGULARITY PROTOCOL &bull; <code>33rdtreelabs.tech</code>
+            </div>
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">[ OVERVIEW ]</a>
+                <a href="protocol.html" class="footer-link">[ PROTOCOL ]</a>
+                <a href="simulator.html" class="footer-link">[ SIMULATOR ]</a>
+                <a href="yield.html" class="footer-link">[ YIELD ]</a>
+                <a href="nodes.html" class="footer-link">[ NODES ]</a>
+                <a href="tokenomics.html" class="footer-link">[ TOKENOMICS ]</a>
+                <a href="research.html" class="footer-link">[ RESEARCH ]</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="footer-link">[ WHITEPAPER PDF ]</a>
+            </div>
+            <div>
+                <a href="#top" class="footer-top">TOP &uarr;</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SNAPPY LENIS SCROLL, GSAP & MECHANICAL GLITCH SCRIPTS -->
+    <script>
+        // Snappy Lenis Scroll Configuration per design-tokens.json motion_contract.lenis_subpages
+        const lenis = new Lenis({
+            lerp: 0.14,
+            wheelMultiplier: 1.15,
+            touchMultiplier: 1.5,
+            smoothWheel: true
+        });
+
+        // Register GSAP ScrollTrigger
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => lenis.raf(time * 1000));
+            gsap.ticker.lagSmoothing(0);
+        } else {
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+        }
+
+        // Custom Retro-Tech Precision Cursor
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+        if (cursorDot && cursorRing) {
+            window.addEventListener('mousemove', (e) => {
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+                cursorRing.style.left = e.clientX + 'px';
+                cursorRing.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, input, select, [data-glitch]').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+        }
+
+        // Top-edge scroll progress telemetry line & Right telemetry rail sync
+        const progressBar = document.getElementById('scroll-progress-line');
+        const navWrapper = document.querySelector('.nav-wrapper');
+        const telemetryScrollPct = document.getElementById('telemetry-scroll-pct');
+        const sbarThumb = document.getElementById('sbar-thumb');
+
+        function onScrollTelemetry() {
+            const doc = document.documentElement;
+            const sy = window.scrollY || doc.scrollTop;
+            const max = doc.scrollHeight - window.innerHeight;
+            const pct = max > 0 ? Math.min(100, Math.max(0, (sy / max) * 100)) : 0;
+            const pctStr = pct.toFixed(0).padStart(2, '0') + '%';
+
+            if (progressBar) {
+                progressBar.style.width = pct.toFixed(2) + '%';
+            }
+            if (telemetryScrollPct) {
+                telemetryScrollPct.innerText = pctStr;
+            }
+            if (sbarThumb && max > 0) {
+                const railH = window.innerHeight - 80;
+                sbarThumb.style.top = ((sy / max) * railH).toFixed(1) + 'px';
+            }
+            if (navWrapper) {
+                if (sy > 50) {
+                    navWrapper.classList.add('nav-scrolled');
+                } else {
+                    navWrapper.classList.remove('nav-scrolled');
+                }
+            }
+        }
+        window.addEventListener('scroll', onScrollTelemetry, { passive: true });
+        lenis.on('scroll', onScrollTelemetry);
+        onScrollTelemetry();
+
+        // Right Telemetry Rail Click-to-Scroll
+        const telemetryRail = document.getElementById('telemetry-rail');
+        if (telemetryRail) {
+            telemetryRail.addEventListener('click', (e) => {
+                const rect = telemetryRail.getBoundingClientRect();
+                const clickY = e.clientY - rect.top;
+                const ratio = Math.min(1, Math.max(0, clickY / rect.height));
+                const targetY = ratio * (document.documentElement.scrollHeight - window.innerHeight);
+                lenis.scrollTo(targetY);
+            });
+        }
+
+        // IntersectionObserver Reveal Engine (Zero Layout Shift)
+        const revealTargets = document.querySelectorAll('.reveal-on-scroll');
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-revealed');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
+            revealTargets.forEach(el => io.observe(el));
+        } else {
+            revealTargets.forEach(el => el.classList.add('is-revealed'));
+        }
+
+        // Mechanical Glitch Scramble Engine (250ms interval / 3.5s duration)
+        class GlitchScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '01X_/*+-[]#';
+                this.originalText = el.getAttribute('data-glitch-text') || el.innerText.trim();
+                el.setAttribute('data-glitch-text', this.originalText);
+                this.isGlitching = false;
+                this.animId = null;
+                this.lastTickTime = 0;
+                this.tickInterval = 250; // 250ms deliberate mechanical relay cadence
+            }
+
+            scramble(duration = 3.5) {
+                if (this.isGlitching) return;
+                this.isGlitching = true;
+                this.el.classList.add('glitch-active');
+                const target = this.originalText;
+                const len = target.length;
+                const startTime = performance.now();
+                const durationMs = duration * 1000;
+                let activeGlyphs = new Array(len);
+                for (let i = 0; i < len; i++) {
+                    const ch = target[i];
+                    activeGlyphs[i] = (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9))
+                        ? ch
+                        : this.chars[Math.floor(Math.random() * this.chars.length)];
+                }
+
+                const tick = (now) => {
+                    const elapsed = now - startTime;
+                    const progress = Math.min(1, elapsed / durationMs);
+                    const revealedCount = Math.floor(progress * len);
+
+                    if (now - this.lastTickTime >= this.tickInterval) {
+                        this.lastTickTime = now;
+                        for (let i = revealedCount; i < len; i++) {
+                            const ch = target[i];
+                            if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
+                                activeGlyphs[i] = ch;
+                            } else if (Math.random() < 0.35) {
+                                activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
+                            }
+                        }
+                    }
+
+                    let result = '';
+                    for (let i = 0; i < len; i++) {
+                        const ch = target[i];
+                        if (ch === ' ' || ch === String.fromCharCode(10) || ch === String.fromCharCode(9)) {
+                            result += ch;
+                        } else if (i < revealedCount) {
+                            result += ch;
+                        } else {
+                            result += activeGlyphs[i] || ch;
+                        }
+                    }
+                    this.el.innerText = result;
+
+                    if (progress < 1) {
+                        this.animId = requestAnimationFrame(tick);
+                    } else {
+                        this.el.innerText = target;
+                        this.el.classList.remove('glitch-active');
+                        this.isGlitching = false;
+                    }
+                };
+                this.animId = requestAnimationFrame(tick);
+            }
+        }
+
+        document.querySelectorAll('[data-glitch], .nav-link').forEach(el => {
+            const inst = new GlitchScramble(el);
+            el.addEventListener('mouseenter', () => inst.scramble(3.5));
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            let delay = 100;
+            document.querySelectorAll('.meta-tag, .sec-kicker').forEach(el => {
+                const inst = new GlitchScramble(el);
+                setTimeout(() => inst.scramble(3.5), delay);
+                delay += 250;
+            });
+        });
+
+        document.querySelectorAll('.section-title, .sec-title').forEach(el => {
+            const inst = new GlitchScramble(el);
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: 'top 88%',
+                    once: true,
+                    onEnter: () => inst.scramble(3.5)
+                });
+            }
+            el.addEventListener('mouseenter', () => inst.scramble(3.5));
+        });
+    </script>
+</body>
+</html>
+"""
+
+def generate():
+    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
+        f.write(HTML_CONTENT.strip() + "\n")
+    print(f"Generated {OUTPUT_PATH} ({len(HTML_CONTENT)} bytes)")
+
+if __name__ == "__main__":
+    generate()

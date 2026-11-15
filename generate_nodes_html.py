@@ -21,23 +21,29 @@ def build():
         A Byzantine-Fault-Tolerant distributed compute fabric anchored on Solana. Hardware-enforced Confidential Computing via Multi-TEE remote attestation, deterministic INT8 tensor execution, and cryptographic slashing penalties enforced on-chain.
       </p>
 
-      <!-- TELEMETRY STRIP (NO CARD CONTAINERS) -->
-      <div class="telemetry-strip">
-        <div class="telemetry-cell">
-          <span class="telemetry-lbl">Byzantine Committee Quorum</span>
-          <span class="telemetry-val accent">K = 64 NODES (&gt; 2/3 BFT)</span>
-        </div>
-        <div class="telemetry-cell">
-          <span class="telemetry-lbl">Hardware TEE Standard</span>
-          <span class="telemetry-val">AMD SEV-SNP // INTEL TDX // HOPPER CC</span>
-        </div>
-        <div class="telemetry-cell">
-          <span class="telemetry-lbl">Minimum Collateral Stake</span>
-          <span class="telemetry-val">25,000 $33RD (TIER 3)</span>
-        </div>
-        <div class="telemetry-cell">
-          <span class="telemetry-lbl">Dispute Bisection Window</span>
-          <span class="telemetry-val green">64 SLOTS (~25.6 SECONDS)</span>
+      <!-- OPEN TABULAR BRUTALIST METRICS SEPARATED BY HAIRLINES (ZERO BOXED CARDS) -->
+      <div class="brutalist-metric-table">
+        <div class="b-row">
+          <div class="b-col">
+            <span class="b-idx">01 // QUORUM</span>
+            <span class="b-label">BYZANTINE COMMITTEE QUORUM</span>
+            <span class="b-val accent">K = 64 NODES (&gt; 2/3 BFT)</span>
+          </div>
+          <div class="b-col">
+            <span class="b-idx">02 // ATTESTATION</span>
+            <span class="b-label">HARDWARE TEE STANDARD</span>
+            <span class="b-val">AMD SEV-SNP // INTEL TDX // HOPPER CC</span>
+          </div>
+          <div class="b-col">
+            <span class="b-idx">03 // STAKE</span>
+            <span class="b-label">MINIMUM COLLATERAL STAKE</span>
+            <span class="b-val">25,000 $33RD (TIER 3)</span>
+          </div>
+          <div class="b-col">
+            <span class="b-idx">04 // DISPUTE</span>
+            <span class="b-label">DISPUTE BISECTION WINDOW</span>
+            <span class="b-val green">64 SLOTS (~25.6 SECONDS)</span>
+          </div>
         </div>
       </div>
     </header>

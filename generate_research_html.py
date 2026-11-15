@@ -21,23 +21,29 @@ def build():
         Peer-reviewed mathematical foundations powering the Singularity Protocol: Non-Euclidean negative curvature routing manifolds, bit-exact deterministic neural inference, and recursive zero-knowledge SNARK folding for Solana on-chain consensus.
       </p>
 
-      <!-- TELEMETRY STRIP (NO CARD CONTAINERS) -->
-      <div class="telemetry-strip">
-        <div class="telemetry-cell">
-          <span class="telemetry-lbl">Manifold Metric Curvature</span>
-          <span class="telemetry-val accent">K(y) &lt; 0 (GROMOV &delta;-HYPERBOLIC)</span>
-        </div>
-        <div class="telemetry-cell">
-          <span class="telemetry-lbl">Cross-Hardware Determinism</span>
-          <span class="telemetry-val">&Delta;&epsilon; = 0.00 (INT8 FIXED-POINT)</span>
-        </div>
-        <div class="telemetry-cell">
-          <span class="telemetry-lbl">Recursive Proof Field</span>
-          <span class="telemetry-val">GOLDILOCKS F_p (p = 2^64 - 2^32 + 1)</span>
-        </div>
-        <div class="telemetry-cell">
-          <span class="telemetry-lbl">Solana Verification Cost</span>
-          <span class="telemetry-val green">~185,000 COMPUTE UNITS</span>
+      <!-- OPEN TABULAR BRUTALIST METRICS SEPARATED BY HAIRLINES (ZERO BOXED CARDS) -->
+      <div class="brutalist-metric-table">
+        <div class="b-row">
+          <div class="b-col">
+            <span class="b-idx">01 // MANIFOLD</span>
+            <span class="b-label">METRIC CURVATURE</span>
+            <span class="b-val accent">K(y) &lt; 0 (GROMOV &delta;-HYPERBOLIC)</span>
+          </div>
+          <div class="b-col">
+            <span class="b-idx">02 // INFERENCE</span>
+            <span class="b-label">DETERMINISM BOUND</span>
+            <span class="b-val">&Delta;&epsilon; = 0.00 (INT8 FIXED-POINT)</span>
+          </div>
+          <div class="b-col">
+            <span class="b-idx">03 // PROOF FIELD</span>
+            <span class="b-label">RECURSIVE FIELD</span>
+            <span class="b-val">GOLDILOCKS F_p (p = 2^64 - 2^32 + 1)</span>
+          </div>
+          <div class="b-col">
+            <span class="b-idx">04 // SETTLEMENT</span>
+            <span class="b-label">SOLANA VERIFICATION</span>
+            <span class="b-val green">~185,000 COMPUTE UNITS</span>
+          </div>
         </div>
       </div>
     </header>

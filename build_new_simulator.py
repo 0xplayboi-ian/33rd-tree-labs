@@ -1,0 +1,2447 @@
+import os
+
+site_dir = "/Users/ianmora/Desktop/Projects/33rd-tree-labs-site"
+output_path = os.path.join(site_dir, "simulator.html")
+
+html_content = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>33RD TREE LABS // Byzantine Simulator &bull; Poincar\u00e9 Hyperbolic Tensor Arbor &bull; 33rdtreelabs.tech</title>
+    <meta name="description" content="Interactive Poincar\u00e9 Disk Hyperbolic Simulator: Non-Euclidean Gromov delta-hyperbolic tensor reduction, K=64 Byzantine committee consensus, INT8 determinism, and real-time geodesic fault bypass on Solana.">
+    <link rel="canonical" href="https://33rdtreelabs.tech/simulator.html">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Snappy Lenis & GSAP CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- KaTeX Mathematical Typography -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+    <style>
+        :root {
+            /* VRTL WRLD DESIGN SYSTEM PALETTE */
+            --bg: #070707;
+            --f: #070707;
+            --border: #1C1C24;
+            --border-hover: #343442;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-accent: rgba(255, 36, 36, 0.35);
+            --laser-red: #FF2424;
+            --t: #FF2424;
+            --laser-glow: rgba(255, 36, 36, 0.45);
+            --laser-subtle: rgba(255, 36, 36, 0.08);
+            --chalk: #F2F2F5;
+            --chalk-dim: #C8C8D2;
+            --slate: #8E8E98;
+            --dark-slate: #343440;
+            --white: #FFFFFF;
+            --green: #00E676;
+            --green-glow: rgba(0, 230, 118, 0.35);
+            --amber: #FFAA00;
+            --fd: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            --fm: 'JetBrains Mono', ui-monospace, monospace;
+            --fh: 'Syne', sans-serif;
+        }
+
+        /* TYPOGRAPHY: OBEL MONO & MONO MASKED */
+        @font-face {
+            font-family: 'Obel Mono';
+            src: url('assets/fonts/ObelMono.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Obel Mono';
+            src: url('assets/fonts/ObelMono-Italic.ttf') format('truetype');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Obel Mono Masked';
+            src: url('assets/fonts/ObelMonoMasked.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        *, *:before, *:after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: default;
+        }
+
+        html {
+            background: var(--bg);
+            color: var(--chalk);
+            font-family: var(--fd);
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+            scrollbar-width: none;
+        }
+        html::-webkit-scrollbar { display: none; }
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-stopped { overflow: hidden; }
+
+        body {
+            position: relative;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--chalk);
+            font-family: var(--fd);
+            font-size: 15px;
+            line-height: 1.55;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* CUSTOM RETRO-TECH CURSOR */
+        #cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--laser-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 100002;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--laser-red);
+            transition: opacity 0.2s;
+        }
+        #cursor-ring {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255, 36, 36, 0.45);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 100001;
+            transform: translate(-50%, -50%);
+            transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+        }
+        body.cursor-hover #cursor-ring {
+            width: 50px;
+            height: 50px;
+            border-color: var(--laser-red);
+            background: rgba(255, 36, 36, 0.08);
+        }
+
+        /* TOP-EDGE SCROLL TELEMETRY PROGRESS LINE */
+        #scroll-progress-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--laser-red);
+            box-shadow: 0 0 8px var(--laser-red), 0 0 18px rgba(255, 36, 36, 0.65);
+            z-index: 100000;
+            pointer-events: none;
+            transition: width 0.03s linear;
+            will-change: width;
+        }
+
+        /* UNIFIED FLOATING PILL NAVBAR SPECIFICATION */
+        .nav-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: fit-content;
+            max-width: 98vw;
+            pointer-events: none;
+        }
+        .nav-wrapper.nav-scrolled .nav-pill {
+            background: rgba(11, 11, 14, 0.96);
+            border-color: rgba(255, 36, 36, 0.35);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.88), 0 0 24px rgba(255, 36, 36, 0.18);
+        }
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            padding: 6px 14px 6px 10px;
+            border-radius: 9999px;
+            background: rgba(11, 11, 14, 0.88);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid #1C1C24;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 36, 36, 0.15);
+            pointer-events: auto;
+            white-space: nowrap;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #FFFFFF;
+            border-right: 1px solid #1C1C24;
+            padding-right: 12px;
+            margin-right: 10px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .nav-logo-box {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .nav-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: #FFFFFF;
+            white-space: nowrap;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+        .nav-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.62);
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 9999px;
+            border: 1px solid transparent;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .nav-link:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+        .nav-link.active {
+            color: #FFFFFF;
+            background: rgba(255, 36, 36, 0.14);
+            border-color: #FF2424;
+            box-shadow: 0 0 10px rgba(255, 36, 36, 0.35);
+        }
+        .nav-link.active::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #FF2424;
+            box-shadow: 0 0 6px #FF2424;
+            display: inline-block;
+        }
+        .nav-pdf-btn {
+            color: #FF2424 !important;
+            border-color: rgba(255, 36, 36, 0.4) !important;
+            background: rgba(255, 36, 36, 0.08) !important;
+            font-weight: 700 !important;
+        }
+        .nav-pdf-btn:hover {
+            background: rgba(255, 36, 36, 0.22) !important;
+            box-shadow: 0 0 12px rgba(255, 36, 36, 0.45) !important;
+        }
+
+        @media (max-width: 900px) {
+            .nav-wrapper {
+                top: 10px;
+                left: 0;
+                right: 0;
+                transform: none;
+                width: 100%;
+                padding: 0 10px;
+                display: flex;
+                justify-content: center;
+                pointer-events: auto;
+            }
+            .nav-pill {
+                padding: 4px 8px;
+                width: auto;
+                max-width: calc(100vw - 20px);
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                justify-content: flex-start;
+            }
+            .nav-pill::-webkit-scrollbar { display: none; }
+            .nav-link { font-size: 10px; padding: 5px 7px; }
+        }
+
+        /* REVEAL ON SCROLL & MECHANICAL GLITCH */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-on-scroll.is-revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        [data-glitch] {
+            font-variant-numeric: tabular-nums;
+            display: inline-block;
+        }
+
+        /* OPEN BRUTALIST DASHBOARD LAYOUT (ZERO CARDS, PURE OBSIDIAN VOID) */
+        .page-wrap {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 120px clamp(20px, 4vw, 60px) 90px;
+        }
+
+        .meta-tag {
+            font-family: var(--fm);
+            font-size: 11px;
+            color: var(--laser-red);
+            letter-spacing: 0.16em;
+            margin-bottom: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-family: var(--fh);
+            font-size: clamp(30px, 5.2vw, 56px);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.025em;
+            color: var(--white);
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+
+        .section-desc {
+            font-size: clamp(15px, 1.25vw, 17px);
+            line-height: 1.62;
+            color: var(--chalk-dim);
+            max-width: 980px;
+            margin-bottom: 36px;
+        }
+
+        /* TELEMETRY HUD STRIP (ZERO CARDS - HAIRLINE BORDER MATRIX) */
+        .telemetry-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 28px;
+            background: transparent;
+        }
+        .telemetry-cell {
+            padding: 18px 20px;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .telemetry-cell:last-child {
+            border-right: none;
+        }
+        .telemetry-lbl {
+            font-family: var(--fm);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--slate);
+        }
+        .telemetry-val {
+            font-family: var(--fm);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--white);
+            font-variant-numeric: tabular-nums;
+        }
+        .telemetry-sub {
+            font-family: var(--fm);
+            font-size: 11px;
+            color: var(--slate);
+            font-variant-numeric: tabular-nums;
+        }
+        .val-green { color: var(--green) !important; }
+        .val-red { color: var(--laser-red) !important; }
+        .val-amber { color: var(--amber) !important; }
+
+        @media (max-width: 960px) {
+            .telemetry-strip { grid-template-columns: repeat(2, 1fr); }
+            .telemetry-cell:nth-child(2) { border-right: none; }
+            .telemetry-cell:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+        }
+        @media (max-width: 580px) {
+            .telemetry-strip { grid-template-columns: 1fr; }
+            .telemetry-cell { border-right: none; border-bottom: 1px solid var(--border); }
+            .telemetry-cell:last-child { border-bottom: none; }
+        }
+
+        /* INTERACTIVE CONTROL TOOLBAR (OPEN BRUTALIST HAIRLINE ROW) */
+        .controls-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+            background: transparent;
+            flex-wrap: wrap;
+        }
+        .control-group-slider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+            min-width: 280px;
+        }
+        .control-label {
+            font-family: var(--fm);
+            font-size: 11px;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            color: var(--chalk-dim);
+            white-space: nowrap;
+        }
+        .control-label strong {
+            color: var(--laser-red);
+            font-weight: 700;
+        }
+        .sim-range {
+            -webkit-appearance: none;
+            flex: 1;
+            height: 4px;
+            background: #1C1C24;
+            border-radius: 0;
+            outline: none;
+            cursor: pointer;
+        }
+        .sim-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: var(--laser-red);
+            border: 2px solid var(--white);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--laser-red);
+        }
+        .sim-range::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            background: var(--laser-red);
+            border: 2px solid var(--white);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--laser-red);
+        }
+
+        .control-group-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* BRUTALIST BUTTONS (ZERO CARDS, PURE CRISP HAIRLINE BORDERS) */
+        .btn-brutal {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            padding: 10px 18px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--chalk);
+            cursor: pointer;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .btn-brutal:hover {
+            border-color: var(--white);
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .btn-brutal-red {
+            border-color: rgba(255, 36, 36, 0.65);
+            color: #FF2424;
+            background: rgba(255, 36, 36, 0.06);
+        }
+        .btn-brutal-red:hover {
+            border-color: #FF2424;
+            background: #FF2424;
+            color: #FFFFFF;
+            box-shadow: 0 0 18px rgba(255, 36, 36, 0.55);
+        }
+        .btn-brutal-sync {
+            border-color: rgba(0, 230, 118, 0.55);
+            color: #00E676;
+            background: rgba(0, 230, 118, 0.05);
+        }
+        .btn-brutal-sync:hover {
+            border-color: #00E676;
+            background: #00E676;
+            color: #050508;
+            box-shadow: 0 0 18px rgba(0, 230, 118, 0.55);
+        }
+
+        .status-pill {
+            font-family: var(--fm);
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.10em;
+            padding: 9px 16px;
+            border: 1px solid var(--border);
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: all 0.25s ease;
+        }
+        .status-pill.status-valid {
+            border-color: rgba(0, 230, 118, 0.5);
+            color: #00E676;
+            background: rgba(0, 230, 118, 0.06);
+        }
+        .status-pill.status-danger {
+            border-color: #FF2424;
+            color: #FF2424;
+            background: rgba(255, 36, 36, 0.12);
+            box-shadow: 0 0 16px rgba(255, 36, 36, 0.35);
+        }
+
+        /* POINCARÉ DISK SIMULATOR CANVAS ARENA (ZERO BOXED CARDS) */
+        .poincare-arena {
+            border: 1px solid var(--border);
+            background: #040407;
+            position: relative;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        .poincare-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--fm);
+            font-size: 10.5px;
+            letter-spacing: 0.10em;
+            color: var(--slate);
+            background: rgba(7, 7, 10, 0.95);
+        }
+        .poincare-canvas-container {
+            width: 100%;
+            height: clamp(480px, 68vh, 760px);
+            position: relative;
+            background: #030306;
+        }
+        #poincare-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .flash-banner {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 14, 0.92);
+            border: 1px solid #FF2424;
+            color: #FFFFFF;
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            padding: 6px 18px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            z-index: 10;
+            box-shadow: 0 0 16px rgba(255, 36, 36, 0.4);
+        }
+
+        .poincare-legend {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid var(--border);
+            background: rgba(7, 7, 10, 0.95);
+        }
+        .legend-item {
+            padding: 12px 14px;
+            border-right: 1px solid var(--border);
+            font-family: var(--fm);
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-item:last-child {
+            border-right: none;
+        }
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .dot-apex { background: #FF2424; box-shadow: 0 0 8px #FF2424; }
+        .dot-t1 { background: #FF2424; }
+        .dot-t2 { background: #FFFFFF; border: 1px solid rgba(255, 36, 36, 0.4); }
+        .dot-t3 { background: var(--slate); }
+
+        @media (max-width: 900px) {
+            .poincare-legend { grid-template-columns: repeat(2, 1fr); }
+            .legend-item:nth-child(2) { border-right: none; }
+            .legend-item:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+        }
+
+        /* OPEN BRUTALIST DIAGNOSTIC MATRIX (ZERO CARDS) */
+        .diagnostic-matrix {
+            display: grid;
+            grid-template-columns: 1fr 1.35fr;
+            border: 1px solid var(--border);
+            margin-bottom: 36px;
+            background: transparent;
+        }
+        .diag-col {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+        .diag-col-left {
+            border-right: 1px solid var(--border);
+        }
+        .diag-heading {
+            font-family: var(--fm);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--white);
+            text-transform: uppercase;
+            padding-bottom: 14px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .diag-spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--fm);
+            font-size: 11px;
+            margin-bottom: 18px;
+        }
+        .diag-spec-table tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .diag-spec-table td {
+            padding: 9px 4px;
+            vertical-align: middle;
+        }
+        .diag-spec-table td:first-child {
+            color: var(--slate);
+            width: 42%;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-size: 10px;
+        }
+        .diag-spec-table td:last-child {
+            color: var(--chalk);
+            font-weight: 500;
+        }
+
+        /* CRYPTOGRAPHIC EVENT STREAM & CLI */
+        .terminal-log-stream {
+            font-family: var(--fm);
+            font-size: 11px;
+            line-height: 1.6;
+            height: 250px;
+            overflow-y: auto;
+            color: var(--chalk-dim);
+            padding-right: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .terminal-log-stream::-webkit-scrollbar {
+            width: 4px;
+        }
+        .terminal-log-stream::-webkit-scrollbar-thumb {
+            background: var(--border);
+        }
+        .log-line { font-variant-numeric: tabular-nums; }
+        .log-cmd { color: var(--white); font-weight: 700; }
+        .log-dim { color: var(--slate); }
+        .log-highlight { color: var(--laser-red); }
+        .log-success { color: var(--green); }
+        .log-warn { color: var(--amber); }
+
+        .cli-input-form {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+            margin-top: 14px;
+            font-family: var(--fm);
+            font-size: 11.5px;
+        }
+        .cli-prompt {
+            color: var(--laser-red);
+            font-weight: 700;
+        }
+        .cli-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--white);
+            font-family: var(--fm);
+            font-size: 11.5px;
+            letter-spacing: 0.04em;
+        }
+
+        @media (max-width: 960px) {
+            .diagnostic-matrix { grid-template-columns: 1fr; }
+            .diag-col-left { border-right: none; border-bottom: 1px solid var(--border); }
+        }
+
+        /* EDITORIAL MATHEMATICAL SPECIFICATIONS MATRIX (ZERO CARDS) */
+        .math-spec-section {
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+            margin-bottom: 40px;
+        }
+        .math-spec-header {
+            margin-bottom: 24px;
+        }
+        .math-spec-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border: 1px solid var(--border);
+            background: transparent;
+        }
+        .math-spec-col {
+            padding: 24px;
+            border-right: 1px solid var(--border);
+        }
+        .math-spec-col:last-child {
+            border-right: none;
+        }
+        .math-col-num {
+            font-family: var(--fm);
+            font-size: 10px;
+            color: var(--laser-red);
+            letter-spacing: 0.12em;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .math-col-title {
+            font-family: var(--fh);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .math-col-body {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--chalk-dim);
+            margin-bottom: 16px;
+        }
+        .math-formula-box {
+            font-family: var(--fm);
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            color: var(--white);
+            line-height: 1.4;
+        }
+
+        @media (max-width: 960px) {
+            .math-spec-grid { grid-template-columns: 1fr; }
+            .math-spec-col { border-right: none; border-bottom: 1px solid var(--border); }
+            .math-spec-col:last-child { border-bottom: none; }
+        }
+
+        /* GLOBAL FOOTER SPECIFICATION */
+        .global-footer {
+            border-top: 1px solid var(--border);
+            padding: 40px clamp(20px, 4vw, 60px);
+            background: #030305;
+        }
+        .footer-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-brand {
+            font-family: var(--fm);
+            font-size: 11px;
+            color: var(--slate);
+            letter-spacing: 0.06em;
+        }
+        .footer-brand strong { color: var(--white); }
+        .footer-brand code { color: var(--laser-red); }
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .footer-link {
+            font-family: var(--fm);
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--slate);
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            transition: color 0.18s;
+            cursor: pointer;
+        }
+        .footer-link:hover { color: var(--laser-red); }
+
+        @media (max-width: 768px) {
+            .footer-inner { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP-EDGE SCROLL TELEMETRY PROGRESS LINE -->
+    <div id="scroll-progress-line" aria-hidden="true"></div>
+
+    <!-- RETRO-TECH CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- UNIFIED FLOATING PILL NAVBAR -->
+    <div class="nav-wrapper">
+        <nav class="nav-pill">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo-box">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="12" cy="4" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+                        <ellipse cx="12" cy="20" rx="8.5" ry="2" stroke="#FFFFFF" stroke-width="0.9" fill="none"/>
+                        <path d="M 3.5 4 C 8.5 7, 10.5 10, 10.5 12 C 10.5 14, 8.5 17, 3.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+                        <path d="M 20.5 4 C 15.5 7, 13.5 10, 13.5 12 C 13.5 14, 15.5 17, 20.5 20" stroke="#FFFFFF" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+                        <line x1="12" y1="2" x2="12" y2="22" stroke="#FF2424" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+                        <circle cx="12" cy="12" r="1.8" fill="#FF2424"/>
+                    </svg>
+                </div>
+                <span class="nav-title" data-glitch data-glitch-text="33RD TREE LABS">33RD TREE LABS</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" data-glitch data-glitch-text="[ OVERVIEW ]">[ OVERVIEW ]</a>
+                <a href="protocol.html" class="nav-link" data-glitch data-glitch-text="[ PROTOCOL ]">[ PROTOCOL ]</a>
+                <a href="simulator.html" class="nav-link active" data-glitch data-glitch-text="[ SIMULATOR ]">[ SIMULATOR ]</a>
+                <a href="yield.html" class="nav-link" data-glitch data-glitch-text="[ YIELD ]">[ YIELD ]</a>
+                <a href="nodes.html" class="nav-link" data-glitch data-glitch-text="[ NODES ]">[ NODES ]</a>
+                <a href="tokenomics.html" class="nav-link" data-glitch data-glitch-text="[ TOKENOMICS ]">[ TOKENOMICS ]</a>
+                <a href="research.html" class="nav-link" data-glitch data-glitch-text="[ RESEARCH ]">[ RESEARCH ]</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="nav-link nav-pdf-btn" data-glitch data-glitch-text="[ WHITEPAPER PDF \u2193 ]">[ WHITEPAPER PDF &darr; ]</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <main class="page-wrap">
+        <div class="meta-tag" data-glitch data-glitch-text="( 02 ) // ADVERSARIAL CONSENSUS &bull; POINCAR\u00c9 HYPERBOLIC SIMULATOR &bull; CANARY v4.0">( 02 ) // ADVERSARIAL CONSENSUS &bull; POINCAR&Eacute; HYPERBOLIC SIMULATOR &bull; CANARY v4.0</div>
+        
+        <!-- HEADLINE WITH BULLETPROOF MECHANICAL GLITCH DECODER -->
+        <h1 class="section-title" data-glitch data-glitch-text="BYZANTINE COMMITTEE CONSENSUS ENGINE">BYZANTINE COMMITTEE CONSENSUS ENGINE</h1>
+        
+        <p class="section-desc">
+            An interactive non-Euclidean Poincar&eacute; Disk Hyperbolic Simulator modeling Gromov $\delta$-hyperbolic tensor reduction ($\kappa = -1.414$). Inject malicious Byzantine nodes, verify mathematical resilience under $3f+1 \le K$ fault thresholds ($f \le 21/64$), and observe real-time geodesic bypass routing around rogue hardware anchored to Solana.
+        </p>
+
+        <!-- LIVE TELEMETRY HUD STRIP (ZERO CARDS, OPEN BRUTALIST MATRIX) -->
+        <div class="telemetry-strip reveal-on-scroll">
+            <div class="telemetry-cell">
+                <span class="telemetry-lbl">Quorum Convergence</span>
+                <span class="telemetry-val" id="hud-quorum">64 / 64 (100.0%)</span>
+                <span class="telemetry-sub val-green" id="hud-quorum-sub">&gt; 66.7% [VALIDATED]</span>
+            </div>
+            <div class="telemetry-cell">
+                <span class="telemetry-lbl">Byzantine Tolerance (3f + 1)</span>
+                <span class="telemetry-val" id="hud-faults">f = 0 / 64 (0.0%)</span>
+                <span class="telemetry-sub" id="hud-tolerance-sub">MAX TOLERANCE: f &le; 21</span>
+            </div>
+            <div class="telemetry-cell">
+                <span class="telemetry-lbl">Routing Diameter</span>
+                <span class="telemetry-val">&le; 8 HOPS</span>
+                <span class="telemetry-sub">GROMOV &delta;-HYPERBOLIC (&kappa; = -1.414)</span>
+            </div>
+            <div class="telemetry-cell">
+                <span class="telemetry-lbl">Solana Slot Anchor</span>
+                <span class="telemetry-val" id="hud-slot">SLOT 312,940,210</span>
+                <span class="telemetry-sub val-green" id="hud-finality">382ms FINALITY // COMMITTED</span>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE CONTROLS TOOLBAR (HAIRLINE STRIP) -->
+        <div class="controls-toolbar reveal-on-scroll">
+            <div class="control-group-slider">
+                <label for="k-slider" class="control-label">
+                    QUORUM COMMITTEE: <strong id="k-slider-text">K = 64</strong> NODES
+                </label>
+                <input type="range" id="k-slider" class="sim-range" min="16" max="64" value="64" step="1" aria-label="Validator Committee Size">
+            </div>
+
+            <div class="control-group-actions">
+                <button type="button" id="btn-inject-fault" class="btn-brutal btn-brutal-red" data-glitch data-glitch-text="[ INJECT BYZANTINE FAULT ]">
+                    [ INJECT BYZANTINE FAULT ]
+                </button>
+                <button type="button" id="btn-reset-sync" class="btn-brutal btn-brutal-sync" data-glitch data-glitch-text="[ RESET / SYNC ]">
+                    [ RESET / SYNC ]
+                </button>
+                <div id="sim-consensus-banner" class="status-pill status-valid">
+                    [VALID] QUORUM VALIDATED // HONEST STATE COMMITTED
+                </div>
+            </div>
+        </div>
+
+        <!-- FULL-SCREEN POINCARÉ DISK SIMULATOR ARENA -->
+        <div class="poincare-arena reveal-on-scroll">
+            <div class="poincare-topbar">
+                <span>POINCAR&Eacute; DISK HYPERBOLIC TENSOR ARBOR // GEODESIC PLUNGE FLOW</span>
+                <span>CURVATURE &kappa; = -1.414 // DETERMINISTIC INT8</span>
+            </div>
+
+            <div class="poincare-canvas-container" id="canvas-container">
+                <canvas id="poincare-canvas"></canvas>
+                <div id="canvas-flash-banner" class="flash-banner">STATE COMMITTED // ANCHOR VERIFIED</div>
+            </div>
+
+            <!-- TIER CLUSTER LEGEND STRIP -->
+            <div class="poincare-legend">
+                <div class="legend-item">
+                    <span class="legend-dot dot-apex"></span>
+                    <span><strong>APEX ROOT:</strong> Mark #06 Singularity Throat</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot dot-t1"></span>
+                    <span><strong>TIER 1 (r=0.28):</strong> 8x H100 SXM5 Primary Coordinators</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot dot-t2"></span>
+                    <span><strong>TIER 2 (r=0.58):</strong> 16x B200 NVL Reduction Hubs</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot dot-t3"></span>
+                    <span><strong>TIER 3 (r=0.84):</strong> 40x RTX 4090 Distributed Edge Quorum</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAGNOSTIC SPLIT MATRIX (ZERO CARDS, OPEN EDITORIAL LAYOUT) -->
+        <div class="diagnostic-matrix reveal-on-scroll">
+            <!-- Left Column: Active Node Inspector -->
+            <div class="diag-col diag-col-left">
+                <div class="diag-heading">
+                    <span>// ACTIVE NODE TELEMETRY INSPECTOR</span>
+                    <span id="insp-badge" class="val-green">[HONEST]</span>
+                </div>
+
+                <table class="diag-spec-table">
+                    <tbody>
+                        <tr>
+                            <td>Node Identifier</td>
+                            <td id="insp-name">H100-01</td>
+                        </tr>
+                        <tr>
+                            <td>Compute Tier</td>
+                            <td id="insp-tier">Tier 1: H100 SXM5 Primary Coordinator</td>
+                        </tr>
+                        <tr>
+                            <td>Hardware TEE</td>
+                            <td id="insp-tee">NVIDIA HOPPER CC // MULTI-TEE ATTESTATION</td>
+                        </tr>
+                        <tr>
+                            <td>Collateral Stake</td>
+                            <td id="insp-stake">500,000 $33RD</td>
+                        </tr>
+                        <tr>
+                            <td>Invariant Drift</td>
+                            <td id="insp-drift" class="val-green">&Delta;&epsilon; = 0.00 INT8</td>
+                        </tr>
+                        <tr>
+                            <td>Routing State</td>
+                            <td id="insp-routing" class="val-green">OPTIMAL TREE GEODESIC</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-top:auto; display:flex; flex-direction:column; gap:8px;">
+                    <button type="button" id="btn-toggle-inspected" class="btn-brutal btn-brutal-red" style="width:100%;">
+                        [ INJECT FAULT ON THIS NODE ]
+                    </button>
+                    <span style="font-family:var(--fm); font-size:9.5px; color:var(--slate);">
+                        &bull; Click or hover any validator node on the Poincar&eacute; disk above to inspect live telemetry or trigger isolated fault injection.
+                    </span>
+                </div>
+            </div>
+
+            <!-- Right Column: Solana Anchor Event Feed & CLI -->
+            <div class="diag-col">
+                <div class="diag-heading">
+                    <span>// CRYPTOGRAPHIC EVENT STREAM &bull; SOLANA ANCHOR</span>
+                    <span style="color:var(--green); font-size:10px;">&bull; CONNECTED // SLOT CADENCE 400ms</span>
+                </div>
+
+                <div class="terminal-log-stream" id="terminal-log-output">
+                    <div class="log-line log-highlight">33RD TREE LABS // SOLANA ANCHOR CONSENSUS STREAM [CANARY v4.0]</div>
+                    <div class="log-line log-dim">Connected to Solana Mainnet-Beta via Jito RPC Anchor Program: 33rdCore11111111111111111111111111111111111</div>
+                    <div class="log-line log-dim">Type "help" in command prompt below for list of diagnostic instructions.</div>
+                    <div class="log-line">&nbsp;</div>
+                    <div class="log-line log-success">[CONSENSUS] Genesis committee K=64 initialized &bull; Quorum threshold 2/3 verified.</div>
+                    <div class="log-line log-dim">[GEODESIC-ROUTING] Tensor reduction packet &otimes; dispatched across 3 hops (Apex &rarr; Edge).</div>
+                </div>
+
+                <form class="cli-input-form" onsubmit="handleCliSubmit(event)">
+                    <span class="cli-prompt">&gt;</span>
+                    <input type="text" id="terminal-cli-input" class="cli-input" placeholder="Type command: status, nodes, bench, verify, byzantine, help..." autocomplete="off" spellcheck="false">
+                </form>
+            </div>
+        </div>
+
+        <!-- MATHEMATICAL SPECIFICATIONS (OPEN EDITORIAL MATRIX) -->
+        <section class="math-spec-section reveal-on-scroll">
+            <div class="math-spec-header">
+                <div class="meta-tag">( 03 ) // MATHEMATICAL PROOFS &bull; NON-EUCLIDEAN FORMULATION</div>
+                <h2 style="font-family:var(--fh); font-size:24px; font-weight:700; color:var(--white); text-transform:uppercase;">
+                    Gromov Hyperbolicity &amp; Byzantine Fault Tolerance Guarantees
+                </h2>
+            </div>
+
+            <div class="math-spec-grid">
+                <div class="math-spec-col">
+                    <span class="math-col-num">[ 01 // METRIC TENSOR ]</span>
+                    <h3 class="math-col-title">Poincar&eacute; Metric</h3>
+                    <p class="math-col-body">
+                        The hyperbolic metric tensor ensures that distance exponentially expands near the disk boundary, naturally embedding high-dimensional distributed deep learning gradient graphs with minimal distortion.
+                    </p>
+                    <div class="math-formula-box">
+                        $$ds^2 = \frac{4(dx^2 + dy^2)}{(1 - (x^2 + y^2))^2}$$
+                        $$\kappa = -1.414, \quad \delta \le 1.414$$
+                    </div>
+                </div>
+
+                <div class="math-spec-col">
+                    <span class="math-col-num">[ 02 // BFT QUORUM ]</span>
+                    <h3 class="math-col-title">Byzantine Bound</h3>
+                    <p class="math-col-body">
+                        Deterministic 2/3 threshold signature quorum. Network guarantees safety and liveness against arbitrary adversarial collusions as long as faulty nodes do not exceed $f \le \lfloor(K-1)/3\rfloor$.
+                    </p>
+                    <div class="math-formula-box">
+                        $$3f + 1 \le K \implies f \le 21 \text{ for } K=64$$
+                        $$\text{Quorum} \ge \lceil 2K/3 \rceil \implies \ge 43 \text{ honest}$$
+                    </div>
+                </div>
+
+                <div class="math-spec-col">
+                    <span class="math-col-num">[ 03 // SLASHER CRANK ]</span>
+                    <h3 class="math-col-title">Geodesic Detours</h3>
+                    <p class="math-col-body">
+                        Upon detection of floating-point drift ($\Delta\epsilon > +0.42\text{ FP16}$), the Singularity protocol initiates automated bisection dispute, reroutes traffic around rogue nodes, and confiscates 100% collateral stake.
+                    </p>
+                    <div class="math-formula-box">
+                        $$\Delta\epsilon = |y_{\text{node}} - y_{\text{INT8}}| > 0.42$$
+                        $$\text{Stake}_{\text{slashed}} \to \text{Solana 1nc1nerator...1111}$$
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- GLOBAL FOOTER -->
+    <footer class="global-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <strong>33RD TREE LABS</strong> &bull; THE SINGULARITY PROTOCOL &bull; <code>33rdtreelabs.tech</code>
+            </div>
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">[ OVERVIEW ]</a>
+                <a href="protocol.html" class="footer-link">[ PROTOCOL ]</a>
+                <a href="simulator.html" class="footer-link">[ SIMULATOR ]</a>
+                <a href="yield.html" class="footer-link">[ YIELD ]</a>
+                <a href="nodes.html" class="footer-link">[ NODES ]</a>
+                <a href="tokenomics.html" class="footer-link">[ TOKENOMICS ]</a>
+                <a href="research.html" class="footer-link">[ RESEARCH ]</a>
+                <a href="33rd_Tree_Labs_Whitepaper.pdf" target="_blank" class="footer-link">[ WHITEPAPER PDF &darr; ]</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- POINCARÉ HYPERBOLIC SIMULATOR & APPLICATION JAVASCRIPT -->
+    <script>
+        /* ==========================================================================
+           1. SNAPPY LENIS SCROLL INITIALIZATION (lerp: 0.14)
+           ========================================================================== */
+        gsap.registerPlugin(ScrollTrigger);
+        const lenis = new Lenis({
+            lerp: 0.14,
+            wheelMultiplier: 1.25,
+            smoothWheel: true
+        });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        /* ==========================================================================
+           2. RETRO-TECH CURSOR & SCROLL PROGRESS TELEMETRY
+           ========================================================================== */
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+        if (cursorDot && cursorRing) {
+            window.addEventListener('mousemove', (e) => {
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+                cursorRing.style.left = e.clientX + 'px';
+                cursorRing.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, input, select, [data-glitch]').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+        }
+
+        const progressBar = document.getElementById('scroll-progress-line');
+        const navWrapper = document.querySelector('.nav-wrapper');
+        function onScrollTelemetry() {
+            const doc = document.documentElement;
+            const sy = window.scrollY || doc.scrollTop;
+            const max = doc.scrollHeight - window.innerHeight;
+            if (progressBar && max > 0) {
+                progressBar.style.width = Math.min(100, Math.max(0, (sy / max) * 100)).toFixed(2) + '%';
+            }
+            if (navWrapper) {
+                if (sy > 40) {
+                    navWrapper.classList.add('nav-scrolled');
+                } else {
+                    navWrapper.classList.remove('nav-scrolled');
+                }
+            }
+        }
+        window.addEventListener('scroll', onScrollTelemetry, { passive: true });
+        lenis.on('scroll', onScrollTelemetry);
+        onScrollTelemetry();
+
+        /* ==========================================================================
+           3. INTERSECTION OBSERVER REVEAL ANIMATIONS (JANK-FREE)
+           ========================================================================== */
+        const revealTargets = document.querySelectorAll('.reveal-on-scroll');
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-revealed');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '0px 0px -40px 0px', threshold: 0.06 });
+            revealTargets.forEach(el => io.observe(el));
+        } else {
+            revealTargets.forEach(el => el.classList.add('is-revealed'));
+        }
+
+        /* ==========================================================================
+           4. BULLETPROOF MECHANICAL GLITCH DECODER (RELIABLY RESOLVES EVERY TIME)
+           ========================================================================== */
+        class GlitchScramble {
+            constructor(el) {
+                if (el._glitchScramble) return el._glitchScramble;
+                this.el = el;
+                el._glitchScramble = this;
+                this.chars = '01X_/*+-[]#';
+                this.originalText = el.getAttribute('data-glitch-text') || el.textContent.trim();
+                el.setAttribute('data-glitch-text', this.originalText);
+                this.isGlitching = false;
+                this.animId = null;
+                this.safetyTimer = null;
+                this.lastTickTime = 0;
+                this.tickInterval = 45; // Snappy 45ms mechanical tick
+            }
+
+            scramble(duration = 1.35) {
+                if (this.animId) {
+                    cancelAnimationFrame(this.animId);
+                    this.animId = null;
+                }
+                if (this.safetyTimer) {
+                    clearTimeout(this.safetyTimer);
+                    this.safetyTimer = null;
+                }
+
+                this.isGlitching = true;
+                this.el.classList.add('glitch-active');
+                const target = this.originalText;
+                const len = target.length;
+                const startTime = performance.now();
+                const durationMs = duration * 1000;
+
+                const activeGlyphs = new Array(len);
+                for (let i = 0; i < len; i++) {
+                    const ch = target[i];
+                    activeGlyphs[i] = (ch === ' ' || ch === '\\n' || ch === '\\t')
+                        ? ch
+                        : this.chars[Math.floor(Math.random() * this.chars.length)];
+                }
+
+                const finalize = () => {
+                    this.el.textContent = target;
+                    this.el.classList.remove('glitch-active');
+                    this.isGlitching = false;
+                    this.animId = null;
+                    if (this.safetyTimer) {
+                        clearTimeout(this.safetyTimer);
+                        this.safetyTimer = null;
+                    }
+                };
+
+                // Guaranteed fallback: ensures clean decode even if tab loses focus or RAF halts
+                this.safetyTimer = setTimeout(finalize, durationMs + 150);
+
+                const tick = (now) => {
+                    const elapsed = now - startTime;
+                    const progress = Math.min(1, elapsed / durationMs);
+                    const revealedCount = Math.floor(progress * len);
+
+                    if (now - this.lastTickTime >= this.tickInterval) {
+                        this.lastTickTime = now;
+                        for (let i = revealedCount; i < len; i++) {
+                            const ch = target[i];
+                            if (ch === ' ' || ch === '\\n' || ch === '\\t') {
+                                activeGlyphs[i] = ch;
+                            } else if (Math.random() < 0.40) {
+                                activeGlyphs[i] = this.chars[Math.floor(Math.random() * this.chars.length)];
+                            }
+                        }
+                    }
+
+                    let result = '';
+                    for (let i = 0; i < len; i++) {
+                        const ch = target[i];
+                        if (ch === ' ' || ch === '\\n' || ch === '\\t') {
+                            result += ch;
+                        } else if (i < revealedCount) {
+                            result += ch;
+                        } else {
+                            result += activeGlyphs[i] || ch;
+                        }
+                    }
+                    this.el.textContent = result;
+
+                    if (progress < 1) {
+                        this.animId = requestAnimationFrame(tick);
+                    } else {
+                        finalize();
+                    }
+                };
+
+                this.animId = requestAnimationFrame(tick);
+            }
+        }
+
+        // Attach glitch scramble handlers to interactive targets
+        document.querySelectorAll('[data-glitch]').forEach(el => {
+            const inst = new GlitchScramble(el);
+            el.addEventListener('mouseenter', () => inst.scramble(1.1));
+        });
+
+        // Trigger deliberate on-load sequence for headers
+        window.addEventListener('DOMContentLoaded', () => {
+            let delay = 100;
+            document.querySelectorAll('.meta-tag, .section-title').forEach(el => {
+                const inst = new GlitchScramble(el);
+                setTimeout(() => inst.scramble(1.35), delay);
+                delay += 180;
+            });
+        });
+
+        /* ==========================================================================
+           5. FULL-SCREEN POINCARÉ HYPERBOLIC SIMULATOR ENGINE (60 FPS CANVAS)
+           ========================================================================== */
+        class PoincareHyperbolicSimulator {
+            constructor(canvas, options = {}) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.options = Object.assign({
+                    k: 64,
+                    speed: 1.0,
+                    interactive: true,
+                    onQuorumChange: null,
+                    onByzantineEvent: null,
+                    onLog: null,
+                    flashBannerElement: null
+                }, options);
+
+                this.k = Math.max(16, Math.min(64, this.options.k));
+                this.nodes = [];
+                this.edges = [];
+                this.packets = [];
+                this.shockwaves = [];
+                this.bypassArcs = [];
+                this.hoveredNode = null;
+                this.selectedNode = null;
+                this.dpr = window.devicePixelRatio || 1;
+                this.width = 0;
+                this.height = 0;
+                this.cx = 0;
+                this.cy = 0;
+                this.radius = 0;
+                this.lastTime = performance.now();
+                this.running = true;
+
+                // On-canvas flash banner
+                this.bannerText = 'STATE COMMITTED // ANCHOR VERIFIED';
+                this.bannerAlpha = 0;
+                this.bannerColor = '#00E676';
+
+                this.initTopology();
+                this.initPackets();
+                this.resize();
+                this.bindEvents();
+
+                this.animate = this.animate.bind(this);
+                requestAnimationFrame(this.animate);
+            }
+
+            initTopology() {
+                this.nodes = [];
+                this.edges = [];
+
+                // NODE 0: APEX SINGULARITY ROOT
+                this.nodes.push({
+                    id: 0,
+                    tier: 0,
+                    name: 'APEX SINGULARITY',
+                    tierName: 'Mark #06 Apex Root Singularity',
+                    teeName: 'HARDWARE ROOT OF TRUST // APEX NEEDLE',
+                    r: 0.0,
+                    theta: 0.0,
+                    parent: -1,
+                    stake: 1000000,
+                    initialStake: 1000000,
+                    drift: 0.00,
+                    state: 'honest',
+                    active: true,
+                    bypassed: false,
+                    pulse: 0
+                });
+
+                // TIER 1: 8 NODES (H100 SXM5 Primary Coordinators) - r = 0.28
+                for (let i = 0; i < 8; i++) {
+                    const theta = i * (2 * Math.PI / 8);
+                    this.nodes.push({
+                        id: this.nodes.length,
+                        tier: 1,
+                        name: `H100-0${i + 1}`,
+                        tierName: 'Tier 1: H100 SXM5 Primary Coordinator',
+                        teeName: 'NVIDIA HOPPER CC // MULTI-TEE ATTESTATION',
+                        r: 0.28,
+                        theta: theta,
+                        parent: 0,
+                        stake: 500000,
+                        initialStake: 500000,
+                        drift: 0.00,
+                        state: 'honest',
+                        active: true,
+                        bypassed: false,
+                        pulse: Math.random() * Math.PI
+                    });
+                    this.edges.push({ from: 0, to: this.nodes.length - 1, type: 'tree' });
+                }
+
+                // TIER 2: 16 NODES (B200 NVL72 Tensor Reduction Hubs) - r = 0.58
+                for (let i = 0; i < 16; i++) {
+                    const theta = i * (2 * Math.PI / 16) + (Math.PI / 16);
+                    const parentId = 1 + Math.floor(i / 2);
+                    this.nodes.push({
+                        id: this.nodes.length,
+                        tier: 2,
+                        name: `B200-${String(i + 1).padStart(2, '0')}`,
+                        tierName: 'Tier 2: B200 NVL72 Tensor Reduction Hub',
+                        teeName: 'INTEL TDX 2.0 // CONFIDENTIAL ACCELERATOR',
+                        r: 0.58,
+                        theta: theta,
+                        parent: parentId,
+                        stake: 250000,
+                        initialStake: 250000,
+                        drift: 0.00,
+                        state: 'honest',
+                        active: true,
+                        bypassed: false,
+                        pulse: Math.random() * Math.PI
+                    });
+                    this.edges.push({ from: parentId, to: this.nodes.length - 1, type: 'tree' });
+                }
+
+                // TIER 3: 40 NODES (RTX 4090 Distributed Edge Quorum) - r = 0.84
+                for (let i = 0; i < 40; i++) {
+                    const theta = i * (2 * Math.PI / 40);
+                    const parentIdx = Math.floor(i * 16 / 40) % 16;
+                    const parentId = 9 + parentIdx;
+                    this.nodes.push({
+                        id: this.nodes.length,
+                        tier: 3,
+                        name: `RTX4090-${String(i + 1).padStart(2, '0')}`,
+                        tierName: 'Tier 3: RTX 4090 Distributed Edge Quorum',
+                        teeName: 'AMD SEV-SNP // SECURE MEMORY ENCRYPTION',
+                        r: 0.84,
+                        theta: theta,
+                        parent: parentId,
+                        stake: 50000,
+                        initialStake: 50000,
+                        drift: 0.00,
+                        state: 'honest',
+                        active: true,
+                        bypassed: false,
+                        pulse: Math.random() * Math.PI
+                    });
+                    this.edges.push({ from: parentId, to: this.nodes.length - 1, type: 'tree' });
+                }
+
+                // LATERAL GOSSIP CHORDS
+                for (let i = 1; i <= 8; i++) {
+                    const next = i === 8 ? 1 : i + 1;
+                    this.edges.push({ from: i, to: next, type: 'chord' });
+                }
+                for (let i = 9; i <= 24; i++) {
+                    const next = i === 24 ? 9 : i + 1;
+                    this.edges.push({ from: i, to: next, type: 'chord' });
+                }
+
+                this.applyActiveK();
+            }
+
+            applyActiveK() {
+                // Exactly K nodes (1..64) are active
+                for (let i = 1; i <= 64; i++) {
+                    this.nodes[i].active = (i <= this.k);
+                }
+                if (this.options.onQuorumChange) {
+                    this.options.onQuorumChange(this.getMetrics());
+                }
+            }
+
+            initPackets() {
+                this.packets = [];
+                const symbols = ['\u2297', '\u2207', '\u03bb', '\u0394', '\u2299', '\u229b'];
+                const count = 18;
+                for (let i = 0; i < count; i++) {
+                    this.packets.push(this.spawnPacket(symbols[i % symbols.length]));
+                }
+            }
+
+            spawnPacket(symbol = '\u2297') {
+                const activeNodes = this.nodes.filter(n => n.id > 0 && n.active && n.state !== 'slashed');
+                if (activeNodes.length === 0) {
+                    return { path: [0], step: 0, progress: 0, speed: 0.015, symbol: symbol, trail: [] };
+                }
+
+                const type = Math.random();
+                let path = [];
+
+                if (type < 0.50) {
+                    // INWARD TENSOR REDUCTION: Tier 3 -> Tier 2 -> Tier 1 -> Apex Singularity
+                    const t3Nodes = this.nodes.filter(n => n.tier === 3 && n.active && n.state !== 'slashed');
+                    const startNode = t3Nodes.length > 0 ? t3Nodes[Math.floor(Math.random() * t3Nodes.length)] : activeNodes[Math.floor(Math.random() * activeNodes.length)];
+                    path = [startNode.id];
+                    let curr = startNode;
+                    while (curr.parent >= 0) {
+                        path.push(curr.parent);
+                        curr = this.nodes[curr.parent];
+                    }
+                } else if (type < 0.82) {
+                    // OUTWARD PARAMETER BROADCAST: Apex -> Tier 1 -> Tier 2 -> Tier 3
+                    const t1Nodes = this.nodes.filter(n => n.tier === 1 && n.active && n.state !== 'slashed');
+                    if (t1Nodes.length > 0) {
+                        const t1 = t1Nodes[Math.floor(Math.random() * t1Nodes.length)];
+                        path = [0, t1.id];
+                        const t2Children = this.nodes.filter(n => n.parent === t1.id && n.active && n.state !== 'slashed');
+                        if (t2Children.length > 0) {
+                            const t2 = t2Children[Math.floor(Math.random() * t2Children.length)];
+                            path.push(t2.id);
+                            const t3Children = this.nodes.filter(n => n.parent === t2.id && n.active && n.state !== 'slashed');
+                            if (t3Children.length > 0) {
+                                path.push(t3Children[Math.floor(Math.random() * t3Children.length)].id);
+                            }
+                        }
+                    } else {
+                        path = [0];
+                    }
+                } else {
+                    // LATERAL PEER GOSSIP CHORD
+                    const tier = Math.random() < 0.5 ? 1 : 2;
+                    const tierNodes = this.nodes.filter(n => n.tier === tier && n.active && n.state !== 'slashed');
+                    if (tierNodes.length >= 2) {
+                        const idx = Math.floor(Math.random() * tierNodes.length);
+                        const nextIdx = (idx + 1) % tierNodes.length;
+                        path = [tierNodes[idx].id, tierNodes[nextIdx].id];
+                    } else {
+                        path = [0, 1];
+                    }
+                }
+
+                return {
+                    path: path,
+                    step: 0,
+                    progress: 0,
+                    speed: 0.010 + Math.random() * 0.016,
+                    symbol: symbol,
+                    trail: []
+                };
+            }
+
+            resize() {
+                const rect = this.canvas.getBoundingClientRect();
+                this.width = rect.width;
+                this.height = rect.height;
+                this.dpr = window.devicePixelRatio || 1;
+                this.canvas.width = Math.round(this.width * this.dpr);
+                this.canvas.height = Math.round(this.height * this.dpr);
+                this.ctx.resetTransform?.();
+                this.ctx.scale(this.dpr, this.dpr);
+
+                this.cx = this.width / 2;
+                this.cy = this.height / 2;
+                this.radius = Math.min(this.width, this.height) * 0.44;
+            }
+
+            bindEvents() {
+                window.addEventListener('resize', () => this.resize());
+
+                if (!this.options.interactive) return;
+
+                this.canvas.addEventListener('mousemove', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const mx = e.clientX - rect.left;
+                    const my = e.clientY - rect.top;
+
+                    let closest = null;
+                    let minDist = 20;
+
+                    for (let i = 0; i < this.nodes.length; i++) {
+                        const n = this.nodes[i];
+                        if (!n.active && n.id !== 0) continue;
+                        const pt = this.getNodePos(n);
+                        const dist = Math.hypot(pt.x - mx, pt.y - my);
+                        if (dist < minDist) {
+                            minDist = dist;
+                            closest = n;
+                        }
+                    }
+
+                    this.hoveredNode = closest;
+                    this.canvas.style.cursor = closest ? 'pointer' : 'default';
+
+                    if (closest && closest.id > 0) {
+                        updateInspectorUI(closest);
+                    }
+                });
+
+                this.canvas.addEventListener('mouseleave', () => {
+                    this.hoveredNode = null;
+                });
+
+                this.canvas.addEventListener('click', () => {
+                    if (this.hoveredNode && this.hoveredNode.id > 0) {
+                        if (this.hoveredNode.state === 'honest') {
+                            this.injectByzantineFault(this.hoveredNode.id);
+                        } else {
+                            this.cureNode(this.hoveredNode.id);
+                        }
+                    }
+                });
+            }
+
+            getNodePos(node) {
+                const rad = node.r * this.radius;
+                const x = this.cx + Math.cos(node.theta) * rad;
+                const y = this.cy + Math.sin(node.theta) * rad;
+                return { x, y };
+            }
+
+            getControlPoint(p1, p2, tier1, tier2) {
+                const mx = (p1.x + p2.x) / 2;
+                const my = (p1.y + p2.y) / 2;
+                const vx = mx - this.cx;
+                const vy = my - this.cy;
+                let lambda = 0.68;
+                if (tier1 === 0 || tier2 === 0) {
+                    lambda = 1.0;
+                } else if (tier1 === tier2) {
+                    lambda = tier1 === 1 ? 0.72 : 0.80;
+                } else {
+                    lambda = 0.65;
+                }
+                return { x: this.cx + vx * lambda, y: this.cy + vy * lambda };
+            }
+
+            setK(newK) {
+                this.k = Math.max(16, Math.min(64, parseInt(newK)));
+                this.applyActiveK();
+                const metrics = this.getMetrics();
+                if (metrics.isQuorum) {
+                    this.triggerFlash('QUORUM COMMITTED // ANCHOR VERIFIED', '#00E676');
+                    this.shockwaves.push({ r: 0, maxR: this.radius, color: 'rgba(0, 230, 118, 0.65)', alpha: 1 });
+                } else {
+                    this.triggerFlash('QUORUM BREACH // SLOTS STALLED', '#FF2424');
+                    this.shockwaves.push({ r: 0, maxR: this.radius, color: 'rgba(255, 36, 36, 0.75)', alpha: 1 });
+                }
+            }
+
+            injectByzantineFault(targetId = null) {
+                let node = null;
+                if (targetId !== null) {
+                    node = this.nodes[targetId];
+                } else {
+                    const candidates = this.nodes.filter(n => n.id > 0 && n.active && n.state === 'honest');
+                    if (candidates.length === 0) return null;
+                    node = candidates[Math.floor(Math.random() * candidates.length)];
+                }
+
+                if (!node) return null;
+
+                // INJECT BYZANTINE FAULT (Δε > +0.42 FP16 GUARANTEED)
+                node.state = 'byzantine';
+                node.drift = +(0.420 + Math.random() * 0.460).toFixed(3);
+                node.pulse = 1.0;
+
+                // Instant crimson shockwave and immediate reroute
+                this.shockwaves.push({ r: 0, maxR: this.radius * 0.45, color: 'rgba(255, 36, 36, 0.9)', alpha: 1 });
+                this.triggerFlash(`BYZANTINE DRIFT DETECTED: ${node.name} (\u0394\u03b5 = +${node.drift} FP16)`, '#FF2424');
+
+                // Find sibling/peer for geodesic bypass arc
+                const peer = this.nodes.find(n => n.id !== node.id && n.tier === node.tier && n.active && n.state === 'honest');
+                if (peer) {
+                    this.bypassArcs.push({ from: node.parent >= 0 ? node.parent : 0, to: peer.id, bypassedNode: node.id, life: 1.0 });
+                }
+
+                this.log(`[BYZANTINE] Node ${node.name} (${node.tierName}) injected floating-point drift: \u0394\u03b5 = +${node.drift} FP16`);
+                this.log(`[QUORUM-CHECK] Fault tolerance threshold 3f+1 challenged. Quorum converging...`);
+
+                if (this.options.onQuorumChange) {
+                    this.options.onQuorumChange(this.getMetrics());
+                }
+                updateInspectorUI(node);
+
+                // Automated Bisection Dispute Resolution
+                setTimeout(() => {
+                    if (node.state === 'byzantine') {
+                        node.state = 'slashed';
+                        node.stake = 0;
+                        node.bypassed = true;
+
+                        this.shockwaves.push({ r: 0, maxR: this.radius * 0.35, color: 'rgba(255, 36, 36, 0.75)', alpha: 1 });
+                        this.triggerFlash(`NODE ${node.name} SLASHED // GEODESIC BYPASS ACTIVE`, '#FF2424');
+
+                        this.log(`[SLASH-CRANK] Node ${node.name} verified dishonest. 100% stake slashed -> 1nc1nerator...1111`);
+                        this.log(`[GEODESIC-BYPASS] Traffic rerouted via hyperbolic bypass arc. Max diameter \u2264 8 hops preserved.`);
+
+                        if (this.options.onByzantineEvent) {
+                            this.options.onByzantineEvent(node, this.getMetrics());
+                        }
+                        if (this.options.onQuorumChange) {
+                            this.options.onQuorumChange(this.getMetrics());
+                        }
+                        updateInspectorUI(node);
+                    }
+                }, 380);
+
+                return node;
+            }
+
+            cureNode(id) {
+                const node = this.nodes[id];
+                if (!node) return;
+                node.state = 'honest';
+                node.stake = node.initialStake;
+                node.drift = 0.00;
+                node.bypassed = false;
+                this.bypassArcs = this.bypassArcs.filter(b => b.bypassedNode !== id);
+                this.log(`[SYNC] Node ${node.name} synchronized to deterministic INT8 invariant (\u0394\u03b5 = 0.00).`);
+                if (this.options.onQuorumChange) {
+                    this.options.onQuorumChange(this.getMetrics());
+                }
+                updateInspectorUI(node);
+            }
+
+            resetQuorum() {
+                for (let i = 1; i <= 64; i++) {
+                    const node = this.nodes[i];
+                    node.state = 'honest';
+                    node.stake = node.initialStake;
+                    node.drift = 0.00;
+                    node.bypassed = false;
+                }
+                this.bypassArcs = [];
+                this.shockwaves.push({ r: 0, maxR: this.radius, color: 'rgba(0, 230, 118, 0.85)', alpha: 1 });
+                this.triggerFlash('QUORUM SYNCHRONIZED // INT8 DETERMINISM RESTORED', '#00E676');
+
+                this.log(`[RESET] Full committee synchronization complete. All active K=${this.k} nodes honest.`);
+                this.log(`[SOLANA-COMMIT] BLS threshold signature verified on Solana. Slot finalized in 382ms.`);
+
+                if (this.options.onQuorumChange) {
+                    this.options.onQuorumChange(this.getMetrics());
+                }
+                updateInspectorUI(this.nodes[1]);
+            }
+
+            triggerFlash(text, color = '#FF2424') {
+                this.bannerText = text;
+                this.bannerColor = color;
+                this.bannerAlpha = 1.0;
+
+                const fb = document.getElementById('canvas-flash-banner');
+                if (fb) {
+                    fb.textContent = text;
+                    fb.style.borderColor = color;
+                    fb.style.color = color === '#00E676' ? '#00E676' : '#FFFFFF';
+                    fb.style.opacity = '1';
+                    setTimeout(() => {
+                        if (fb) fb.style.opacity = '0';
+                    }, 2000);
+                }
+            }
+
+            log(msg) {
+                if (this.options.onLog) {
+                    this.options.onLog(msg);
+                }
+            }
+
+            getMetrics() {
+                const active = this.nodes.filter(n => n.id > 0 && n.active);
+                const honest = active.filter(n => n.state === 'honest');
+                const byzantine = active.filter(n => n.state === 'byzantine');
+                const slashed = active.filter(n => n.state === 'slashed');
+                const faultCount = byzantine.length + slashed.length;
+                const threshold = Math.ceil((2 / 3) * active.length);
+                const maxF = Math.floor((active.length - 1) / 3);
+                const isQuorum = honest.length >= threshold;
+
+                return {
+                    k: this.k,
+                    totalActive: active.length,
+                    honestCount: honest.length,
+                    byzantineCount: byzantine.length,
+                    slashedCount: slashed.length,
+                    faultCount: faultCount,
+                    threshold: threshold,
+                    maxFaults: maxF,
+                    isQuorum: isQuorum,
+                    honestRatio: active.length > 0 ? honest.length / active.length : 1,
+                    routingDiameter: 8,
+                    consensusInvariant: faultCount === 0 ? '0.00 INT8' : `+0.47 FP16 (BYPASS ENGAGED)`,
+                    solanaFinality: '382ms'
+                };
+            }
+
+            animate(now) {
+                if (!this.running) return;
+                const dt = (now - this.lastTime) / 1000;
+                this.lastTime = now;
+
+                this.update(dt);
+                this.render();
+
+                requestAnimationFrame(this.animate);
+            }
+
+            update(dt) {
+                // Decay flash banner alpha
+                if (this.bannerAlpha > 0) {
+                    this.bannerAlpha = Math.max(0, this.bannerAlpha - dt * 0.65);
+                }
+
+                // Update node pulses
+                for (let i = 0; i < this.nodes.length; i++) {
+                    const n = this.nodes[i];
+                    n.pulse += dt * (n.state === 'byzantine' ? 7.0 : 2.0);
+                }
+
+                // Update shockwaves
+                for (let i = this.shockwaves.length - 1; i >= 0; i--) {
+                    const sw = this.shockwaves[i];
+                    sw.r += dt * (this.radius * 1.5);
+                    sw.alpha = Math.max(0, 1 - sw.r / sw.maxR);
+                    if (sw.r >= sw.maxR) {
+                        this.shockwaves.splice(i, 1);
+                    }
+                }
+
+                // Update tensor packets
+                const symbols = ['\u2297', '\u2207', '\u03bb', '\u0394', '\u2299', '\u229b'];
+                for (let i = 0; i < this.packets.length; i++) {
+                    const p = this.packets[i];
+                    p.progress += p.speed * dt * 60;
+
+                    // Compute current position for trail
+                    if (p.path.length > 1 && p.step < p.path.length - 1) {
+                        const n1 = this.nodes[p.path[p.step]];
+                        const n2 = this.nodes[p.path[p.step + 1]];
+                        if (n1 && n2) {
+                            const pt1 = this.getNodePos(n1);
+                            const pt2 = this.getNodePos(n2);
+                            const cp = this.getControlPoint(pt1, pt2, n1.tier, n2.tier);
+                            const t = Math.min(1, Math.max(0, p.progress));
+                            const px = (1 - t) * (1 - t) * pt1.x + 2 * (1 - t) * t * cp.x + t * t * pt2.x;
+                            const py = (1 - t) * (1 - t) * pt1.y + 2 * (1 - t) * t * cp.y + t * t * pt2.y;
+                            p.trail.unshift({ x: px, y: py });
+                            if (p.trail.length > 5) p.trail.pop();
+                        }
+                    }
+
+                    if (p.progress >= 1.0) {
+                        p.progress = 0;
+                        p.step++;
+
+                        // Dynamic Geodesic Bypass: Reroute around rogue nodes
+                        if (p.step < p.path.length) {
+                            const nextNode = this.nodes[p.path[p.step]];
+                            if (nextNode && (nextNode.state === 'slashed' || nextNode.state === 'byzantine')) {
+                                const alt = this.nodes.find(n => n.id !== nextNode.id && n.tier === nextNode.tier && n.active && n.state === 'honest');
+                                if (alt) {
+                                    p.path[p.step] = alt.id;
+                                }
+                            }
+                        }
+
+                        if (p.step >= p.path.length - 1) {
+                            this.packets[i] = this.spawnPacket(symbols[Math.floor(Math.random() * symbols.length)]);
+                        }
+                    }
+                }
+            }
+
+            render() {
+                const ctx = this.ctx;
+                ctx.clearRect(0, 0, this.width, this.height);
+
+                // 1. Deep Obsidian Radial Background
+                const bgGrad = ctx.createRadialGradient(this.cx, this.cy, 10, this.cx, this.cy, this.radius * 1.12);
+                bgGrad.addColorStop(0, '#06060A');
+                bgGrad.addColorStop(0.75, '#040407');
+                bgGrad.addColorStop(1, '#020204');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, this.width, this.height);
+
+                // 2. Poincaré Disk Absolute Horizon Boundary (r = R)
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(this.cx, this.cy, this.radius, 0, 2 * Math.PI);
+                ctx.strokeStyle = '#22222E';
+                ctx.lineWidth = 1.4;
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(255, 36, 36, 0.14)';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                // Perimeter Graduation Ticks (64 ticks around horizon circle)
+                for (let i = 0; i < 64; i++) {
+                    const angle = i * (2 * Math.PI / 64);
+                    const isMajor = i % 8 === 0;
+                    const tLen = isMajor ? 8 : 4;
+                    const x1 = this.cx + Math.cos(angle) * (this.radius - tLen);
+                    const y1 = this.cy + Math.sin(angle) * (this.radius - tLen);
+                    const x2 = this.cx + Math.cos(angle) * this.radius;
+                    const y2 = this.cy + Math.sin(angle) * this.radius;
+
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.strokeStyle = isMajor ? 'rgba(255, 255, 255, 0.45)' : 'rgba(255, 255, 255, 0.16)';
+                    ctx.lineWidth = isMajor ? 1.2 : 0.8;
+                    ctx.stroke();
+                }
+
+                // 3. Concentric Hyperbolic Distance Rings (Horocycles)
+                const rings = [
+                    { r: 0.28, label: 'TIER 1 (r=0.28)' },
+                    { r: 0.58, label: 'TIER 2 (r=0.58)' },
+                    { r: 0.84, label: 'TIER 3 (r=0.84)' }
+                ];
+                ctx.setLineDash([2, 4]);
+                for (let i = 0; i < rings.length; i++) {
+                    const ring = rings[i];
+                    const rad = ring.r * this.radius;
+                    ctx.beginPath();
+                    ctx.arc(this.cx, this.cy, rad, 0, 2 * Math.PI);
+                    ctx.strokeStyle = i === 0 ? 'rgba(255, 36, 36, 0.25)' : 'rgba(255, 255, 255, 0.10)';
+                    ctx.lineWidth = 0.9;
+                    ctx.stroke();
+                }
+                ctx.setLineDash([]);
+
+                // 4. Hyperbolic Crosshair Reticle
+                ctx.beginPath();
+                ctx.moveTo(this.cx - this.radius, this.cy);
+                ctx.lineTo(this.cx + this.radius, this.cy);
+                ctx.moveTo(this.cx, this.cy - this.radius);
+                ctx.lineTo(this.cx, this.cy + this.radius);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+
+                // 5. Geodesic Connections (Curved Hyperbolic Rays Plunging Inward)
+                for (let i = 0; i < this.edges.length; i++) {
+                    const e = this.edges[i];
+                    const n1 = this.nodes[e.from];
+                    const n2 = this.nodes[e.to];
+                    if (!n1 || !n2) continue;
+
+                    const p1 = this.getNodePos(n1);
+                    const p2 = this.getNodePos(n2);
+                    const cp = this.getControlPoint(p1, p2, n1.tier, n2.tier);
+
+                    const isBothActive = (n1.active || n1.id === 0) && (n2.active || n2.id === 0);
+                    const isSlashed = n1.state === 'slashed' || n2.state === 'slashed' || n1.state === 'byzantine' || n2.state === 'byzantine';
+
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    if (n1.id === 0) {
+                        ctx.lineTo(p2.x, p2.y);
+                    } else {
+                        ctx.quadraticCurveTo(cp.x, cp.y, p2.x, p2.y);
+                    }
+
+                    if (isSlashed) {
+                        ctx.strokeStyle = 'rgba(255, 36, 36, 0.22)';
+                        ctx.setLineDash([2, 4]);
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+                    } else if (!isBothActive) {
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+                        ctx.lineWidth = 0.6;
+                        ctx.stroke();
+                    } else if (e.type === 'chord') {
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+                        ctx.lineWidth = 0.7;
+                        ctx.stroke();
+                    } else {
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+                        ctx.lineWidth = 1.0;
+                        ctx.stroke();
+                    }
+                }
+
+                // 6. Active Geodesic Bypass Curves
+                for (let i = 0; i < this.bypassArcs.length; i++) {
+                    const b = this.bypassArcs[i];
+                    const n1 = this.nodes[b.from];
+                    const n2 = this.nodes[b.to];
+                    if (!n1 || !n2) continue;
+                    const p1 = this.getNodePos(n1);
+                    const p2 = this.getNodePos(n2);
+                    const cp = this.getControlPoint(p1, p2, n1.tier, n2.tier);
+
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.quadraticCurveTo(cp.x, cp.y, p2.x, p2.y);
+                    ctx.strokeStyle = '#FFAA00';
+                    ctx.lineWidth = 1.8;
+                    ctx.setLineDash([4, 4]);
+                    ctx.shadowColor = '#FFAA00';
+                    ctx.shadowBlur = 6;
+                    ctx.stroke();
+                    ctx.restore();
+                }
+
+                // 7. Shockwaves
+                for (let i = 0; i < this.shockwaves.length; i++) {
+                    const sw = this.shockwaves[i];
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(this.cx, this.cy, sw.r, 0, 2 * Math.PI);
+                    ctx.strokeStyle = sw.color;
+                    ctx.globalAlpha = sw.alpha;
+                    ctx.lineWidth = 2.0;
+                    ctx.stroke();
+                    ctx.restore();
+                }
+
+                // 8. Animated Tensor Packets (⊗, ∇, λ, Δ) Flowing Along Geodesics
+                for (let i = 0; i < this.packets.length; i++) {
+                    const p = this.packets[i];
+                    if (p.path.length <= 1 || p.step >= p.path.length - 1) continue;
+
+                    const n1 = this.nodes[p.path[p.step]];
+                    const n2 = this.nodes[p.path[p.step + 1]];
+                    if (!n1 || !n2) continue;
+
+                    const pt1 = this.getNodePos(n1);
+                    const pt2 = this.getNodePos(n2);
+                    const cp = this.getControlPoint(pt1, pt2, n1.tier, n2.tier);
+                    const t = Math.min(1, Math.max(0, p.progress));
+
+                    const px = (1 - t) * (1 - t) * pt1.x + 2 * (1 - t) * t * cp.x + t * t * pt2.x;
+                    const py = (1 - t) * (1 - t) * pt1.y + 2 * (1 - t) * t * cp.y + t * t * pt2.y;
+
+                    // Packet trail
+                    for (let j = 0; j < p.trail.length; j++) {
+                        const tr = p.trail[j];
+                        ctx.beginPath();
+                        ctx.arc(tr.x, tr.y, 2.0 * (1 - j / p.trail.length), 0, 2 * Math.PI);
+                        ctx.fillStyle = j % 2 === 0 ? 'rgba(255, 36, 36, 0.45)' : 'rgba(255, 255, 255, 0.4)';
+                        ctx.fill();
+                    }
+
+                    // Glyph rendering
+                    ctx.save();
+                    ctx.font = '11px "JetBrains Mono", monospace';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.shadowColor = '#FF2424';
+                    ctx.shadowBlur = 8;
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillText(p.symbol, px, py);
+                    ctx.restore();
+                }
+
+                // 9. Render Nodes
+                for (let i = 0; i < this.nodes.length; i++) {
+                    const n = this.nodes[i];
+                    const pt = this.getNodePos(n);
+                    const isHovered = this.hoveredNode && this.hoveredNode.id === n.id;
+
+                    if (n.id === 0) {
+                        // APEX ROOT SINGULARITY (Mark #06 Root Node)
+                        ctx.save();
+                        // Two white canopy rim nodes
+                        ctx.beginPath();
+                        ctx.arc(pt.x - 7, pt.y - 4, 2.4, 0, 2 * Math.PI);
+                        ctx.arc(pt.x + 7, pt.y - 4, 2.4, 0, 2 * Math.PI);
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.fill();
+
+                        // Connecting wireframe
+                        ctx.beginPath();
+                        ctx.moveTo(pt.x - 7, pt.y - 4);
+                        ctx.lineTo(pt.x, pt.y);
+                        ctx.lineTo(pt.x + 7, pt.y - 4);
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+
+                        // Crimson Needle-Throat Singularity Core
+                        const apexPulse = 1 + Math.sin(n.pulse * 2) * 0.15;
+                        ctx.shadowColor = '#FF2424';
+                        ctx.shadowBlur = 14;
+                        ctx.beginPath();
+                        ctx.arc(pt.x, pt.y, 5 * apexPulse, 0, 2 * Math.PI);
+                        ctx.fillStyle = '#FF2424';
+                        ctx.fill();
+
+                        ctx.beginPath();
+                        ctx.arc(pt.x, pt.y, 1.8, 0, 2 * Math.PI);
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.fill();
+                        ctx.restore();
+
+                        ctx.font = '9px "JetBrains Mono", monospace';
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+                        ctx.textAlign = 'center';
+                        ctx.fillText('APEX // ROOT', pt.x, pt.y + 14);
+                        continue;
+                    }
+
+                    // Validator Nodes (Tiers 1, 2, 3)
+                    let radius = n.tier === 1 ? 5.2 : n.tier === 2 ? 3.8 : 2.6;
+                    if (isHovered) radius += 2.2;
+
+                    if (!n.active) {
+                        // Standby node (when K < 64)
+                        ctx.beginPath();
+                        ctx.arc(pt.x, pt.y, radius, 0, 2 * Math.PI);
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+                        ctx.lineWidth = 0.8;
+                        ctx.setLineDash([1.5, 1.5]);
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+                        continue;
+                    }
+
+                    if (n.state === 'byzantine') {
+                        // BYZANTINE FAULT: PULSING CRIMSON + FLOATING-POINT DRIFT TELEMETRY
+                        const jx = (Math.random() - 0.5) * 2.5;
+                        const jy = (Math.random() - 0.5) * 2.5;
+                        const pulseScale = 1.0 + Math.sin(n.pulse * 3) * 0.25;
+
+                        ctx.save();
+                        ctx.shadowColor = '#FF2424';
+                        ctx.shadowBlur = 18;
+                        ctx.beginPath();
+                        ctx.arc(pt.x + jx, pt.y + jy, (radius + 3) * pulseScale, 0, 2 * Math.PI);
+                        ctx.fillStyle = '#FF2424';
+                        ctx.fill();
+
+                        ctx.beginPath();
+                        ctx.arc(pt.x, pt.y, radius, 0, 2 * Math.PI);
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.fill();
+
+                        // Floating-point drift telemetry badge (\u0394\u03b5 > +0.42 FP16)
+                        ctx.font = 'bold 8.5px "JetBrains Mono", monospace';
+                        ctx.fillStyle = '#FF2424';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(`\u0394\u03b5 = +${n.drift} FP16`, pt.x, pt.y - radius - 6);
+                        ctx.restore();
+                    } else if (n.state === 'slashed') {
+                        // SLASHED TOMBSTONE
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(pt.x, pt.y, radius + 1.5, 0, 2 * Math.PI);
+                        ctx.strokeStyle = '#FF2424';
+                        ctx.lineWidth = 1.4;
+                        ctx.stroke();
+
+                        ctx.beginPath();
+                        ctx.moveTo(pt.x - radius, pt.y - radius);
+                        ctx.lineTo(pt.x + radius, pt.y + radius);
+                        ctx.moveTo(pt.x + radius, pt.y - radius);
+                        ctx.lineTo(pt.x - radius, pt.y + radius);
+                        ctx.strokeStyle = '#FF2424';
+                        ctx.lineWidth = 1.2;
+                        ctx.stroke();
+
+                        ctx.font = '8px "JetBrains Mono", monospace';
+                        ctx.fillStyle = '#FF2424';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(`[SLASHED \u0394\u03b5=+${n.drift}]`, pt.x, pt.y + radius + 10);
+                        ctx.restore();
+                    } else {
+                        // HONEST VALIDATOR
+                        ctx.save();
+                        if (n.tier === 1) {
+                            ctx.beginPath();
+                            ctx.arc(pt.x, pt.y, radius, 0, 2 * Math.PI);
+                            ctx.fillStyle = '#FF2424';
+                            ctx.fill();
+
+                            ctx.beginPath();
+                            ctx.arc(pt.x, pt.y, radius * 0.55, 0, 2 * Math.PI);
+                            ctx.fillStyle = '#FFFFFF';
+                            ctx.fill();
+                        } else if (n.tier === 2) {
+                            ctx.beginPath();
+                            ctx.arc(pt.x, pt.y, radius, 0, 2 * Math.PI);
+                            ctx.fillStyle = '#FFFFFF';
+                            ctx.fill();
+                            ctx.strokeStyle = 'rgba(255, 36, 36, 0.45)';
+                            ctx.lineWidth = 1.0;
+                            ctx.stroke();
+                        } else {
+                            ctx.beginPath();
+                            ctx.arc(pt.x, pt.y, radius, 0, 2 * Math.PI);
+                            ctx.fillStyle = 'rgba(255, 255, 255, 0.88)';
+                            ctx.fill();
+                        }
+                        ctx.restore();
+                    }
+
+                    // Node labels for Tier 1 or hovered nodes
+                    if (n.tier === 1 || isHovered) {
+                        ctx.font = '8.5px "JetBrains Mono", monospace';
+                        ctx.fillStyle = isHovered ? '#FFFFFF' : 'rgba(255, 255, 255, 0.65)';
+                        ctx.textAlign = 'center';
+                        const labelY = pt.y > this.cy ? pt.y + radius + 10 : pt.y - radius - 6;
+                        ctx.fillText(n.name, pt.x, labelY);
+                    }
+                }
+                ctx.restore();
+            }
+        }
+
+        /* ==========================================================================
+           6. SIMULATOR CONTROLS, TELEMETRY WIRING & TERMINAL LOGS
+           ========================================================================== */
+        const pCanvas = document.getElementById('poincare-canvas');
+        const kSlider = document.getElementById('k-slider');
+        const kSliderText = document.getElementById('k-slider-text');
+        const btnInject = document.getElementById('btn-inject-fault');
+        const btnReset = document.getElementById('btn-reset-sync');
+        const simStatusBanner = document.getElementById('sim-consensus-banner');
+
+        // HUD Elements
+        const hudQuorum = document.getElementById('hud-quorum');
+        const hudQuorumSub = document.getElementById('hud-quorum-sub');
+        const hudFaults = document.getElementById('hud-faults');
+        const hudToleranceSub = document.getElementById('hud-tolerance-sub');
+        const hudSlot = document.getElementById('hud-slot');
+        const hudFinality = document.getElementById('hud-finality');
+
+        // Inspector Elements
+        const inspName = document.getElementById('insp-name');
+        const inspTier = document.getElementById('insp-tier');
+        const inspTee = document.getElementById('insp-tee');
+        const inspStake = document.getElementById('insp-stake');
+        const inspDrift = document.getElementById('insp-drift');
+        const inspRouting = document.getElementById('insp-routing');
+        const inspBadge = document.getElementById('insp-badge');
+        const btnToggleInspected = document.getElementById('btn-toggle-inspected');
+
+        // Terminal Log Elements
+        const termLog = document.getElementById('terminal-log-output');
+        const cliInput = document.getElementById('terminal-cli-input');
+
+        let inspectedNodeId = 1;
+        let sim = null;
+
+        function appendTermLine(text, type = '') {
+            if (!termLog) return;
+            const div = document.createElement('div');
+            div.className = 'log-line ' + type;
+            div.innerHTML = text;
+            termLog.appendChild(div);
+            termLog.scrollTop = termLog.scrollHeight;
+        }
+
+        function updateInspectorUI(node) {
+            if (!node || node.id === 0) return;
+            inspectedNodeId = node.id;
+            inspName.textContent = `${node.name} (ID: ${node.id})`;
+            inspTier.textContent = node.tierName;
+            inspTee.textContent = node.teeName;
+            inspStake.textContent = `${node.stake.toLocaleString()} $33RD`;
+
+            if (node.state === 'honest') {
+                inspDrift.textContent = '\u0394\u03b5 = 0.00 INT8';
+                inspDrift.className = 'val-green';
+                inspRouting.textContent = 'OPTIMAL TREE GEODESIC';
+                inspRouting.className = 'val-green';
+                inspBadge.textContent = '[HONEST]';
+                inspBadge.className = 'val-green';
+                btnToggleInspected.textContent = '[ INJECT DRIFT ON THIS NODE ]';
+                btnToggleInspected.className = 'btn-brutal btn-brutal-red';
+            } else if (node.state === 'byzantine') {
+                inspDrift.textContent = `\u0394\u03b5 = +${node.drift} FP16 (CRITICAL DRIFT)`;
+                inspDrift.className = 'val-red';
+                inspRouting.textContent = 'ROUGE // BISECTION DISPUTE ACTIVE';
+                inspRouting.className = 'val-amber';
+                inspBadge.textContent = '[BYZANTINE]';
+                inspBadge.className = 'val-red';
+                btnToggleInspected.textContent = '[ RESTORE / SYNC NODE ]';
+                btnToggleInspected.className = 'btn-brutal btn-brutal-sync';
+            } else {
+                inspDrift.textContent = `\u0394\u03b5 = +${node.drift} FP16 (SLASHED)`;
+                inspDrift.className = 'val-red';
+                inspRouting.textContent = 'ISOLATED // GEODESIC BYPASS ACTIVE';
+                inspRouting.className = 'val-red';
+                inspBadge.textContent = '[SLASHED]';
+                inspBadge.className = 'val-red';
+                btnToggleInspected.textContent = '[ RESTORE / SYNC NODE ]';
+                btnToggleInspected.className = 'btn-brutal btn-brutal-sync';
+            }
+        }
+
+        let currentSlot = 312940210;
+        setInterval(() => {
+            currentSlot += 1;
+            if (hudSlot) hudSlot.textContent = `SLOT ${currentSlot.toLocaleString()}`;
+        }, 400);
+
+        function updateSimulatorHUD(m) {
+            if (!m) return;
+            const pct = (m.honestRatio * 100).toFixed(1);
+            hudQuorum.textContent = `${m.honestCount} / ${m.totalActive} (${pct}%)`;
+
+            if (m.isQuorum) {
+                hudQuorumSub.textContent = `> 66.7% [VALIDATED]`;
+                hudQuorumSub.className = 'telemetry-sub val-green';
+                simStatusBanner.textContent = `[VALID] QUORUM VALIDATED // HONEST STATE COMMITTED`;
+                simStatusBanner.className = 'status-pill status-valid';
+                hudFinality.textContent = '382ms FINALITY // COMMITTED';
+                hudFinality.className = 'telemetry-sub val-green';
+            } else {
+                hudQuorumSub.textContent = `< 66.7% [CRITICAL BREACH]`;
+                hudQuorumSub.className = 'telemetry-sub val-red';
+                simStatusBanner.textContent = `[CRITICAL] BYZANTINE FAULT // QUORUM BREACHED`;
+                simStatusBanner.className = 'status-pill status-danger';
+                hudFinality.textContent = 'CIRCUIT BREAKER // STALLED';
+                hudFinality.className = 'telemetry-sub val-red';
+            }
+
+            const faultPct = ((m.faultCount / m.totalActive) * 100).toFixed(1);
+            hudFaults.textContent = `f = ${m.faultCount} / ${m.totalActive} (${faultPct}%)`;
+            hudFaults.style.color = m.faultCount <= m.maxFaults ? 'var(--white)' : 'var(--laser-red)';
+            hudToleranceSub.textContent = `MAX TOLERANCE: f \u2264 ${m.maxFaults} (3f + 1 \u2264 K)`;
+        }
+
+        if (pCanvas) {
+            sim = new PoincareHyperbolicSimulator(pCanvas, {
+                k: 64,
+                speed: 1.0,
+                interactive: true,
+                onQuorumChange: (m) => updateSimulatorHUD(m),
+                onByzantineEvent: (node, m) => {
+                    updateSimulatorHUD(m);
+                    appendTermLine(`[ALERT] Byzantine adversary isolated: ${node.name} &bull; Drift \u0394\u03b5 = +${node.drift} FP16`, 'log-highlight');
+                },
+                onLog: (msg) => {
+                    const type = msg.includes('[BYZANTINE]') ? 'log-warn' : msg.includes('[SLASH') ? 'log-highlight' : msg.includes('[RESET') ? 'log-success' : 'log-dim';
+                    appendTermLine(msg, type);
+                }
+            });
+            updateInspectorUI(sim.nodes[1]);
+        }
+
+        // Slider listener
+        if (kSlider) {
+            kSlider.addEventListener('input', (e) => {
+                const val = parseInt(e.target.value);
+                kSliderText.textContent = `K = ${val}`;
+                if (sim) sim.setK(val);
+            });
+        }
+
+        // Action buttons
+        if (btnInject) {
+            btnInject.addEventListener('click', () => {
+                if (sim) {
+                    const node = sim.injectByzantineFault();
+                    if (node) {
+                        appendTermLine(`> Injected Byzantine adversary into ${node.name}...`, 'log-warn');
+                    }
+                }
+            });
+        }
+
+        if (btnReset) {
+            btnReset.addEventListener('click', () => {
+                if (sim) {
+                    sim.resetQuorum();
+                    appendTermLine(`> Resynchronizing entire committee to deterministic INT8...`, 'log-dim');
+                }
+            });
+        }
+
+        if (btnToggleInspected) {
+            btnToggleInspected.addEventListener('click', () => {
+                if (!sim) return;
+                const node = sim.nodes[inspectedNodeId];
+                if (!node || node.id === 0) return;
+                if (node.state === 'honest') {
+                    sim.injectByzantineFault(node.id);
+                } else {
+                    sim.cureNode(node.id);
+                }
+            });
+        }
+
+        /* ==========================================================================
+           7. SOLANA ANCHOR CLI INTERPRETER
+           ========================================================================== */
+        function executeCliCommand(rawCmd) {
+            const cmd = rawCmd.trim();
+            if (!cmd) return;
+            appendTermLine('&gt; ' + cmd, 'log-cmd');
+            const c = cmd.toLowerCase();
+
+            if (c === 'help') {
+                appendTermLine('CANARY SPEC v4.0 &bull; SOLANA DIAGNOSTIC COMMANDS:', 'log-highlight');
+                appendTermLine('  status     - Query Solana anchor slot and committee state');
+                appendTermLine('  nodes      - Inspect active GPU cluster topology & TEE attestations');
+                appendTermLine('  bench      - Run simulated CAP-FFN LLaMA-3 Proof of Intelligence check');
+                appendTermLine('  verify     - Evaluate BN254 KZG polynomial opening commitment');
+                appendTermLine('  byzantine  - Run Byzantine consensus fault tolerance check');
+                appendTermLine('  tokenomics - Display hard supply cap, epoch emission, & buyback');
+                appendTermLine('  clear      - Clear terminal logs');
+            } else if (c === 'status') {
+                appendTermLine('[ANCHOR] Program ID: 33rdCore11111111111111111111111111111111111', 'log-highlight');
+                appendTermLine(`[CONSENSUS] Active Committee: K=${sim ? sim.k : 64} nodes &bull; Slot Cadence: 400ms`);
+                appendTermLine('[STATE] Epoch 0 &bull; Quorum: 2/3 BLS BN254 Verified &bull; Sub-second finality', 'log-success');
+                appendTermLine('[METRICS] Network Latency: 1.42ms &bull; Slashing Slasher Crank: ACTIVE');
+            } else if (c === 'nodes') {
+                appendTermLine('ACTIVE VALIDATOR HIERARCHY (Poincar\u00e9 Hyperbolic Disk):', 'log-highlight');
+                appendTermLine('  Tier 0 (Root)  : Apex Singularity (Mark #06 Needled Singularity)');
+                appendTermLine('  Tier 1 (Coord) : 8x H100 SXM5 Coordinators &bull; NVIDIA Hopper CC &bull; 500k $33RD');
+                appendTermLine('  Tier 2 (Hubs)  : 16x B200 NVL Reduction Hubs &bull; Intel TDX 2.0 &bull; 250k $33RD');
+                appendTermLine('  Tier 3 (Edge)  : 40x RTX 4090 Distributed Edge &bull; AMD SEV-SNP &bull; 50k $33RD');
+            } else if (c === 'bench') {
+                appendTermLine('[BENCH] Executing CAP-FFN LLaMA-3-8B PoI kernel challenge...', 'log-dim');
+                setTimeout(() => {
+                    appendTermLine('[BENCH] Randomized polynomial eval: Degree d=16 &bull; Chebyshev match', 'log-dim');
+                    appendTermLine('[BENCH] Forward pass: 14.2ms &bull; Proof generated: 1.84ms &bull; OK', 'log-success');
+                }, 260);
+            } else if (c === 'verify') {
+                appendTermLine('[KZG] Evaluating BN254 pairing: e(\u03c0, [x - z]_2) == e(C - v*[1]_1, [1]_2)...', 'log-dim');
+                setTimeout(() => {
+                    appendTermLine('[KZG] Commitment opening verified on Solana &bull; Cost: 184,200 Compute Units', 'log-success');
+                }, 300);
+            } else if (c === 'byzantine') {
+                if (sim) {
+                    const m = sim.getMetrics();
+                    appendTermLine(`[BYZANTINE] Committee state: K=${m.k} &bull; Faults f=${m.faultCount} (Max allowed: ${m.maxFaults})`, 'log-highlight');
+                    if (m.isQuorum) {
+                        appendTermLine('[BYZANTINE] Quorum threshold \u2265 2/3: SATISFIED. Honest consensus intact.', 'log-success');
+                    } else {
+                        appendTermLine('[BYZANTINE] CRITICAL: f > threshold. Quorum breached. Automated circuit breaker.', 'log-warn');
+                    }
+                }
+            } else if (c === 'tokenomics') {
+                appendTermLine('TOKENOMICS & EMISSION PARAMETERS:', 'log-highlight');
+                appendTermLine('  Hard Supply Cap : 33,000,000 $33RD');
+                appendTermLine('  Genesis Epoch   : Epoch 0 &bull; 0.7135 $33RD / block');
+                appendTermLine('  Buyback-Burn    : 10% commercial revenue routed to market buyback crank');
+                appendTermLine('  Canary Staking  : Slashing penalty enforced via on-chain contract');
+            } else if (c === 'clear') {
+                termLog.innerHTML = '';
+            } else {
+                appendTermLine(`Command not found: "${cmd}". Type "help" for available commands.`, 'log-warn');
+            }
+        }
+
+        function handleCliSubmit(e) {
+            e.preventDefault();
+            const val = cliInput.value;
+            cliInput.value = '';
+            executeCliCommand(val);
+        }
+    </script>
+</body>
+</html>
+"""
+
+with open(output_path, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print(f"Successfully generated {output_path} ({len(html_content)} bytes)")

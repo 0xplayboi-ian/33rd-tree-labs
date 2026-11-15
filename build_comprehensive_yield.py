@@ -107,10 +107,13 @@ def generate_yield_page():
             max-width: 860px;
         }
 
-        /* SIMULATOR WORKBENCH (EDITORIAL HAIRLINE ARCHITECTURE - NO GENERIC CARDS) */
+        /* SIMULATOR WORKBENCH (OPEN EDITORIAL BRUTALIST - NO ENCLOSED CARD BOXES) */
         .sim-workbench {
-            border: 1px solid var(--border);
-            background: #09090C;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: none;
+            border-right: none;
+            background: transparent;
             position: relative;
             margin-bottom: 48px;
         }
@@ -118,16 +121,18 @@ def generate_yield_page():
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding: 12px 24px;
-            background: #0B0B0E;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 14px 0;
+            background: transparent;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             color: var(--slate);
+            letter-spacing: 0.08em;
         }
         .sim-grid {
             display: grid;
             grid-template-columns: 1.15fr 0.85fr;
+            background: transparent;
         }
         @media (max-width: 980px) {
             .sim-grid {
@@ -135,29 +140,30 @@ def generate_yield_page():
             }
         }
         .sim-controls-pane {
-            padding: 32px;
-            border-right: 1px solid var(--border);
+            padding: 32px 32px 32px 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
             display: flex;
             flex-direction: column;
             gap: 26px;
+            background: transparent;
         }
         @media (max-width: 980px) {
             .sim-controls-pane {
                 border-right: none;
-                border-bottom: 1px solid var(--border);
-                padding: 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+                padding: 20px 0;
             }
         }
         .sim-results-pane {
-            padding: 32px;
-            background: #070709;
+            padding: 32px 0 32px 32px;
+            background: transparent;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
         @media (max-width: 980px) {
             .sim-results-pane {
-                padding: 20px;
+                padding: 20px 0;
             }
         }
 
@@ -183,8 +189,8 @@ def generate_yield_page():
             font-size: 12px;
         }
         .sim-select {
-            background: #111116;
-            border: 1px solid var(--border);
+            background: #030306;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: var(--chalk);
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
@@ -233,7 +239,8 @@ def generate_yield_page():
             justify-content: space-between;
             align-items: baseline;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: transparent;
         }
         .sim-metric-row:last-child {
             border-bottom: none;
@@ -264,9 +271,9 @@ def generate_yield_page():
 
         .sim-status-badge {
             margin-top: 24px;
-            padding: 12px 16px;
-            border: 1px solid var(--border);
-            background: rgba(17, 17, 22, 0.7);
+            padding: 14px 0 0 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            background: transparent;
             font-family: 'JetBrains Mono', monospace;
             font-size: 10.5px;
             line-height: 1.6;
@@ -278,9 +285,11 @@ def generate_yield_page():
 
         /* EQUATION & PROOF CALLOUT */
         .math-proof-box {
-            background: #09090C;
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--laser-red);
+            background: transparent;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: 2px solid var(--laser-red);
+            border-right: none;
             padding: 24px 28px;
             margin: 28px 0;
             font-family: 'JetBrains Mono', monospace;
@@ -320,8 +329,8 @@ def generate_yield_page():
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             margin: 24px 0 36px 0;
-            border: 1px solid var(--border);
-            background: #08080A;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: transparent;
         }
         .open-table {
             width: 100%;
@@ -332,18 +341,18 @@ def generate_yield_page():
         }
         .open-table th {
             padding: 12px 16px;
-            background: #0E0E12;
+            background: rgba(255, 36, 36, 0.04);
             color: var(--slate);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             white-space: nowrap;
         }
         .open-table td {
             padding: 12px 16px;
             color: var(--chalk);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             white-space: nowrap;
         }
         .open-table tr:last-child td {
@@ -364,8 +373,8 @@ def generate_yield_page():
 
         /* ASCII DIAGRAM DISPLAY */
         .ascii-diagram-wrap {
-            background: #050507;
-            border: 1px solid var(--border);
+            background: #030306;
+            border: 1px solid rgba(255, 255, 255, 0.12);
             padding: 20px 24px;
             margin: 24px 0;
             overflow-x: auto;
@@ -395,7 +404,7 @@ def generate_yield_page():
             }
         }
         .editorial-col {
-            border-top: 1px solid var(--border);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
             padding-top: 18px;
         }
         .editorial-col-title {
@@ -427,8 +436,8 @@ def generate_yield_page():
 
         /* MONOSPACE CODE LISTING */
         .code-listing-box {
-            background: #050507;
-            border: 1px solid var(--border);
+            background: #030306;
+            border: 1px solid rgba(255, 255, 255, 0.12);
             margin: 24px 0 36px 0;
             position: relative;
         }
@@ -437,8 +446,8 @@ def generate_yield_page():
             justify-content: space-between;
             align-items: center;
             padding: 8px 16px;
-            background: #0C0C10;
-            border-bottom: 1px solid var(--border);
+            background: #07070A;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             font-family: 'JetBrains Mono', monospace;
             font-size: 10.5px;
             color: var(--slate);
@@ -533,15 +542,18 @@ def generate_yield_page():
             document.getElementById('sim-fees-val').textContent = dailyFeeVolume.toLocaleString() + ' $33RD / DAY';
 
             // Hardware Weight Multiplier ($W_i$)
-            // B200: 8.2x, H100: 4.8x, RTX 4090: 1.0x
+            // B200: 6.2x, H100: 4.8x, L40S: 2.1x, RTX 4090: 1.0x
             let hwWeight = 4.8;
             let hwSpecName = "NVIDIA Hopper H100 SXM5 (80GB)";
             if (hwTier === 'b200') {
-                hwWeight = 8.2;
+                hwWeight = 6.2;
                 hwSpecName = "NVIDIA Blackwell B200 (192GB HBM3e)";
             } else if (hwTier === 'h100') {
                 hwWeight = 4.8;
                 hwSpecName = "NVIDIA Hopper H100 SXM5 (80GB)";
+            } else if (hwTier === 'l40s') {
+                hwWeight = 2.1;
+                hwSpecName = "NVIDIA L40S (48GB GDDR6)";
             } else if (hwTier === 'rtx4090') {
                 hwWeight = 1.0;
                 hwSpecName = "NVIDIA RTX 4090 (24GB GDDR6X)";
