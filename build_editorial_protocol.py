@@ -551,7 +551,7 @@ def generate_protocol_page():
         <a href="nodes.html" class="nav-link" data-glitch>[ NODES ]</a>
         <a href="tokenomics.html" class="nav-link" data-glitch>[ TOKENOMICS ]</a>
         <a href="research.html" class="nav-link" data-glitch>[ RESEARCH ]</a>
-        <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="nav-link" data-glitch>[ WHITEPAPER PDF ↓ ]</a>
+        <a href="33rd_Tree_Labs_Whitepaper.pdf" download class="nav-link" data-glitch>[ WHITEPAPER PDF ]</a>
       </div>
     </nav>
   </div>
@@ -825,23 +825,23 @@ def generate_protocol_page():
       <div class="ed-sec-head">
         <div class="sec-badge-col">
           <span class="sec-giant-num">03</span>
-          <span class="sec-kicker">// CONSENSUS &amp; ENCLAVES</span>
+          <span class="sec-kicker">// K=64 HYPERBOLIC BYZANTINE QUORUM</span>
         </div>
         <div>
-          <h2 class="sec-title">Byzantine Fault Tolerance &amp; Multi-TEE</h2>
+          <h2 class="sec-title">K=64 Hyperbolic Byzantine Quorum &amp; Multi-TEE</h2>
           <p class="sec-summary">
-            The Singularity Protocol consensus layer operates an asynchronous Byzantine Fault Tolerant state machine across a rotating committee of $K = 64$ stake-bonded validator nodes. The network guarantees safety and liveness provided malicious or compromised nodes remain strictly below the Byzantine threshold $f < \lfloor(K-1)/3\rfloor = 21$. Hardware Confidential Computing eliminates single-vendor trust by enforcing independent remote attestation across AMD SEV-SNP, Intel TDX, and NVIDIA Hopper CC enclaves.
+            The Singularity Protocol consensus layer operates an asynchronous <strong>K=64 Hyperbolic Byzantine Quorum</strong> across a rotating committee of $K = 64$ stake-bonded validator nodes. The network guarantees safety and liveness provided malicious or compromised nodes remain strictly below the Byzantine threshold $f < \lfloor(K-1)/3\rfloor = 21$. Hardware Confidential Computing eliminates single-vendor trust by enforcing independent remote attestation across AMD SEV-SNP, Intel TDX, and NVIDIA Hopper CC enclaves.
           </p>
         </div>
       </div>
 
       <div class="math-callout">
-        <div class="math-callout-title">BYZANTINE QUORUM &amp; THRESHOLD SECURITY BOUND</div>
+        <div class="math-callout-title">K=64 HYPERBOLIC BYZANTINE QUORUM &amp; THRESHOLD SECURITY BOUND</div>
         <div class="math-display-box">
           $$f < \left\lfloor\frac{K - 1}{3}\right\rfloor = 21 \quad \implies \quad \text{Quorum Threshold } \mathcal{Q} \ge 2f + 1 = 43 \text{ Honest Signatures}$$
         </div>
         <p style="color:var(--chalk-dim); font-size:14px; line-height:1.65;">
-          With a minimum stake bond of 25,000 $33RD per validator, an attacker attempting to corrupt consensus must control at least 22 nodes, requiring an upfront capital lockup of $> 550,000\text{ }33RD$ subject to 100% on-chain slashing.
+          With the canonical <strong>25,000 $33RD VALIDATOR STAKE BOND</strong> locked in non-custodial Anchor escrow, an attacker attempting to corrupt consensus must control at least 22 nodes, requiring an upfront capital lockup of $> 550,000\text{ }33RD$ subject to 100% on-chain slashing.
         </p>
       </div>
 
@@ -850,13 +850,13 @@ def generate_protocol_page():
         <div class="ed-grid-cell">
           <div>
             <span class="cell-tag">[ ASYNCHRONOUS BFT ]</span>
-            <h3 class="cell-title">Committee Quorum</h3>
+            <h3 class="cell-title">K=64 Hyperbolic Byzantine Quorum</h3>
             <p class="cell-body">
-              Each inference block proposal requires a $2/3 + 1$ honest supermajority ($> 43$ valid BLS signatures) before anchoring to the Solana state ledger.
+              Each inference block proposal requires a $2/3 + 1$ honest supermajority ($> 43$ valid BLS signatures) across the K=64 Hyperbolic Byzantine Quorum before anchoring to the Solana state ledger.
             </p>
           </div>
           <ul class="cell-spec-list">
-            <li><span>Committee Size:</span> <strong>$K = 64$ Active Nodes</strong></li>
+            <li><span>Quorum Committee:</span> <strong>K=64 Hyperbolic Byzantine Quorum</strong></li>
             <li><span>Honest Majority:</span> <strong>&ge; 43 Signatures</strong></li>
             <li><span>Slot Cadence:</span> <strong>12.0s Block Window</strong></li>
             <li><span>Solana Commit:</span> <strong>400ms Fast Slots</strong></li>
@@ -882,13 +882,13 @@ def generate_protocol_page():
         <div class="ed-grid-cell">
           <div>
             <span class="cell-tag">[ ECONOMIC DISCIPLINE ]</span>
-            <h3 class="cell-title">Automated Slashing</h3>
+            <h3 class="cell-title">25,000 $33RD Validator Stake Bond</h3>
             <p class="cell-body">
-              Any node producing contradictory commitments (equivocation), corrupted activation hashes, or invalid KZG openings has its 25,000 $33RD bond instantly slashed on-chain.
+              Any node producing contradictory commitments (equivocation), corrupted activation hashes, or invalid KZG openings has its 25,000 $33RD VALIDATOR STAKE BOND instantly slashed on-chain.
             </p>
           </div>
           <ul class="cell-spec-list">
-            <li><span>Collateral Bond:</span> <strong>25,000 $33RD</strong></li>
+            <li><span>Validator Stake Bond:</span> <strong>25,000 $33RD</strong></li>
             <li><span>Equivocation Penalty:</span> <strong>100% Slashed</strong></li>
             <li><span>Slashed Destination:</span> <strong>50% Burn / 50% Bounty</strong></li>
             <li><span>Revocation:</span> <strong>Permanent Pubkey Ban</strong></li>
@@ -946,18 +946,18 @@ def generate_protocol_page():
         <div>
           <h2 class="sec-title">Economic Equilibrium &amp; Deflation Invariants</h2>
           <p class="sec-summary">
-            Sustainable decentralized compute requires aligning capital expenditure, validator profitability, and token scarcity. The Singularity Protocol establishes macroeconomic equilibrium through an immutable monetary foundation: strict 33,333,333 $33RD hard cap, 100% LP incinerated at launch, 75% hardware node reward pool, and continuous 10% fee burns directly to the Solana canonical incinerator address:
+            Sustainable decentralized compute requires aligning capital expenditure, validator profitability, and token scarcity. The Singularity Protocol establishes macroeconomic equilibrium through an immutable monetary foundation: strict 33,333,333 $33RD hard cap, 100% LP incinerated at launch, 75% hardware node reward pool, and continuous automated 10% fee burns directly to the canonical Solana Incinerator address: <code>1nc1nerator11111111111111111111111111111111</code>.
           </p>
         </div>
       </div>
 
       <div class="math-callout">
-        <div class="math-callout-title">NET MONETARY DEFLATION THEOREM &bull; SOLANA INCINERATOR SINK</div>
+        <div class="math-callout-title">NET MONETARY DEFLATION THEOREM &bull; SOLANA INCINERATOR AUTOMATED 10% FEE BURN</div>
         <div class="math-display-box">
           $$\frac{dS}{dt} = \mathcal{E}_{\text{daily}}(t) - \mathcal{B}_{\text{daily}}(t) < 0 \iff 0.10 \times \mathcal{V}_{\text{fee}} > 5,136.986 \iff \mathcal{V}_{\text{fee}} > 51,369.86\text{ }33RD/\text{day}$$
         </div>
         <p style="color:var(--chalk-dim); font-size:14px; line-height:1.65;">
-          Where $\mathcal{E}_{\text{daily}}$ is the gross daily compute emission ($5,136.98\text{ }33RD/\text{day}$ in Era 1), and $\mathcal{B}_{\text{daily}}$ is the 10% fee capture burned to <code>1nc1nerator11111111111111111111111111111111</code>. When daily network inference billing crosses 51,370 $33RD, total incinerator destruction permanently outpaces gross emissions.
+          Where $\mathcal{E}_{\text{daily}}$ is the gross daily compute emission ($5,136.98\text{ }33RD/\text{day}$ in Era 1), and $\mathcal{B}_{\text{daily}}$ is the automated 10% fee capture burned to <code>1nc1nerator11111111111111111111111111111111</code> via atomic SPL Token-2022 burn instructions. When daily network inference billing crosses 51,370 $33RD, total incinerator destruction permanently outpaces gross emissions.
         </p>
       </div>
 
@@ -974,7 +974,7 @@ def generate_protocol_page():
           <ul class="cell-spec-list">
             <li><span>Node Allocation:</span> <strong>75.0% of Fees</strong></li>
             <li><span>Treasury Allocation:</span> <strong>15.0% Multisig</strong></li>
-            <li><span>Incinerator Burn:</span> <strong>10.0% Permanent</strong></li>
+            <li><span>Incinerator Burn:</span> <strong>10.0% Automated</strong></li>
             <li><span>Payout Slot:</span> <strong>Atomic Per-Epoch CPI</strong></li>
           </ul>
         </div>
@@ -982,13 +982,13 @@ def generate_protocol_page():
         <div class="ed-grid-cell">
           <div>
             <span class="cell-tag">[ CAPITAL GATE ]</span>
-            <h3 class="cell-title">25,000 $33RD Bond</h3>
+            <h3 class="cell-title">25,000 $33RD Validator Stake Bond</h3>
             <p class="cell-body">
-              Mandatory non-custodial capital bond held in Solana Anchor staking escrow, creating an insurmountable economic barrier ($> 550,000\text{ }33RD$) against Byzantine committee capture.
+              Mandatory non-custodial 25,000 $33RD VALIDATOR STAKE BOND held in Solana Anchor staking escrow, creating an insurmountable economic barrier ($> 550,000\text{ }33RD$) against Byzantine committee capture.
             </p>
           </div>
           <ul class="cell-spec-list">
-            <li><span>Minimum Bond:</span> <strong>25,000 $33RD / Node</strong></li>
+            <li><span>Validator Stake Bond:</span> <strong>25,000 $33RD / Node</strong></li>
             <li><span>Lockup Window:</span> <strong>7-Day Cooldown</strong></li>
             <li><span>Anchor PDA:</span> <strong>Staking Escrow Vault</strong></li>
             <li><span>Sybil Threshold:</span> <strong>$f \ge 22$ Committee</strong></li>
@@ -998,13 +998,13 @@ def generate_protocol_page():
         <div class="ed-grid-cell">
           <div>
             <span class="cell-tag">[ INCINERATOR SINK ]</span>
-            <h3 class="cell-title">10% Perpetual Burn</h3>
+            <h3 class="cell-title">Automated 10% Fee Burn</h3>
             <p class="cell-body">
-              Every compute contract execution atomically burns 10% of invoiced tokens via Solana SPL Token-2022 instructions to the incinerator, permanently removing them from circulation.
+              Every compute contract execution atomically burns 10% of invoiced tokens via Solana SPL Token-2022 instructions directly to <code>1nc1nerator11111111111111111111111111111111</code>, permanently removing them from circulating supply.
             </p>
           </div>
           <ul class="cell-spec-list">
-            <li><span>Burn Target:</span> <strong>1nc1nerator...1111</strong></li>
+            <li><span>Burn Target:</span> <strong>1nc1nerator11111111111111111111111111111111</strong></li>
             <li><span>SPL Program:</span> <strong>Token-2022 Native</strong></li>
             <li><span>Supply Authority:</span> <strong>Permanently Revoked</strong></li>
             <li><span>Deflation Velocity:</span> <strong>Volume Scaled</strong></li>
@@ -1041,7 +1041,7 @@ def generate_protocol_page():
         <div class="prose-block">
           <h3>Game-Theoretic Capital Security</h3>
           <p>
-            Holding 25,000 $33RD in bonded escrow per node ties validator solvency directly to network integrity. Slashing penalties ensure that attempting to poison tensor weights or double-sign blocks guarantees catastrophic financial loss.
+            Holding the canonical 25,000 $33RD VALIDATOR STAKE BOND in escrow per node ties validator solvency directly to network integrity. Slashing penalties ensure that attempting to poison tensor weights or double-sign blocks guarantees catastrophic financial loss.
           </p>
           <p>
             The 75% fee accrual provides enterprise operators with stable, hardware-backed yield, creating an antifragile equilibrium between physical infrastructure supply and enterprise compute demand.
